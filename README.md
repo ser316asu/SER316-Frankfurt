@@ -1,6 +1,7 @@
 Project SER316
 
 # spring17project
+
 This is the initial dump for the ser316 spring 2017 project. It is a slightly modified version of the Memoranda project from memoranda.sf.net
 
 The purpose of this project is to enhance the Memoranda application to support Time Management for Software Engineers. In essence, to augment Memoranda with features that support the time management concepts in the Personal Software Process, which you learned some of last year in SER215.
