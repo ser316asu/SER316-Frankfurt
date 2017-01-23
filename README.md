@@ -20,4 +20,4 @@ You should then be able to run the project. The included ant script should work,
 Try to change minimal things to see how everything works. After that go back to the initial version and start your SCRUM process and document all changes through github and Taiga (like I said, if it isn’t in github/taiga it does not count).
 
 Enjoy!
-Dr. Mehlhase
+Dr. Mehlhase 
