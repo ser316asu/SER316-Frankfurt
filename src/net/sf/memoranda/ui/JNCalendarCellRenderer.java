@@ -25,17 +25,17 @@ import net.sf.memoranda.date.CalendarDate;
  */
 /*$Id: JNCalendarCellRenderer.java,v 1.5 2004/10/11 08:48:20 alexeya Exp $*/
 public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRenderer {
-    private CalendarDate d = null;
+    private CalendarDate date = null;
     boolean disabled = false;
-    ImageIcon evIcon = new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/en.png"));
-    Task t = null;
+    ImageIcon eventIcon = new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/en.png"));
+    Task task = null;
     
-    public void setTask(Task _t) {
-        t = _t;
+    public void setTask(Task newTask) {
+        task = newTask;
     }
     
     public Task getTask() {
-        return t;
+        return task;
     }
 
     public Component getTableCellRendererComponent(
@@ -49,69 +49,93 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 		JLabel label = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 		String currentPanel = ((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.getCurrentPanel();
 
-		if (d == null) {
+		// For Cells that would hold dates not in the current month
+		if (date == null) {
             label.setEnabled(false);
 			label.setIcon(null);
-            label.setBackground(new Color(0xE0,0xE0,0xE0));
+            label.setBackground(new Color(244,244,244));
             return label;
         }
         
+		// Non-Selected Calendar Cells
 		if (!isSelected) {
-			CalendarDate cpsd = CurrentProject.get().getStartDate();
-            CalendarDate cped = CurrentProject.get().getEndDate();
-            if (!(((d.after(cpsd)) && (d.before(cped))) || (d.equals(cpsd)) || (d.equals(cped)))) {
-				label.setBackground(new Color(0xF0,0xF0,0xF0));
+//			CalendarDate projectStartDate = CurrentProject.get().getStartDate();
+//            CalendarDate projectEndDate = CurrentProject.get().getEndDate();
+            //if (!(((date.after(projectStartDate)) && (date.before(projectEndDate))) || (date.equals(projectStartDate)) || (date.equals(projectEndDate)))) {
+            	
+            	// Set Foreground color based on work week and weekend days
+            	if (date.getCalendar().get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || date.getCalendar().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            		label.setForeground(Color.LIGHT_GRAY);
+            	} else {
+            		label.setForeground(Color.DARK_GRAY);
+            	}
+            	label.setBackground(Color.WHITE);
+            	
+            	// today cell foreground and background colors (non-selected)
+                if (date.equals(CalendarDate.today())) {
+                    label.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 128)));
+                }
 				return label;
-			}
+			//}
         }		
 
-
-		label.setHorizontalTextPosition(2);
-		label.setEnabled(true);
 		
-
-
-        if (d.equals(CalendarDate.today())) {
-            label.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 128)));
-        }
-        
-		// set foreground color
-		if (d.getCalendar().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-            label.setForeground(new Color(255, 0, 0));
-        }
-		else { 		
-			label.setForeground(Color.BLACK);
+		// Selected Cells
+		if (isSelected) {
+			// Today Cells
+			if (date.equals(CalendarDate.today())) {
+				label.setBackground(new Color(36,90,175));
+				label.setForeground(Color.WHITE);
+			} else { // Regular Cells
+				label.setBackground(Color.BLACK);
+				label.setForeground(Color.WHITE);
+			}
+			
 		}
+		
+		// General Layout Alignment of labels inside cell
+		label.setHorizontalAlignment(CENTER);
+		label.setEnabled(true);
 
-		// set background color
-		if (currentPanel == null)
-			label.setBackground(Color.WHITE);
 		
-		else if (currentPanel.equals("TASKS") && (t != null) && 
-			(d.inPeriod(t.getStartDate(), t.getEndDate()))) 
-				label.setBackground( new Color(230, 255, 230));
+//		// set foreground color
+//		if (date.getCalendar().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+////            label.setForeground(new Color(255, 0, 0));
+//        }
+//		else { 		
+//			label.setForeground(Color.BLACK);
+//		}
+
+//		// set background color
+//		if (currentPanel == null)
+//			label.setBackground(Color.WHITE);
 		
-		else if(currentPanel.equals("NOTES") && 
-		CurrentProject.getNoteList().getNoteForDate(d) != null) 
-					label.setBackground(new Color(255,245,200));
+		// TODO Remove these checks once drastic architecture reform is complete
+//		else if (currentPanel.equals("TASKS") && (task != null) && 
+//			(date.inPeriod(task.getStartDate(), task.getEndDate()))) 
+//				label.setBackground( new Color(230, 255, 230));
+//		
+//		else if(currentPanel.equals("NOTES") && 
+//		CurrentProject.getNoteList().getNoteForDate(date) != null) 
+//					label.setBackground(new Color(255,245,200));
+//		
+//		else if(currentPanel.equals("EVENTS") && 
+//		(!(EventsManager.getEventsForDate(date).isEmpty()))) 
+//					label.setBackground(new Color(255,230,230));
 		
-		else if(currentPanel.equals("EVENTS") && 
-		(!(EventsManager.getEventsForDate(d).isEmpty()))) 
-					label.setBackground(new Color(255,230,230));
-		
-		else if(!isSelected)
-			label.setBackground(Color.WHITE);
+//		else if(!isSelected)
+//			label.setBackground(Color.WHITE);
 				
-		// always display NREvents
-		if (EventsManager.isNREventsForDate(d))
-			label.setIcon(evIcon);
+		// Displaying events / tasks
+		if (EventsManager.isNREventsForDate(date)) //will need to change this to isTaskForDate(d) once new task structure is created
+			label.setIcon(eventIcon);
 		else
 			label.setIcon(null);
 		
         return label;
     }
 
-    public void setDate(CalendarDate date) {
-        d = date;
+    public void setDate(CalendarDate newDate) {
+        date = newDate;
     }
 }

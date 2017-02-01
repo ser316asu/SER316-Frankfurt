@@ -170,20 +170,20 @@ public class JNCalendar extends JTable {
 	void setCalendarParameters() {
 		int d = 1;
 
-		Calendar cal = _date.getCalendar();
+		Calendar calendar = _date.getCalendar();
 
 		if (Configuration.get("FIRST_DAY_OF_WEEK").equals("mon")) {
-			cal.setFirstDayOfWeek(Calendar.MONDAY);
+			calendar.setFirstDayOfWeek(Calendar.MONDAY);
 			d = 2;
 		} else
-			cal.setFirstDayOfWeek(Calendar.SUNDAY);
+			calendar.setFirstDayOfWeek(Calendar.SUNDAY);
 
-		cal.set(Calendar.DAY_OF_MONTH, 1);
-		cal.getTime();
-		firstDay = cal.get(Calendar.DAY_OF_WEEK) - d;
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		calendar.getTime();
+		firstDay = calendar.get(Calendar.DAY_OF_WEEK) - d;
 		if (firstDay == -1)
 			firstDay = 6;
-		daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 	}
 
 	/*$Id: JNCalendar.java,v 1.8 2004/11/05 07:38:10 pbielen Exp $*/
