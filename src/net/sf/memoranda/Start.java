@@ -54,8 +54,9 @@ public class Start {
             } catch (Exception e) {
                 // If socket is not opened (app is not started), continue
                 // e.printStackTrace();
+            	System.out.println("Socket Not Opened"); // For debugging/tracing purposes 
             }
-            new SLThread().start();
+            //new SLThread().start();
         }
         
         //System.out.println(EventsScheduler.isEventScheduled());
@@ -67,11 +68,12 @@ public class Start {
     }
 }
 
-class SLThread extends Thread {
+/*class SLThread extends Thread {
     
     public void run() {
         ServerSocket serverSocket = null;
         try {
+        	System.out.println("HERE in thread");
             serverSocket = new ServerSocket(Start.DEFAULT_PORT);
             serverSocket.accept();
             Start.app.show();
@@ -79,10 +81,11 @@ class SLThread extends Thread {
             new SLThread().start();
             
         } catch (Exception e) {
+        	System.out.println("HERE in EXCEPTION thread");
             System.err.println("Port:"+Start.DEFAULT_PORT);
             e.printStackTrace();
             new ExceptionDialog(e, "Cannot create a socket connection on localhost:"+Start.DEFAULT_PORT,
             "Make sure that other software does not use the port "+Start.DEFAULT_PORT+" and examine your security settings.");
         }
     }
-}
+}*/
