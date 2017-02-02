@@ -1,6 +1,7 @@
 package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JToolBar;
@@ -46,13 +48,33 @@ public class JNCalendarPanel extends JPanel {
   CalendarDate _date = CurrentDate.get();
   JToolBar navigationBar = new JToolBar();
   JPanel mntyPanel = new JPanel(new BorderLayout());
-  JPanel navbPanel = new JPanel(new BorderLayout());
-  JButton dayForwardB = new JButton();
-  JPanel dayForwardBPanel = new JPanel();
-  JButton todayB = new JButton();
-  JPanel todayBPanel = new JPanel();
-  JPanel dayBackBPanel = new JPanel();
-  JButton dayBackB = new JButton();
+  JPanel navigationPanel = new JPanel(new GridLayout(1,3));
+  
+  // 1st level Panels
+  JPanel todayAndPrevNextPanel = new JPanel(new GridLayout(1,2));
+  JPanel monthAndYearPanel =  new JPanel();
+  JPanel searchAndCreateTaskPanel = new JPanel(new GridLayout(1,2));
+  
+  // 2nd level Panels
+  JPanel todayButtonPanel = new JPanel();
+  JPanel prevAndNextDayPanel = new JPanel(new GridLayout(1,2));
+  JPanel searchButtonPanel = new JPanel();
+  JPanel addTaskButtonPanel = new JPanel();
+  
+  // 3rd level Panels
+  JPanel dayBackButtonPanel = new JPanel();
+  JPanel dayForwardButtonPanel = new JPanel();
+  
+  // Buttons
+  JButton todayButton = new JButton();
+  JButton dayBackButton = new JButton();
+  JButton dayForwardButton = new JButton();
+  JButton searchButton = new JButton();
+  JButton addTaskButton = new JButton(); 
+  
+  // Labels
+  JLabel monthAndYearLabel = new JLabel();
+  
   JComboBox monthsCB = new JComboBox(Local.getMonthNames());
   BorderLayout borderLayout4 = new BorderLayout();
   JNCalendar jnCalendar = new JNCalendar(CurrentDate.get());
@@ -76,13 +98,22 @@ public class JNCalendarPanel extends JPanel {
       new ExceptionDialog(ex);
     }
   }
+  
+  public Action todayAction =
+	        new AbstractAction(
+	            "Go to today",
+	            new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/today16.png"))) {
+	        public void actionPerformed(ActionEvent e) {
+	            todayButton_actionPerformed(e);
+	        }
+	  };
 
   public Action dayBackAction =
         new AbstractAction(
             "Go one day back",
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/back16.png"))) {
         public void actionPerformed(ActionEvent e) {
-            dayBackB_actionPerformed(e);
+            dayBackButton_actionPerformed(e);
         }
   };
   
@@ -91,18 +122,28 @@ public class JNCalendarPanel extends JPanel {
             "Go one day forward",
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/forward16.png"))) {
         public void actionPerformed(ActionEvent e) {
-            dayForwardB_actionPerformed(e);
+            dayForwardButton_actionPerformed(e);
         }
   };
   
-  public Action todayAction =
+  public Action searchAction =
         new AbstractAction(
-            "Go to today",
+            "search for task",
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/today16.png"))) {
         public void actionPerformed(ActionEvent e) {
-            todayB_actionPerformed(e);
+            searchButton_actionPerformed(e);
         }
   };
+	  
+  public Action addTaskAction =
+        new AbstractAction(
+            "add task",
+            new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/today16.png"))) {
+        public void actionPerformed(ActionEvent e) {
+            addTaskButton_actionPerformed(e);
+        }
+  };
+  
       
   void jbInit() throws Exception {
     //dayBackAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, KeyEvent.ALT_MASK));
@@ -116,75 +157,140 @@ public class JNCalendarPanel extends JPanel {
     border2 = BorderFactory.createEmptyBorder();
     this.setLayout(new BorderLayout());
     navigationBar.setFloatable(false);
-    dayForwardB.setAction(dayForwardAction);
-    dayForwardB.setMinimumSize(new Dimension(24, 24));
-    dayForwardB.setOpaque(false);
-    dayForwardB.setPreferredSize(new Dimension(24, 24));
-    dayForwardB.setRequestFocusEnabled(false);
-    dayForwardB.setBorderPainted(false);
-    dayForwardB.setFocusPainted(false);
-    dayForwardB.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/forward.png")));
-    dayForwardB.setText("");
-    dayForwardB.setToolTipText(Local.getString("One day forward"));
     
-    dayForwardBPanel.setAlignmentX((float) 0.0);
-    dayForwardBPanel.setMinimumSize(new Dimension(40, 24));
-    dayForwardBPanel.setOpaque(false);
-    dayForwardBPanel.setPreferredSize(new Dimension(40, 24));
+    // Month / Year Label Creation
+    monthAndYearLabel.setText("Feb 2017"); // TODO set to current month / year of "today"
     
-    todayB.setAction(todayAction);
-    todayB.setMinimumSize(new Dimension(24, 24));
-    todayB.setOpaque(false);
-    todayB.setPreferredSize(new Dimension(24, 24));
-    todayB.setRequestFocusEnabled(false);
-    todayB.setBorderPainted(false);
-    todayB.setFocusPainted(false);
-    todayB.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/today.png")));
-    todayB.setText("");
-    todayB.setToolTipText(Local.getString("To today"));
+    // Creation of Buttons
+    todayButton.setAction(todayAction);
+    todayButton.setMinimumSize(new Dimension(24, 24));
+    todayButton.setOpaque(false);
+    todayButton.setPreferredSize(new Dimension(24, 24));
+    todayButton.setRequestFocusEnabled(false);
+    todayButton.setBorderPainted(false);
+    todayButton.setFocusPainted(false);
+    todayButton.setContentAreaFilled(false);
+    todayButton.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/today_icon.png")));
+    todayButton.setText("");
+    todayButton.setToolTipText(Local.getString("To today"));
     
-    dayBackBPanel.setAlignmentX((float) 1.5);
-    dayBackBPanel.setMinimumSize(new Dimension(40, 24));
-    dayBackBPanel.setOpaque(false);
-    dayBackBPanel.setPreferredSize(new Dimension(40, 24));
+    dayBackButton.setAction(dayBackAction);
+    dayBackButton.setMinimumSize(new Dimension(24, 24));
+    dayBackButton.setOpaque(false);
+    dayBackButton.setPreferredSize(new Dimension(24, 24));
+    dayBackButton.setRequestFocusEnabled(false);
+    dayBackButton.setToolTipText("");
+    dayBackButton.setBorderPainted(false);
+    dayBackButton.setFocusPainted(false);
+    dayBackButton.setContentAreaFilled(false);
+    dayBackButton.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/prevday_icon.png")));
+    dayBackButton.setText("");
+    dayBackButton.setToolTipText(Local.getString("One day back"));
     
-    dayBackB.setAction(dayBackAction);
-    dayBackB.setMinimumSize(new Dimension(24, 24));
-    dayBackB.setOpaque(false);
-    dayBackB.setPreferredSize(new Dimension(24, 24));
-    dayBackB.setRequestFocusEnabled(false);
-    dayBackB.setToolTipText("");
-    dayBackB.setBorderPainted(false);
-    dayBackB.setFocusPainted(false);
-    dayBackB.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/back.png")));
-    dayBackB.setText("");
-    dayBackB.setToolTipText(Local.getString("One day back"));
+    dayForwardButton.setAction(dayForwardAction);
+    dayForwardButton.setMinimumSize(new Dimension(24, 24));
+    dayForwardButton.setOpaque(false);
+    dayForwardButton.setPreferredSize(new Dimension(24, 24));
+    dayForwardButton.setRequestFocusEnabled(false);
+    dayForwardButton.setBorderPainted(false);
+    dayForwardButton.setFocusPainted(false);
+    dayForwardButton.setContentAreaFilled(false);
+    dayForwardButton.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/nextday_icon.png")));
+    dayForwardButton.setText("");
+    dayForwardButton.setToolTipText(Local.getString("One day forward"));
+    
+    searchButton.setAction(searchAction);
+    searchButton.setMinimumSize(new Dimension(24, 24));
+    searchButton.setOpaque(false);
+    searchButton.setPreferredSize(new Dimension(24, 24));
+    searchButton.setRequestFocusEnabled(false);
+    searchButton.setToolTipText("");
+    searchButton.setBorderPainted(false);
+    searchButton.setFocusPainted(false);
+    searchButton.setContentAreaFilled(false);
+    searchButton.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/search_icon.png")));
+    searchButton.setText("");
+    searchButton.setToolTipText(Local.getString("Search for Task"));
+    
+    addTaskButton.setAction(addTaskAction);
+    addTaskButton.setMinimumSize(new Dimension(24, 24));
+    addTaskButton.setOpaque(false);
+    addTaskButton.setPreferredSize(new Dimension(24, 24));
+    addTaskButton.setRequestFocusEnabled(false);
+    addTaskButton.setToolTipText("");
+    addTaskButton.setBorderPainted(false);
+    addTaskButton.setFocusPainted(false);
+    addTaskButton.setContentAreaFilled(false);
+    addTaskButton.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/addtask_icon.png")));
+    addTaskButton.setText("");
+    addTaskButton.setToolTipText(Local.getString("Add Task"));
+    
+    // Creation of Button Specific Panels
+    todayButtonPanel.setMinimumSize(new Dimension(68, 24));
+    todayButtonPanel.setOpaque(false);
+    todayButtonPanel.setPreferredSize(new Dimension(51, 24));
+    todayButtonPanel.add(todayButton, null);
+    
+    dayForwardButtonPanel.setAlignmentX((float) 0.0);
+    dayForwardButtonPanel.setMinimumSize(new Dimension(40, 24));
+    dayForwardButtonPanel.setOpaque(false);
+    dayForwardButtonPanel.setPreferredSize(new Dimension(40, 24));
+    dayForwardButtonPanel.add(dayForwardButton, null);
+    
+    dayBackButtonPanel.setAlignmentX((float) 1.5);
+    dayBackButtonPanel.setMinimumSize(new Dimension(40, 24));
+    dayBackButtonPanel.setOpaque(false);
+    dayBackButtonPanel.setPreferredSize(new Dimension(40, 24));
+    dayBackButtonPanel.add(dayBackButton, null);  
+    
+    searchButtonPanel.setAlignmentX((float) 1.5);
+    searchButtonPanel.setMinimumSize(new Dimension(40, 24));
+    searchButtonPanel.setOpaque(false);
+    searchButtonPanel.setPreferredSize(new Dimension(40, 24));
+    searchButtonPanel.add(searchButton, null);  
+    
+    addTaskButtonPanel.setAlignmentX((float) 1.5);
+    addTaskButtonPanel.setMinimumSize(new Dimension(40, 24));
+    addTaskButtonPanel.setOpaque(false);
+    addTaskButtonPanel.setPreferredSize(new Dimension(40, 24));
+    addTaskButtonPanel.add(addTaskButton, null); 
+
+    prevAndNextDayPanel.add(dayBackButtonPanel);
+    prevAndNextDayPanel.add(dayForwardButtonPanel);
+    
+    todayAndPrevNextPanel.add(todayButtonPanel);
+    todayAndPrevNextPanel.add(prevAndNextDayPanel);
+    
+    monthAndYearPanel.add(monthAndYearLabel);
+    
+    searchAndCreateTaskPanel.add(searchButtonPanel);
+    searchAndCreateTaskPanel.add(addTaskButtonPanel);
+    
+    navigationPanel.add(todayAndPrevNextPanel);
+    navigationPanel.add(monthAndYearPanel);
+    navigationPanel.add(searchAndCreateTaskPanel);
     
     yearSpin.setPreferredSize(new Dimension(70, 20));
     yearSpin.setRequestFocusEnabled(false);
         yearSpin.setEditor(yearSpinner);
-    navbPanel.setMinimumSize(new Dimension(202, 30));
-    navbPanel.setOpaque(false);
-    navbPanel.setPreferredSize(new Dimension(155, 30));
+    navigationPanel.setMinimumSize(new Dimension(202, 30));
+    navigationPanel.setOpaque(false);
+    navigationPanel.setPreferredSize(new Dimension(155, 30));
     jnCalendar.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 10));
     jnCalendar.setFont(new java.awt.Font("Dialog", 0, 10));
     jnCalendar.setGridColor(Color.lightGray);
-    jnCalendarPanel.setLayout(borderLayout5);
-    todayBPanel.setMinimumSize(new Dimension(68, 24));
-    todayBPanel.setOpaque(false);
-    todayBPanel.setPreferredSize(new Dimension(51, 24));
-    this.add(navigationBar, BorderLayout.NORTH);
-    navigationBar.add(navbPanel, null);
-    navbPanel.add(dayBackBPanel, BorderLayout.WEST);
-    dayBackBPanel.add(dayBackB, null);
-    navbPanel.add(todayBPanel, BorderLayout.CENTER);
-    todayBPanel.add(todayB, null);
-    navbPanel.add(dayForwardBPanel, BorderLayout.EAST);
-    dayForwardBPanel.add(dayForwardB, null);
-    this.add(mntyPanel,  BorderLayout.SOUTH);
+    jnCalendarPanel.setLayout(borderLayout5);    
+    
+    navigationBar.add(navigationPanel, null);
+    
     mntyPanel.add(monthsCB, BorderLayout.CENTER);
     mntyPanel.add(yearSpin,  BorderLayout.EAST);
+
+    // Putting Large Pieces together for calendar
+    this.add(navigationBar, BorderLayout.NORTH);
     this.add(jnCalendarPanel,  BorderLayout.CENTER);
+    this.add(mntyPanel,  BorderLayout.SOUTH);
+    
     jnCalendar.getTableHeader().setPreferredSize(new Dimension(200, 15));
     jnCalendarPanel.add(jnCalendar.getTableHeader(), BorderLayout.NORTH);
     jnCalendarPanel.add(jnCalendar, BorderLayout.CENTER);
@@ -272,7 +378,7 @@ public class JNCalendarPanel extends JPanel {
     notifyListeners();
   }
 
-  void dayBackB_actionPerformed(ActionEvent e) {
+  void dayBackButton_actionPerformed(ActionEvent e) {
     Calendar cal = _date.getCalendar();
     cal.add(Calendar.DATE, -1); cal.getTime();
     _date = new CalendarDate(cal);
@@ -280,18 +386,28 @@ public class JNCalendarPanel extends JPanel {
     notifyListeners();
   }
 
-  void todayB_actionPerformed(ActionEvent e) {
+  void todayButton_actionPerformed(ActionEvent e) {
     _date = CalendarDate.today();
     refreshView();
     notifyListeners();
   }
 
-  void dayForwardB_actionPerformed(ActionEvent e) {
+  void dayForwardButton_actionPerformed(ActionEvent e) {
     Calendar cal = _date.getCalendar();
     cal.add(Calendar.DATE, 1); cal.getTime();
     _date = new CalendarDate(cal);
     refreshView();
     notifyListeners();
+  }
+  
+  // TODO search button backend logic
+  void searchButton_actionPerformed(ActionEvent e) {
+	  System.out.println("Called to search tasks");
+  }
+  
+  // TODO add task button backend logic
+  void addTaskButton_actionPerformed(ActionEvent e) {
+	  System.out.println("Called to add a task");
   }
 
 
