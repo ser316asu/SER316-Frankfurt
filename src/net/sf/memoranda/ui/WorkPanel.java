@@ -224,7 +224,7 @@ public class WorkPanel extends JPanel {
 		calendarB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		calendarB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				tasksB_actionPerformed(e);
+				calendarB_actionPerformed(e);
 			}
 		});
 		calendarB.setVerticalAlignment(SwingConstants.TOP);
@@ -259,6 +259,8 @@ public class WorkPanel extends JPanel {
 				eventsB_actionPerformed(null);
 			else if (pan.equals("FILES"))
 				filesB_actionPerformed(null);
+			else if (pan.equals("CALENDAR"))
+				calendarB_actionPerformed(null);
 		}
 	}
 
@@ -295,6 +297,16 @@ public class WorkPanel extends JPanel {
 		setCurrentButton(filesB);
 		Context.put("CURRENT_PANEL", "FILES");
 	}
+	
+	
+	public void calendarB_actionPerformed(ActionEvent e) {
+		cardLayout1.show(panel, "DAILYITEMS");
+		dailyItemsPanel.selectPanel("CALENDAR");
+		setCurrentButton(calendarB);
+		Context.put("CURRENT_PANEL", "CALENDAR");
+	}
+	
+	
 
 	void setCurrentButton(JButton cb) {
 		currentB.setBackground(Color.white);
