@@ -38,7 +38,6 @@ public class WorkPanel extends JPanel {
 	public JButton tasksB = new JButton();
 	public JButton eventsB = new JButton();
 	public JButton filesB = new JButton();
-	public JButton calendarB = new JButton();
 	JButton currentB = null;
 	Border border1;
 
@@ -206,41 +205,10 @@ public class WorkPanel extends JPanel {
 		toolBar.add(tasksB, null);
 		toolBar.add(notesB, null);
 		toolBar.add(filesB, null);
-		toolBar.add(calendarB, null);
 		currentB = agendaB;
 		// Default blue color
 		currentB.setBackground(new Color(215, 225, 250));
 		currentB.setOpaque(true);
-		
-		
-		
-		calendarB.setSelected(true);
-		calendarB.setFont(new java.awt.Font("Dialog", 1, 10));
-		calendarB.setMargin(new Insets(0, 0, 0, 0));
-		calendarB.setIcon(
-			new ImageIcon(
-				net.sf.memoranda.ui.AppFrame.class.getResource(
-					"resources/icons/calendar2.png")));
-		calendarB.setVerticalTextPosition(SwingConstants.BOTTOM);
-		calendarB.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				tasksB_actionPerformed(e);
-			}
-		});
-		calendarB.setVerticalAlignment(SwingConstants.TOP);
-		calendarB.setText(Local.getString("Calendar"));
-		calendarB.setHorizontalTextPosition(SwingConstants.CENTER);
-		calendarB.setFocusPainted(false);
-		calendarB.setBorderPainted(false);
-		calendarB.setContentAreaFilled(false);
-		calendarB.setPreferredSize(new Dimension(50, 50));
-		calendarB.setMinimumSize(new Dimension(30, 30));
-		calendarB.setOpaque(false);
-		calendarB.setMaximumSize(new Dimension(60, 80));
-		calendarB.setBackground(Color.white);
-
-		
-		
 
 		toolBar.setBorder(null);
 		panel.setBorder(null);
