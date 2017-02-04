@@ -2,7 +2,7 @@
 
 **/
 import javax.swing.*;
-import java.awt.*;
+import java.awt.*; 
 public class TopHomePanel extends JPanel
 {
 	private final double topRatio = .4;
