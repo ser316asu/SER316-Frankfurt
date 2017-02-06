@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 public class TopHomePanel extends JPanel
 {
-	private final double topRatio = .4;
+	private final Double topRatio = .4;
     private TaskCard task;
     private JPanel leftParent,leftOne,leftTwo,leftOneLabelPanel,leftTwoLabelPanel,rightParent,rightTop,rightBottom;
     private JButton startButton,pauseButton;
@@ -45,8 +45,7 @@ public class TopHomePanel extends JPanel
     }
 
 
-    public void createComponents()
-    {
+    public void createComponents(){
         leftParent = new JPanel();
         leftOne = new JPanel();
         leftOneLabelPanel = new JPanel();
@@ -59,7 +58,7 @@ public class TopHomePanel extends JPanel
         startButton = new JButton("Start");
         pauseButton = new JButton("Pause");
 
-        timerLabel = new JLabel();
+        /*timerLabel = new JLabel();
         estimatedLOC = new JLabel("Estimated LOC: ");
         actualLOC = new JLabel("Actual LOC: ");
         estimatedTime = new JLabel("Estimated Time(hrs): ");
@@ -69,7 +68,9 @@ public class TopHomePanel extends JPanel
         startDate = new JLabel("Start Date: ");
         endDate = new JLabel("End Date: ");
         scheduleStatus = new JLabel("Schedule Status: ");
-        taskName = new JLabel("Task Name: ");
+        taskName = new JLabel("Task Name: ");*/
+
+        createLabels();
 
         estimatedLOC.setVerticalAlignment(JLabel.CENTER);
         actualLOC.setVerticalAlignment(JLabel.CENTER);
@@ -105,128 +106,146 @@ public class TopHomePanel extends JPanel
         parentLayout = new GridLayout(1,1);
         leftChildLayout = new BorderLayout();
     }
-    	public void editComponents()
-    	{
-    		//setFont(estimatedLOC);
-    		editPanels();
+    public void createLabels(){
+    	if(task != null){
+    	    timerLabel = new JLabel();
+        	estimatedLOC = new JLabel("Estimated LOC: " + task.getEstimatedLOC());
+        	actualLOC = new JLabel("Actual LOC: " + task.getActualLOC());
+        	estimatedTime = new JLabel("Estimated Time(hrs): " + task.getEstimatedTime());
+        	actualTime = new JLabel("Actual Time(hrs): " + task.getActualTime());
+        	locPerHour = new JLabel("Actual LOC/h: " + task.getLocPerHour());
+        	estimatedLOCPH = new JLabel("Estimated LOC/h: " + task.getEstimatedLOCPH());
+        	startDate = new JLabel("Start Date: " + task.getStartDate().toString());
+        	endDate = new JLabel("End Date: " + task.getEndDate().toString());
+        	scheduleStatus = new JLabel("Schedule Status: " + task.getScheduleStatus());
+        	taskName = new JLabel("Task Name: " + task.getTaskName());
+    	}
+    	else{
+    	    timerLabel = new JLabel();
+        	estimatedLOC = new JLabel("Estimated LOC: ");
+        	actualLOC = new JLabel("Actual LOC: ");
+        	estimatedTime = new JLabel("Estimated Time(hrs): ");
+        	actualTime = new JLabel("Actual Time(hrs): ");
+        	locPerHour = new JLabel("Actual LOC/h: ");
+        	estimatedLOCPH = new JLabel("Estimated LOC/h: ");
+        	startDate = new JLabel("Start Date: ");
+        	endDate = new JLabel("End Date: ");
+        	scheduleStatus = new JLabel("Schedule Status: ");
+        	taskName = new JLabel("Task Name: ");
+    	}
+    }
+    public void editComponents(){
+    	//setFont(estimatedLOC);
+    	editPanels();
  
-    		startButton.setActionCommand("start");
-    		pauseButton.setActionCommand("pause");
-            
-            if(currentTask != null){
-				timerLabel = new JLabel();
-				estimatedLOC = new JLabel("Estimated LOC: " + Integer.toString(currentTask.getEstimatedLOC()));
-				actualLOC = new JLabel("Actual LOC: " + Integer.toString(currentTask.getActualLOC()));
-				estimatedTime = new JLabel("Estimated Time(hrs): " + Float.toString(currentTask.getEstimatedTime()));
-				actualTime = new JLabel("Actual Time(hrs): " + Float.toString(currentTask.getActualTime()));
-				locPerHour = new JLabel("Actual LOC/h: " + Float.toString(currentTask.getLocPerHour()));
-				estimatedLOCPH = new JLabel("Estimated LOC/h: " + Float.toString(currentTask.getEstimatedLOCPH()));
-				startDate = new JLabel("Start Date: " + currentTask.getStartDate());
-				endDate = new JLabel("End Date: " + currentTask.getEndDate());
+   		startButton.setActionCommand("start");
+   		pauseButton.setActionCommand("pause");
+           
+        if(currentTask != null){
+			timerLabel = new JLabel();
+			estimatedLOC = new JLabel("Estimated LOC: " + Integer.toString(currentTask.getEstimatedLOC()));
+			actualLOC = new JLabel("Actual LOC: " + Integer.toString(currentTask.getActualLOC()));
+			estimatedTime = new JLabel("Estimated Time(hrs): " + Double.toString(currentTask.getEstimatedTime()));
+			actualTime = new JLabel("Actual Time(hrs): " + Double.toString(currentTask.getActualTime()));
+			locPerHour = new JLabel("Actual LOC/h: " + Double.toString(currentTask.getLocPerHour()));
+			estimatedLOCPH = new JLabel("Estimated LOC/h: " + Double.toString(currentTask.getEstimatedLOCPH()));
+			startDate = new JLabel("Start Date: " + currentTask.getStartDate());
+			endDate = new JLabel("End Date: " + currentTask.getEndDate());
 				
-				if(currentTask.getScheduleStatus() == TaskCard.ON_TIME)
-					scheduleStatus = new JLabel("Schedule Status: ON TIME");
-				else if(currentTask.getScheduleStatus() == TaskCard.BEHIND_SCHED)
-					scheduleStatus = new JLabel("Schedule Status: BEHIND");
-				else
-					scheduleStatus = new JLabel("Schedule Status: AHEAD");
-            }
-    	}
-    	public void addActionListeners()
-    	{
+			if(currentTask.getScheduleStatus() == TaskCard.ON_TIME)
+				scheduleStatus = new JLabel("Schedule Status: ON TIME");
+			else if(currentTask.getScheduleStatus() == TaskCard.BEHIND_SCHED)
+				scheduleStatus = new JLabel("Schedule Status: BEHIND");
+			else
+				scheduleStatus = new JLabel("Schedule Status: AHEAD");
+        }
+    }
+    public void addActionListeners(){
+    	startButton.addActionListener(new ButtonListener());
+    }
+    public void addComponents(){
+    	leftOneLabelPanel.add(estimatedLOC);
+    	leftOneLabelPanel.add(actualLOC);
+    	leftOneLabelPanel.add(estimatedTime);
+    	leftOneLabelPanel.add(actualTime);
+    	leftOneLabelPanel.add(scheduleStatus);
 
-    	}
-    	public void addComponents()
-    	{
-    		leftOneLabelPanel.add(estimatedLOC);
-    		leftOneLabelPanel.add(actualLOC);
-    		leftOneLabelPanel.add(estimatedTime);
-    		leftOneLabelPanel.add(actualTime);
-    		leftOneLabelPanel.add(scheduleStatus);
-
-    		leftTwoLabelPanel.add(startDate);
-    		leftTwoLabelPanel.add(endDate);
-    		leftTwoLabelPanel.add(locPerHour);
-    		leftTwoLabelPanel.add(estimatedLOCPH);
-    		leftTwoLabelPanel.add(taskName);
+    	leftTwoLabelPanel.add(startDate);
+    	leftTwoLabelPanel.add(endDate);
+    	leftTwoLabelPanel.add(locPerHour);
+    	leftTwoLabelPanel.add(estimatedLOCPH);
+    	leftTwoLabelPanel.add(taskName);
 
 
-    		leftOne.add(leftOneLabelPanel,BorderLayout.CENTER);
-    		leftTwo.add(leftTwoLabelPanel,BorderLayout.CENTER);
+    	leftOne.add(leftOneLabelPanel,BorderLayout.CENTER);
+    	leftTwo.add(leftTwoLabelPanel,BorderLayout.CENTER);
 
-    		leftParent.add(leftOneLabelPanel);
-    		leftParent.add(leftTwo);
+    	leftParent.add(leftOneLabelPanel);
+    	leftParent.add(leftTwo);
        		
-            this.add(leftParent);
-            this.add(rightParent);
-    	}
+        this.add(leftParent);
+        this.add(rightParent);
+    }
 
-    	public void editPanels(){
-    		/*leftTwo.setOpaque(true);
-    		leftParent.setOpaque(true);
-    		rightParent.setOpaque(true);
-    		leftOne.setOpaque(true);
-    		rightTop.setOpaque(true);
-    		rightBottom.setOpaque(true);*/
-    		//leftOneLabelPanel.setOpaque(true);
-    		//leftTwoLabelPanel.setOpaque(true);
+    public void editPanels(){
+    	/*leftTwo.setOpaque(true);
+    	leftParent.setOpaque(true);
+    	rightParent.setOpaque(true);
+    	leftOne.setOpaque(true);
+    	rightTop.setOpaque(true);
+    	rightBottom.setOpaque(true);*/
+    	//leftOneLabelPanel.setOpaque(true);
+    	//leftTwoLabelPanel.setOpaque(true);
 
-    		/*leftParent.setBackground(Color.blue);
-    		rightParent.setBackground(Color.red);
-    		rightTop.setBackground(Color.gray);
-    		rightBottom.setBackground(Color.cyan);
-    		leftTwo.setBackground(Color.black);*/
-    		//leftTwoLabelPanel.setBackground(Color.cyan);
-    		//leftOne.setBackground(Color.yellow);
-    		//leftOneLabelPanel.setBackground(Color.red);
+    	/*leftParent.setBackground(Color.blue);
+    	rightParent.setBackground(Color.red);
+    	rightTop.setBackground(Color.gray);
+    	rightBottom.setBackground(Color.cyan);
+    	leftTwo.setBackground(Color.black);*/
+    	//leftTwoLabelPanel.setBackground(Color.cyan);
+    	//leftOne.setBackground(Color.yellow);
+    	//leftOneLabelPanel.setBackground(Color.red);
 
+        this.setBorder(BorderFactory.createLineBorder(Color.black));
+        this.setPreferredSize(parentDimension);
 
-    		
+        leftParent.setPreferredSize(leftParentDim);
+        leftOne.setPreferredSize(innerLeftDim);
+        // leftOneLabelPanel.setPreferredSize(leftLabelDim);
+        leftTwo.setPreferredSize(innerLeftDim);
+        //leftTwoLabelPanel.setPreferredSize(leftLabelDim);
+        rightParent.setPreferredSize(rightParentDim);
+        rightTop.setPreferredSize(innerRightDim);
+        rightBottom.setPreferredSize(innerRightDim);
 
+        this.setLayout(parentLayout);
 
-            this.setBorder(BorderFactory.createLineBorder(Color.black));
-            this.setPreferredSize(parentDimension);
+        leftParent.setLayout(parentLayout);
+        leftOne.setLayout(leftChildLayout);
+        leftTwo.setLayout(leftChildLayout);
+        leftOneLabelPanel.setLayout(leftLabelLayout);
+        leftTwoLabelPanel.setLayout(leftLabelLayout);
+   	}
 
-            leftParent.setPreferredSize(leftParentDim);
-            leftOne.setPreferredSize(innerLeftDim);
-           // leftOneLabelPanel.setPreferredSize(leftLabelDim);
-            leftTwo.setPreferredSize(innerLeftDim);
-            //leftTwoLabelPanel.setPreferredSize(leftLabelDim);
-            rightParent.setPreferredSize(rightParentDim);
-            rightTop.setPreferredSize(innerRightDim);
-            rightBottom.setPreferredSize(innerRightDim);
+    private void setFont(JLabel label){
+    	Font labelFont = label.getFont();
+		String labelText = label.getText();
 
+		int stringWidth = label.getFontMetrics(labelFont).stringWidth(labelText);
+		int componentWidth = label.getWidth();
 
-            this.setLayout(parentLayout);
+		// Find out how much the font can grow in width.
+		double widthRatio = (double)componentWidth / (double)stringWidth;
 
-            leftParent.setLayout(parentLayout);
-            leftOne.setLayout(leftChildLayout);
-            leftTwo.setLayout(leftChildLayout);
-            leftOneLabelPanel.setLayout(leftLabelLayout);
-            leftTwoLabelPanel.setLayout(leftLabelLayout);
+		int newFontSize = (int)(labelFont.getSize() * widthRatio);
+		int componentHeight = label.getHeight();
 
+		// Pick a new font size so it will not be larger than the height of label.
+		int fontSizeToUse = Math.min(newFontSize, componentHeight);
 
-    	}
-
-    	private void setFont(JLabel label){
-    		Font labelFont = label.getFont();
-			String labelText = label.getText();
-
-			int stringWidth = label.getFontMetrics(labelFont).stringWidth(labelText);
-			int componentWidth = label.getWidth();
-
-			// Find out how much the font can grow in width.
-			double widthRatio = (double)componentWidth / (double)stringWidth;
-
-			int newFontSize = (int)(labelFont.getSize() * widthRatio);
-			int componentHeight = label.getHeight();
-
-			// Pick a new font size so it will not be larger than the height of label.
-			int fontSizeToUse = Math.min(newFontSize, componentHeight);
-
-			// Set the label's font size to the newly determined size.
-			label.setFont(new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse));
-    	}
+		// Set the label's font size to the newly determined size.
+		label.setFont(new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse));
+   	}
 
 	private class ButtonListener implements ActionListener{
 

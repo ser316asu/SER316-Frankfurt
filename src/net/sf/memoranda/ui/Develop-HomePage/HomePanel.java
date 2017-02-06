@@ -9,6 +9,7 @@ public class HomePanel extends JPanel
 	private LowerHomePanel low_P;
 	private final double topRatio = .4;
 	private final double lowRatio = .6;
+    private TaskCard task;
     public HomePanel()
     {
     	//this.super();
@@ -18,11 +19,18 @@ public class HomePanel extends JPanel
     	addActionListeners();
     	addComponents();
     }
+    public HomePanel(TaskCard task){
+        this.task = task;
+        createComponents();
+        editComponents();
+        addActionListeners();
+        addComponents();
+    }
 
 
     	public void createComponents()
     	{
-    		top_P = new TopHomePanel();
+    		top_P = new TopHomePanel(task);
     		low_P = new LowerHomePanel();
     	}
     	public void editComponents()
