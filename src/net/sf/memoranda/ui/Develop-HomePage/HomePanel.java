@@ -1,5 +1,5 @@
 /**
-
+Joshua Becker
 **/
 import javax.swing.*;
 import java.awt.Dimension;
