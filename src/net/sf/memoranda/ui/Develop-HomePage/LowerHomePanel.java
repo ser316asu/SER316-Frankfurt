@@ -22,7 +22,7 @@ public class LowerHomePanel extends JPanel
     	}
     	public void editComponents()
     	{
-            this.setBorder(BorderFactory.createLineBorder(Color.black));
+            this.setBorder(BorderFactory.createLineBorder(HomePanel.BACKGROUNDCOLOR));
             
             this.setPreferredSize(new Dimension(Develop.SCREEN_WIDTH - 100,((int) (Develop.SCREEN_HEIGHT*lowRatio)) - 25));
     	}
