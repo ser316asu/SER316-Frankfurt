@@ -1,3 +1,6 @@
+package net.sf.memoranda;
+
+
 import javax.swing.*;
 import java.util.*;
 import java.text.*;
