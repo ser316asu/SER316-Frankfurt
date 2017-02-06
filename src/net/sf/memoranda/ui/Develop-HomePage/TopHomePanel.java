@@ -4,6 +4,7 @@
 import javax.swing.*;
 import java.awt.*; 
 import java.awt.event.*;
+
 public class TopHomePanel extends JPanel
 {
 	private final Double topRatio = .4;
@@ -19,8 +20,7 @@ public class TopHomePanel extends JPanel
     private Timer timer;
     private Dimension parentDimension,leftParentDim,rightParentDim,innerLeftDim,innerRightDim,leftLabelDim;
     private GridLayout leftLabelLayout,parentLayout;
-    private BorderLayout leftChildLayout;
-    
+    private BorderLayout leftChildLayout;    
 
     public TopHomePanel()
     {

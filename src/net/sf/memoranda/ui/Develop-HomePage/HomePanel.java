@@ -3,11 +3,8 @@
 **/
 import javax.swing.*;
 import java.awt.Dimension;
-import java.awt.Color;
 public class HomePanel extends JPanel
 {
-    public static final Color BACKGROUNDCOLOR = new Color(109, 109, 95);
-
 	private TopHomePanel top_P;
 	private LowerHomePanel low_P;
 	private final double topRatio = .4;
@@ -38,7 +35,7 @@ public class HomePanel extends JPanel
     	}
     	public void editComponents()
     	{
-            this.setBackground(HomePanel.BACKGROUNDCOLOR);
+
     		//top_P.setPreferredSize(new Dimension(Develop.SCREEN_WIDTH - 100,((int) (Develop.SCREEN_HEIGHT*topRatio)) - 5));
     		//low_P.setPreferredSize(new Dimension(Develop.SCREEN_WIDTH - 100,((int) (Develop.SCREEN_HEIGHT*lowRatio)) - 5));
 

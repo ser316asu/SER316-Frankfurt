@@ -5,9 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 public class TaskPanel extends JPanel
 {
-    public static final Color TASKCOLOR = new Color(246, 249, 17);
-    public static final Color TASKBORDER = new Color(246, 249, 17);
-
 	private int height, width;
     public TaskPanel()
     {
@@ -35,10 +32,9 @@ public class TaskPanel extends JPanel
     	}
     	public void editComponents()
     	{
-            this.setBorder(BorderFactory.createLineBorder(TaskPanel.TASKCOLOR));
-            this.setBackground(TaskPanel.TASKCOLOR);
+            this.setBorder(BorderFactory.createLineBorder(Color.black));
             this.setPreferredSize(new Dimension(width,height));
-            
+            this.setBackground(Color.gray);
     	}
     	public void addActionListeners()
     	{

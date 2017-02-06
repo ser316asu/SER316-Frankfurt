@@ -1,4 +1,5 @@
 import java.util.*;
+import java.text.*;
 
 public class TaskCard{
 	private int estimatedLOC;
@@ -14,6 +15,7 @@ public class TaskCard{
 	final static int BEHIND_SCHED = -1;
 	final static int ON_TIME = 0;
 	private int scheduleStatus;
+	private NumberFormat decimalFormat;
 
 	public TaskCard(){
 		estimatedLOC = 0;
@@ -26,6 +28,7 @@ public class TaskCard{
 		startDate = null;
 		endDate = null;
 		scheduleStatus = ON_TIME;
+		decimalFormat = new DecimalFormat("#0.0");
 	}
 
 	/**
@@ -39,7 +42,7 @@ public class TaskCard{
 
 		result = locLeft / getLocPerHour();
 		
-		return result;
+		return Double.parseDouble(decimalFormat.format(result));
 	}
 
 	/**
@@ -74,16 +77,16 @@ public class TaskCard{
 		return taskName;
 	}
 	public double getActualTime(){
-		return actualTime;
+		return Double.parseDouble(decimalFormat.format(actualTime));
 	}
 	public double getEstimatedTime(){
-		return estimatedTime;
+		return Double.parseDouble(decimalFormat.format(estimatedTime));
 	}
 	public double getLocPerHour(){
-		return actualLOC / actualTime;
+		return Double.parseDouble(decimalFormat.format(actualLOC / actualTime));
 	}
 	public double getEstimatedLOCPH(){
-		return estimatedLOC / estimatedTime;
+		return Double.parseDouble(decimalFormat.format(estimatedLOC / estimatedTime));
 	}
 	public Date getStartDate(){
 		return startDate;
