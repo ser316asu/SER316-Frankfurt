@@ -1,15 +1,20 @@
 import java.util.*;
 import java.text.*;
 
+
 public class MAIN
 {
 	public static Develop d;
 	public static TaskCard task;
+    //public static Hashtable<String,TaskCard> tasks;
    
     public static void main(String[] args)
     {
     	task = new TaskCard();
+
+
     	MAIN.createTestCard(task);
+
     	d = new Develop(task);
     }
 
