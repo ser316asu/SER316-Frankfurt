@@ -115,8 +115,8 @@ public class TopHomePanel extends JPanel
         	actualTime = new JLabel("Actual Time(hrs): " + task.getActualTime());
         	locPerHour = new JLabel("Actual LOC/h: " + task.getLocPerHour());
         	estimatedLOCPH = new JLabel("Estimated LOC/h: " + task.getEstimatedLOCPH());
-        	startDate = new JLabel("Start Date: " + task.getStartDate().toString());
-        	endDate = new JLabel("End Date: " + task.getEndDate().toString());
+        	startDate = new JLabel("Start Date: " + task.formatDate(task.getStartDate()));
+        	endDate = new JLabel("End Date: " + task.formatDate(task.getEndDate()));
         	scheduleStatus = new JLabel("Schedule Status: " + task.getScheduleStatus());
         	taskName = new JLabel("Task Name: " + task.getTaskName());
     	}
@@ -141,24 +141,6 @@ public class TopHomePanel extends JPanel
    		startButton.setActionCommand("start");
    		pauseButton.setActionCommand("pause");
            
-        if(currentTask != null){
-			timerLabel = new JLabel();
-			estimatedLOC = new JLabel("Estimated LOC: " + Integer.toString(currentTask.getEstimatedLOC()));
-			actualLOC = new JLabel("Actual LOC: " + Integer.toString(currentTask.getActualLOC()));
-			estimatedTime = new JLabel("Estimated Time(hrs): " + Double.toString(currentTask.getEstimatedTime()));
-			actualTime = new JLabel("Actual Time(hrs): " + Double.toString(currentTask.getActualTime()));
-			locPerHour = new JLabel("Actual LOC/h: " + Double.toString(currentTask.getLocPerHour()));
-			estimatedLOCPH = new JLabel("Estimated LOC/h: " + Double.toString(currentTask.getEstimatedLOCPH()));
-			startDate = new JLabel("Start Date: " + currentTask.getStartDate());
-			endDate = new JLabel("End Date: " + currentTask.getEndDate());
-				
-			if(currentTask.getScheduleStatus() == TaskCard.ON_TIME)
-				scheduleStatus = new JLabel("Schedule Status: ON TIME");
-			else if(currentTask.getScheduleStatus() == TaskCard.BEHIND_SCHED)
-				scheduleStatus = new JLabel("Schedule Status: BEHIND");
-			else
-				scheduleStatus = new JLabel("Schedule Status: AHEAD");
-        }
     }
     public void addActionListeners(){
     	startButton.addActionListener(new ButtonListener());

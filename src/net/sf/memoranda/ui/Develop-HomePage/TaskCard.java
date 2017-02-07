@@ -16,7 +16,7 @@ public class TaskCard{
 	final static int ON_TIME = 0;
 	private int scheduleStatus;
 	private NumberFormat decimalFormat;
-
+	
 	public TaskCard(){
 		estimatedLOC = 0;
 		actualLOC = 0;
@@ -45,24 +45,21 @@ public class TaskCard{
 		return Double.parseDouble(decimalFormat.format(result));
 	}
 
-	/**
-	* This method returns the overall status of the task. 1 for ahead of schedule 0 for on time and -1 for behind schedule
-	* @return The status of the schedule*/
-	public int getScheduleStatus(){
-		int result = scheduleStatus;
+	public String getScheduleStatus(){
+		String result;
 		double scheduleDifference = getEstimatedLOCPH() - getLocPerHour();
 
 		// if the difference between the estimatedLOCPH and actual locPerHour is negative and less than -5 the programmer is behind
 		if(scheduleDifference < 0 && scheduleDifference < -5){
-			result = BEHIND_SCHED;
+			result = "BEHIND SCHEDULE";
 		}
 		// if the difference between the estimatedLOCPH and actual locPerHour is postive and greater than 5 than the programmer is ahead
 		else if(scheduleDifference > 0 && scheduleDifference > 5){
-			result = AHEAD_OF_SCHED;
+			result = "AHEAD OF SCHEDULE";
 		}
 		//otherwise the programmer/user is within 5loc/h and therefore is considered on time
 		else{
-			result = ON_TIME;
+			result = "ON TIME";
 		}
 		return result;
 	}
@@ -89,10 +86,15 @@ public class TaskCard{
 		return Double.parseDouble(decimalFormat.format(estimatedLOC / estimatedTime));
 	}
 	public Date getStartDate(){
+		
 		return startDate;
 	}
 	public Date getEndDate(){
 		return endDate;
+	}
+	public String formatDate(Date date){
+		return new SimpleDateFormat("E MM-dd-yyyy").format(date);
+		 //Integer.toString(date.getMonth()) + "/" + Integer.toString(date.getDay()) + "/" + Integer.toString(date.getYear());
 	}
 
 	public void setEstimatedLOC(int loc){
@@ -115,5 +117,22 @@ public class TaskCard{
 	}
 	public void setEndDate(Date date){
 		endDate = date;
+	}
+	public void setScheduleStatus(){
+		
+		double scheduleDifference = getEstimatedLOCPH() - getLocPerHour();
+
+		// if the difference between the estimatedLOCPH and actual locPerHour is negative and less than -5 the programmer is behind
+		if(scheduleDifference < 0 && scheduleDifference < -5){
+			scheduleStatus = BEHIND_SCHED;
+		}
+		// if the difference between the estimatedLOCPH and actual locPerHour is postive and greater than 5 than the programmer is ahead
+		else if(scheduleDifference > 0 && scheduleDifference > 5){
+			scheduleStatus = AHEAD_OF_SCHED;
+		}
+		//otherwise the programmer/user is within 5loc/h and therefore is considered on time
+		else{
+			scheduleStatus = ON_TIME;
+		}
 	}
 }
