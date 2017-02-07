@@ -3,8 +3,11 @@ Joshua Becker
 **/
 import javax.swing.*;
 import java.awt.Dimension;
+import java.awt.Color;
 public class HomePanel extends JPanel
 {
+    public static final Color BACKGROUND = new Color(113, 114, 106);
+
 	private TopHomePanel top_P;
 	private LowerHomePanel low_P;
 	private final double topRatio = .4;
@@ -35,7 +38,7 @@ public class HomePanel extends JPanel
     	}
     	public void editComponents()
     	{
-
+            this.setBackground(HomePanel.BACKGROUND);
     		//top_P.setPreferredSize(new Dimension(Develop.SCREEN_WIDTH - 100,((int) (Develop.SCREEN_HEIGHT*topRatio)) - 5));
     		//low_P.setPreferredSize(new Dimension(Develop.SCREEN_WIDTH - 100,((int) (Develop.SCREEN_HEIGHT*lowRatio)) - 5));
 
