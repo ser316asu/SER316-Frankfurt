@@ -9,6 +9,7 @@ public class Timer implements Runnable{
 	private long currentTimeMs;
 	private long previousTimeMs;
 	private long deltaTime;
+
 	
 
 	public Timer(JLabel label){
@@ -20,24 +21,26 @@ public class Timer implements Runnable{
 
 	}
 	public void run(){
-		previousTimeMs = System.currentTimeMillis();
-		int i = 0;
-		while(true){
-			currentTimeMs = System.currentTimeMillis();
-			
-			deltaTime = currentTimeMs - previousTimeMs;
-			if(i == 0){
-				System.out.println(deltaTime);
-				i++;
+		
+		synchronized(this){
+			previousTimeMs = System.currentTimeMillis();
+			int i = 0;
+			while(true){
+				currentTimeMs = System.currentTimeMillis();
+				
+				deltaTime = currentTimeMs - previousTimeMs;
+				if(i == 0){
+					System.out.println(deltaTime);
+					i++;
+				}
+				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+
+				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+				Date result = new Date(deltaTime);
+
+				label.setText(sdf.format(result));
 			}
-			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-
-			sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-			Date result = new Date(deltaTime);
-
-			label.setText(sdf.format(result));
-
 		}
 	}
 

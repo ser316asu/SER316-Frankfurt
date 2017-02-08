@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class StatusBarPanel extends JPanel{
+public class StatusBarPanel extends JPanel implements Styling{
 	private TopInnerPanel parent;
 	private TaskCard task;
 	private Dimension dimension;
@@ -18,18 +18,25 @@ public class StatusBarPanel extends JPanel{
 
 		this.setLayout(layout);
 		
-		this.setSize();
+		setSize();
 
-		this.setBorder(BorderFactory.createLineBorder(Color.cyan));
+		style();
 	}
 
 	public void setSize(){
 		Dimension parentDimension = parent.getDimension();
 		int width =(int) (parentDimension.getWidth() * WIDTH_RATIO);
 		int height = (int) (parentDimension.getHeight() * HEIGHT_RATIO);
+		height += 5;
 
 		dimension = new Dimension(width,height);
 		//this.setMaximumSize(dimension);
-		this.setPreferredSize(dimension); 
+		this.setMinimumSize(dimension); 
+	}
+
+	public void style(){
+		this.setBackground(Styling.BACKGROUND_COLOR);
+		//this.setForeground(Styling.FOREGROUND_COLOR);
+		this.setBorder(BorderFactory.createLineBorder(Color.black));
 	}
 }

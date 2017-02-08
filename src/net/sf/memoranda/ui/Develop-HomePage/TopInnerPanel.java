@@ -1,17 +1,20 @@
 import javax.swing.*;
 import java.awt.*; 
 import java.awt.event.*;
-public class TopInnerPanel extends JPanel{
+
+public class TopInnerPanel extends JPanel implements Styling{
 	private TaskCard task;
 	private TopHomePanel parent;
 	private JPanel child1,child2;
 	private Dimension dimension;
 	private LayoutManager layout;
+	private static int panelCount = 0;
 	
 	public TopInnerPanel(TopHomePanel parent,TaskCard task){
 		this.parent = parent;
 		this.task = task;
-		this.setBorder(BorderFactory.createLineBorder(Color.red));
+		style();
+		panelCount++;
 	}
 
 	public void giveChildren(JPanel child1,JPanel child2){
@@ -21,10 +24,12 @@ public class TopInnerPanel extends JPanel{
 
 	public void setSize(double widthRatio,double heightRatio){
 		Dimension parentDimension = parent.getDimension();
-		int width = (int) ( (double) parentDimension.getWidth() * widthRatio );
-		int height = (int) ( (double) parentDimension.getHeight() );
+		int width = (int) (( (double) parentDimension.getWidth() * widthRatio ) - 3);
+		int height = (int) (( (double) parentDimension.getHeight() ) - 2);
 		dimension = new Dimension(width,height);
+		this.setMinimumSize(dimension);
 		this.setPreferredSize(dimension);
+		this.setMaximumSize(dimension);
 	}
 
 	public int setPanelLayout(LayoutManager layout){
@@ -41,6 +46,7 @@ public class TopInnerPanel extends JPanel{
 	public Dimension getDimension(){
 		return dimension;
 	}
+
 	public int addChildren(){
 		int err = 1;
 		int success = 0;
@@ -54,6 +60,11 @@ public class TopInnerPanel extends JPanel{
 			return err;
 	}
 
-
-	
+	public void style(){
+		this.setBackground(Styling.BACKGROUND_COLOR);
+		//this.setForeground(Styling.FOREGROUND_COLOR);
+		if(panelCount == 0){
+			this.setBorder(BorderFactory.createLineBorder(Color.black));
+		}
+	}	
 }

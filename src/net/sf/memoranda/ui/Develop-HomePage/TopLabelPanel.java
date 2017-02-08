@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class TopLabelPanel extends JPanel{
+public class TopLabelPanel extends JPanel implements Styling{
 	private TaskCard task;
 	private TopInnerPanel parent;
 	private LayoutManager layout;
@@ -21,13 +21,11 @@ public class TopLabelPanel extends JPanel{
     	setSize();
     	createLabels();
     	this.setLayout(layout);
-    	if(location == TopHomePanel.LEFT_LABEL_PANEL)
-    		this.setBorder(BorderFactory.createLineBorder(Color.black));
-    	else
-    		this.setBorder(BorderFactory.createLineBorder(Color.yellow));
     	alignLabels();
     	addLabels();
+        style();
     }
+
     public void createLabels(){
     	if(location == TopHomePanel.LEFT_LABEL_PANEL){
     		labels[0] = new JLabel("Task Name: " + task.getTaskName());
@@ -37,7 +35,7 @@ public class TopLabelPanel extends JPanel{
         	labels[4] = new JLabel("Actual Time(hrs): " + task.getActualTime());
       	}
     	else if(location == TopHomePanel.RIGHT_LABEL_PANEL){
-    	    labels[0] = new JLabel("Schedule Status: " + task.getScheduleStatus());
+    	    labels[0] = new JLabel("Schedule Status: " + task.scheduleStatusToString());
     	    labels[1] = new JLabel("Actual LOC/h: " + task.getLocPerHour());
         	labels[2] = new JLabel("Estimated LOC/h: " + task.getEstimatedLOCPH());
         	labels[3] = new JLabel("Start Date: " + task.formatDate(task.getStartDate()));
@@ -57,13 +55,22 @@ public class TopLabelPanel extends JPanel{
     	int width = (int) (parentDimension.getWidth() * WIDTH_RATIO);
     	int height = (int) (parentDimension.getHeight() * HEIGHT_RATIO);
     	dimension = new Dimension(width,height);
-    	this.setMaximumSize(dimension);
+    	this.setMinimumSize(dimension);
     }
 
     public void addLabels(){
     	for(int i = 0; i < LABEL_COUNT; i++){
-    		this.add(labels[i]);
+            this.add(labels[i]);
     	}
+    }
+
+    public void style(){
+        this.setBackground(Styling.BACKGROUND_COLOR);
+        //this.setForeground(Styling.FOREGROUND_COLOR);
+        for(int i = 0; i < LABEL_COUNT; i++){
+            labels[i].setFont(Styling.FONT);
+            labels[i].setForeground(Styling.FOREGROUND_COLOR);
+        }
     }
 	
 }
