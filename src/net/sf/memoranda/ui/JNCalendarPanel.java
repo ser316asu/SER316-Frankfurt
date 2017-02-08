@@ -159,7 +159,7 @@ public class JNCalendarPanel extends JPanel {
     navigationBar.setFloatable(false);
     
     // Month / Year Label Creation
-    monthAndYearLabel.setText("Feb 2017"); // TODO set to current month / year of "today"
+    monthAndYearLabel.setText(Local.getMonthName(_date.getMonth()) + " " + _date.getYear());
     
     // Creation of Buttons
     todayButton.setAction(todayAction);
@@ -361,6 +361,7 @@ public class JNCalendarPanel extends JPanel {
     jnCalendar.set(_date);
     monthsCB.setSelectedIndex(new Integer(_date.getMonth()));
     yearSpin.setValue(new Integer(_date.getYear()));
+    monthAndYearLabel.setText(Local.getMonthName(_date.getMonth()) + " " + _date.getYear());
     ignoreChange = false;
   }
 
