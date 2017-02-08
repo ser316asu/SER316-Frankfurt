@@ -44,6 +44,9 @@ public class TaskCard{
 		
 		return Double.parseDouble(decimalFormat.format(result));
 	}
+	public double calculateProgress(){
+		return actualLOC / estimatedLOC;
+	}
 
 	public String scheduleStatusToString(){
 		String result;

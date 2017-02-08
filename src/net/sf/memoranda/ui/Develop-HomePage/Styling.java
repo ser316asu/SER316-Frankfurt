@@ -12,5 +12,6 @@ public interface Styling{
 	
 	static final Font FONT = new Font("Arial",Font.BOLD,20);
 	static final Font TIMER_FONT = new Font("Arial",Font.BOLD,60);
+	
 	public void style(); 
 }

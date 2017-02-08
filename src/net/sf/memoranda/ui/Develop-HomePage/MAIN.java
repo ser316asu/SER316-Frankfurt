@@ -25,8 +25,8 @@ public class MAIN
     	task.setActualLOC(256);
     	task.setActualTime(4.5);
     	task.setTaskName("test");
-    	task.setStartDate(new Date());
-    	task.setEndDate(new Date());
+    	task.setStartDate(new Date("02/02/2017"));
+    	task.setEndDate(new Date("02/20/2017"));
 
     }
 }
