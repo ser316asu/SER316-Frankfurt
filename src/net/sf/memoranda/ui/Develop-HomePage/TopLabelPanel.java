@@ -16,8 +16,8 @@ public class TopLabelPanel extends JPanel implements Styling{
     	this.parent = parent;
     	this.task = task;
     	this.location = location;
-    	this.labels = new JLabel[LABEL_COUNT];
-    	layout = new GridLayout(LABEL_COUNT,0);
+    	this.labels = new JLabel[LABEL_COUNT*2];
+    	layout = new GridLayout(LABEL_COUNT,2);
     	setSize();
     	createLabels();
     	this.setLayout(layout);
@@ -28,25 +28,35 @@ public class TopLabelPanel extends JPanel implements Styling{
 
     public void createLabels(){
     	if(location == TopHomePanel.LEFT_LABEL_PANEL){
-    		labels[0] = new JLabel("Task Name: " + task.getTaskName());
-        	labels[1] = new JLabel("Estimated LOC: " + task.getEstimatedLOC());
-        	labels[2] = new JLabel("Actual LOC: " + task.getActualLOC());
-        	labels[3] = new JLabel("Estimated Time(hrs): " + task.getEstimatedTime());
-        	labels[4] = new JLabel("Actual Time(hrs): " + task.getActualTime());
+    		labels[0] = new JLabel("Task Name ");
+            labels[1] = new JLabel(task.getTaskName()+ "");
+        	labels[2] = new JLabel("Estimated LOC: ");
+            labels[3] = new JLabel(task.getEstimatedLOC()+ "");
+        	labels[4] = new JLabel("Actual LOC: ");
+            labels[5] = new JLabel(task.getActualLOC()+ "");
+        	labels[6] = new JLabel("Estimated Time(hrs): ");
+            labels[7] = new JLabel(task.getEstimatedTime()+ "");
+        	labels[8] = new JLabel("Actual Time(hrs): ");
+        	labels[9] = new JLabel(task.getActualTime()+ "");
       	}
     	else if(location == TopHomePanel.RIGHT_LABEL_PANEL){
-    	    labels[0] = new JLabel("Schedule Status: " + task.scheduleStatusToString());
-    	    labels[1] = new JLabel("Actual LOC/h: " + task.getLocPerHour());
-        	labels[2] = new JLabel("Estimated LOC/h: " + task.getEstimatedLOCPH());
-        	labels[3] = new JLabel("Start Date: " + task.formatDate(task.getStartDate()));
-        	labels[4] = new JLabel("End Date: " + task.formatDate(task.getEndDate()));
+    		labels[0] = new JLabel("Schedule Status: ");
+            labels[1] = new JLabel(task.scheduleStatusToString());
+        	labels[2] = new JLabel("Actual LOC/h: ");
+            labels[3] = new JLabel(task.getLocPerHour() + "");
+        	labels[4] = new JLabel("Estimated LOC/h: ");
+            labels[5] = new JLabel(task.getEstimatedLOCPH()+ "");
+        	labels[6] = new JLabel("Start Date: ");
+            labels[7] = new JLabel(task.formatDate(task.getStartDate())+ "");
+        	labels[8] = new JLabel("End Date: ");
+        	labels[9] = new JLabel(task.formatDate(task.getEndDate())+ "");
         }
     }
 
     public void alignLabels(){
-    	for(int i = 0; i < LABEL_COUNT; i++){
-    		labels[i].setVerticalAlignment(JLabel.CENTER);
-    		labels[i].setHorizontalAlignment(JLabel.CENTER);
+    	for(int i = 0; i < LABEL_COUNT*2; i++){
+    		labels[i].setAlignmentX(Component.LEFT_ALIGNMENT);
+    		//labels[i].setAlignmentX(Component.LEFT);
     	}
     }
 	
@@ -59,7 +69,7 @@ public class TopLabelPanel extends JPanel implements Styling{
     }
 
     public void addLabels(){
-    	for(int i = 0; i < LABEL_COUNT; i++){
+    	for(int i = 0; i < LABEL_COUNT*2; i++){
             this.add(labels[i]);
     	}
     }
@@ -67,8 +77,9 @@ public class TopLabelPanel extends JPanel implements Styling{
     public void style(){
         this.setBackground(Styling.BACKGROUND_COLOR);
         //this.setForeground(Styling.FOREGROUND_COLOR);
-        for(int i = 0; i < LABEL_COUNT; i++){
-            labels[i].setFont(Styling.FONT);
+        for(int i = 0; i < LABEL_COUNT*2; i++){
+            //labels[i].setFont(Styling.FONT);
+            labels[i].setFont(new Font(labels[i].getFont().getName(), Font.PLAIN, 20));
             labels[i].setForeground(Styling.FOREGROUND_COLOR);
         }
     }
