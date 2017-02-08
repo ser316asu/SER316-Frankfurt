@@ -17,7 +17,8 @@ public class TopHomePanel extends JPanel implements Styling
     private final String ONTIME = "On Time";
     private TopInnerPanel leftChild,rightChild;
     private TopLabelPanel leftLabels,rightLabels;
-    private StatusBarPanel statusBarTop,statusBarBottom;
+    private StatusBarPanel statusBarTop;
+    private TimerPanel timerPanel;
     private TaskCard task;
     private Dimension dimension;
     private LayoutManager layout;
@@ -29,8 +30,6 @@ public class TopHomePanel extends JPanel implements Styling
     {
         this.task = task;
         layout = new FlowLayout(FlowLayout.LEFT,1,1);
-        verticalSeparator = new JSeparator(JSeparator.VERTICAL);
-        horizontalSeparator = new JSeparator(JSeparator.HORIZONTAL);
         setSize();
         this.setLayout(layout);
         createChildPanels();
@@ -53,7 +52,7 @@ public class TopHomePanel extends JPanel implements Styling
         rightLabels = new TopLabelPanel(rightChild,task,TopHomePanel.RIGHT_LABEL_PANEL);
 
         statusBarTop = new StatusBarPanel(rightChild,task);
-        statusBarBottom = new StatusBarPanel(rightChild,task);
+        timerPanel = new TimerPanel(rightChild,task);
     }
 
     public void addPanels(){
@@ -63,7 +62,7 @@ public class TopHomePanel extends JPanel implements Styling
         rightChild.add(statusBarTop);
         //rightChild.add(horizontalSeparator);
         //rightChild.add(new JSeparator(SwingConstants.HORIZONTAL));
-        rightChild.add(statusBarBottom);
+        rightChild.add(timerPanel);
         //rightChild.add(horizontalSeparator);
 
         this.add(leftChild);
@@ -82,16 +81,6 @@ public class TopHomePanel extends JPanel implements Styling
 
     public void style(){
         this.setBackground(Styling.BACKGROUND_COLOR);
-
-        verticalSeparator.setBackground(Styling.BORDER_COLOR);
-        verticalSeparator.setForeground(Styling.BORDER_COLOR);
-
-        horizontalSeparator.setMinimumSize(new Dimension(500,50));
-        horizontalSeparator.setPreferredSize(new Dimension(100,50));
-        
-        horizontalSeparator.setForeground(Styling.BORDER_COLOR);
-        horizontalSeparator.setBackground(Styling.BORDER_COLOR);
-
         //this.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));
     }
 
