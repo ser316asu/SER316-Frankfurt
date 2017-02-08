@@ -9,7 +9,7 @@ public class TaskPanel extends JPanel
 {
     private Dimension dimension;
     private TaskCard task;
-    private JLabel name_L;
+    private JLabel name_L, schStat_L, startDate_L, header_L, footer_L;
     public TaskPanel()
     {
         this.dimension = new Dimension(200,400);
@@ -18,7 +18,7 @@ public class TaskPanel extends JPanel
     	addActionListeners();
     	addComponents();
     }
-        public TaskPanel(int height,int width, TaskCard card)
+        public TaskPanel(int width,int height, TaskCard card)
     {
         this.dimension = new Dimension(width, height);
         this.task = card;
@@ -32,13 +32,45 @@ public class TaskPanel extends JPanel
     	public void createComponents()
     	{
             name_L = new JLabel(this.task.getTaskName());
+            startDate_L = new JLabel();
+            schStat_L = new JLabel();
+            header_L = new JLabel();
+            footer_L = new JLabel();
     	}
     	public void editComponents()
     	{
-            this.setBorder(BorderFactory.createLineBorder(Color.black));
+            this.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
             this.setPreferredSize(this.dimension);
-            this.setBackground(Color.gray);
+            this.setBackground(new Color(250, 255, 127));
             this.setFont(new Font("Courier New", Font.ROMAN_BASELINE, 12));
+            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            
+            header_L.setLayout(new BoxLayout(header_L, BoxLayout.Y_AXIS));
+            footer_L.setLayout(new BoxLayout(footer_L, BoxLayout.Y_AXIS));
+            
+            header_L.setPreferredSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.31)));
+            footer_L.setPreferredSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.69)));
+            header_L.setMinimumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.31)));
+            footer_L.setMinimumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.69)));
+            header_L.setMaximumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.31)));
+            footer_L.setMaximumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.69)));
+            
+            header_L.setBorder(BorderFactory.createLineBorder(new Color(248, 255, 63)));
+            footer_L.setBorder(BorderFactory.createLineBorder(new Color(248, 255, 63)));
+            
+
+            
+            String schStat = "Behind Schedule";
+            if(this.task.getScheduleStatus() == TaskCard.ON_TIME)
+            {
+                schStat = "On Time";
+            }else if(this.task.getScheduleStatus() == TaskCard.AHEAD_OF_SCHED)
+            {
+                schStat = "Ahead Of Schedule";
+            }
+            schStat_L.setText(schStat);
+            startDate_L.setText(this.task.formatDate(this.task.getEndDate()));
+            
     	}
     	public void addActionListeners()
     	{
@@ -46,13 +78,55 @@ public class TaskPanel extends JPanel
     	}
     	public void addComponents()
     	{
-            this.add(name_L);
+            addSpacing(header_L);
+            header_L.add(new JLabel("Task Name"));
+            header_L.add(name_L);
+            addSpacing(header_L);
+            
+            addSpacing(footer_L);
+            footer_L.add(new JLabel("Schedule State"));
+            footer_L.add(schStat_L);
+            addSpacing(footer_L);
+            footer_L.add(new JLabel("Start Date"));
+            footer_L.add(startDate_L);
+            addSpacing(footer_L);
+            
+            centerLabels(header_L);
+            centerLabels(footer_L);
+            
+            this.add(header_L);
+            this.add(footer_L);
+            centerLabels(this);
+
     	}
+        private void centerLabels(JLabel label)
+        {
+            for(Component tmp : label.getComponents())
+            {
+                ((JLabel) tmp).setAlignmentX(Component.CENTER_ALIGNMENT);
+            }
+        }
+        private void centerLabels(JPanel panel)
+        {
+            for(Component tmp : panel.getComponents())
+            {
+                ((JLabel) tmp).setAlignmentX(Component.CENTER_ALIGNMENT);
+            }
+        }
+        private void addSpacing(JLabel label)
+        {
+            label.add(new JLabel("\n"));
+        }
+        private void addSpacing(JPanel panel)
+        {
+            panel.add(new JLabel("\n"));
+        }
         public void resetSize()
         {
             this.setPreferredSize(this.dimension);
             this.revalidate();
         }
+
         public int getHeight()
         {
             return this.dimension.height;
