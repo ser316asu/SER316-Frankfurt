@@ -34,6 +34,7 @@ public class WorkPanel extends JPanel {
 	public JButton notesB = new JButton();
 	public DailyItemsPanel dailyItemsPanel = new DailyItemsPanel(this);
 	public ResourcesPanel filesPanel = new ResourcesPanel();
+	public CalendarPanel calendarPanel = new CalendarPanel();
 	public JButton agendaB = new JButton();
 	public JButton tasksB = new JButton();
 	public JButton eventsB = new JButton();
@@ -201,6 +202,7 @@ public class WorkPanel extends JPanel {
 		this.add(panel, BorderLayout.CENTER);
 		panel.add(dailyItemsPanel, "DAILYITEMS");
 		panel.add(filesPanel, "FILES");
+		panel.add(calendarPanel, "CALENDAR");
 		toolBar.add(agendaB, null);
 		toolBar.add(eventsB, null);
 		toolBar.add(tasksB, null);
@@ -300,8 +302,8 @@ public class WorkPanel extends JPanel {
 	
 	
 	public void calendarB_actionPerformed(ActionEvent e) {
-		cardLayout1.show(panel, "DAILYITEMS");
-		dailyItemsPanel.selectPanel("CALENDAR");
+		cardLayout1.show(panel, "CALENDAR");
+		//dailyItemsPanel.selectPanel("CALENDAR");
 		setCurrentButton(calendarB);
 		Context.put("CURRENT_PANEL", "CALENDAR");
 	}
