@@ -289,7 +289,7 @@ public class JNCalendarPanel extends JPanel {
     // Putting Large Pieces together for calendar
     this.add(navigationBar, BorderLayout.NORTH);
     this.add(jnCalendarPanel,  BorderLayout.CENTER);
-    this.add(mntyPanel,  BorderLayout.SOUTH);
+//    this.add(mntyPanel,  BorderLayout.SOUTH); Temp Removal of month and year scroll pickers
     
     jnCalendar.getTableHeader().setPreferredSize(new Dimension(200, 15));
     jnCalendarPanel.add(jnCalendar.getTableHeader(), BorderLayout.NORTH);
@@ -404,11 +404,14 @@ public class JNCalendarPanel extends JPanel {
   // TODO search button backend logic
   void searchButton_actionPerformed(ActionEvent e) {
 	  System.out.println("Called to search tasks");
+	  TaskSearchPanel searchPanel = new TaskSearchPanel();
+	  this.add(searchPanel,  BorderLayout.SOUTH);
+	  refreshView();
   }
   
-  // TODO add task button backend logic
   void addTaskButton_actionPerformed(ActionEvent e) {
 	  System.out.println("Called to add a task");
+	  NewTaskWindow taskCreationWindow = new NewTaskWindow(); // Creates task creation window
   }
 
 
