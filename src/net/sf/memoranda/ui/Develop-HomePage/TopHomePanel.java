@@ -83,16 +83,16 @@ public class TopHomePanel extends JPanel implements Styling
     public void style(){
         this.setBackground(Styling.BACKGROUND_COLOR);
 
-        verticalSeparator.setBackground(Color.black);
-        verticalSeparator.setForeground(Color.black);
+        verticalSeparator.setBackground(Styling.BORDER_COLOR);
+        verticalSeparator.setForeground(Styling.BORDER_COLOR);
 
         horizontalSeparator.setMinimumSize(new Dimension(500,50));
         horizontalSeparator.setPreferredSize(new Dimension(100,50));
         
-        horizontalSeparator.setForeground(Color.black);
-        horizontalSeparator.setBackground(Color.black);
+        horizontalSeparator.setForeground(Styling.BORDER_COLOR);
+        horizontalSeparator.setBackground(Styling.BORDER_COLOR);
 
-        //this.setBorder(BorderFactory.createLineBorder(Color.black));
+        //this.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));
     }
 
 

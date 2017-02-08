@@ -9,7 +9,7 @@ public class TaskPanel extends JPanel implements Styling
 {
     private Dimension dimension;
     private TaskCard task;
-    private JLabel name_L, schStat_L, startDate_L, header_L, footer_L;
+    private JLabel name_L, schStat_L, startDate_L, header_L, footer_L,labelName,labelSched,labelStart;
     public TaskPanel()
     {
         this.dimension = new Dimension(200,400);
@@ -37,6 +37,9 @@ public class TaskPanel extends JPanel implements Styling
             schStat_L = new JLabel();
             header_L = new JLabel();
             footer_L = new JLabel();
+            labelName = new JLabel();
+            labelSched = new JLabel();
+            labelStart = new JLabel();
     	}
         public void style()
         {
@@ -45,6 +48,24 @@ public class TaskPanel extends JPanel implements Styling
             this.setBorder(BorderFactory.createLineBorder(Styling.TASK_PANEL_COLOR));
             header_L.setBorder(BorderFactory.createLineBorder(Styling.TASK_PANEL_COLOR));
             footer_L.setBorder(BorderFactory.createLineBorder(Styling.TASK_PANEL_COLOR));
+            
+            name_L.setForeground(Styling.TASK_PANEL_TEXT_COLOR);
+            startDate_L.setForeground(Styling.TASK_PANEL_TEXT_COLOR);
+            schStat_L.setForeground(Styling.TASK_PANEL_TEXT_COLOR);
+            header_L.setForeground(Styling.TASK_PANEL_TEXT_COLOR);
+            footer_L.setForeground(Styling.TASK_PANEL_TEXT_COLOR);
+            labelName.setForeground(Styling.TASK_PANEL_TEXT_COLOR);
+            labelSched.setForeground(Styling.TASK_PANEL_TEXT_COLOR);
+            labelStart.setForeground(Styling.TASK_PANEL_TEXT_COLOR);
+
+            labelName.setFont(Styling.FONT);
+            labelSched.setFont(Styling.FONT);
+            labelStart.setFont(Styling.FONT);
+            name_L.setFont(Styling.FONT);
+            startDate_L.setFont(Styling.FONT);
+            schStat_L.setFont(Styling.FONT);
+            header_L.setFont(Styling.FONT);
+            footer_L.setFont(Styling.FONT);
         }
     	public void editComponents()
     	{
@@ -80,15 +101,18 @@ public class TaskPanel extends JPanel implements Styling
     	public void addComponents()
     	{
             addSpacing(header_L);
-            header_L.add(new JLabel("Task Name"));
+            labelName.setText("Task Name");
+            header_L.add(labelName);
             header_L.add(name_L);
             addSpacing(header_L);
             
             addSpacing(footer_L);
-            footer_L.add(new JLabel("Schedule State"));
+            labelSched.setText("Schedule State");
+            footer_L.add(labelSched);
             footer_L.add(schStat_L);
             addSpacing(footer_L);
-            footer_L.add(new JLabel("Start Date"));
+            labelStart.setText("Start Date");
+            footer_L.add(labelStart);
             footer_L.add(startDate_L);
             addSpacing(footer_L);
             

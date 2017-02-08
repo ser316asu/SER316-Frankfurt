@@ -42,8 +42,8 @@ public class LowerHomePanel extends JPanel implements Styling
     	}
     	public void editComponents()
     	{
-            this.setBorder(BorderFactory.createLineBorder(Color.black));
-            tasks_P.setBorder(BorderFactory.createLineBorder(Color.black));            
+            this.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));
+            tasks_P.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));            
             
             this.setLayout(new OverlayLayout(this));
             tasks_P.setLayout(new FlowLayout(FlowLayout.LEFT,5,40));

@@ -37,6 +37,6 @@ public class StatusBarPanel extends JPanel implements Styling{
 	public void style(){
 		this.setBackground(Styling.BACKGROUND_COLOR);
 		//this.setForeground(Styling.FOREGROUND_COLOR);
-		this.setBorder(BorderFactory.createLineBorder(Color.black));
+		this.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));
 	}
 }

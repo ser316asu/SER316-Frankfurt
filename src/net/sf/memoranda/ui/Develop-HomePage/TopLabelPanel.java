@@ -76,11 +76,11 @@ public class TopLabelPanel extends JPanel implements Styling{
 
     public void style(){
         this.setBackground(Styling.BACKGROUND_COLOR);
-        //this.setForeground(Styling.FOREGROUND_COLOR);
+        //this.setForeground(Styling.LABEL_PANEL__COLOR);
         for(int i = 0; i < LABEL_COUNT*2; i++){
-            //labels[i].setFont(Styling.FONT);
-            labels[i].setFont(new Font(labels[i].getFont().getName(), Font.PLAIN, 20));
-            labels[i].setForeground(Styling.FOREGROUND_COLOR);
+            labels[i].setFont(Styling.FONT);
+            //labels[i].setFont(new Font(labels[i].getFont().getName(), Font.PLAIN, 20));
+            labels[i].setForeground(Styling.LABEL_PANEL_TEXT_COLOR);
         }
     }
 	
