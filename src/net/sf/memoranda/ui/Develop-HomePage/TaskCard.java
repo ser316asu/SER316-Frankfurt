@@ -45,7 +45,7 @@ public class TaskCard{
 		return Double.parseDouble(decimalFormat.format(result));
 	}
 
-	public String getScheduleStatus(){
+	public String scheduleStatusToString(){
 		String result;
 		double scheduleDifference = getEstimatedLOCPH() - getLocPerHour();
 
@@ -63,7 +63,9 @@ public class TaskCard{
 		}
 		return result;
 	}
-
+	public int getScheduleStatus(){
+		return scheduleStatus;
+	}
 	public int getEstimatedLOC(){
 		return estimatedLOC;
 	}
@@ -118,8 +120,7 @@ public class TaskCard{
 	public void setEndDate(Date date){
 		endDate = date;
 	}
-	public void setScheduleStatus(){
-		
+	public void setScheduleStatus(){		
 		double scheduleDifference = getEstimatedLOCPH() - getLocPerHour();
 
 		// if the difference between the estimatedLOCPH and actual locPerHour is negative and less than -5 the programmer is behind
