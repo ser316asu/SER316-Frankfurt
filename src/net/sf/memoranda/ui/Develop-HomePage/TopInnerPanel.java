@@ -62,7 +62,7 @@ public class TopInnerPanel extends JPanel implements Styling{
 
 	public void style(){
 		this.setBackground(Styling.BACKGROUND_COLOR);
-		//this.setForeground(Styling.FOREGROUND_COLOR);
+		//ths.setForeground(Styling.FOREGROUND_COLOR);
 		if(panelCount == 0){
 			this.setBorder(BorderFactory.createLineBorder(Color.black));
 		}

@@ -4,19 +4,15 @@
 import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Color;
-public class HomePanel extends JPanel
+public class HomePanel extends JPanel implements Styling
 {
-    public static final Color BACKGROUND = new Color(113, 114, 106);
-
-	private TopHomePanel top_P;
+    private TopHomePanel top_P;
 	private LowerHomePanel low_P;
 	private final double topRatio = .4;
 	private final double lowRatio = .6;
     private TaskCard task;
     public HomePanel()
     {
-    	//this.super();
-
     	createComponents();
     	editComponents();
     	addActionListeners();
@@ -27,6 +23,7 @@ public class HomePanel extends JPanel
         createComponents();
         editComponents();
         addActionListeners();
+        style();
         addComponents();
     }
 
@@ -38,10 +35,6 @@ public class HomePanel extends JPanel
     }
     public void editComponents()
     {
-           this.setBackground(HomePanel.BACKGROUND);
-    	//top_P.setPreferredSize(new Dimension(Develop.SCREEN_WIDTH - 100,((int) (Develop.SCREEN_HEIGHT*topRatio)) - 5));
-    	//low_P.setPreferredSize(new Dimension(Develop.SCREEN_WIDTH - 100,((int) (Develop.SCREEN_HEIGHT*lowRatio)) - 5));
-
     }
     public void addActionListeners()
     {
@@ -51,5 +44,10 @@ public class HomePanel extends JPanel
     {
     	this.add(top_P);
     	this.add(low_P);
+    }
+
+    public void style()
+    {
+        this.setBackground(Styling.BACKGROUND_COLOR);
     }
 }

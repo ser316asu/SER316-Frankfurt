@@ -5,7 +5,7 @@ Joshua Becker
 import javax.swing.*;
 import java.awt.*;
 
-public class TaskPanel extends JPanel
+public class TaskPanel extends JPanel implements Styling
 {
     private Dimension dimension;
     private TaskCard task;
@@ -25,6 +25,7 @@ public class TaskPanel extends JPanel
         createComponents();
         editComponents();
         addActionListeners();
+        style();
         addComponents();
     }
 
@@ -37,12 +38,17 @@ public class TaskPanel extends JPanel
             header_L = new JLabel();
             footer_L = new JLabel();
     	}
+        public void style()
+        {
+            this.setBackground(Styling.TASK_PANEL_COLOR);
+            this.setFont(Styling.FONT);
+            this.setBorder(BorderFactory.createLineBorder(Styling.TASK_PANEL_COLOR));
+            header_L.setBorder(BorderFactory.createLineBorder(Styling.TASK_PANEL_COLOR));
+            footer_L.setBorder(BorderFactory.createLineBorder(Styling.TASK_PANEL_COLOR));
+        }
     	public void editComponents()
     	{
-            this.setBorder(BorderFactory.createLineBorder(Color.YELLOW));
             this.setPreferredSize(this.dimension);
-            this.setBackground(new Color(250, 255, 127));
-            this.setFont(new Font("Courier New", Font.ROMAN_BASELINE, 12));
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             
             header_L.setLayout(new BoxLayout(header_L, BoxLayout.Y_AXIS));
@@ -55,12 +61,7 @@ public class TaskPanel extends JPanel
             header_L.setMaximumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.31)));
             footer_L.setMaximumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.69)));
             
-            header_L.setBorder(BorderFactory.createLineBorder(new Color(248, 255, 63)));
-            footer_L.setBorder(BorderFactory.createLineBorder(new Color(248, 255, 63)));
-            
-
-            
-            String schStat = "Behind Schedule";
+           String schStat = "Behind Schedule";
             if(this.task.getScheduleStatus() == TaskCard.ON_TIME)
             {
                 schStat = "On Time";

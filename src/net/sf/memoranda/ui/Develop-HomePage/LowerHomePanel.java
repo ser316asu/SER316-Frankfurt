@@ -8,7 +8,7 @@ import java.util.Hashtable;
 import java.util.Date;
 import java.awt.Insets;
 
-public class LowerHomePanel extends JPanel
+public class LowerHomePanel extends JPanel implements Styling
 {
     private Hashtable<String,TaskCard> tasks;
 	private final double lowRatio = .6;
@@ -25,6 +25,7 @@ public class LowerHomePanel extends JPanel
         this.dimension = new Dimension(Develop.SCREEN_WIDTH - 100,((int) (Develop.SCREEN_HEIGHT*lowRatio)) - 25);
         fillTasks();
     	createComponents();
+        style();
     	editComponents();
     	addActionListeners();
     	addComponents();
@@ -42,11 +43,7 @@ public class LowerHomePanel extends JPanel
     	public void editComponents()
     	{
             this.setBorder(BorderFactory.createLineBorder(Color.black));
-            tasks_P.setBorder(BorderFactory.createLineBorder(Color.black));
-            
-            this.setBackground(HomePanel.BACKGROUND);
-            sortTasks_CB.setBackground(HomePanel.BACKGROUND);
-            
+            tasks_P.setBorder(BorderFactory.createLineBorder(Color.black));            
             
             this.setLayout(new OverlayLayout(this));
             tasks_P.setLayout(new FlowLayout(FlowLayout.LEFT,5,40));
@@ -111,6 +108,10 @@ public class LowerHomePanel extends JPanel
                 this.tasks.put(tmpTask.getTaskName(), tmpTask);
             }
         }
+    public void style(){
+        this.setBackground(Styling.BACKGROUND_COLOR);
+        sortTasks_CB.setBackground(Styling.BACKGROUND_COLOR);
+    }
     /**Listeners
 	* Once an event occurs the program goes here
 	* and decides what to do with each event.
