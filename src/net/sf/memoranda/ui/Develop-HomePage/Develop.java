@@ -14,8 +14,9 @@ public class Develop extends JFrame
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();// geting size of screen
-		SCREEN_WIDTH = gd.getDisplayMode().getWidth();
-		SCREEN_HEIGHT = gd.getDisplayMode().getHeight();
+		Develop.SCREEN_WIDTH = gd.getDisplayMode().getWidth();
+		Develop.SCREEN_HEIGHT = gd.getDisplayMode().getHeight();
+        
 		HomePanel hp = new HomePanel();
 		hp.setPreferredSize(new Dimension(Develop.SCREEN_WIDTH,Develop.SCREEN_HEIGHT));
 		this.add(hp);
@@ -33,6 +34,7 @@ public class Develop extends JFrame
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();// geting size of screen
         SCREEN_WIDTH = gd.getDisplayMode().getWidth();
         SCREEN_HEIGHT = gd.getDisplayMode().getHeight();
+        System.out.println(Develop.SCREEN_WIDTH + " HELLO " +Develop.SCREEN_HEIGHT);
         HomePanel hp = new HomePanel(task);
         hp.setPreferredSize(new Dimension(Develop.SCREEN_WIDTH,Develop.SCREEN_HEIGHT));
         this.add(hp);

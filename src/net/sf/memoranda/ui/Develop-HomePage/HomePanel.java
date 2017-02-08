@@ -31,25 +31,25 @@ public class HomePanel extends JPanel
     }
 
 
-    	public void createComponents()
-    	{
-    		top_P = new TopHomePanel(task);
-    		low_P = new LowerHomePanel();
-    	}
-    	public void editComponents()
-    	{
-            this.setBackground(HomePanel.BACKGROUND);
-    		//top_P.setPreferredSize(new Dimension(Develop.SCREEN_WIDTH - 100,((int) (Develop.SCREEN_HEIGHT*topRatio)) - 5));
-    		//low_P.setPreferredSize(new Dimension(Develop.SCREEN_WIDTH - 100,((int) (Develop.SCREEN_HEIGHT*lowRatio)) - 5));
+    public void createComponents()
+    {
+    	top_P = new TopHomePanel(task);
+    	low_P = new LowerHomePanel();
+    }
+    public void editComponents()
+    {
+           this.setBackground(HomePanel.BACKGROUND);
+    	//top_P.setPreferredSize(new Dimension(Develop.SCREEN_WIDTH - 100,((int) (Develop.SCREEN_HEIGHT*topRatio)) - 5));
+    	//low_P.setPreferredSize(new Dimension(Develop.SCREEN_WIDTH - 100,((int) (Develop.SCREEN_HEIGHT*lowRatio)) - 5));
 
-    	}
-    	public void addActionListeners()
-    	{
+    }
+    public void addActionListeners()
+    {
 
-    	}
-    	public void addComponents()
-    	{
-    		this.add(top_P);
-    		this.add(low_P);
-    	}
+    }
+    public void addComponents()
+    {
+    	this.add(top_P);
+    	this.add(low_P);
+    }
 }
