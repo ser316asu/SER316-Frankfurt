@@ -6,7 +6,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Hashtable;
 import java.util.Date;
+import java.util.*;
 import java.awt.Insets;
+import java.util.Arrays;
 
 public class LowerHomePanel extends JPanel implements Styling
 {
@@ -15,14 +17,14 @@ public class LowerHomePanel extends JPanel implements Styling
     private JPanel tasks_P, addtasks_P, toolBar_P;
     private Dimension dimension;
     private JButton addTask_B;
-    private JComboBox sortTasks_CB;
+    private JComboBox<String> sortTasks_CB;
     private final String [] comboCommands;
 
     public LowerHomePanel()
     {
         tasks = new Hashtable<String,TaskCard>();
-        comboCommands = new String [] {"sort by", "end date", "name", "date created", "est LOC", "est hours", "priority"};
-        this.dimension = new Dimension(Develop.SCREEN_WIDTH - 100,((int) (Develop.SCREEN_HEIGHT*lowRatio)) - 25);
+        comboCommands = new String [] {"sort by", "start date", "name", "date created", "est LOC", "est hours", "priority"};
+        this.dimension = new Dimension(Develop.SCREEN_WIDTH -5,((int) (Develop.SCREEN_HEIGHT*lowRatio))-7);
         fillTasks();
     	createComponents();
         style();
@@ -38,15 +40,12 @@ public class LowerHomePanel extends JPanel implements Styling
             addTask_B = new JButton("+");
             addtasks_P = new JPanel();
             toolBar_P = new JPanel();
-            sortTasks_CB = new JComboBox(comboCommands);
+            sortTasks_CB = new JComboBox<String>(comboCommands);
     	}
     	public void editComponents()
-    	{
-            this.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));
-            tasks_P.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));            
-            
+    	{            
             this.setLayout(new OverlayLayout(this));
-            tasks_P.setLayout(new FlowLayout(FlowLayout.LEFT,5,40));
+            tasks_P.setLayout(new FlowLayout(FlowLayout.CENTER,10,35));
             toolBar_P.setLayout(new BorderLayout());
             addtasks_P.setLayout(new FlowLayout(FlowLayout.RIGHT));
             
@@ -70,12 +69,13 @@ public class LowerHomePanel extends JPanel implements Styling
     	public void addActionListeners()
     	{
             addTask_B.addActionListener(new ButtonListener());
+            sortTasks_CB.addActionListener(new ComboListener());
     	}
     	public void addComponents()
     	{
-            for(int i = 0; i < 5; i++)
+            for(int i = 9; i > -1; i--)
             {
-                tasks_P.add(new TaskPanel(300,200,this.tasks.get("task " + i)),JLayeredPane.DRAG_LAYER);
+                tasks_P.add(new TaskPanel(320,220,this.tasks.get("task " + i)),JLayeredPane.DRAG_LAYER);
             }
             
             addtasks_P.add(sortTasks_CB);
@@ -100,7 +100,7 @@ public class LowerHomePanel extends JPanel implements Styling
         public void fillTasks()
         {
             TaskCard tmpTask;
-            for(int i = 0; i < 5; i++)
+            for(int i = 0; i < 10; i++)
             {
                 tmpTask = new TaskCard();
                 tmpTask.setTaskName("task " + i);
@@ -111,12 +111,39 @@ public class LowerHomePanel extends JPanel implements Styling
     public void style(){
         this.setBackground(Styling.BACKGROUND_COLOR);
         sortTasks_CB.setBackground(Styling.BACKGROUND_COLOR);
+        sortTasks_CB.setForeground(Styling.LABEL_PANEL_TEXT_COLOR);
+        this.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));
+        //tasks_P.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR)); 
+    }
+    private void sortTasksByName()
+    {
+        tasks_P.removeAll();
+        System.out.println("here");
+        tasks_P.revalidate();
+        tasks_P.repaint();
+        Object [] tmp = this.tasks.keySet().toArray();
+        Arrays.sort(tmp);
+        for(int i = 0; i < 10; i++)
+        {
+            tasks_P.add(new TaskPanel(320,220,this.tasks.get((String) tmp[i])),JLayeredPane.DRAG_LAYER);
+            System.out.println(((String) tmp[i]) + " asfd");
+        }
+    }
+    private void sortTasksByDate()
+    {
+        tasks_P.removeAll();
+        System.out.println("here");
+        tasks_P.revalidate();
+        tasks_P.repaint();
+        
+        Object [] tmp = tasks.values().toArray();
+        Date tmpDate;
+        LinkedList<TaskCard> queue = new LinkedList<TaskCard>();
     }
     /**Listeners
 	* Once an event occurs the program goes here
 	* and decides what to do with each event.
 	*
-	*@peram MenuPanel.
 	*@peram nothing.
 	* J.B.
 	**/
@@ -130,8 +157,24 @@ public class LowerHomePanel extends JPanel implements Styling
 				case "addTask":
                     //Insert Add Task Window HERE...
 					break;
-
+                case "Start Date":
+                    break;
 			}
 		}  
+	}
+    private class ComboListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent event)
+		{
+			String command = (String) sortTasks_CB.getSelectedItem();
+            //System.out.println(command + "  " + sortTasks_CB.getSelectedItem());
+			switch(command)
+			{
+                case "name":
+                    sortTasksByName();
+                break;
+			// create default error message
+			}
+		}
 	}
 }
