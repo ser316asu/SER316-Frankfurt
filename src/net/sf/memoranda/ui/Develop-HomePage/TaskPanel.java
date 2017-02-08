@@ -1,5 +1,6 @@
 /**
 swhacks.org
+Joshua Becker
 **/
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +20,7 @@ public class TaskPanel extends JPanel
     }
         public TaskPanel(int height,int width, TaskCard card)
     {
-        this.dimension = new Dimension(height, width);
+        this.dimension = new Dimension(width, height);
         this.task = card;
         createComponents();
         editComponents();
@@ -37,6 +38,7 @@ public class TaskPanel extends JPanel
             this.setBorder(BorderFactory.createLineBorder(Color.black));
             this.setPreferredSize(this.dimension);
             this.setBackground(Color.gray);
+            this.setFont(new Font("Courier New", Font.ROMAN_BASELINE, 12));
     	}
     	public void addActionListeners()
     	{

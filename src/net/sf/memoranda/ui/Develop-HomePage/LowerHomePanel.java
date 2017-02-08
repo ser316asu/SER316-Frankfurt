@@ -41,7 +41,7 @@ public class LowerHomePanel extends JPanel
             //this.add(new JLabel("Lower"));
             for(int i = 0; i < 5; i++)
             {
-                this.add(new TaskPanel(200,300,this.tasks.get("task " + i)));
+                this.add(new TaskPanel(250,350,this.tasks.get("task " + i)));
             }
     	}
         public void fillTasks()
