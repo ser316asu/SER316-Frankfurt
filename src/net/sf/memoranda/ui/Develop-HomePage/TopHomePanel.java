@@ -45,7 +45,7 @@ public class TopHomePanel extends JPanel implements Styling
         leftChild.setSize(TIP_LEFT_WIDTH_RATIO,1.0);
         rightChild.setSize(TIP_RIGHT_WIDTH_RATIO,1.0);
 
-        leftChild.setLayout(new BoxLayout(leftChild,BoxLayout.X_AXIS));
+        leftChild.setLayout(new GridLayout(1,2,0,0));
         rightChild.setLayout(new GridLayout(2,1,3,3));//new BoxLayout(rightChild,BoxLayout.Y_AXIS));
 
 
@@ -67,7 +67,7 @@ public class TopHomePanel extends JPanel implements Styling
         //rightChild.add(horizontalSeparator);
 
         this.add(leftChild);
-        this.add(verticalSeparator);
+        //this.add(verticalSeparator);
         this.add(rightChild);
     }
 
