@@ -10,12 +10,14 @@ public class TimerPanel extends JPanel implements Styling{
 	private LayoutManager layout;
 	private TaskCard task;
 	private JPanel buttonPanel;
+	private ButtonListener timerListener;
 	
 	public TimerPanel(TopInnerPanel parent,TaskCard task){
 		this.task = task;
 		this.parent = parent;
 		createComponents();
 		editComponents();
+		addActionListener();
 		style();
 		addComponents();
 	}
@@ -35,7 +37,9 @@ public class TimerPanel extends JPanel implements Styling{
 
 		buttonDimension = new Dimension(25,20);
 
-		buttonPanel = new JPanel(new GridLayout(1,3,3,0));		
+		buttonPanel = new JPanel(new GridLayout(1,3,3,0));
+
+		timerListener = new ButtonListener();		
 	}
 
 	public void editComponents(){
@@ -66,8 +70,8 @@ public class TimerPanel extends JPanel implements Styling{
 	}
 
 	public void addActionListener(){
-		pause.addActionListener(new ButtonListener());
-		toggle.addActionListener(new ButtonListener());
+		pause.addActionListener(timerListener);
+		toggle.addActionListener(timerListener);
 	}
 
 	public void addComponents(){
@@ -96,8 +100,43 @@ public class TimerPanel extends JPanel implements Styling{
 	}
 
 	private class ButtonListener implements ActionListener{
-		public void actionPerformed(ActionEvent event){
+		Timer timer;
+		boolean paused;
+		public ButtonListener(){
+			timer = new Timer(time);
+			paused = false;
+		}
 
+		public void actionPerformed(ActionEvent event){
+			if(event.getActionCommand().equalsIgnoreCase("start")){
+				timer.start();
+				toggle.setText("Stop");
+				toggle.setActionCommand("Stop");
+			}
+			else if(event.getActionCommand().equalsIgnoreCase("pause")){
+				paused = !paused;
+				if(paused){
+					timer.pause();
+					pause.setText("Play");					
+				}
+				else{
+					timer.resume();
+					pause.setText("Pause");
+				}
+			
+			}
+			else if(event.getActionCommand().equalsIgnoreCase("stop")){
+				timer.stop();
+				String totalTime = time.getText();
+				
+				timer = new Timer(time);
+
+				toggle.setText("Start");
+				toggle.setActionCommand("start");
+
+				time.setText("00:00:00");
+			}
+			
 		}
 	}
 }

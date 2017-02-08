@@ -6,43 +6,94 @@ public class Timer implements Runnable{
 	private Thread thread;
 	private String threadName;
 	private JLabel label;
-	private long currentTimeMs;
-	private long previousTimeMs;
+	private long currentTime;
+	private long startTime;
 	private long deltaTime;
-
+	private long totalTime;
+	private boolean paused,stopped;
+	SimpleDateFormat sdf;
+	Date result;
 	
-
 	public Timer(JLabel label){
 		threadName = "Task Timer";
 		this.label = label;
-		currentTimeMs = 0;
-		previousTimeMs = 0;
-		deltaTime = currentTimeMs - previousTimeMs;
+		currentTime = 0;
+		startTime = 0;
+		deltaTime = currentTime - startTime;
+		totalTime = 0;
+		paused = false;
+		stopped = false;
 
+		sdf = new SimpleDateFormat("HH:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+		result = new Date(deltaTime);
 	}
-	public void run(){
+	
+	public void run(){		
+		startTime = System.currentTimeMillis();
 		
-		synchronized(this){
-			previousTimeMs = System.currentTimeMillis();
-			int i = 0;
-			while(true){
-				currentTimeMs = System.currentTimeMillis();
-				
-				deltaTime = currentTimeMs - previousTimeMs;
-				if(i == 0){
-					System.out.println(deltaTime);
-					i++;
+		while(!stopped){
+
+			synchronized(this){
+	
+				while(paused){
+	
+					try{
+						wait();
+						
+						totalTime += deltaTime;
+						
+						currentTime = 0;
+						
+						deltaTime = 0;
+						
+						startTime = System.currentTimeMillis();
+					}catch(Exception e){
+						e.printStackTrace();
+	
+					}
+	
 				}
-				SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+	
+			}				
+			
+			currentTime = System.currentTimeMillis();
+			
+			deltaTime = currentTime - startTime;
+			
+			result.setTime(totalTime + deltaTime);
 
-				sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-				Date result = new Date(deltaTime);
-
-				label.setText(sdf.format(result));
-			}
+			label.setText(sdf.format(result));
+			
 		}
+
+		totalTime += deltaTime;
+		currentTime = 0;
+		startTime = 0;
+		deltaTime = 0;
+		result.setTime(totalTime);
+		label.setText(sdf.format(result));		
 	}
+
+	public void stop(){
+		stopped = true;
+		try{
+			thread.join();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+
+	}
+	public void pause(){
+		paused = true;
+
+	}
+
+	synchronized void resume(){
+		paused = false;
+		notify();
+	}	
 
 	public void start(){
 		thread = new Thread(this,threadName);
