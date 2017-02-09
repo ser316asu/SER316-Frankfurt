@@ -11,16 +11,21 @@ public class HomePanel extends JPanel implements Styling
 	private LowerHomePanel low_P;
 	private final double topRatio = .4;
 	private final double lowRatio = .6;
-    private TaskCard task;
+    private TaskCard activeTask;
+    private Hashtable<String,TaskCard> tasks;
     public HomePanel()
     {
+        this.tasks = new Hashtable<String, TaskCard>();
+        fillTasks();
     	createComponents();
     	editComponents();
     	addActionListeners();
     	addComponents();
     }
-    public HomePanel(TaskCard task){
-        this.task = task;
+    public HomePanel(TaskCard task)
+    {
+        this.tasks = new Hashtable<String, TaskCard>();
+        fillTasks();
         createComponents();
         editComponents();
         addActionListeners();
@@ -31,8 +36,8 @@ public class HomePanel extends JPanel implements Styling
 
     public void createComponents()
     {
-    	top_P = new TopHomePanel(task);
-    	low_P = new LowerHomePanel();
+    	top_P = new TopHomePanel(this.tasks.get("test Task 1"));
+    	low_P = new LowerHomePanel(this.top_P, this.tasks);
     }
     public void editComponents()
     {
@@ -50,5 +55,26 @@ public class HomePanel extends JPanel implements Styling
     public void style()
     {
         this.setBackground(Styling.BACKGROUND_COLOR);
+    }
+    public void fillTasks()
+    {
+        TaskCard tmpTask;
+        for(int i = 0; i < 10; i++)
+        {
+            tmpTask = new TaskCard();
+            tmpTask.setEstimatedLOC(500+i);
+            tmpTask.setEstimatedTime((double)8.5+i);
+            tmpTask.setActualLOC(256+i);
+            tmpTask.setActualTime(4.5+i);
+            tmpTask.setTaskName("test Task " + i);
+            tmpTask.setStartDate(new Date("02/02/2017"));
+            tmpTask.setEndDate(new Date("02/20/2017"));
+            this.tasks.put(tmpTask.getTaskName(), tmpTask);
+        }
+        this.tasks.get("test Task 1").setActive(true);
+    }
+    public void createTasks()
+    {
+
     }
 }

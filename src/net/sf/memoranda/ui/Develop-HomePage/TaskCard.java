@@ -11,6 +11,7 @@ public class TaskCard extends Observable{
 	private double estimatedLOCPH;
 	private Date startDate;
 	private Date endDate;
+    private boolean isActive;
 	final static int AHEAD_OF_SCHED = 1;
 	final static int BEHIND_SCHED = -1;
 	final static int ON_TIME = 0;
@@ -29,6 +30,7 @@ public class TaskCard extends Observable{
 		endDate = null;
 		scheduleStatus = ON_TIME;
 		decimalFormat = new DecimalFormat("#0.00000");
+        this.isActive = false;
 	}
 
 	/**
@@ -151,6 +153,12 @@ public class TaskCard extends Observable{
 	public void change(){
 		setChanged();
 	}
-		
-
+    public void setActive(boolean act)
+    {
+        this.isActive = act;
+    }
+    public boolean isActive()
+    {
+        return this.isActive;
+    }
 }
