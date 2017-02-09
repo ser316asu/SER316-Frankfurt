@@ -30,6 +30,10 @@ public class Timer implements Runnable{
 
 		result = new Date(deltaTime);
 	}
+
+	public JLabel getLabel(){
+		return label;
+	}
 	
 	public void run(){		
 		startTime = System.currentTimeMillis();

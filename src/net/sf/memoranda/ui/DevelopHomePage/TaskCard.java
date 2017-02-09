@@ -16,9 +16,11 @@ public class TaskCard extends Observable{
 	final static int AHEAD_OF_SCHED = 1;
 	final static int BEHIND_SCHED = -1;
 	final static int ON_TIME = 0;
+	private final long DAY_IN_MS = 1000 * 60 * 60 * 24;
 	private int scheduleStatus;
 	private NumberFormat decimalFormat;
 	private int changeVar;
+	private int length,daysLeft;
 	
 	public TaskCard(){
 		estimatedLOC = 0;
@@ -31,7 +33,7 @@ public class TaskCard extends Observable{
 		startDate = null;
 		endDate = null;
 		scheduleStatus = ON_TIME;
-		decimalFormat = new DecimalFormat("#0.00000");
+		decimalFormat = new DecimalFormat("#0.0");
         this.isActive = false;
 	}
 
@@ -48,12 +50,27 @@ public class TaskCard extends Observable{
 		
 		return Double.parseDouble(decimalFormat.format(result));				
 	}
+
+	public double convertTimer(String time){
+		String[] hhmmss = time.split(":");
+
+		double hours = Double.parseDouble(hhmmss[0]);
+		double minutes = Double.parseDouble(hhmmss[1]);
+		double seconds = Double.parseDouble(hhmmss[2]);
+
+		 
+		 hours += (minutes/60.0) + (seconds/3600);
+
+
+		return hours;
+	}
 	
 	public void addTime(double time){
 		actualTime += time;
 		setChanged();
 		notifyObservers();
 	}
+	
 	public double calculateProgress(){
 		return actualLOC / estimatedLOC;
 	}
@@ -75,6 +92,14 @@ public class TaskCard extends Observable{
 			result = "ON TIME";
 		}
 		return result;
+	}
+
+	public int getLength(){
+		return (int) ((endDate.getTime() - startDate.getTime()) / DAY_IN_MS);
+	}
+
+	public int getDaysLeft(){
+		return (int) ((endDate.getTime() - new Date().getTime()) / DAY_IN_MS);
 	}
 	
 	public int getScheduleStatus(){

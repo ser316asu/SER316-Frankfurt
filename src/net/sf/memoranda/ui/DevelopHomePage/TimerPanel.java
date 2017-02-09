@@ -7,7 +7,7 @@ import java.util.*;
 public class TimerPanel extends JPanel implements Styling{
 	private Dimension dimension,buttonDimension;
 	private TopInnerPanel parent;
-	private JButton pause,toggle;
+	private JButton pause,start,stop;
 	private JLabel time;
 	private LayoutManager layout;
 	private TaskCard task;
@@ -28,7 +28,8 @@ public class TimerPanel extends JPanel implements Styling{
 		layout = new BorderLayout();
 
 		pause = new JButton();
-		toggle = new JButton();
+		start = new JButton();
+		stop = new JButton();
 
 		time = new JLabel();
 		
@@ -37,9 +38,9 @@ public class TimerPanel extends JPanel implements Styling{
 
 		dimension = new Dimension(width,height);
 
-		buttonDimension = new Dimension(25,20);
+		buttonDimension = new Dimension(75,50);
 
-		buttonPanel = new JPanel(new GridLayout(1,3,3,0));
+		buttonPanel = new JPanel(new GridLayout(0,3,2,2));
 
 		timerListener = new ButtonListener();		
 	}
@@ -52,33 +53,40 @@ public class TimerPanel extends JPanel implements Styling{
 		this.setLayout(layout);
 
 		pause.setText("Pause");
-		toggle.setText("Start");
+		start.setText("Start");
+		stop.setText("Stop");
 		
-		time.setText(("00:00:00"));
+		time.setText("00:00:00");
 
 		time.setVerticalAlignment(JLabel.CENTER);
 		pause.setVerticalAlignment(JLabel.CENTER);
-		toggle.setVerticalAlignment(JLabel.CENTER);
+		start.setVerticalAlignment(JLabel.CENTER);
+		stop.setVerticalAlignment(JLabel.CENTER);
 
+		stop.setHorizontalAlignment(JLabel.CENTER);
 		time.setHorizontalAlignment(JLabel.CENTER);
 		pause.setHorizontalAlignment(JLabel.CENTER);
-		toggle.setHorizontalAlignment(JLabel.CENTER);
+		start.setHorizontalAlignment(JLabel.CENTER);
 
 		pause.setActionCommand("pause");
-		toggle.setActionCommand("start");
+		start.setActionCommand("start");
+		stop.setActionCommand("stop");
 
-		toggle.setPreferredSize(buttonDimension);
-		pause.setPreferredSize(buttonDimension);
+		start.setMinimumSize(buttonDimension);
+		pause.setMinimumSize(buttonDimension);
+		stop.setMinimumSize(buttonDimension);
 	}
 
 	public void addActionListener(){
 		pause.addActionListener(timerListener);
-		toggle.addActionListener(timerListener);
+		start.addActionListener(timerListener);
+		stop.addActionListener(timerListener);
 	}
 
 	public void addComponents(){
 		buttonPanel.add(pause);
-		buttonPanel.add(toggle);
+		buttonPanel.add(stop);
+		buttonPanel.add(start);
 
 		this.add(time,BorderLayout.CENTER);
 		this.add(buttonPanel,BorderLayout.SOUTH);
@@ -90,8 +98,11 @@ public class TimerPanel extends JPanel implements Styling{
 		pause.setBackground(Styling.TASK_PANEL_COLOR);
 		pause.setForeground(Styling.TASK_PANEL_TEXT_COLOR);
 		
-		toggle.setBackground(Styling.TASK_PANEL_COLOR);
-		toggle.setForeground(Styling.TASK_PANEL_TEXT_COLOR);
+		start.setBackground(Styling.TASK_PANEL_COLOR);
+		start.setForeground(Styling.TASK_PANEL_TEXT_COLOR);
+
+		stop.setBackground(Styling.TASK_PANEL_COLOR);
+		stop.setForeground(Styling.TASK_PANEL_TEXT_COLOR);
 		
 		time.setFont(Styling.TIMER_FONT);
 		time.setForeground(Styling.TASK_PANEL_COLOR);
@@ -112,8 +123,6 @@ public class TimerPanel extends JPanel implements Styling{
 		public void actionPerformed(ActionEvent event){
 			if(event.getActionCommand().equalsIgnoreCase("start")){
 				timer.start();
-				toggle.setText("Stop");
-				toggle.setActionCommand("Stop");
 			}
 			else if(event.getActionCommand().equalsIgnoreCase("pause")){
 				paused = !paused;
@@ -129,22 +138,13 @@ public class TimerPanel extends JPanel implements Styling{
 			}
 			else if(event.getActionCommand().equalsIgnoreCase("stop")){
 				timer.stop();
-				try{
-				
-					Date timerDuration = timer.getDateFormatter().parse(time.getText());
-					//getHours is deprecated
-					double timeToAdd = (double)(timerDuration.getHours() + (timerDuration.getMinutes() / 60) + (timerDuration.getSeconds() / (60 * 60)));
-					task.addTime(timeToAdd);
-					System.out.println(task.countObservers());
-					task.notifyObservers();
+				task.addTime(task.convertTimer(timer.getLabel().getText()));
 
-				}catch(Exception e){
-					e.printStackTrace();
-				}
+				task.setValue(task.setChangeVar(task.getChangeVar()+1));
 				timer = new Timer(time);
 
-				toggle.setText("Start");
-				toggle.setActionCommand("start");
+				start.setText("Start");
+				start.setActionCommand("start");
 
 				time.setText("00:00:00");
 			}
