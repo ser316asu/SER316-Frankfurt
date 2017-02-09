@@ -43,7 +43,7 @@ public class TaskPanelMouseListener implements MouseListener
         {
             System.out.println("double Clicked");
             clickCount = 0;
-            target.getTaskCard().setActive(true);
+            this.topPanel.setActiveTask(target.getTaskCard());
         }else
         {
             clickCount = 0;
@@ -57,7 +57,7 @@ public class TaskPanelMouseListener implements MouseListener
     @Override
     public void mouseEntered(MouseEvent e)
     {
-        
+        this.target.setBackground(Styling.TASK_PANEL_COLOR_ONHOVER);
     }
     /**
     * Invoked when the mouse exits a component.
@@ -67,7 +67,7 @@ public class TaskPanelMouseListener implements MouseListener
     @Override
     public void mouseExited(MouseEvent e)
     {
-        
+        this.target.setBackground(Styling.TASK_PANEL_COLOR);
     }
     /**
     * Invoked when a mouse button has been pressed on a component.

@@ -36,7 +36,6 @@ public class HomePanel extends JPanel implements Styling
 
     public void createComponents()
     {
-        System.out.println("name " + this.tasks.get("task 1").getTaskName());
     	top_P = new TopHomePanel(this.tasks.get("task 1"));
     	low_P = new LowerHomePanel(this.top_P, this.tasks);
     }
@@ -73,7 +72,6 @@ public class HomePanel extends JPanel implements Styling
             this.tasks.put(tmpTask.getTaskName(), tmpTask);
         }
         this.tasks.get("task 1").setActive(true);
-        System.out.println(this.tasks.size());
     }
     public void createTasks()
     {

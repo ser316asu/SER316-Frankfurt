@@ -90,8 +90,6 @@ public class LowerHomePanel extends JPanel implements Styling
     {
           for(TaskCard tc : tasks.values())
           {
-              
-             // System.out.println(this.tasks.get("task " + i).getTaskName());
               tasks_P.add(new TaskPanel(320,220,tc, topHomePanel),JLayeredPane.DRAG_LAYER);
           }
           

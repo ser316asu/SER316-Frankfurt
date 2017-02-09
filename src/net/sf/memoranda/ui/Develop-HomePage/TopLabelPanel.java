@@ -98,5 +98,10 @@ public class TopLabelPanel extends JPanel implements Styling, Observer{
             labels[9] = new JLabel(task.formatDate(task.getEndDate())+ "");
         }
     }
-	
+    public void setActiveTask(TaskCard newTask)
+    {
+        this.task.setActive(false);
+        newTask.setActive(true);
+        this.task = newTask;
+    }
 }

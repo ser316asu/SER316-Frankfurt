@@ -89,9 +89,10 @@ public class TopHomePanel extends JPanel implements Styling
         this.setBackground(Styling.BACKGROUND_COLOR);
         //this.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));
     }
-
-
-    
-   
-    
+    public void setActiveTask(TaskCard newTask)
+    {
+        this.task.setActive(false);
+        newTask.setActive(true);
+        this.task = newTask;
+    }
 }

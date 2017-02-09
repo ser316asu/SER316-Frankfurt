@@ -84,15 +84,7 @@ public class TaskPanel extends JPanel implements Styling
            header_L.setMaximumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.31)));
            footer_L.setMaximumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.69)));
            
-           String schStat = "Behind Schedule";
-           if(this.task.getScheduleStatus() == TaskCard.ON_TIME)
-           {
-               schStat = "On Time";
-           }else if(this.task.getScheduleStatus() == TaskCard.AHEAD_OF_SCHED)
-           {
-               schStat = "Ahead Of Schedule";
-           }
-           schStat_L.setText(schStat);
+           schStat_L.setText(this.task.scheduleStatusToString());
            startDate_L.setText(this.task.formatDate(this.task.getEndDate()));
            
     }
