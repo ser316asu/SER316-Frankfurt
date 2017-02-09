@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 
-public class StatusBarPanel extends JPanel implements Styling{
+public class StatusBarPanel extends JPanel implements Styling, Observer{
 	private TopInnerPanel parent;
 	private JPanel buttonPanel,progressPanel;
 	private TaskCard task;
@@ -21,7 +21,7 @@ public class StatusBarPanel extends JPanel implements Styling{
 		this.task = task;
 		
 		timeMax = (int)task.getEstimatedTime();
-		daysMax = (int) ((task.getEndDate().getTime() - task.getStartDate().getTime()));
+		daysMax = (int) ((task.getEndDate().getTime() - task.getStartDate().getTime()) / DAY_IN_MS);
 		locMax = task.getEstimatedLOC();
 
 		buildComponents();
@@ -44,6 +44,8 @@ public class StatusBarPanel extends JPanel implements Styling{
 		grid = new GridLayout(6,1,1,1);
 
 		open = new JButton();
+		Date today = new Date();
+		int daysCompleted = (int)((today.getTime() - task.getStartDate().getTime() )/ DAY_IN_MS);
 
 		dayStatus = new JLabel("Progress in Days");
 		locStatus = new JLabel("Progress in LOC");
@@ -76,11 +78,9 @@ public class StatusBarPanel extends JPanel implements Styling{
 		progressTime.setValue((int)task.getActualTime());
 		
 		Date today = new Date();
-		int daysCompleted = (int)((task.getEndDate().getTime() - today.getTime() )/ DAY_IN_MS);
-		int percentLeft = daysCompleted / daysMax;
-		int percentCompleted =(int) (1-percentLeft);
+		int daysCompleted = (int)((today.getTime() - task.getStartDate().getTime() )/ DAY_IN_MS);
 
-		progressDays.setValue((int) percentCompleted * daysMax);
+		progressDays.setValue(daysCompleted);
 		
 		progressLoc.setValue(task.getActualLOC());//((int)((task.getActualLOC() / locMax) * locMax));
 		
@@ -144,5 +144,9 @@ public class StatusBarPanel extends JPanel implements Styling{
 		open.setFont(Styling.FONT);
 
 
+	}
+
+	public void update(Observable taskCard,Object args){
+		editComponents();
 	}
 }

@@ -1,7 +1,7 @@
 import java.util.*;
 import java.text.*;
 
-public class TaskCard{
+public class TaskCard extends Observable{
 	private int estimatedLOC;
 	private int actualLOC;
 	private String taskName;
@@ -28,7 +28,7 @@ public class TaskCard{
 		startDate = null;
 		endDate = null;
 		scheduleStatus = ON_TIME;
-		decimalFormat = new DecimalFormat("#0.0");
+		decimalFormat = new DecimalFormat("#0.00000");
 	}
 
 	/**
@@ -42,7 +42,13 @@ public class TaskCard{
 
 		result = locLeft / getLocPerHour();
 		
-		return Double.parseDouble(decimalFormat.format(result));
+		return Double.parseDouble(decimalFormat.format(result));				
+	}
+	
+	public void addTime(double time){
+		actualTime += time;
+		setChanged();
+		notifyObservers();
 	}
 	public double calculateProgress(){
 		return actualLOC / estimatedLOC;
@@ -66,6 +72,7 @@ public class TaskCard{
 		}
 		return result;
 	}
+	
 	public int getScheduleStatus(){
 		return scheduleStatus;
 	}
@@ -104,6 +111,7 @@ public class TaskCard{
 
 	public void setEstimatedLOC(int loc){
 		estimatedLOC = loc;
+
 	}
 	public void setActualLOC(int loc){
 		actualLOC = loc;
@@ -139,4 +147,10 @@ public class TaskCard{
 			scheduleStatus = ON_TIME;
 		}
 	}
+	
+	public void change(){
+		setChanged();
+	}
+		
+
 }

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
 public class TimerPanel extends JPanel implements Styling{
 	private Dimension dimension,buttonDimension;
@@ -127,8 +128,17 @@ public class TimerPanel extends JPanel implements Styling{
 			}
 			else if(event.getActionCommand().equalsIgnoreCase("stop")){
 				timer.stop();
-				String totalTime = time.getText();
+				try{
 				
+					Date timerDuration = timer.getDateFormatter().parse(time.getText());
+					double timeToAdd = (double)(timerDuration.getHours() + (timerDuration.getMinutes() / 60) + (timerDuration.getSeconds() / (60 * 60)));
+					task.addTime(timeToAdd);
+					System.out.println(task.countObservers());
+					task.notifyObservers();
+
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 				timer = new Timer(time);
 
 				toggle.setText("Start");

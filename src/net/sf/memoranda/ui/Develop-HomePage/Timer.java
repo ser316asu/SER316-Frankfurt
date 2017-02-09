@@ -100,4 +100,8 @@ public class Timer implements Runnable{
 		thread.start();
 	}
 
+	public SimpleDateFormat getDateFormatter(){
+		return sdf;
+	}
+
 }

@@ -1,8 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.*;
 
-public class TopLabelPanel extends JPanel implements Styling{
+public class TopLabelPanel extends JPanel implements Styling, Observer{
 	private TaskCard task;
 	private TopInnerPanel parent;
 	private LayoutManager layout;
@@ -56,7 +57,6 @@ public class TopLabelPanel extends JPanel implements Styling{
     public void alignLabels(){
     	for(int i = 0; i < LABEL_COUNT*2; i++){
     		labels[i].setAlignmentX(Component.LEFT_ALIGNMENT);
-    		//labels[i].setAlignmentX(Component.LEFT);
     	}
     }
 	
@@ -76,11 +76,26 @@ public class TopLabelPanel extends JPanel implements Styling{
 
     public void style(){
         this.setBackground(Styling.BACKGROUND_COLOR);
-        //this.setForeground(Styling.LABEL_PANEL__COLOR);
         for(int i = 0; i < LABEL_COUNT*2; i++){
             labels[i].setFont(Styling.FONT);
-            //labels[i].setFont(new Font(labels[i].getFont().getName(), Font.PLAIN, 20));
             labels[i].setForeground(Styling.LABEL_PANEL_TEXT_COLOR);
+        }
+    }
+
+    public void update(Observable taskCard,Object ars){
+        if(location == TopHomePanel.LEFT_LABEL_PANEL){
+            labels[1] = new JLabel(task.getTaskName()+ "");
+            labels[3] = new JLabel(task.getEstimatedLOC()+ "");
+            labels[5] = new JLabel(task.getActualLOC()+ "");
+            labels[7] = new JLabel(task.getEstimatedTime()+ "");
+            labels[9] = new JLabel(task.getActualTime()+ "");
+        }
+        else if(location == TopHomePanel.RIGHT_LABEL_PANEL){
+            labels[1] = new JLabel(task.scheduleStatusToString());
+            labels[3] = new JLabel(task.getLocPerHour() + "");
+            labels[5] = new JLabel(task.getEstimatedLOCPH()+ "");
+            labels[7] = new JLabel(task.formatDate(task.getStartDate())+ "");
+            labels[9] = new JLabel(task.formatDate(task.getEndDate())+ "");
         }
     }
 	

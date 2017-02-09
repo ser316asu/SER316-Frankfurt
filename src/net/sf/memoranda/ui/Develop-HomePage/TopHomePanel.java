@@ -4,6 +4,7 @@
 import javax.swing.*;
 import java.awt.*; 
 import java.awt.event.*;
+import java.util.*;
 
 public class TopHomePanel extends JPanel implements Styling
 {
@@ -22,8 +23,7 @@ public class TopHomePanel extends JPanel implements Styling
     private TaskCard task;
     private Dimension dimension;
     private LayoutManager layout;
-    private JSeparator verticalSeparator,horizontalSeparator;
-       
+    
 
 
     public TopHomePanel(TaskCard task)
@@ -34,7 +34,9 @@ public class TopHomePanel extends JPanel implements Styling
         this.setLayout(layout);
         createChildPanels();
         style();
-        addPanels();       
+        addPanels();  
+
+
     }
 
     public void createChildPanels(){
@@ -53,6 +55,10 @@ public class TopHomePanel extends JPanel implements Styling
 
         statusBarTop = new StatusBarPanel(rightChild,task);
         timerPanel = new TimerPanel(rightChild,task);
+
+        task.addObserver(leftLabels);
+        task.addObserver(rightLabels);
+        task.addObserver(statusBarTop);
     }
 
     public void addPanels(){
