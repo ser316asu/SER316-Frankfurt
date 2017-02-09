@@ -19,7 +19,7 @@ public class TaskPanel extends JPanel implements Styling
     	addActionListeners();
     	addComponents();
     }
-        public TaskPanel(int width,int height, TaskCard card, TopHomePanel thp)
+    public TaskPanel(int width,int height, TaskCard card, TopHomePanel thp)
     {
         this.topHomePanel = thp;
         this.dimension = new Dimension(width, height);

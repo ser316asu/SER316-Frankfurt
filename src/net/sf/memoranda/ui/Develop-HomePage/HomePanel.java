@@ -36,7 +36,8 @@ public class HomePanel extends JPanel implements Styling
 
     public void createComponents()
     {
-    	top_P = new TopHomePanel(this.tasks.get("test Task 1"));
+        System.out.println("name " + this.tasks.get("task 1").getTaskName());
+    	top_P = new TopHomePanel(this.tasks.get("task 1"));
     	low_P = new LowerHomePanel(this.top_P, this.tasks);
     }
     public void editComponents()
@@ -66,12 +67,13 @@ public class HomePanel extends JPanel implements Styling
             tmpTask.setEstimatedTime((double)8.5+i);
             tmpTask.setActualLOC(256+i);
             tmpTask.setActualTime(4.5+i);
-            tmpTask.setTaskName("test Task " + i);
+            tmpTask.setTaskName("task " + i);
             tmpTask.setStartDate(new Date("02/02/2017"));
             tmpTask.setEndDate(new Date("02/20/2017"));
             this.tasks.put(tmpTask.getTaskName(), tmpTask);
         }
-        this.tasks.get("test Task 1").setActive(true);
+        this.tasks.get("task 1").setActive(true);
+        System.out.println(this.tasks.size());
     }
     public void createTasks()
     {

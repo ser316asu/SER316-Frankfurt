@@ -37,7 +37,7 @@ public class LowerHomePanel extends JPanel implements Styling
     public LowerHomePanel(TopHomePanel thp, Hashtable<String,TaskCard> tasks)
     {
         this.topHomePanel = thp;
-        tasks = tasks;
+        this.tasks = tasks;
         comboCommands = new String [] {"sort by", "start date", "name", "date created", "est LOC", "est hours", "priority"};
         this.dimension = new Dimension(Develop.SCREEN_WIDTH -5,((int) (Develop.SCREEN_HEIGHT*lowRatio))-7);
         
@@ -88,9 +88,11 @@ public class LowerHomePanel extends JPanel implements Styling
     }
     public void addComponents()
     {
-          for(int i = this.tasks.size(); i > -1; i--)
+          for(TaskCard tc : tasks.values())
           {
-              tasks_P.add(new TaskPanel(320,220,this.tasks.get("task " + i), topHomePanel),JLayeredPane.DRAG_LAYER);
+              
+             // System.out.println(this.tasks.get("task " + i).getTaskName());
+              tasks_P.add(new TaskPanel(320,220,tc, topHomePanel),JLayeredPane.DRAG_LAYER);
           }
           
           addtasks_P.add(sortTasks_CB);
