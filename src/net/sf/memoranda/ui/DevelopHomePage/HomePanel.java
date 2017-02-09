@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.util.*;
 public class HomePanel extends JLabel implements Styling
 {
+	private JToolBar toolbar;
     private TopHomePanel top_P;
 	private LowerHomePanel low_P;
 	private final double topRatio = .4;
@@ -18,6 +19,7 @@ public class HomePanel extends JLabel implements Styling
     private LoadAssets assets;
     public HomePanel()
     {
+    	
         assets = new LoadAssets();
         this.tasks = new Hashtable<String, TaskCard>();
         fillTasks();

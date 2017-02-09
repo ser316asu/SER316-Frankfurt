@@ -13,7 +13,6 @@ public class MAIN
     {
     	task = new TaskCard();
 
-
     	MAIN.createTestCard(task);
 
     	d = new Develop(task);

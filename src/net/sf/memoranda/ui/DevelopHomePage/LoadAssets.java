@@ -10,10 +10,11 @@ class LoadAssets
     public static ImageIcon TASK_PANEL_IMAGE = loadImage("Assets/ui/frame.png", Styling.TASK_PANEL_WIDTH,Styling.TASK_PANEL_HEIGHT);
     public static ImageIcon TASK_BOARD_IMAGE = loadImage("Assets/ui/BoardBackground.jpg", Styling.TASK_BOARD_WIDTH,Styling.TASK_BOARD_HEIGHT);
     public static ImageIcon HOMEPAGE_BACKGROUND = loadImage("Assets/ui/HomePageBackground.jpg", Styling.SCREEN_WIDTH,Styling.SCREEN_HEIGHT);
-    public static ImageIcon TERMINAL_IMAGE = loadImage("Assets/ui/terminalBackground.png",Styling.TERMINAL_PANEL_WIDTH, Styling.TERMINAL_PANEL_HEIGHT);
+    public static Icon TERMINAL_IMAGE = loadImage("Assets/ui/terminalBackground.png",Styling.TERMINAL_PANEL_WIDTH, Styling.TERMINAL_PANEL_HEIGHT);
     public LoadAssets()
     {
         loadFont("Assets/ui/Rudiment.ttf");
+        loadFont("Assets/ui/Staubach.ttf");
     }
     private static ImageIcon loadImage(String name, int w, int h)
 	{
