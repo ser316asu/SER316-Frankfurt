@@ -1,11 +1,13 @@
+package net.sf.memoranda.ui.DevelopHomePage;
 /**
 
 **/
 import javax.swing.*;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Color;
 import java.util.*;
-public class HomePanel extends JPanel implements Styling
+public class HomePanel extends JLabel implements Styling
 {
     private TopHomePanel top_P;
 	private LowerHomePanel low_P;
@@ -13,8 +15,10 @@ public class HomePanel extends JPanel implements Styling
 	private final double lowRatio = .6;
     private TaskCard activeTask;
     private Hashtable<String,TaskCard> tasks;
+    private LoadAssets assets;
     public HomePanel()
     {
+        assets = new LoadAssets();
         this.tasks = new Hashtable<String, TaskCard>();
         fillTasks();
     	createComponents();
@@ -24,6 +28,8 @@ public class HomePanel extends JPanel implements Styling
     }
     public HomePanel(TaskCard task)
     {
+    	this.setIcon(LoadAssets.HOMEPAGE_BACKGROUND);
+        assets = new LoadAssets();
         this.tasks = new Hashtable<String, TaskCard>();
         fillTasks();
         createComponents();
@@ -41,6 +47,7 @@ public class HomePanel extends JPanel implements Styling
     }
     public void editComponents()
     {
+    	this.setLayout(new FlowLayout());
     }
     public void addActionListeners()
     {

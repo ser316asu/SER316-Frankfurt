@@ -1,3 +1,4 @@
+package net.sf.memoranda.ui.DevelopHomePage;
 /**
 
 **/
@@ -10,7 +11,7 @@ import java.util.*;
 import java.awt.Insets;
 import java.util.Arrays;
 
-public class LowerHomePanel extends JPanel implements Styling
+public class LowerHomePanel extends JLabel implements Styling
 {
     private Hashtable<String,TaskCard> tasks;
 	private final double lowRatio = .6;
@@ -39,7 +40,7 @@ public class LowerHomePanel extends JPanel implements Styling
         this.topHomePanel = thp;
         this.tasks = tasks;
         comboCommands = new String [] {"sort by", "start date", "name", "date created", "est LOC", "est hours", "priority"};
-        this.dimension = new Dimension(Develop.SCREEN_WIDTH -5,((int) (Develop.SCREEN_HEIGHT*lowRatio))-7);
+        this.dimension = new Dimension(Styling.TASK_BOARD_WIDTH,Styling.TASK_BOARD_HEIGHT);
         
     	createComponents();
         style();
@@ -90,7 +91,7 @@ public class LowerHomePanel extends JPanel implements Styling
     {
           for(TaskCard tc : tasks.values())
           {
-              tasks_P.add(new TaskPanel(320,220,tc, topHomePanel),JLayeredPane.DRAG_LAYER);
+              tasks_P.add(new TaskPanel(Styling.TASK_PANEL_WIDTH,Styling.TASK_PANEL_HEIGHT,tc, topHomePanel),JLayeredPane.DRAG_LAYER);
           }
           
           addtasks_P.add(sortTasks_CB);
@@ -119,6 +120,7 @@ public class LowerHomePanel extends JPanel implements Styling
         sortTasks_CB.setForeground(Styling.LABEL_PANEL_TEXT_COLOR);
         this.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));
         //tasks_P.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR)); 
+        this.setIcon(LoadAssets.TASK_BOARD_IMAGE);
     }
     private void sortTasksByName()
     {

@@ -1,3 +1,4 @@
+package net.sf.memoranda.ui.DevelopHomePage;
 import java.util.*;
 import java.text.*;
 
@@ -17,6 +18,7 @@ public class TaskCard extends Observable{
 	final static int ON_TIME = 0;
 	private int scheduleStatus;
 	private NumberFormat decimalFormat;
+	private int changeVar;
 	
 	public TaskCard(){
 		estimatedLOC = 0;
@@ -150,8 +152,9 @@ public class TaskCard extends Observable{
 		}
 	}
 	
-	public void change(){
-		setChanged();
+	public void setValue(TaskCard task){
+		this.setChanged();
+		this.notifyObservers(task);
 	}
     public void setActive(boolean act)
     {
@@ -160,5 +163,14 @@ public class TaskCard extends Observable{
     public boolean isActive()
     {
         return this.isActive;
+    }
+    public TaskCard setChangeVar(int newVar)
+    {
+    	this.changeVar = newVar;
+    	return this;
+    }
+    public int getChangeVar()
+    {
+    	return this.changeVar;
     }
 }

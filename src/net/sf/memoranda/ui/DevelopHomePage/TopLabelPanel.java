@@ -1,11 +1,11 @@
+package net.sf.memoranda.ui.DevelopHomePage;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class TopLabelPanel extends JPanel implements Styling, Observer{
+public class TopLabelPanel extends JLabel implements Styling, Observer{
 	private TaskCard task;
-	private TopInnerPanel parent;
 	private LayoutManager layout;
 	private Dimension dimension;
     private JLabel[] labels;
@@ -13,8 +13,7 @@ public class TopLabelPanel extends JPanel implements Styling, Observer{
     private final int LABEL_COUNT = 5;
     private final double WIDTH_RATIO = .5,HEIGHT_RATIO = 1.0;
 
-    public TopLabelPanel(TopInnerPanel parent,TaskCard task,int location){
-    	this.parent = parent;
+    public TopLabelPanel(TaskCard task,int location){
     	this.task = task;
     	this.location = location;
     	this.labels = new JLabel[LABEL_COUNT*2];
@@ -61,11 +60,12 @@ public class TopLabelPanel extends JPanel implements Styling, Observer{
     }
 	
     public void setSize(){
-    	Dimension parentDimension = parent.getDimension();
-    	int width = (int) (parentDimension.getWidth() * WIDTH_RATIO);
-    	int height = (int) (parentDimension.getHeight() * HEIGHT_RATIO);
+    	int width = (int) (Styling.TERMINAL_PANEL_WIDTH * WIDTH_RATIO);
+    	int height = (int) (Styling.TERMINAL_PANEL_HEIGHT * HEIGHT_RATIO);
     	dimension = new Dimension(width,height);
-    	this.setMinimumSize(dimension);
+		this.setMinimumSize(dimension);
+		this.setPreferredSize(dimension);
+		this.setMaximumSize(dimension);
     }
 
     public void addLabels(){
@@ -83,6 +83,10 @@ public class TopLabelPanel extends JPanel implements Styling, Observer{
     }
 
     public void update(Observable taskCard,Object ars){
+    	this.task.setActive(false);
+    	this.task = (TaskCard) taskCard;
+    	this.task.setActive(true);
+    	this.removeAll();
         if(location == TopHomePanel.LEFT_LABEL_PANEL){
             labels[1] = new JLabel(task.getTaskName()+ "");
             labels[3] = new JLabel(task.getEstimatedLOC()+ "");
@@ -97,11 +101,8 @@ public class TopLabelPanel extends JPanel implements Styling, Observer{
             labels[7] = new JLabel(task.formatDate(task.getStartDate())+ "");
             labels[9] = new JLabel(task.formatDate(task.getEndDate())+ "");
         }
-    }
-    public void setActiveTask(TaskCard newTask)
-    {
-        this.task.setActive(false);
-        newTask.setActive(true);
-        this.task = newTask;
+        this.addLabels();
+        style();
+        this.revalidate();
     }
 }

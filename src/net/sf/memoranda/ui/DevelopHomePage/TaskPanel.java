@@ -1,11 +1,13 @@
+package net.sf.memoranda.ui.DevelopHomePage;
 /**
+
 swhacks.org
 Joshua Becker
 **/
 import javax.swing.*;
 import java.awt.*;
 
-public class TaskPanel extends JPanel implements Styling
+public class TaskPanel extends JLabel implements Styling
 {
     private Dimension dimension;
     private TaskCard task;
@@ -46,10 +48,10 @@ public class TaskPanel extends JPanel implements Styling
        public void style()
        {
            this.setBackground(Styling.TASK_PANEL_COLOR);
-           this.setFont(Styling.FONT);
-           this.setBorder(BorderFactory.createLineBorder(Styling.TASK_PANEL_COLOR));
-           header_L.setBorder(BorderFactory.createLineBorder(Styling.TASK_PANEL_COLOR));
-           footer_L.setBorder(BorderFactory.createLineBorder(Styling.TASK_PANEL_COLOR));
+           this.setFont(Styling.TASK_PANEL_FONT);
+           //this.setBorder(BorderFactory.createLineBorder(Styling.TASK_PANEL_COLOR));
+           //header_L.setBorder(BorderFactory.createLineBorder(Styling.TASK_PANEL_BOARDER_COLOR));
+           //footer_L.setBorder(BorderFactory.createLineBorder(Styling.TASK_PANEL_BOARDER_COLOR));
            
            name_L.setForeground(Styling.TASK_PANEL_TEXT_COLOR);
            startDate_L.setForeground(Styling.TASK_PANEL_TEXT_COLOR);
@@ -60,14 +62,16 @@ public class TaskPanel extends JPanel implements Styling
            labelSched.setForeground(Styling.TASK_PANEL_TEXT_COLOR);
            labelStart.setForeground(Styling.TASK_PANEL_TEXT_COLOR);
 
-           labelName.setFont(Styling.FONT);
-           labelSched.setFont(Styling.FONT);
-           labelStart.setFont(Styling.FONT);
-           name_L.setFont(Styling.FONT);
-           startDate_L.setFont(Styling.FONT);
-           schStat_L.setFont(Styling.FONT);
-           header_L.setFont(Styling.FONT);
-           footer_L.setFont(Styling.FONT);
+           labelName.setFont(Styling.TASK_PANEL_FONT);
+           labelSched.setFont(Styling.TASK_PANEL_FONT);
+           labelStart.setFont(Styling.TASK_PANEL_FONT);
+           name_L.setFont(Styling.TASK_PANEL_FONT);
+           startDate_L.setFont(Styling.TASK_PANEL_FONT);
+           schStat_L.setFont(Styling.TASK_PANEL_FONT);
+           header_L.setFont(Styling.TASK_PANEL_FONT);
+           footer_L.setFont(Styling.TASK_PANEL_FONT);
+           
+           this.setIcon(LoadAssets.TASK_PANEL_IMAGE);
        }
     public void editComponents()
     {

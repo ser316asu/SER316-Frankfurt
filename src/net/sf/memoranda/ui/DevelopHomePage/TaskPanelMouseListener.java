@@ -1,4 +1,6 @@
+package net.sf.memoranda.ui.DevelopHomePage;
 /**
+
 * @file: TaskPanelMouseListener.java
 * @author: Joshua Becker
 * @date: 
@@ -14,6 +16,7 @@ public class TaskPanelMouseListener implements MouseListener
     private short clickCount;
     private long firstClickTime;
     private TaskPanel target;
+    private TaskCard task;
     private TopHomePanel topPanel;
     public TaskPanelMouseListener()
     {
@@ -24,6 +27,7 @@ public class TaskPanelMouseListener implements MouseListener
     {
         this.topPanel = thp;
         this.target = target;
+        task = target.getTaskCard();
         clickCount = 0;
     }
     /**
@@ -38,12 +42,22 @@ public class TaskPanelMouseListener implements MouseListener
         {
             firstClickTime = System.currentTimeMillis();
             clickCount++;
-            System.out.println("one Clicked");
+            System.out.println("One Clicked");
         }else if(firstClickTime+1000 > System.currentTimeMillis() && clickCount == 1)
         {
-            System.out.println("double Clicked");
+            System.out.println("Double Clicked");
             clickCount = 0;
-            this.topPanel.setActiveTask(target.getTaskCard());
+            this.topPanel.addObservers(task);
+            /*
+             * setValue: changes the state of the current taskCard and
+             * 			 notifies observers (Task Panels)
+             * setChangeVar: changes the state of the new TaskCard and 
+             * 				 returns itself in order to pass to the 
+             * 				 other observers
+             * getChangeVar: is used to make a change in order to modify 
+             * 				 the state of the observing panels
+             */
+            task.setValue(task.setChangeVar(task.getChangeVar()+1));
         }else
         {
             clickCount = 0;

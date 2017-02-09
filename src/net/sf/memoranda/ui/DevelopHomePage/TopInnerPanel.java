@@ -1,35 +1,29 @@
+package net.sf.memoranda.ui.DevelopHomePage;
 import javax.swing.*;
 import java.awt.*; 
 import java.awt.event.*;
 
-public class TopInnerPanel extends JPanel implements Styling{
-	private TaskCard task;
-	private TopHomePanel parent;
+public class TopInnerPanel extends JLabel implements Styling{
 	private JPanel child1,child2;
 	private Dimension dimension;
 	private LayoutManager layout;
 	private static int panelCount = 0;
 	
-	public TopInnerPanel(TopHomePanel parent,TaskCard task){
-		this.parent = parent;
-		this.task = task;
+	public TopInnerPanel(){
 		style();
 		panelCount++;
 	}
-
+	
+	public TopInnerPanel(int width, int height)
+	{
+		this.dimension = new Dimension(width, height);
+		style();
+		panelCount++;
+	}
+	
 	public void giveChildren(JPanel child1,JPanel child2){
 		this.child1 = child1;
 		this.child2 = child2;
-	}
-
-	public void setSize(double widthRatio,double heightRatio){
-		Dimension parentDimension = parent.getDimension();
-		int width = (int) (( (double) parentDimension.getWidth() * widthRatio ) - 3);
-		int height = (int) (( (double) parentDimension.getHeight() ) - 2);
-		dimension = new Dimension(width,height);
-		this.setMinimumSize(dimension);
-		this.setPreferredSize(dimension);
-		this.setMaximumSize(dimension);
 	}
 
 	public int setPanelLayout(LayoutManager layout){
@@ -66,5 +60,8 @@ public class TopInnerPanel extends JPanel implements Styling{
 		if(panelCount == 0){
 			this.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));
 		}
+		this.setMinimumSize(dimension);
+		this.setPreferredSize(dimension);
+		this.setMaximumSize(dimension);
 	}	
 }

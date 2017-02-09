@@ -1,3 +1,4 @@
+package net.sf.memoranda.ui.DevelopHomePage;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;

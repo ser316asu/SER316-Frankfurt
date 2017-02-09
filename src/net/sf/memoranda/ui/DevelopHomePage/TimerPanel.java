@@ -1,3 +1,4 @@
+package net.sf.memoranda.ui.DevelopHomePage;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -131,6 +132,7 @@ public class TimerPanel extends JPanel implements Styling{
 				try{
 				
 					Date timerDuration = timer.getDateFormatter().parse(time.getText());
+					//getHours is deprecated
 					double timeToAdd = (double)(timerDuration.getHours() + (timerDuration.getMinutes() / 60) + (timerDuration.getSeconds() / (60 * 60)));
 					task.addTime(timeToAdd);
 					System.out.println(task.countObservers());
