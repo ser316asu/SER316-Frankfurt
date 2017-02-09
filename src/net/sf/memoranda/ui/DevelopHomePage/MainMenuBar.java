@@ -1,4 +1,7 @@
-package net.sf.memoranda.ui;
+package net.sf.memoranda.ui.DevelopHomePage;
+
+
+import net.sf.memoranda.ui.*;
 
 import java.awt.AWTEvent;
 import java.awt.BorderLayout;
@@ -64,9 +67,9 @@ import nu.xom.Elements;
 
 /*$Id: AppFrame.java,v 1.33 2005/07/05 08:17:24 alexeya Exp $*/
 
-public class AppFrame extends JFrame 
+public class MainMenuBar extends JMenuBar 
 {
-
+	JFrame parent;
     JPanel contentPane;
     JMenuBar menuBar = new JMenuBar();
     JMenu jMenuFile = new JMenu();
@@ -246,7 +249,8 @@ public class AppFrame extends JFrame
     JMenuItem jMenuHelpAbout = new JMenuItem();
 
     //Construct the frame
-    public AppFrame() {
+    public MainMenuBar(JFrame parent) {
+    	this.parent = parent;
         enableEvents(AWTEvent.WINDOW_EVENT_MASK);
         try {
             jbInit();
@@ -257,13 +261,13 @@ public class AppFrame extends JFrame
     }
     //Component initialization
     private void jbInit() throws Exception {
-        this.setIconImage(new ImageIcon(AppFrame.class.getResource(
+        parent.setIconImage(new ImageIcon(AppFrame.class.getResource(
                 "resources/icons/jnotes16.png"))
                 .getImage());
-        contentPane = (JPanel) this.getContentPane();
+        contentPane = (JPanel) parent.getContentPane();
         contentPane.setLayout(borderLayout1);
         //this.setSize(new Dimension(800, 500));
-        this.setTitle("Memoranda - " + CurrentProject.get().getTitle());
+        parent.setTitle("Memoranda - " + CurrentProject.get().getTitle());
         //Added a space to App.VERSION_INFO to make it look some nicer
         statusBar.setText(" Version:" + App.VERSION_INFO + " (Build "
                 + App.BUILD_INFO + " )");
@@ -475,7 +479,7 @@ public class AppFrame extends JFrame
         menuBar.add(jMenuFormat);
         menuBar.add(jMenuGo);
         menuBar.add(jMenuHelp);
-        this.setJMenuBar(menuBar);
+        parent.setJMenuBar(menuBar);
         //contentPane.add(toolBar, BorderLayout.NORTH);
         contentPane.add(statusBar, BorderLayout.SOUTH);
         contentPane.add(splitPane, BorderLayout.CENTER);
@@ -604,7 +608,7 @@ public class AppFrame extends JFrame
             this.setSize(w, h);
         }
         else
-            this.setExtendedState(Frame.MAXIMIZED_BOTH);
+        	parent.setExtendedState(Frame.MAXIMIZED_BOTH);
 
         Object xo = Context.get("FRAME_XPOS");
         Object yo = Context.get("FRAME_YPOS");
@@ -627,7 +631,7 @@ public class AppFrame extends JFrame
             }
 
             public void projectWasChanged() {
-                setTitle("Memoranda - " + CurrentProject.get().getTitle());
+            	parent.setTitle("Memoranda - " + CurrentProject.get().getTitle());
             }
         });
 
@@ -651,7 +655,7 @@ public class AppFrame extends JFrame
                         Dimension frmSize = this.getSize();
                         Point loc = this.getLocation();
                         
-                        ExitConfirmationDialog dlg = new ExitConfirmationDialog(this,Local.getString("Exit"));
+                        ExitConfirmationDialog dlg = new ExitConfirmationDialog(parent,Local.getString("Exit"));
                         dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
                         dlg.setVisible(true);
                         if(dlg.CANCELLED) return;
@@ -672,7 +676,7 @@ public class AppFrame extends JFrame
 
     //Help | About action performed
     public void jMenuHelpAbout_actionPerformed(ActionEvent e) {
-         AppFrame_AboutBox dlg = new AppFrame_AboutBox(this);        
+         AppFrame_AboutBox dlg = new AppFrame_AboutBox(parent);        
          Dimension dlgSize = dlg.getSize();
          Dimension frmSize = getSize();
          Point loc = getLocation();
@@ -689,12 +693,12 @@ public class AppFrame extends JFrame
                 doMinimize();
         }
         else if ((e.getID() == WindowEvent.WINDOW_ICONIFIED)) {
-            super.processWindowEvent(new WindowEvent(this,
+            super.processComponentEvent(new WindowEvent(parent,
                     WindowEvent.WINDOW_CLOSING));
             doMinimize();
         }
         else
-            super.processWindowEvent(e);
+            super.processComponentEvent(e);
     }
 
     public static void addExitListener(ActionListener al) {
@@ -832,7 +836,7 @@ public class AppFrame extends JFrame
     }
 
     public void showPreferences() {
-        PreferencesDialog dlg = new PreferencesDialog(this);
+        PreferencesDialog dlg = new PreferencesDialog(parent);
         dlg.pack();
         dlg.setLocationRelativeTo(this);
         dlg.setVisible(true);
