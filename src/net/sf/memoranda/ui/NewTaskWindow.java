@@ -1,5 +1,6 @@
 package net.sf.memoranda.ui;
 import javax.swing.*;
+import javax.swing.Box.Filler;
 import javax.swing.border.Border;
 
 import java.awt.*;
@@ -13,9 +14,8 @@ import java.awt.event.*;
 
 /*TODO Add setters/getters, incorporate JPanels, Layout, Event/Action-Listeners & dividers.
 * 1. Add Button that will actually OPEN this window. This will likely be on several different pages (taskboard, tasklist, calendar)
-* 2. Will need to permanently save some data to reopen the next session
-* 3. Need to change state functionality (1: ADD 2: INPROG 3: END ADD 4: FINAL RESULTS)
-* 
+* 2. Add input-validation 
+*
 */
 
 public class NewTaskWindow extends JFrame {
@@ -31,12 +31,13 @@ public class NewTaskWindow extends JFrame {
 	private JFrame mainFrame;
 	
 	private JTextField name, startDate, endDate; // String
-	private JLabel currentState, nameLabel, startDateLabel, endDateLabel;
+	private JLabel currentState, nameLabel, startDateLabel, endDateLabel, locEstLabel, hoursEstLabel, numFilesLabel;
 
 	// Code Info
 	private JTextField locEst, hoursEst, numFiles; 
 	
 	
+	private JButton finishButton;
 	private JButton startStop; // Hoping to only use one button that changes when pressed
 	private JLabel trackedMinutes; // Timer with stored data ---> will need XML 
 	
@@ -51,83 +52,124 @@ public class NewTaskWindow extends JFrame {
 	
 	// Default No-Arg Constructor
 	public NewTaskWindow(){
-		
-
+		Border blackBorder;
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		WIDTH = (int)screenSize.getWidth()/2; // Casting as int
 		HEIGHT = (int)screenSize.getHeight()/2;
 		
 		/* COMPONENTS */
 		//Upper-left Quadrant
-		name = new JTextField("Name of Task",15);
+		nameLabel = new JLabel("Name");
+		name = new JTextField("Name of Task",28);
 
 		startDateLabel = new JLabel("Start Date");
-		startDate = new JTextField("Start Date",15);
+		startDate = new JTextField("Start Date",28);
 		startDate.setMaximumSize(new Dimension(100, 1));
 		
 		endDateLabel = new JLabel("Due Date");
-		endDate = new JTextField("Due Date", 10);
+		endDate = new JTextField("Due Date", 28);
 		
+		locEstLabel = new JLabel("Estimated LOC");
+		locEst = new JTextField("LOC Estimate", 28);
 		
-		locEst = new JTextField("LOC Estimate", 10);
-		hoursEst = new JTextField("Hours Estimate", 10);
+		hoursEstLabel = new JLabel("Estimated Hours");
+		hoursEst = new JTextField("Hours Estimate", 28);
+		
+		numFilesLabel = new JLabel("Estimated # of Files");
+		numFiles = new JTextField("Number of Files", 28);
 		
 		// Upper-right Quadrant
 		// TODO Consider adding JLabel here to clarify what button does
-		startStop = new JButton("START"); // Have states. OnClick, startStop.setText("STOP")
+		//startStop = new JButton("START"); // Have states. OnClick, startStop.setText("STOP")
+		blackBorder = BorderFactory.createLineBorder(Color.black);
+
+		JButton finishButton = new JButton("Add Task");
+		
 		trackedMinutes = new JLabel("0");
-		taskDesc = new JTextArea("Enter Task Description here...");
+		taskDesc = new JTextArea("Enter Task Description here...", 5, 43);
+		taskDesc.setBorder(blackBorder);
 		
 		/* WINDOW SETUP */ 
 	
 		mainPane = getContentPane();
-		Border blackBorder;
 		
-		blackBorder = BorderFactory.createLineBorder(Color.black);
 		
-		JPanel topLeftPane = new JPanel();
-		topLeftPane.setLayout(new BoxLayout(topLeftPane,BoxLayout.Y_AXIS));
+		JPanel centerPane = new JPanel();
+		//centerPane.setLayout(new BoxLayout(centerPane,BoxLayout.Y_AXIS));
+		centerPane.setLayout(new BorderLayout());
+		centerPane.setBorder(blackBorder);
+		centerPane.setMaximumSize(new Dimension(150,150));
+		
+		JPanel topLeftPane = new JPanel(new FlowLayout());
 		topLeftPane.setBorder(blackBorder);
 		
-		JPanel topRightPane = new JPanel();
+		JPanel topRightPane = new JPanel(new FlowLayout());
 		topRightPane.setBorder(blackBorder);
 		
-		JPanel bottomLeftPane = new JPanel();
-		bottomLeftPane.setBorder(blackBorder);
+		JPanel topCenterPane = new JPanel(new BorderLayout());
+		topCenterPane.setBorder(blackBorder);
 		
-		JPanel bottomRightPane = new JPanel();
-		bottomRightPane.setBorder(blackBorder);
+		JPanel bottomCenterPane = new JPanel(new BorderLayout());
+		bottomCenterPane.setBorder(blackBorder);
 		
-		mainPane.setLayout(new GridLayout(2,2));
+		mainPane.setLayout(new BorderLayout());
+		Dimension minSize = new Dimension(5,40);
+		Dimension maxSize = new Dimension(80,400);
+		Dimension prefSize = new Dimension(60,60);
+		Dimension centerPanelSize = new Dimension(335, 200);
 		
-		mainPane.add(topLeftPane);
-		mainPane.add(topRightPane);
-		mainPane.add(bottomRightPane);
-		mainPane.add(bottomLeftPane);
 		
-		topLeftPane.add(Box.createRigidArea(new Dimension(0,25)));
-		topLeftPane.add(Box.createHorizontalGlue());
+		// Change these to regular boxes so color can be applied
+		Filler boxLeft = new Box.Filler(minSize, prefSize, maxSize);
+		Filler boxRight = new Box.Filler(minSize, prefSize, maxSize);
+		Filler boxCenter = new Box.Filler(new Dimension(5,5), new Dimension(5,5), new Dimension(5,5));
+
+		mainPane.add(boxLeft, BorderLayout.WEST);
+		mainPane.add(centerPane, BorderLayout.CENTER);
+		mainPane.add(boxRight,  BorderLayout.EAST);
+		//mainPane.add(topLeftPane);
+		//mainPane.add(bottomCenterPane);
+		//mainPane.add(topRightPane);
 		
+		
+		// Top-Left-Center Pane
+		topLeftPane.add(nameLabel);
+		topLeftPane.add(name); // Component, row, column
 		topLeftPane.add(startDateLabel);
 		topLeftPane.add(startDate);
-		
-		topLeftPane.add(Box.createRigidArea(new Dimension(0,40)));
-		topLeftPane.add(name); // Component, row, column
-
+		topLeftPane.add(endDateLabel);
 		topLeftPane.add(endDate);
-		topLeftPane.add(locEst);
-		topLeftPane.add(Box.createRigidArea(new Dimension(25,5)));
-		topLeftPane.add(hoursEst);
-				
+		topLeftPane.setPreferredSize(centerPanelSize);
+		
+		// Top-Right-Center Pane
+		topRightPane.add(locEstLabel);
+		topRightPane.add(locEst);
+		topRightPane.add(hoursEstLabel);
+		topRightPane.add(hoursEst);
+		topRightPane.add(numFilesLabel);
+		topRightPane.add(numFiles);
+		
+		topRightPane.setPreferredSize(centerPanelSize);
+		
+		topCenterPane.add(topLeftPane, BorderLayout.WEST);
+		topCenterPane.add(boxCenter,BorderLayout.CENTER);
+		topCenterPane.add(topRightPane, BorderLayout.EAST);
+		bottomCenterPane.add(taskDesc);
+		bottomCenterPane.add(finishButton, BorderLayout.SOUTH);
+		
+		centerPane.add(topCenterPane,BorderLayout.NORTH);
+		centerPane.add(bottomCenterPane, BorderLayout.CENTER);
+		
 		setTitle("New Task Window");
 		setSize(WIDTH, HEIGHT);
 		setLocation(WIDTH/2,HEIGHT/2);
+		setResizable(false); // Fixed window size
 		setVisible(true);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE); // Enum value EXIT_ON_CLOSE, not String. Interesting.
 		
 	}
-
+	// Remove
 	public TaskState getTaskState() {
 		return state;
 	}
