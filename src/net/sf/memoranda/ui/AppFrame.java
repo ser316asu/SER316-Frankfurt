@@ -80,7 +80,6 @@ public class AppFrame extends JFrame
     JLabel statusBar = new JLabel();
     BorderLayout borderLayout1 = new BorderLayout();
     JSplitPane splitPane = new JSplitPane();
-    ProjectsPanel projectsPanel = new ProjectsPanel();
     boolean prPanelExpanded = false;
 
     JMenu jMenuEdit = new JMenu();
@@ -88,7 +87,7 @@ public class AppFrame extends JFrame
     JMenu jMenuInsert = new JMenu();
 
     public WorkPanel workPanel = new WorkPanel();
-    HTMLEditor editor = workPanel.dailyItemsPanel.editorPanel.editor;
+    //HTMLEditor editor = workPanel.dailyItemsPanel.editorPanel.editor;
 
     static Vector exitListeners = new Vector();
 
@@ -140,18 +139,18 @@ public class AppFrame extends JFrame
         };
     
     JMenuItem jMenuFileNewPrj = new JMenuItem();
-        JMenuItem jMenuFileNewNote = new JMenuItem(workPanel.dailyItemsPanel.editorPanel.newAction);
+        //JMenuItem jMenuFileNewNote = new JMenuItem(workPanel.dailyItemsPanel.editorPanel.newAction);
     JMenuItem jMenuFilePackPrj = new JMenuItem(prjPackAction);
     JMenuItem jMenuFileUnpackPrj = new JMenuItem(prjUnpackAction);
     JMenuItem jMenuFileExportPrj = new JMenuItem(exportNotesAction);
     JMenuItem jMenuFileImportPrj = new JMenuItem(importNotesAction);
     JMenuItem jMenuFileImportNote = new JMenuItem(importOneNoteAction);
-    JMenuItem jMenuFileExportNote = new JMenuItem(
-            workPanel.dailyItemsPanel.editorPanel.exportAction);
+    //JMenuItem jMenuFileExportNote = new JMenuItem(
+      //      workPanel.dailyItemsPanel.editorPanel.exportAction);
     JMenuItem jMenuFileMin = new JMenuItem(minimizeAction);
 
     JMenuItem jMenuItem1 = new JMenuItem();
-    JMenuItem jMenuEditUndo = new JMenuItem(editor.undoAction);
+    /*JMenuItem jMenuEditUndo = new JMenuItem(editor.undoAction);
     JMenuItem jMenuEditRedo = new JMenuItem(editor.redoAction);
     JMenuItem jMenuEditCut = new JMenuItem(editor.cutAction);
     JMenuItem jMenuEditCopy = new JMenuItem(editor.copyAction);
@@ -232,7 +231,7 @@ public class AppFrame extends JFrame
     JMenuItem jMenuGoDayFwd = new JMenuItem(
             workPanel.dailyItemsPanel.getCalendar().dayForwardAction);
     JMenuItem jMenuGoToday = new JMenuItem(
-            workPanel.dailyItemsPanel.getCalendar().todayAction);
+            workPanel.dailyItemsPanel.getCalendar().todayAction);*/
 
     JMenuItem jMenuEditPref = new JMenuItem(preferencesAction);
 
@@ -317,8 +316,8 @@ public class AppFrame extends JFrame
         //splitPane.setOneTouchExpandable(true);
         splitPane.setDividerLocation(28);
         //projectsPanel.setMaximumSize(new Dimension(2147483647, 200));
-        projectsPanel.setMinimumSize(new Dimension(10, 28));
-        projectsPanel.setPreferredSize(new Dimension(10, 28));
+        //projectsPanel.setMinimumSize(new Dimension(10, 28));
+        //projectsPanel.setPreferredSize(new Dimension(10, 28));
         /*workPanel.setMinimumSize(new Dimension(734, 300));
          workPanel.setPreferredSize(new Dimension(1073, 300));*/
         splitPane.setDividerLocation(28);
@@ -330,11 +329,11 @@ public class AppFrame extends JFrame
          }
          });
          */
-        jMenuFileNewPrj.setAction(projectsPanel.newProjectAction);
+        //jMenuFileNewPrj.setAction(projectsPanel.newProjectAction);
 
         jMenuFileUnpackPrj.setText(Local.getString("Unpack project") + "...");
-        jMenuFileExportNote.setText(Local.getString("Export current note")
-                + "...");
+        //jMenuFileExportNote.setText(Local.getString("Export current note")
+                //+ "...");
         jMenuFileImportNote.setText(Local.getString("Import one note")
                 + "...");
         jMenuFilePackPrj.setText(Local.getString("Pack project") + "...");
@@ -344,7 +343,7 @@ public class AppFrame extends JFrame
 
         jMenuEdit.setText(Local.getString("Edit"));
 
-        jMenuEditUndo.setText(Local.getString("Undo"));
+        /*jMenuEditUndo.setText(Local.getString("Undo"));
         jMenuEditUndo.setToolTipText(Local.getString("Undo"));
         jMenuEditRedo.setText(Local.getString("Redo"));
         jMenuEditRedo.setToolTipText(Local.getString("Redo"));
@@ -356,56 +355,56 @@ public class AppFrame extends JFrame
         jMenuEditPaste.setToolTipText(Local.getString("Paste"));
         jMenuEditPasteSpec.setText(Local.getString("Paste special"));
         jMenuEditPasteSpec.setToolTipText(Local.getString("Paste special"));
-        jMenuEditSelectAll.setText(Local.getString("Select all"));
+        jMenuEditSelectAll.setText(Local.getString("Select all"));*/
 
-        jMenuEditFind.setText(Local.getString("Find & replace") + "...");
+        //jMenuEditFind.setText(Local.getString("Find & replace") + "...");
 
         jMenuEditPref.setText(Local.getString("Preferences") + "...");
 
         jMenuInsert.setText(Local.getString("Insert"));
 
-        jMenuInsertImage.setText(Local.getString("Image") + "...");
-        jMenuInsertImage.setToolTipText(Local.getString("Insert Image"));
-        jMenuInsertTable.setText(Local.getString("Table") + "...");
-        jMenuInsertTable.setToolTipText(Local.getString("Insert Table"));
-        jMenuInsertLink.setText(Local.getString("Hyperlink") + "...");
-        jMenuInsertLink.setToolTipText(Local.getString("Insert Hyperlink"));
-        jMenuInsertList.setText(Local.getString("List"));
+        //jMenuInsertImage.setText(Local.getString("Image") + "...");
+        //jMenuInsertImage.setToolTipText(Local.getString("Insert Image"));
+        //jMenuInsertTable.setText(Local.getString("Table") + "...");
+        //jMenuInsertTable.setToolTipText(Local.getString("Insert Table"));
+        //jMenuInsertLink.setText(Local.getString("Hyperlink") + "...");
+        //jMenuInsertLink.setToolTipText(Local.getString("Insert Hyperlink"));
+        //jMenuInsertList.setText(Local.getString("List"));
 
-        jMenuInsertListUL.setText(Local.getString("Unordered"));
-        jMenuInsertListUL.setToolTipText(Local.getString("Insert Unordered"));
-        jMenuInsertListOL.setText(Local.getString("Ordered"));
+        //jMenuInsertListUL.setText(Local.getString("Unordered"));
+        // jMenuInsertListUL.setToolTipText(Local.getString("Insert Unordered"));
+        // jMenuInsertListOL.setText(Local.getString("Ordered"));
 
         jMenuInsertSpecial.setText(Local.getString("Special"));
-        jMenuInsertBR.setText(Local.getString("Line break"));
-        jMenuInsertHR.setText(Local.getString("Horizontal rule"));
+        // jMenuInsertBR.setText(Local.getString("Line break"));
+        //jMenuInsertHR.setText(Local.getString("Horizontal rule"));
 
-        jMenuInsertListOL.setToolTipText(Local.getString("Insert Ordered"));
+        //jMenuInsertListOL.setToolTipText(Local.getString("Insert Ordered"));
 
-        jMenuInsertChar.setText(Local.getString("Special character") + "...");
-        jMenuInsertChar.setToolTipText(Local.getString(
-                "Insert Special character"));
-        jMenuInsertDate.setText(Local.getString("Current date"));
-        jMenuInsertTime.setText(Local.getString("Current time"));
-        jMenuInsertFile.setText(Local.getString("File") + "...");
+        //jMenuInsertChar.setText(Local.getString("Special character") + "...");
+        //jMenuInsertChar.setToolTipText(Local.getString(
+        //       "Insert Special character"));
+                //jMenuInsertDate.setText(Local.getString("Current date"));
+        //        jMenuInsertTime.setText(Local.getString("Current time"));
+        //jMenuInsertFile.setText(Local.getString("File") + "...");
 
         jMenuFormat.setText(Local.getString("Format"));
-        jMenuFormatPStyle.setText(Local.getString("Paragraph style"));
-        jMenuFormatP.setText(Local.getString("Paragraph"));
-        jMenuFormatH1.setText(Local.getString("Header") + " 1");
-        jMenuFormatH2.setText(Local.getString("Header") + " 2");
-        jMenuFormatH3.setText(Local.getString("Header") + " 3");
-        jMenuFormatH4.setText(Local.getString("Header") + " 4");
-        jMenuFormatH5.setText(Local.getString("Header") + " 5");
-        jMenuFormatH6.setText(Local.getString("Header") + " 6");
-        jMenuFormatPRE.setText(Local.getString("Preformatted text"));
-        jMenuFormatBLCQ.setText(Local.getString("Blockquote"));
-        jjMenuFormatChStyle.setText(Local.getString("Character style"));
-        jMenuFormatChNorm.setText(Local.getString("Normal"));
-        jMenuFormatChEM.setText(Local.getString("Emphasis"));
-        jMenuFormatChSTRONG.setText(Local.getString("Strong"));
-        jMenuFormatChCODE.setText(Local.getString("Code"));
-        jMenuFormatChCite.setText(Local.getString("Cite"));
+        //jMenuFormatPStyle.setText(Local.getString("Paragraph style"));
+        //jMenuFormatP.setText(Local.getString("Paragraph"));
+        //jMenuFormatH1.setText(Local.getString("Header") + " 1");
+        //jMenuFormatH2.setText(Local.getString("Header") + " 2");
+        //jMenuFormatH3.setText(Local.getString("Header") + " 3");
+        //jMenuFormatH4.setText(Local.getString("Header") + " 4");
+        //jMenuFormatH5.setText(Local.getString("Header") + " 5");
+        //jMenuFormatH6.setText(Local.getString("Header") + " 6");
+        //jMenuFormatPRE.setText(Local.getString("Preformatted text"));
+        //jMenuFormatBLCQ.setText(Local.getString("Blockquote"));
+        //jjMenuFormatChStyle.setText(Local.getString("Character style"));
+        //jMenuFormatChNorm.setText(Local.getString("Normal"));
+        //jMenuFormatChEM.setText(Local.getString("Emphasis"));
+        //jMenuFormatChSTRONG.setText(Local.getString("Strong"));
+        //jMenuFormatChCODE.setText(Local.getString("Code"));
+        /*jMenuFormatChCite.setText(Local.getString("Cite"));
         jMenuFormatChSUP.setText(Local.getString("Superscript"));
         jMenuFormatChSUB.setText(Local.getString("Subscript"));
         jMenuFormatChCustom.setText(Local.getString("Custom style") + "...");
@@ -437,27 +436,27 @@ public class AppFrame extends JFrame
         jMenuGoFwd.setToolTipText(Local.getString("History forward"));
         jMenuGoDayBack.setText(Local.getString("One day back"));
         jMenuGoDayFwd.setText(Local.getString("One day forward"));
-        jMenuGoToday.setText(Local.getString("To today"));
+        jMenuGoToday.setText(Local.getString("To today"));*/
 
         jMenuInsertSpecial.setText(Local.getString("Special"));
-        jMenuInsertBR.setText(Local.getString("Line break"));
-        jMenuInsertBR.setToolTipText(Local.getString("Insert break"));
-        jMenuInsertHR.setText(Local.getString("Horizontal rule"));
-        jMenuInsertHR.setToolTipText(Local.getString("Insert Horizontal rule"));
+       // jMenuInsertBR.setText(Local.getString("Line break"));
+        //jMenuInsertBR.setToolTipText(Local.getString("Insert break"));
+        //jMenuInsertHR.setText(Local.getString("Horizontal rule"));
+        //jMenuInsertHR.setToolTipText(Local.getString("Insert Horizontal rule"));
 
-        toolBar.add(jButton3);
-        jMenuFile.add(jMenuFileNewPrj);
-                jMenuFile.add(jMenuFileNewNote);
+        //toolBar.add(jButton3);
+        //jMenuFile.add(jMenuFileNewPrj);
+        //        jMenuFile.add(jMenuFileNewNote);
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuFilePackPrj);
         jMenuFile.add(jMenuFileUnpackPrj);
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuFileExportPrj);
-        jMenuFile.add(jMenuFileExportNote);
+        //jMenuFile.add(jMenuFileExportNote);
         jMenuFile.add(jMenuFileImportNote);
         jMenuFile.add(jMenuFileImportPrj);
         jMenuFile.addSeparator();
-        jMenuFile.add(jMenuEditPref);
+        //jMenuFile.add(jMenuEditPref);
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuFileMin);
         jMenuFile.addSeparator();
@@ -473,17 +472,17 @@ public class AppFrame extends JFrame
         menuBar.add(jMenuEdit);
         menuBar.add(jMenuInsert);
         menuBar.add(jMenuFormat);
-        menuBar.add(jMenuGo);
+        //menuBar.add(jMenuGo);
         menuBar.add(jMenuHelp);
         this.setJMenuBar(menuBar);
         //contentPane.add(toolBar, BorderLayout.NORTH);
-        contentPane.add(statusBar, BorderLayout.SOUTH);
-        contentPane.add(splitPane, BorderLayout.CENTER);
-        splitPane.add(projectsPanel, JSplitPane.TOP);
-        splitPane.add(workPanel, JSplitPane.BOTTOM);
-        jMenuEdit.add(jMenuEditUndo);
-        jMenuEdit.add(jMenuEditRedo);
-        jMenuEdit.addSeparator();
+        //contentPane.add(statusBar, BorderLayout.SOUTH);
+        //contentPane.add(splitPane, BorderLayout.CENTER);
+        //splitPane.add(projectsPanel, JSplitPane.TOP);
+        //splitPane.add(workPanel, JSplitPane.BOTTOM);
+        //jMenuEdit.add(jMenuEditUndo);
+        //jMenuEdit.add(jMenuEditRedo);
+        /*jMenuEdit.addSeparator();
         jMenuEdit.add(jMenuEditCut);
         jMenuEdit.add(jMenuEditCopy);
         jMenuEdit.add(jMenuEditPaste);
@@ -556,11 +555,11 @@ public class AppFrame extends JFrame
         jMenuGo.add(jMenuGoToday);
 
         splitPane.setBorder(null);
-        workPanel.setBorder(null);
+        workPanel.setBorder(null);*/
 
         setEnabledEditorMenus(false);
 
-        projectsPanel.AddExpandListener(new ActionListener() {
+       /*projectsPanel.AddExpandListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (prPanelExpanded) {
                     prPanelExpanded = false;
@@ -571,7 +570,7 @@ public class AppFrame extends JFrame
                     splitPane.setDividerLocation(0.2);
                 }
             }
-        });
+        });*/
 
         java.awt.event.ActionListener setMenusDisabled = new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -579,10 +578,10 @@ public class AppFrame extends JFrame
             }
         };
 
-        this.workPanel.dailyItemsPanel.getTaskB()
-                .addActionListener(setMenusDisabled);
-        this.workPanel.dailyItemsPanel.getAlarmB().addActionListener(
-                setMenusDisabled);
+        //this.workPanel.dailyItemsPanel.getTaskB()
+        //        .addActionListener(setMenusDisabled);
+        //this.workPanel.dailyItemsPanel.getAlarmB().addActionListener(
+        /*        setMenusDisabled);
 
         this.workPanel.tasksB.addActionListener(setMenusDisabled);
         this.workPanel.eventsB.addActionListener(setMenusDisabled);
@@ -594,7 +593,7 @@ public class AppFrame extends JFrame
                     public void actionPerformed(ActionEvent e) {
                         setEnabledEditorMenus(true);
                     }
-                });
+                });*/
 
         Object fwo = Context.get("FRAME_WIDTH");
         Object fho = Context.get("FRAME_HEIGHT");
@@ -616,7 +615,7 @@ public class AppFrame extends JFrame
 
         String pan = (String) Context.get("CURRENT_PANEL");
         if (pan != null) {
-            workPanel.selectPanel(pan);
+            //workPanel.selectPanel(pan);
             setEnabledEditorMenus(pan.equalsIgnoreCase("NOTES"));
         }
 
@@ -714,8 +713,8 @@ public class AppFrame extends JFrame
         this.jMenuEdit.setEnabled(enabled);
         this.jMenuFormat.setEnabled(enabled);
         this.jMenuInsert.setEnabled(enabled);
-        this.jMenuFileNewNote.setEnabled(enabled);
-        this.jMenuFileExportNote.setEnabled(enabled);
+        //this.jMenuFileNewNote.setEnabled(enabled);
+        //this.jMenuFileExportNote.setEnabled(enabled);
     }
 
     public void doPrjPack() {
@@ -828,7 +827,7 @@ public class AppFrame extends JFrame
         Context.put("LAST_SELECTED_PACK_FILE", chooser.getSelectedFile());        
         java.io.File f = chooser.getSelectedFile();
         ProjectPackager.unpack(f);
-        projectsPanel.getPrjTablePanel().updateUI();
+        //projectsPanel.getPrjTablePanel().updateUI();
     }
 
     public void showPreferences() {
@@ -1016,7 +1015,7 @@ public class AppFrame extends JFrame
                             note.setId(Util.generateId());
                     CurrentStorage.get().storeNote(note, doc);
                     }
-                    workPanel.dailyItemsPanel.getNotesControlPane().refresh();
+                    //workPanel.dailyItemsPanel.getNotesControlPane().refresh();
                     
             }catch(Exception exc){
                     exc.printStackTrace();
@@ -1098,7 +1097,7 @@ public class AppFrame extends JFrame
                             note.setId(Util.generateId());
                     CurrentStorage.get().storeNote(note, doc);
                     }
-                    workPanel.dailyItemsPanel.getNotesControlPane().refresh();
+                    //workPanel.dailyItemsPanel.getNotesControlPane().refresh();
                     
             }catch(Exception exc){
                     exc.printStackTrace();
