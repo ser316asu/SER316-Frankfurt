@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -51,9 +52,7 @@ import net.sf.memoranda.util.Util;
 
 public class CalendarPanel extends JPanel {
 
-	JNCalendarPanel calendar = new JNCalendarPanel();
-	JPanel main = new JPanel();
-
+	
 	    public CalendarPanel() {
 	        try {
 	           // parentPanel = _parentPanel;
@@ -66,7 +65,9 @@ public class CalendarPanel extends JPanel {
 
 		private void jbInit() {
 			
-			main.add(calendar, BorderLayout.CENTER);
+		   
 			
+		
+		
 		}
 	}

@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -16,6 +17,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
+import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.util.Context;
 import net.sf.memoranda.util.Local;
 
@@ -42,6 +44,15 @@ public class WorkPanel extends JPanel {
 	public JButton calendarB = new JButton();
 	JButton currentB = null;
 	Border border1;
+	
+	
+	boolean calendarIgnoreChange = false;
+    boolean dateChangedByCalendar = false;
+    boolean changedByHistory = false;
+    
+	JNCalendarPanel calendar = new JNCalendarPanel();
+	JPanel main = new JPanel();
+
 
 	public WorkPanel() {
 		try {
@@ -69,6 +80,10 @@ public class WorkPanel extends JPanel {
 		toolBar.setBorderPainted(false);
 		toolBar.setFloatable(false);
 		panel.setLayout(cardLayout1);
+		
+		 calendar.setFont(new java.awt.Font("Dialog", 0, 11));
+	     calendar.setMinimumSize(new Dimension(0, 1000));
+		 //main.add(calendar, BorderLayout.CENTER);
 
 		agendaB.setBackground(Color.white);
 		agendaB.setMaximumSize(new Dimension(60, 80));
@@ -203,6 +218,7 @@ public class WorkPanel extends JPanel {
 		panel.add(dailyItemsPanel, "DAILYITEMS");
 		panel.add(filesPanel, "FILES");
 		panel.add(calendarPanel, "CALENDAR");
+		calendarPanel.add(calendar, BorderLayout.CENTER);
 		toolBar.add(agendaB, null);
 		toolBar.add(eventsB, null);
 		toolBar.add(tasksB, null);
@@ -248,6 +264,16 @@ public class WorkPanel extends JPanel {
 		panel.setBorder(null);
 		dailyItemsPanel.setBorder(null);
 		filesPanel.setBorder(null);
+		
+		 calendar.addSelectionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	                if (calendarIgnoreChange)
+	                    return;
+	                dateChangedByCalendar = true;
+	                CurrentDate.set(calendar.get());
+	                dateChangedByCalendar = false;
+	            }
+	        });
 
 	}
 
@@ -318,4 +344,6 @@ public class WorkPanel extends JPanel {
 		currentB.setBackground(new Color(215, 225, 250));
 		currentB.setOpaque(true);
 	}
+	
+	
 }
