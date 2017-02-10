@@ -90,6 +90,12 @@ public class AppFrame extends JFrame {
     HTMLEditor editor = workPanel.dailyItemsPanel.editorPanel.editor;
 
     static Vector exitListeners = new Vector();
+    
+    public Action newTaskAction = new AbstractAction("New Task") {
+        public void actionPerformed(ActionEvent e) {
+        	NewTaskWindow newTask = new NewTaskWindow();
+        }
+    };
 
     public Action prjPackAction = new AbstractAction("Pack current project") {
         public void actionPerformed(ActionEvent e) {
@@ -140,6 +146,7 @@ public class AppFrame extends JFrame {
     
     JMenuItem jMenuFileNewPrj = new JMenuItem();
         JMenuItem jMenuFileNewNote = new JMenuItem(workPanel.dailyItemsPanel.editorPanel.newAction);
+    JMenuItem jMenuFileNewTask = new JMenuItem(newTaskAction);
     JMenuItem jMenuFilePackPrj = new JMenuItem(prjPackAction);
     JMenuItem jMenuFileUnpackPrj = new JMenuItem(prjUnpackAction);
     JMenuItem jMenuFileExportPrj = new JMenuItem(exportNotesAction);
@@ -445,8 +452,11 @@ public class AppFrame extends JFrame {
         jMenuInsertHR.setToolTipText(Local.getString("Insert Horizontal rule"));
 
         toolBar.add(jButton3);
+        jMenuFile.add(jMenuFileNewTask);
         jMenuFile.add(jMenuFileNewPrj);
                 jMenuFile.add(jMenuFileNewNote);
+
+
         jMenuFile.addSeparator();
         jMenuFile.add(jMenuFilePackPrj);
         jMenuFile.add(jMenuFileUnpackPrj);
