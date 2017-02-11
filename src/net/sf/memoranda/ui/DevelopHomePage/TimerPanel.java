@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class TimerPanel extends JLabel implements Styling{
+public class TimerPanel extends JPanel implements Styling{
 	private Dimension dimension,buttonDimension;
 	private TopInnerPanel parent;
 	private JButton pause,start,stop;
@@ -16,7 +16,6 @@ public class TimerPanel extends JLabel implements Styling{
 	
 	public TimerPanel(TopInnerPanel parent,TaskCard task){
 		this.task = task;
-		dimension = new Dimension(Styling.TIMER_PANEL_WIDTH,Styling.TIMER_PANEL_HEIGHT);
 		this.parent = parent;
 		createComponents();
 		editComponents();
@@ -33,6 +32,11 @@ public class TimerPanel extends JLabel implements Styling{
 		stop = new JButton();
 
 		time = new JLabel();
+		
+		int width = (int) parent.getDimension().getWidth();
+		int height = (int) parent.getDimension().getHeight() + 5;
+
+		dimension = new Dimension(width,height);
 
 		buttonDimension = new Dimension(75,50);
 
@@ -89,7 +93,7 @@ public class TimerPanel extends JLabel implements Styling{
 	}
 
 	public void style(){
-		//this.setBackground(Styling.TIMER_PANEL_COLOR);
+		this.setBackground(Styling.BACKGROUND_COLOR);
 		
 		pause.setBackground(Styling.TASK_PANEL_COLOR);
 		pause.setForeground(Styling.TASK_PANEL_TEXT_COLOR);

@@ -55,7 +55,7 @@ public class TopInnerPanel extends JLabel implements Styling{
 	}
 
 	public void style(){
-		//this.setBackground(Styling.PROGRESS_PANEL_COLOR);
+		this.setBackground(Styling.BACKGROUND_COLOR);
 		//ths.setForeground(Styling.FOREGROUND_COLOR);
 		if(panelCount == 0){
 			this.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));
