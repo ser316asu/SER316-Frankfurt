@@ -92,7 +92,6 @@ public class Timer implements Runnable{
 	}
 	public void pause(){
 		paused = true;
-
 	}
 
 	synchronized void resume(){

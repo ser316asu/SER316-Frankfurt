@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class TopHomePanel extends JPanel implements Styling
+public class TopHomePanel extends JLabel implements Styling
 {
     final static int LEFT_LABEL_PANEL = 0, RIGHT_LABEL_PANEL = 1;
     private TopInnerPanel leftChild,rightChild;
@@ -37,11 +37,6 @@ public class TopHomePanel extends JPanel implements Styling
     public void createChildPanels(){
         leftChild = new TopInnerPanel(Styling.TERMINAL_PANEL_WIDTH, Styling.TERMINAL_PANEL_HEIGHT);
         rightChild = new TopInnerPanel(Styling.TERMINAL_RIGHT_PANEL_WIDTH,Styling.TERMINAL_RIGHT_PANEL_HEIGHT);
-
-        leftChild.setLayout(new GridLayout(1,2,0,0));
-        rightChild.setLayout(new GridLayout(2,1,3,3));//new BoxLayout(rightChild,BoxLayout.Y_AXIS));
-        leftChild.setIcon(LoadAssets.TERMINAL_IMAGE);
-
 
         leftLabels = new TopLabelPanel(task,TopHomePanel.LEFT_LABEL_PANEL);
         rightLabels = new TopLabelPanel(task,TopHomePanel.RIGHT_LABEL_PANEL);
@@ -80,6 +75,14 @@ public class TopHomePanel extends JPanel implements Styling
 
     public void style(){
         this.setBackground(Styling.BACKGROUND_COLOR);
+        leftChild.setLayout(new GridLayout(1,2,0,0));
+        rightChild.setLayout(new FlowLayout(FlowLayout.LEFT,0,0));//rightChild.setLayout(new GridLayout(2,1,3,3));//new BoxLayout(rightChild,BoxLayout.Y_AXIS));
+        rightChild.setBackground(Styling.TIMER_PANEL_COLOR);
+        this.setIcon(LoadAssets.TERMINAL_IMAGE);
+        //rightChild.setIcon(LoadAssets.TERMINAL_IMAGE);
+        
+        
+        //rightChild.setPreferredSize(new Dimension(Styling.TERMINAL_RIGHT_PANEL_WIDTH,Styling.TERMINAL_RIGHT_PANEL_HEIGHT));
         //this.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));
     }
     
