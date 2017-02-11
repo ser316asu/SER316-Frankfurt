@@ -28,11 +28,11 @@ public interface Styling{
 	static final int SCREEN_WIDTH = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();
 	static final int SCREEN_HEIGHT = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight();
 	
-	static final int TASK_PANEL_WIDTH = 275;
-	static final int TASK_PANEL_HEIGHT = 225;
-	
 	static final int TASK_BOARD_WIDTH = SCREEN_WIDTH -105;
 	static final int TASK_BOARD_HEIGHT = ((int) (SCREEN_HEIGHT * .6)) -10;
+	
+	static final int TASK_PANEL_WIDTH = TASK_BOARD_WIDTH/5 -75;
+	static final int TASK_PANEL_HEIGHT = TASK_BOARD_HEIGHT/2 - 75;
 	
 	public final int TOP_PANEL_WIDTH = (int) (SCREEN_WIDTH) - 105;
     public final int TOP_PANEL_HEIGHT = (int) (SCREEN_HEIGHT * .4)-10;
