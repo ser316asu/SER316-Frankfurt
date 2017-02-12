@@ -67,7 +67,7 @@ public class ProgressCircleUI extends BasicProgressBarUI {
 		        progress.setValue(iv);
 		      })).start();*/
 
-		    progress.setBorder(BorderFactory.createLineBorder(Color.red));
+		    //progress.setBorder(BorderFactory.createLineBorder(Color.red));
 		    return progress;
 		  }
 	}

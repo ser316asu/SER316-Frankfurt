@@ -6,7 +6,7 @@ import java.util.*;
 
 public class StatusBarPanel extends JLabel implements Styling, Observer{
 	private TopInnerPanel parent;
-	private JLabel buttonPanel,progressPanel;
+	private JLabel buttonPanel,progressPanel, circlesPanel, progressLabelsPanel;
 	private TaskCard task;
 	private Dimension dimension,progressDimension;
 	private LayoutManager border,grid;
@@ -40,6 +40,8 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 		progressDays.setUI(new ProgressCircleUI());
 	
 		//progressTime.setUI(new ProgressCircleUI());
+		circlesPanel = new JLabel();
+		this.progressLabelsPanel = new JLabel();
 
 		open = new JButton();
 		
@@ -71,35 +73,53 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 
 		open.setText("Open Task File");
 
-		this.setLayout(new BorderLayout());
-		progressPanel.setLayout(new GridLayout(1,3,0,0));
-		progressPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		this.circlesPanel.setLayout(new GridLayout(1,3,0,0));
+		this.progressLabelsPanel.setLayout(new BoxLayout(this.progressLabelsPanel,BoxLayout.X_AXIS));
+		this.setLayout(new GridLayout(1,1,0,0));
+		progressPanel.setLayout(new BoxLayout(progressPanel,BoxLayout.Y_AXIS));
+		
+		this.dayStatus.setHorizontalAlignment(CENTER);
+		this.locStatus.setHorizontalAlignment(CENTER);
+		this.timeStatus.setHorizontalAlignment(CENTER);
 	}
 
 	public void addActionListeners(){}
 
 	public void addComponents(){
-		//progressPanel.add(dayStatus);
-		progressPanel.add(progressTime);
+		//progressPanel.add(dayStac);tus);
+		this.circlesPanel.add(progressTime);
 
 		//progressPanel.add(timeStatus);
-		progressPanel.add(progressDays);
+		this.circlesPanel.add(progressDays);
 
 		//progressPanel.add(locStatus);
-		progressPanel.add(progressLoc);
+		this.circlesPanel.add(progressLoc);
+		
+		JLabel label = new JLabel("Hello");
+		label.setLayout(new FlowLayout());
+		this.progressLabelsPanel.add(this.timeStatus);
+		this.progressLabelsPanel.add(this.locStatus);
+		this.progressLabelsPanel.add(this.dayStatus);
+		
+		this.progressPanel.add(this.circlesPanel);
+		this.progressPanel.add(this.progressLabelsPanel);
+		//this.progressPanel.add(new JLabel("Some Text"));
+		
 
-		buttonPanel.add(open);
+		//buttonPanel.add(open);
 
-		this.add(progressPanel,BorderLayout.CENTER);
-		this.add(buttonPanel,BorderLayout.SOUTH);
+		this.add(progressPanel);
+		//this.add(, constraints);
+		//this.add(buttonPanel,BorderLayout.SOUTH);
 	}
 
 	public void style(){
 		//this.setBackground(Styling.BACKGROUND_COLOR);
-		progressPanel.setBorder(BorderFactory.createLineBorder(Color.red));
-		this.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));
+		//progressPanel.setBorder(BorderFactory.createLineBorder(Color.red));
+		
+		//this.circlesPanel.setBorder(BorderFactory.createLineBorder(Color.green));
+		//this.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));
 
 		//progressDays.setBackground(Styling.TASK_PANEL_TEXT_COLOR);
 		//progressDays.setForeground(Styling.TASK_PANEL_COLOR);
@@ -125,6 +145,32 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 		open.setBackground(Styling.TASK_PANEL_COLOR);
 		open.setForeground(Styling.TASK_PANEL_TEXT_COLOR);
 		open.setFont(Styling.FONT);
+		
+		//this.circlesPanel.setMaximumSize(new Dimension(Styling.PROGRESS_PANEL_CIRCLES_WIDTH,Styling.PROGRESS_PANEL_CIRCLES_HEIGTH));
+		//this.progressLabelsPanel.setMaximumSize(new Dimension(Styling.PROGRESS_PANEL_LABELS_WIDTH,Styling.PROGRESS_PANEL_LABELS_HEIGTH));
+		//this.circlesPanel.setPreferredSize(new Dimension(Styling.PROGRESS_PANEL_CIRCLES_WIDTH,Styling.PROGRESS_PANEL_CIRCLES_HEIGTH));
+		this.progressLabelsPanel.setPreferredSize(new Dimension(Styling.PROGRESS_PANEL_LABELS_WIDTH,Styling.PROGRESS_PANEL_LABELS_HEIGTH));
+		this.progressLabelsPanel.setMaximumSize(new Dimension(Styling.PROGRESS_PANEL_WIDTH,Styling.PROGRESS_PANEL_LABELS_HEIGTH));
+		this.circlesPanel.setPreferredSize(new Dimension(Styling.PROGRESS_PANEL_WIDTH,Styling.PROGRESS_PANEL_CIRCLES_HEIGTH));
+		this.circlesPanel.setMaximumSize(new Dimension(Styling.PROGRESS_PANEL_WIDTH,Styling.PROGRESS_PANEL_CIRCLES_HEIGTH));
+		System.out.println(Styling.PROGRESS_PANEL_WIDTH + " circles " + Styling.PROGRESS_PANEL_CIRCLES_HEIGTH);
+		Dimension d = new Dimension(Styling.PROGRESS_PANEL_LABELS_WIDTH,Styling.PROGRESS_PANEL_LABELS_HEIGTH);
+		
+		this.timeStatus.setPreferredSize(d);
+		this.dayStatus.setPreferredSize(d);
+		this.locStatus.setPreferredSize(d);
+		this.timeStatus.setSize(d);
+		this.dayStatus.setSize(d);
+		this.locStatus.setSize(d);
+		this.timeStatus.setMinimumSize(d);
+		this.dayStatus.setMinimumSize(d);
+		this.locStatus.setMinimumSize(d);
+		this.timeStatus.setMaximumSize(d);
+		this.dayStatus.setMaximumSize(d);
+		this.locStatus.setMaximumSize(d);
+		
+		//this.dayStatus.setBorder(BorderFactory.createLineBorder(Color.white));
+		//this.progressLabelsPanel.setBorder(BorderFactory.createLineBorder(Color.white));
 	}
 
 	public void update(Observable taskCard,Object args){

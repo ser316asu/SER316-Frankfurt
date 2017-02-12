@@ -31,8 +31,8 @@ public interface Styling{
 	static final int TASK_BOARD_WIDTH = SCREEN_WIDTH -105;
 	static final int TASK_BOARD_HEIGHT = ((int) (SCREEN_HEIGHT * .6)) -10;
 	
-	static final int TASK_PANEL_WIDTH = TASK_BOARD_WIDTH/5 -75;
-	static final int TASK_PANEL_HEIGHT = TASK_BOARD_HEIGHT/2 - 75;
+	static final int TASK_PANEL_WIDTH = TASK_BOARD_WIDTH/5 -100;
+	static final int TASK_PANEL_HEIGHT = TASK_BOARD_HEIGHT/2 - 100;
 	
 	public final int TOP_PANEL_WIDTH = (int) (SCREEN_WIDTH) - 105;
     public final int TOP_PANEL_HEIGHT = (int) (SCREEN_HEIGHT * .4)-10;
@@ -48,5 +48,15 @@ public interface Styling{
 	
 	static final int PROGRESS_PANEL_WIDTH = TERMINAL_RIGHT_PANEL_WIDTH;
 	static final int PROGRESS_PANEL_HEIGHT  = (int) (TERMINAL_RIGHT_PANEL_HEIGHT*.6);
+	
+	static final int PROGRESS_PANEL_CIRCLES_WIDTH = PROGRESS_PANEL_WIDTH/3 -1;
+	static final int PROGRESS_PANEL_CIRCLES_HEIGTH = PROGRESS_PANEL_HEIGHT/3 * 2 -1;
+	
+	static final int PROGRESS_PANEL_LABELS_WIDTH = PROGRESS_PANEL_WIDTH/3 -1;
+	static final int PROGRESS_PANEL_LABELS_HEIGTH = PROGRESS_PANEL_HEIGHT/3 -1;
+	
+	static final int MAIN_TOOLBAR_HEIGHT = 300;
+	static final int MAIN_TOOLBAR_WIDTH = 30;
+	
 	public void style(); 
 }

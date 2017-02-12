@@ -38,8 +38,11 @@ public class TopHomePanel extends JLabel implements Styling
         leftChild = new TopInnerPanel(Styling.TERMINAL_PANEL_WIDTH, Styling.TERMINAL_PANEL_HEIGHT);
         rightChild = new TopInnerPanel(Styling.TERMINAL_RIGHT_PANEL_WIDTH,Styling.TERMINAL_RIGHT_PANEL_HEIGHT);
 
-        leftLabels = new TopLabelPanel(task,TopHomePanel.LEFT_LABEL_PANEL);
-        rightLabels = new TopLabelPanel(task,TopHomePanel.RIGHT_LABEL_PANEL);
+        //leftLabels = new TopLabelPanel(task,TopHomePanel.LEFT_LABEL_PANEL);
+        //rightLabels = new TopLabelPanel(task,TopHomePanel.RIGHT_LABEL_PANEL);
+        
+        leftLabels = new TopLabelPanel(TopHomePanel.LEFT_LABEL_PANEL);
+        rightLabels = new TopLabelPanel(TopHomePanel.RIGHT_LABEL_PANEL);
 
         statusBarTop = new StatusBarPanel(rightChild,task);
         timerPanel = new TimerPanel(rightChild,task);

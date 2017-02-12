@@ -12,8 +12,7 @@ public class HomePanel extends JLabel implements Styling
 	private JToolBar toolbar;
     private TopHomePanel top_P;
 	private LowerHomePanel low_P;
-	private final double topRatio = .4;
-	private final double lowRatio = .6;
+	private JLabel container;
     private TaskCard activeTask;
     private Hashtable<String,TaskCard> tasks;
     private LoadAssets assets;
@@ -46,10 +45,14 @@ public class HomePanel extends JLabel implements Styling
     {
     	top_P = new TopHomePanel(this.tasks.get("task 1"));
     	low_P = new LowerHomePanel(this.top_P, this.tasks);
+    	container = new JLabel();
     }
     public void editComponents()
     {
-    	this.setLayout(new FlowLayout());
+    	container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+    	container.setMaximumSize(new Dimension(Styling.SCREEN_WIDTH,Styling.SCREEN_HEIGHT));
+    	container.setMinimumSize(new Dimension(Styling.SCREEN_WIDTH,Styling.SCREEN_HEIGHT));
+    	this.setLayout(new OverlayLayout(this));
     }
     public void addActionListeners()
     {
@@ -57,8 +60,12 @@ public class HomePanel extends JLabel implements Styling
     }
     public void addComponents()
     {
-    	this.add(top_P);
-    	this.add(low_P);
+    	container.add(top_P);
+    	container.add(low_P);
+    	this.add(new MainToolBar());
+    	//this.add(new MainMenuBar());
+    	this.add(container);
+    	this.revalidate();
     }
 
     public void style()
