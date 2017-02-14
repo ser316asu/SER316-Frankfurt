@@ -31,13 +31,13 @@ public interface Styling{
 	static final int MAIN_TOOLBAR_HEIGHT = 300;
 	static final int MAIN_TOOLBAR_WIDTH = 50;
 	
-	static final int TASK_BOARD_WIDTH = SCREEN_WIDTH - MAIN_TOOLBAR_WIDTH-2;
+	static final int TASK_BOARD_WIDTH = SCREEN_WIDTH-2;// - MAIN_TOOLBAR_WIDTH-2;
 	static final int TASK_BOARD_HEIGHT = ((int) (SCREEN_HEIGHT * .6)) -10;
 	
 	static final int TASK_PANEL_WIDTH = TASK_BOARD_WIDTH/5 -100;
 	static final int TASK_PANEL_HEIGHT = TASK_BOARD_HEIGHT/2 - 100;
 	
-	public final int TOP_PANEL_WIDTH = (int) (SCREEN_WIDTH) - MAIN_TOOLBAR_WIDTH-2;
+	public final int TOP_PANEL_WIDTH = (int) (SCREEN_WIDTH)-2;// - MAIN_TOOLBAR_WIDTH-2;
     public final int TOP_PANEL_HEIGHT = (int) (SCREEN_HEIGHT * .4)-10;
     
 	static final int TERMINAL_PANEL_WIDTH = (int) (TOP_PANEL_WIDTH*.6)-1;

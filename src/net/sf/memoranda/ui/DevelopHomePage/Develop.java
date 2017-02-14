@@ -12,6 +12,7 @@ public class Develop extends JFrame
 	public static int SCREEN_HEIGHT;
     public Develop()
     {
+    	this.setLocationRelativeTo(null);
     	this.setJMenuBar(new MainMenuBar(this));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();// geting size of screen
@@ -26,11 +27,13 @@ public class Develop extends JFrame
         //frame.add(new JLabel("THis is a test"));
 
         //Add stuff to the frame
+		System.out.println(this.getLocation().x + "   " + this.getLocation().y);
         this.pack();
         this.setVisible(true);
     }
     public Develop(TaskCard task){
     	//this.setJMenuBar(new MainMenuBar(this));
+    	this.setLocation(0,0);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();// geting size of screen
         SCREEN_WIDTH = gd.getDisplayMode().getWidth();
@@ -42,7 +45,7 @@ public class Develop extends JFrame
         
 
         //frame.add(new JLabel("THis is a test"));
-
+        System.out.println(this.getLocation().x + "   " + this.getLocation().y);
         //Add stuff to the frame
         this.pack();
         this.setVisible(true);

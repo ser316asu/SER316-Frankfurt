@@ -12,7 +12,7 @@ public class HomePanel extends JLayeredPane implements Styling
 {
     private TopHomePanel top_P;
 	private LowerHomePanel low_P;
-	private JLabel container;
+	private JLabel container, containerForToolbar;
     private TaskCard activeTask;
     private Hashtable<String,TaskCard> tasks;
     private LoadAssets assets;
@@ -22,7 +22,7 @@ public class HomePanel extends JLayeredPane implements Styling
     	
         assets = new LoadAssets();
         this.tasks = new Hashtable<String, TaskCard>();
-        this.toolbar = new MainToolBar();
+        this.toolbar = new MainToolBar(this);
         fillTasks();
     	createComponents();
     	editComponents();
@@ -33,7 +33,7 @@ public class HomePanel extends JLayeredPane implements Styling
     {
     	//this.setIcon(LoadAssets.HOMEPAGE_BACKGROUND);
         assets = new LoadAssets();
-        this.toolbar = new MainToolBar();
+        this.toolbar = new MainToolBar(this);
         this.tasks = new Hashtable<String, TaskCard>();
         fillTasks();
         createComponents();
@@ -58,7 +58,6 @@ public class HomePanel extends JLayeredPane implements Styling
     	this.setBorder(BorderFactory.createLineBorder(Color.red)); 
     	this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
     	this.container.setLocation(0,0);
-    	this.toolbar.setLocation(0,0);
     }
     public void addActionListeners()
     {
@@ -71,7 +70,6 @@ public class HomePanel extends JLayeredPane implements Styling
     	//this.add(new MainToolBar());
     	//this.setLayer(c, layer);
     	//this.add(this.toolbar, new Integer(10));
-    	this.toolbar.setAlwaysOnTop(true);
     	this.toolbar.setVisible(true);
     	this.add(container, new Integer(0));
     	this.revalidate();
