@@ -64,7 +64,8 @@ import nu.xom.Elements;
 
 /*$Id: AppFrame.java,v 1.33 2005/07/05 08:17:24 alexeya Exp $*/
 
-public class AppFrame extends JFrame {
+public class AppFrame extends JFrame 
+{
 
     JPanel contentPane;
     JMenuBar menuBar = new JMenuBar();
@@ -234,11 +235,11 @@ public class AppFrame extends JFrame {
     JMenuItem jMenuGoFwd = new JMenuItem(History.historyForwardAction);
 
     JMenuItem jMenuGoDayBack = new JMenuItem(
-            workPanel.dailyItemsPanel.calendar.dayBackAction);
+            workPanel.dailyItemsPanel.getCalendar().dayBackAction);
     JMenuItem jMenuGoDayFwd = new JMenuItem(
-            workPanel.dailyItemsPanel.calendar.dayForwardAction);
+            workPanel.dailyItemsPanel.getCalendar().dayForwardAction);
     JMenuItem jMenuGoToday = new JMenuItem(
-            workPanel.dailyItemsPanel.calendar.todayAction);
+            workPanel.dailyItemsPanel.getCalendar().todayAction);
 
     JMenuItem jMenuEditPref = new JMenuItem(preferencesAction);
 
@@ -588,9 +589,9 @@ public class AppFrame extends JFrame {
             }
         };
 
-        this.workPanel.dailyItemsPanel.taskB
+        this.workPanel.dailyItemsPanel.getTaskB()
                 .addActionListener(setMenusDisabled);
-        this.workPanel.dailyItemsPanel.alarmB.addActionListener(
+        this.workPanel.dailyItemsPanel.getAlarmB().addActionListener(
                 setMenusDisabled);
 
         this.workPanel.tasksB.addActionListener(setMenusDisabled);
@@ -837,7 +838,7 @@ public class AppFrame extends JFrame {
         Context.put("LAST_SELECTED_PACK_FILE", chooser.getSelectedFile());        
         java.io.File f = chooser.getSelectedFile();
         ProjectPackager.unpack(f);
-        projectsPanel.prjTablePanel.updateUI();
+        projectsPanel.getPrjTablePanel().updateUI();
     }
 
     public void showPreferences() {
@@ -901,13 +902,13 @@ public class AppFrame extends JFrame {
                                 chooser);
                 String enc = (String) Context.get("EXPORT_FILE_ENCODING");
                 if (enc != null)
-                        dlg.encCB.setSelectedItem(enc);
+                        dlg.getEncCB().setSelectedItem(enc);
                 String spl = (String) Context.get("EXPORT_SPLIT_NOTES");
                 if (spl != null)
-                        dlg.splitChB.setSelected(spl.equalsIgnoreCase("true"));
+                        dlg.getSplitChB().setSelected(spl.equalsIgnoreCase("true"));
                 String ti = (String) Context.get("EXPORT_TITLES_AS_HEADERS");
                 if (ti != null)
-                        dlg.titlesAsHeadersChB.setSelected(ti.equalsIgnoreCase("true"));
+                        dlg.getTitlesAsHeadersChB().setSelected(ti.equalsIgnoreCase("true"));
                 Dimension dlgSize = new Dimension(550, 500);
                 dlg.setSize(dlgSize);
                 Dimension frmSize = App.getFrame().getSize();
@@ -922,10 +923,10 @@ public class AppFrame extends JFrame {
                         Context.put(
                                 "LAST_SELECTED_EXPORT_FILE",
                                 chooser.getSelectedFile().getPath());
-                        Context.put("EXPORT_SPLIT_NOTES", new Boolean(dlg.splitChB.isSelected()).toString());
-                        Context.put("EXPORT_TITLES_AS_HEADERS", new Boolean(dlg.titlesAsHeadersChB.isSelected()).toString());
+                        Context.put("EXPORT_SPLIT_NOTES", new Boolean(dlg.getSplitChB().isSelected()).toString());
+                        Context.put("EXPORT_TITLES_AS_HEADERS", new Boolean(dlg.getTitlesAsHeadersChB().isSelected()).toString());
                 
-                int ei = dlg.encCB.getSelectedIndex();
+                int ei = dlg.getEncCB().getSelectedIndex();
                 enc = null;
                 if (ei == 1)
                         enc = "UTF-8";
@@ -935,7 +936,7 @@ public class AppFrame extends JFrame {
                         chooser.getFileFilter().getDescription().indexOf("XHTML") > -1;
                  CurrentProject.save();
                  ProjectExporter.export(CurrentProject.get(), chooser.getSelectedFile(), enc, xhtml, 
-                                 dlg.splitChB.isSelected(), true, nument, dlg.titlesAsHeadersChB.isSelected(), false); 
+                                 dlg.getSplitChB().isSelected(), true, nument, dlg.getTitlesAsHeadersChB().isSelected(), false); 
                 }
             
             protected void ppImport_actionPerformed(ActionEvent e) {
@@ -1025,7 +1026,7 @@ public class AppFrame extends JFrame {
                             note.setId(Util.generateId());
                     CurrentStorage.get().storeNote(note, doc);
                     }
-                    workPanel.dailyItemsPanel.notesControlPane.refresh();
+                    workPanel.dailyItemsPanel.getNotesControlPane().refresh();
                     
             }catch(Exception exc){
                     exc.printStackTrace();
@@ -1107,7 +1108,7 @@ public class AppFrame extends JFrame {
                             note.setId(Util.generateId());
                     CurrentStorage.get().storeNote(note, doc);
                     }
-                    workPanel.dailyItemsPanel.notesControlPane.refresh();
+                    workPanel.dailyItemsPanel.getNotesControlPane().refresh();
                     
             }catch(Exception exc){
                     exc.printStackTrace();

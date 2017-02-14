@@ -374,12 +374,12 @@ public class TaskPanel extends JPanel {
     				//ppSubTasks.setEnabled(hasSubTasks);
     				ppCalcTask.setEnabled(hasSubTasks);
     				Task t = CurrentProject.getTaskList().getTask(thisTaskId);
-                    parentPanel.calendar.jnCalendar.renderer.setTask(t);
-                    parentPanel.calendar.jnCalendar.updateUI();
+                    parentPanel.getCalendar().jnCalendar.renderer.setTask(t);
+                    parentPanel.getCalendar().jnCalendar.updateUI();
                 }    
                 else {
-                    parentPanel.calendar.jnCalendar.renderer.setTask(null);
-                    parentPanel.calendar.jnCalendar.updateUI();
+                    parentPanel.getCalendar().jnCalendar.renderer.setTask(null);
+                    parentPanel.getCalendar().jnCalendar.updateUI();
                 }
             }
         });

@@ -1,7 +1,8 @@
+package net.sf.memoranda.ui.DevelopHomePage;
 import java.util.*;
 import java.text.*;
 
-public class TaskCard{
+public class TaskCard extends Observable{
 	private int estimatedLOC;
 	private int actualLOC;
 	private String taskName;
@@ -11,12 +12,16 @@ public class TaskCard{
 	private double estimatedLOCPH;
 	private Date startDate;
 	private Date endDate;
+    private boolean isActive;
 	final static int AHEAD_OF_SCHED = 1;
 	final static int BEHIND_SCHED = -1;
 	final static int ON_TIME = 0;
+	private final long DAY_IN_MS = 1000 * 60 * 60 * 24;
 	private int scheduleStatus;
 	private NumberFormat decimalFormat;
-
+	private int changeVar;
+	private int length,daysLeft;
+	
 	public TaskCard(){
 		estimatedLOC = 0;
 		actualLOC = 0;
@@ -29,6 +34,7 @@ public class TaskCard{
 		endDate = null;
 		scheduleStatus = ON_TIME;
 		decimalFormat = new DecimalFormat("#0.0");
+        this.isActive = false;
 	}
 
 	/**
@@ -42,31 +48,63 @@ public class TaskCard{
 
 		result = locLeft / getLocPerHour();
 		
-		return Double.parseDouble(decimalFormat.format(result));
+		return Double.parseDouble(decimalFormat.format(result));				
 	}
 
-	/**
-	* This method returns the overall status of the task. 1 for ahead of schedule 0 for on time and -1 for behind schedule
-	* @return The status of the schedule*/
-	public int getScheduleStatus(){
-		int result = scheduleStatus;
+	public double convertTimer(String time){
+		String[] hhmmss = time.split(":");
+
+		double hours = Double.parseDouble(hhmmss[0]);
+		double minutes = Double.parseDouble(hhmmss[1]);
+		double seconds = Double.parseDouble(hhmmss[2]);
+
+		 
+		 hours += (minutes/60.0) + (seconds/3600);
+
+
+		return hours;
+	}
+	
+	public void addTime(double time){
+		actualTime += time;
+		setChanged();
+		notifyObservers();
+	}
+	
+	public double calculateProgress(){
+		return actualLOC / estimatedLOC;
+	}
+
+	public String scheduleStatusToString(){
+		String result;
 		double scheduleDifference = getEstimatedLOCPH() - getLocPerHour();
 
 		// if the difference between the estimatedLOCPH and actual locPerHour is negative and less than -5 the programmer is behind
 		if(scheduleDifference < 0 && scheduleDifference < -5){
-			result = BEHIND_SCHED;
+			result = "BEHIND SCHEDULE";
 		}
 		// if the difference between the estimatedLOCPH and actual locPerHour is postive and greater than 5 than the programmer is ahead
 		else if(scheduleDifference > 0 && scheduleDifference > 5){
-			result = AHEAD_OF_SCHED;
+			result = "AHEAD OF SCHEDULE";
 		}
 		//otherwise the programmer/user is within 5loc/h and therefore is considered on time
 		else{
-			result = ON_TIME;
+			result = "ON TIME";
 		}
 		return result;
 	}
 
+	public int getLength(){
+		return (int) ((endDate.getTime() - startDate.getTime()) / DAY_IN_MS);
+	}
+
+	public int getDaysLeft(){
+		return (int) ((endDate.getTime() - new Date().getTime()) / DAY_IN_MS);
+	}
+	
+	public int getScheduleStatus(){
+		return scheduleStatus;
+	}
 	public int getEstimatedLOC(){
 		return estimatedLOC;
 	}
@@ -89,14 +127,20 @@ public class TaskCard{
 		return Double.parseDouble(decimalFormat.format(estimatedLOC / estimatedTime));
 	}
 	public Date getStartDate(){
+		
 		return startDate;
 	}
 	public Date getEndDate(){
 		return endDate;
 	}
+	public String formatDate(Date date){
+		return new SimpleDateFormat("E MM-dd-yyyy").format(date);
+		 //Integer.toString(date.getMonth()) + "/" + Integer.toString(date.getDay()) + "/" + Integer.toString(date.getYear());
+	}
 
 	public void setEstimatedLOC(int loc){
 		estimatedLOC = loc;
+
 	}
 	public void setActualLOC(int loc){
 		actualLOC = loc;
@@ -116,4 +160,42 @@ public class TaskCard{
 	public void setEndDate(Date date){
 		endDate = date;
 	}
+	public void setScheduleStatus(){		
+		double scheduleDifference = getEstimatedLOCPH() - getLocPerHour();
+
+		// if the difference between the estimatedLOCPH and actual locPerHour is negative and less than -5 the programmer is behind
+		if(scheduleDifference < 0 && scheduleDifference < -5){
+			scheduleStatus = BEHIND_SCHED;
+		}
+		// if the difference between the estimatedLOCPH and actual locPerHour is postive and greater than 5 than the programmer is ahead
+		else if(scheduleDifference > 0 && scheduleDifference > 5){
+			scheduleStatus = AHEAD_OF_SCHED;
+		}
+		//otherwise the programmer/user is within 5loc/h and therefore is considered on time
+		else{
+			scheduleStatus = ON_TIME;
+		}
+	}
+	
+	public void setValue(TaskCard task){
+		this.setChanged();
+		this.notifyObservers(task);
+	}
+    public void setActive(boolean act)
+    {
+        this.isActive = act;
+    }
+    public boolean isActive()
+    {
+        return this.isActive;
+    }
+    public TaskCard setChangeVar(int newVar)
+    {
+    	this.changeVar = newVar;
+    	return this;
+    }
+    public int getChangeVar()
+    {
+    	return this.changeVar;
+    }
 }
