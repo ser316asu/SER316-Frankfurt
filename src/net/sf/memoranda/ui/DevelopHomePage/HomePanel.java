@@ -7,7 +7,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Color;
 import java.util.*;
-public class HomePanel extends JLabel implements Styling
+public class HomePanel extends JLayeredPane implements Styling
 {
 	private JToolBar toolbar;
     private TopHomePanel top_P;
@@ -29,7 +29,7 @@ public class HomePanel extends JLabel implements Styling
     }
     public HomePanel(TaskCard task)
     {
-    	this.setIcon(LoadAssets.HOMEPAGE_BACKGROUND);
+    	//this.setIcon(LoadAssets.HOMEPAGE_BACKGROUND);
         assets = new LoadAssets();
         this.tasks = new Hashtable<String, TaskCard>();
         fillTasks();
@@ -62,9 +62,9 @@ public class HomePanel extends JLabel implements Styling
     {
     	container.add(top_P);
     	container.add(low_P);
-    	this.add(new MainToolBar());
+    	this.add(new MainToolBar(), JLayeredPane.PALETTE_LAYER);
     	//this.add(new MainMenuBar());
-    	this.add(container);
+    	this.add(container, JLayeredPane.DEFAULT_LAYER);
     	this.revalidate();
     }
 
