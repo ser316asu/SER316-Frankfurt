@@ -5,22 +5,24 @@ package net.sf.memoranda.ui.DevelopHomePage;
 import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.Color;
 import java.util.*;
 public class HomePanel extends JLayeredPane implements Styling
 {
-	private JToolBar toolbar;
     private TopHomePanel top_P;
 	private LowerHomePanel low_P;
 	private JLabel container;
     private TaskCard activeTask;
     private Hashtable<String,TaskCard> tasks;
     private LoadAssets assets;
+    private MainToolBar toolbar;
     public HomePanel()
     {
     	
         assets = new LoadAssets();
         this.tasks = new Hashtable<String, TaskCard>();
+        this.toolbar = new MainToolBar();
         fillTasks();
     	createComponents();
     	editComponents();
@@ -31,6 +33,7 @@ public class HomePanel extends JLayeredPane implements Styling
     {
     	//this.setIcon(LoadAssets.HOMEPAGE_BACKGROUND);
         assets = new LoadAssets();
+        this.toolbar = new MainToolBar();
         this.tasks = new Hashtable<String, TaskCard>();
         fillTasks();
         createComponents();
@@ -52,7 +55,10 @@ public class HomePanel extends JLayeredPane implements Styling
     	container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
     	container.setMaximumSize(new Dimension(Styling.SCREEN_WIDTH,Styling.SCREEN_HEIGHT));
     	container.setMinimumSize(new Dimension(Styling.SCREEN_WIDTH,Styling.SCREEN_HEIGHT));
-    	this.setLayout(new OverlayLayout(this));
+    	this.setBorder(BorderFactory.createLineBorder(Color.red)); 
+    	this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+    	this.container.setLocation(0,0);
+    	this.toolbar.setLocation(0,0);
     }
     public void addActionListeners()
     {
@@ -62,9 +68,12 @@ public class HomePanel extends JLayeredPane implements Styling
     {
     	container.add(top_P);
     	container.add(low_P);
-    	this.add(new MainToolBar(), JLayeredPane.PALETTE_LAYER);
-    	//this.add(new MainMenuBar());
-    	this.add(container, JLayeredPane.DEFAULT_LAYER);
+    	//this.add(new MainToolBar());
+    	//this.setLayer(c, layer);
+    	//this.add(this.toolbar, new Integer(10));
+    	this.toolbar.setAlwaysOnTop(true);
+    	this.toolbar.setVisible(true);
+    	this.add(container, new Integer(0));
     	this.revalidate();
     }
 

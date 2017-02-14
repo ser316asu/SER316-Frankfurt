@@ -3,10 +3,11 @@ package net.sf.memoranda.ui.DevelopHomePage;
 import java.awt.Dimension;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JToolBar;
 
-public class MainToolBar extends JToolBar implements Styling{
-	private JButton button;
+public class MainToolBar extends JFrame implements Styling{
+	private JButton createNewTask_B;
 	public MainToolBar()
 	{
 		
@@ -17,7 +18,7 @@ public class MainToolBar extends JToolBar implements Styling{
 	}
 	
 	private void createComponents() {
-		// TODO Auto-generated method stub
+		createNewTask_B = new JButton("task");
 		
 	}
 
@@ -25,6 +26,8 @@ public class MainToolBar extends JToolBar implements Styling{
 		this.setPreferredSize(new Dimension(Styling.MAIN_TOOLBAR_WIDTH,Styling.MAIN_TOOLBAR_HEIGHT));
 		this.setMaximumSize(new Dimension(Styling.MAIN_TOOLBAR_WIDTH,Styling.MAIN_TOOLBAR_HEIGHT));
 		this.setLocation(0, Styling.SCREEN_HEIGHT/2 - Styling.MAIN_TOOLBAR_HEIGHT);
+		this.setUndecorated(true);
+		
 	}
 
 	private void addActionListeners() {
@@ -33,7 +36,7 @@ public class MainToolBar extends JToolBar implements Styling{
 	}
 
 	private void addComponents() {
-		// TODO Auto-generated method stub
+		this.add(createNewTask_B);
 		
 	}
 

@@ -28,13 +28,16 @@ public interface Styling{
 	static final int SCREEN_WIDTH = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();
 	static final int SCREEN_HEIGHT = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight();
 	
-	static final int TASK_BOARD_WIDTH = SCREEN_WIDTH - 25;
+	static final int MAIN_TOOLBAR_HEIGHT = 300;
+	static final int MAIN_TOOLBAR_WIDTH = 50;
+	
+	static final int TASK_BOARD_WIDTH = SCREEN_WIDTH - MAIN_TOOLBAR_WIDTH-2;
 	static final int TASK_BOARD_HEIGHT = ((int) (SCREEN_HEIGHT * .6)) -10;
 	
 	static final int TASK_PANEL_WIDTH = TASK_BOARD_WIDTH/5 -100;
 	static final int TASK_PANEL_HEIGHT = TASK_BOARD_HEIGHT/2 - 100;
 	
-	public final int TOP_PANEL_WIDTH = (int) (SCREEN_WIDTH) - 25;
+	public final int TOP_PANEL_WIDTH = (int) (SCREEN_WIDTH) - MAIN_TOOLBAR_WIDTH-2;
     public final int TOP_PANEL_HEIGHT = (int) (SCREEN_HEIGHT * .4)-10;
     
 	static final int TERMINAL_PANEL_WIDTH = (int) (TOP_PANEL_WIDTH*.6)-1;
@@ -54,9 +57,6 @@ public interface Styling{
 	
 	static final int PROGRESS_PANEL_LABELS_WIDTH = PROGRESS_PANEL_WIDTH/3 -1;
 	static final int PROGRESS_PANEL_LABELS_HEIGTH = PROGRESS_PANEL_HEIGHT/3 -1;
-	
-	static final int MAIN_TOOLBAR_HEIGHT = 300;
-	static final int MAIN_TOOLBAR_WIDTH = 50;
 	
 	public void style(); 
 }
