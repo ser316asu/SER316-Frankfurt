@@ -1,0 +1,14 @@
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\dist\memoranda1.0-rc3.1-20170123\lib\nekohtml.jar
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\dist\memoranda1.0-rc3.1-20170123\lib\nekohtmlXni.jar
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\dist\memoranda1.0-rc3.1-20170123\lib\swag.jar
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\dist\memoranda1.0-rc3.1-20170123\lib\swexpl.jar
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\dist\memoranda1.0-rc3.1-20170123\lib\xercesImpl.jar
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\dist\memoranda1.0-rc3.1-20170123\lib\xmlParserAPIs.jar
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\dist\memoranda1.0-rc3.1-20170123\lib\xom-1.0.jar
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\lib\nekohtml.jar
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\lib\nekohtmlXni.jar
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\lib\swag.jar
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\lib\swexpl.jar
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\lib\xercesImpl.jar
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\lib\xmlParserAPIs.jar
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\lib\xom-1.0.jar

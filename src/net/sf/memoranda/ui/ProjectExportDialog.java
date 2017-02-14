@@ -27,11 +27,11 @@ public class ProjectExportDialog extends JDialog {
   JPanel jPanel4 = new JPanel();
   JPanel jPanel1 = new JPanel();
   BorderLayout borderLayout2 = new BorderLayout();
-  JComboBox encCB = new JComboBox(new String[]{Local.getString("System default"), "UTF-8", "ANSI"});
+  private JComboBox encCB = new JComboBox(new String[]{Local.getString("System default"), "UTF-8", "ANSI"});
   JLabel jLabel1 = new JLabel();
   GridLayout gridLayout1 = new GridLayout();
-  JCheckBox splitChB = new JCheckBox();
-  JCheckBox titlesAsHeadersChB = new JCheckBox();
+  private JCheckBox splitChB = new JCheckBox();
+  private JCheckBox titlesAsHeadersChB = new JCheckBox();
 
   public ProjectExportDialog(Frame frame, String title, JFileChooser chooser) {
     super(frame, title, true);
@@ -90,21 +90,21 @@ public class ProjectExportDialog extends JDialog {
     jLabel1.setPreferredSize(new Dimension(80, 16));
     jLabel1.setText(Local.getString("Encoding")+":");
     jPanel4.setLayout(gridLayout1);
-    splitChB.setText(Local.getString("Split notes into separate files"));
+    getSplitChB().setText(Local.getString("Split notes into separate files"));
     gridLayout1.setColumns(1);
     gridLayout1.setRows(3);
-    titlesAsHeadersChB.setText(Local.getString("Notes titles as headers"));
+    getTitlesAsHeadersChB().setText(Local.getString("Notes titles as headers"));
     this.getContentPane().add(jPanel2,  BorderLayout.CENTER);
     jPanel2.add(jPanel4,  BorderLayout.SOUTH);
     jPanel4.add(jPanel1, null);
-    jPanel1.add(encCB, BorderLayout.CENTER);
+    jPanel1.add(getEncCB(), BorderLayout.CENTER);
     jPanel1.add(jLabel1, BorderLayout.WEST);
-    jPanel4.add(splitChB, null);
+    jPanel4.add(getSplitChB(), null);
     jPanel2.add(fileChooser, BorderLayout.NORTH);
     this.getContentPane().add(jPanel3,  BorderLayout.SOUTH);
     jPanel3.add(okB, null);
     jPanel3.add(cancelB, null);
-    jPanel4.add(titlesAsHeadersChB, null);
+    jPanel4.add(getTitlesAsHeadersChB(), null);
   }
 
    void cancelB_actionPerformed(ActionEvent e) {
@@ -115,4 +115,52 @@ public class ProjectExportDialog extends JDialog {
         CANCELLED = false;
         this.dispose();
     }
+
+
+	/**
+	 * @return the encCB
+	 */
+	public JComboBox getEncCB() {
+		return encCB;
+	}
+
+
+	/**
+	 * @param encCB the encCB to set
+	 */
+	public void setEncCB(JComboBox encCB) {
+		this.encCB = encCB;
+	}
+
+
+	/**
+	 * @return the splitChB
+	 */
+	public JCheckBox getSplitChB() {
+		return splitChB;
+	}
+
+
+	/**
+	 * @param splitChB the splitChB to set
+	 */
+	public void setSplitChB(JCheckBox splitChB) {
+		this.splitChB = splitChB;
+	}
+
+
+	/**
+	 * @return the titlesAsHeadersChB
+	 */
+	public JCheckBox getTitlesAsHeadersChB() {
+		return titlesAsHeadersChB;
+	}
+
+
+	/**
+	 * @param titlesAsHeadersChB the titlesAsHeadersChB to set
+	 */
+	public void setTitlesAsHeadersChB(JCheckBox titlesAsHeadersChB) {
+		this.titlesAsHeadersChB = titlesAsHeadersChB;
+	}
 }

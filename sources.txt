@@ -1,0 +1,17 @@
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\src\net\sf\memoranda\ui\DevelopHomePage\Develop.java
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\src\net\sf\memoranda\ui\DevelopHomePage\HomePanel.java
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\src\net\sf\memoranda\ui\DevelopHomePage\LoadAssets.java
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\src\net\sf\memoranda\ui\DevelopHomePage\LowerHomePanel.java
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\src\net\sf\memoranda\ui\DevelopHomePage\MAIN.java
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\src\net\sf\memoranda\ui\DevelopHomePage\MainMenuBar.java
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\src\net\sf\memoranda\ui\DevelopHomePage\MainToolBar.java
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\src\net\sf\memoranda\ui\DevelopHomePage\StatusBarPanel.java
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\src\net\sf\memoranda\ui\DevelopHomePage\Styling.java
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\src\net\sf\memoranda\ui\DevelopHomePage\TaskCard.java
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\src\net\sf\memoranda\ui\DevelopHomePage\TaskPanel.java
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\src\net\sf\memoranda\ui\DevelopHomePage\TaskPanelMouseListener.java
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\src\net\sf\memoranda\ui\DevelopHomePage\Timer.java
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\src\net\sf\memoranda\ui\DevelopHomePage\TimerPanel.java
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\src\net\sf\memoranda\ui\DevelopHomePage\TopHomePanel.java
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\src\net\sf\memoranda\ui\DevelopHomePage\TopInnerPanel.java
+C:\Users\Joshua\Documents\GitHub\SER316-Frankfurt\src\net\sf\memoranda\ui\DevelopHomePage\TopLabelPanel.java 

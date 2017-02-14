@@ -78,7 +78,7 @@ public class DailyItemsPanel extends JPanel {
     boolean dateChangedByCalendar = false;
     boolean changedByHistory = false;
     JPanel cmainPanel = new JPanel();
-    JNCalendarPanel calendar = new JNCalendarPanel();
+    private JNCalendarPanel calendar = new JNCalendarPanel();
     JToolBar toggleToolBar = new JToolBar();
     BorderLayout borderLayout5 = new BorderLayout();
     Border border1;
@@ -87,11 +87,11 @@ public class DailyItemsPanel extends JPanel {
     
     boolean addedToHistory = false;
     JPanel indicatorsPanel = new JPanel();
-    JButton alarmB = new JButton();
+    private JButton alarmB = new JButton();
     FlowLayout flowLayout1 = new FlowLayout();
-    JButton taskB = new JButton();
+    private JButton taskB = new JButton();
     JPanel mainTabsPanel = new JPanel();
-    NotesControlPanel notesControlPane = new NotesControlPanel();
+    private NotesControlPanel notesControlPane = new NotesControlPanel();
     CardLayout cardLayout2 = new CardLayout();
         
     JTabbedPane tasksTabbedPane = new JTabbedPane();
@@ -138,8 +138,8 @@ public class DailyItemsPanel extends JPanel {
         controlPanel.setPreferredSize(new Dimension(205, 170));
         //controlPanel.setMaximumSize(new Dimension(206, 170));
         //controlPanel.setSize(controlPanel.getMaximumSize());
-        calendar.setFont(new java.awt.Font("Dialog", 0, 11));
-        calendar.setMinimumSize(new Dimension(0, 168));
+        getCalendar().setFont(new java.awt.Font("Dialog", 0, 11));
+        getCalendar().setMinimumSize(new Dimension(0, 168));
         toggleToolBar.setBackground(new Color(215, 225, 250));
         toggleToolBar.setRequestFocusEnabled(false);
         toggleToolBar.setFloatable(false);
@@ -163,39 +163,39 @@ public class DailyItemsPanel extends JPanel {
         toggleButton.setIcon(collIcon);
         indicatorsPanel.setOpaque(false);
         indicatorsPanel.setLayout(flowLayout1);
-        alarmB.setMaximumSize(new Dimension(24, 24));
-        alarmB.setOpaque(false);
-        alarmB.setPreferredSize(new Dimension(24, 24));
-        alarmB.setToolTipText(Local.getString("Active events"));
-        alarmB.setBorderPainted(false);
-        alarmB.setMargin(new Insets(0, 0, 0, 0));
-        alarmB.addActionListener(new java.awt.event.ActionListener() {
+        getAlarmB().setMaximumSize(new Dimension(24, 24));
+        getAlarmB().setOpaque(false);
+        getAlarmB().setPreferredSize(new Dimension(24, 24));
+        getAlarmB().setToolTipText(Local.getString("Active events"));
+        getAlarmB().setBorderPainted(false);
+        getAlarmB().setMargin(new Insets(0, 0, 0, 0));
+        getAlarmB().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 alarmB_actionPerformed(e);
             }
         });
-        alarmB.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/alarm.png")));
+        getAlarmB().setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/alarm.png")));
         flowLayout1.setAlignment(FlowLayout.RIGHT);
         flowLayout1.setVgap(0);
-        taskB.setMargin(new Insets(0, 0, 0, 0));
-        taskB.addActionListener(new java.awt.event.ActionListener() {
+        getTaskB().setMargin(new Insets(0, 0, 0, 0));
+        getTaskB().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 taskB_actionPerformed(e);
             }
         });
-        taskB.setPreferredSize(new Dimension(24, 24));
-        taskB.setToolTipText(Local.getString("Active to-do tasks"));
-        taskB.setBorderPainted(false);
-        taskB.setMaximumSize(new Dimension(24, 24));
-        taskB.setOpaque(false);
-        taskB.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/task.png")));
+        getTaskB().setPreferredSize(new Dimension(24, 24));
+        getTaskB().setToolTipText(Local.getString("Active to-do tasks"));
+        getTaskB().setBorderPainted(false);
+        getTaskB().setMaximumSize(new Dimension(24, 24));
+        getTaskB().setOpaque(false);
+        getTaskB().setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/task.png")));
 
-        notesControlPane.setFont(new java.awt.Font("Dialog", 1, 10));
+        getNotesControlPane().setFont(new java.awt.Font("Dialog", 1, 10));
         mainTabsPanel.setLayout(cardLayout2);
         this.add(splitPane, BorderLayout.CENTER);
 
         controlPanel.add(cmainPanel, BorderLayout.CENTER);
-        cmainPanel.add(calendar, BorderLayout.NORTH);
+        cmainPanel.add(getCalendar(), BorderLayout.NORTH);
 
         mainPanel.add(statusPanel, BorderLayout.NORTH);
         statusPanel.add(currentDateLabel, BorderLayout.CENTER);
@@ -256,12 +256,12 @@ public class DailyItemsPanel extends JPanel {
             }
         });
 		
-        calendar.addSelectionListener(new ActionListener() {
+        getCalendar().addSelectionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (calendarIgnoreChange)
                     return;
                 dateChangedByCalendar = true;
-                CurrentDate.set(calendar.get());
+                CurrentDate.set(getCalendar().get());
                 dateChangedByCalendar = false;
             }
         });
@@ -301,7 +301,7 @@ public class DailyItemsPanel extends JPanel {
         cmainPanel.add(mainTabsPanel, BorderLayout.CENTER);
         mainTabsPanel.add(eventsTabbedPane, "EVENTSTAB");
         mainTabsPanel.add(tasksTabbedPane, "TASKSTAB");
-        mainTabsPanel.add(notesControlPane, "NOTESTAB");
+        mainTabsPanel.add(getNotesControlPane(), "NOTESTAB");
 		mainTabsPanel.add(agendaTabbedPane, "AGENDATAB");
         updateIndicators(CurrentDate.get(), CurrentProject.getTaskList());
         mainPanel.setBorder(null);
@@ -317,7 +317,7 @@ public class DailyItemsPanel extends JPanel {
 		}
         if (!dateChangedByCalendar) {
             calendarIgnoreChange = true;
-            calendar.set(newdate);
+            getCalendar().set(newdate);
             calendarIgnoreChange = false;
         }
 
@@ -356,11 +356,11 @@ public class DailyItemsPanel extends JPanel {
 			if (toSaveCurrentNote) {
 	            saveNote();				
 			}
-			notesControlPane.refresh();
+			getNotesControlPane().refresh();
         }
 		currentNote = note;
 		editorPanel.setDocument(currentNote);
-        calendar.set(CurrentDate.get());
+        getCalendar().set(CurrentDate.get());
 		editorPanel.editor.requestFocus();		
 	}
 	
@@ -427,7 +427,7 @@ public class DailyItemsPanel extends JPanel {
         indicatorsPanel.removeAll();
         if (date.equals(CalendarDate.today())) {
             if (tl.getActiveSubTasks(null,date).size() > 0)
-                indicatorsPanel.add(taskB, null);
+                indicatorsPanel.add(getTaskB(), null);
             if (EventsScheduler.isEventScheduled()) {
                 /*String evlist = "";
                 for (Iterator it = EventsScheduler.getScheduledEvents().iterator(); it.hasNext();) {
@@ -435,8 +435,8 @@ public class DailyItemsPanel extends JPanel {
                     evlist += ev.getTimeString()+" - "+ev.getText()+"\n";
                 } */
                 net.sf.memoranda.Event ev = EventsScheduler.getFirstScheduledEvent();
-                alarmB.setToolTipText(ev.getTimeString() + " - " + ev.getText());
-                indicatorsPanel.add(alarmB, null);
+                getAlarmB().setToolTipText(ev.getTimeString() + " - " + ev.getText());
+                indicatorsPanel.add(getAlarmB(), null);
             }
         }
         indicatorsPanel.updateUI();
@@ -447,8 +447,8 @@ public class DailyItemsPanel extends JPanel {
     }
 
     public void selectPanel(String pan) {
-        if (calendar.jnCalendar.renderer.getTask() != null) {
-            calendar.jnCalendar.renderer.setTask(null);
+        if (getCalendar().jnCalendar.renderer.getTask() != null) {
+            getCalendar().jnCalendar.renderer.setTask(null);
          //   calendar.jnCalendar.updateUI();
         }
         if (pan.equals("TASKS") && (tasksPanel.taskTable.getSelectedRow() > -1)) {
@@ -459,7 +459,7 @@ public class DailyItemsPanel extends JPanel {
                         .getModel()
                         .getValueAt(tasksPanel.taskTable.getSelectedRow(), TaskTable.TASK_ID)
                         .toString());
-            calendar.jnCalendar.renderer.setTask(t);
+            getCalendar().jnCalendar.renderer.setTask(t);
        //     calendar.jnCalendar.updateUI();
         }
         boolean isAg = pan.equals("AGENDA");
@@ -468,7 +468,7 @@ public class DailyItemsPanel extends JPanel {
         	agendaPanel.refresh(CurrentDate.get());
         cardLayout1.show(editorsPanel, pan);
         cardLayout2.show(mainTabsPanel, pan + "TAB");
-		calendar.jnCalendar.updateUI();
+		getCalendar().jnCalendar.updateUI();
 		CurrentPanel=pan;
     }
 
@@ -482,4 +482,52 @@ public class DailyItemsPanel extends JPanel {
     void alarmB_actionPerformed(ActionEvent e) {
         parentPanel.eventsB_actionPerformed(null);
     }
+	/**
+	 * @return the notesControlPane
+	 */
+	public NotesControlPanel getNotesControlPane() {
+		return notesControlPane;
+	}
+	/**
+	 * @param notesControlPane the notesControlPane to set
+	 */
+	public void setNotesControlPane(NotesControlPanel notesControlPane) {
+		this.notesControlPane = notesControlPane;
+	}
+	/**
+	 * @return the calendar
+	 */
+	public JNCalendarPanel getCalendar() {
+		return calendar;
+	}
+	/**
+	 * @param calendar the calendar to set
+	 */
+	public void setCalendar(JNCalendarPanel calendar) {
+		this.calendar = calendar;
+	}
+	/**
+	 * @return the taskB
+	 */
+	public JButton getTaskB() {
+		return taskB;
+	}
+	/**
+	 * @param taskB the taskB to set
+	 */
+	public void setTaskB(JButton taskB) {
+		this.taskB = taskB;
+	}
+	/**
+	 * @return the alarmB
+	 */
+	public JButton getAlarmB() {
+		return alarmB;
+	}
+	/**
+	 * @param alarmB the alarmB to set
+	 */
+	public void setAlarmB(JButton alarmB) {
+		this.alarmB = alarmB;
+	}
 }
