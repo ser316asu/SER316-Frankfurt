@@ -163,7 +163,7 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		setLocation(WIDTH/2,HEIGHT/2);
 		setResizable(true); // Fixed window size
 
-		setDefaultCloseOperation(EXIT_ON_CLOSE); // Enum value EXIT_ON_CLOSE, not String. Interesting.
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE); // Enum value EXIT_ON_CLOSE, not String. Interesting.
 		
 		finishButton.addActionListener(this);
 
