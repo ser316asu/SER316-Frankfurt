@@ -23,6 +23,8 @@
 	<property name="debuglevel" value="lines,vars,source"/>
 	<property name="optimize" value="off"/>
 	<property name="deprecation" value="off"/>
+	<property name="build.junitreport.dir" value="${build.dir}/junitreport"/>
+	<property name="junit4.jar" value="{lib.dir}/junit-4.10.jar"/>
 
 	<target name="init">
 		<!-- Create the time stamp -->
@@ -174,5 +176,29 @@
 		<java jar="${build.dir}/${jarname}" fork="yes">
 			<classpath refid="classpath"/>
 		</java> -->
+	</target>
+	
+	<!-- =================================================================== -->
+	<!-- Runs JUnit Tests                                                    -->
+	<!-- =================================================================== -->
+	<target name="test" depends="build-if-needed"
+	 description="Runs JUnit tests for classes starts with Test, and generates a report.">
+	             <!-- First, clean the junit directory. -->
+	             <delete dir="${build.junitreport.dir}"/>
+	             <mkdir dir="${build.junitreport.dir}"/> 
+	             <!-- Run the tests -->
+	             <echo message="JUnit testing is running..."/>
+	             <junit printsummary="withOutAndErr" haltonfailure="no" fork="on">      
+	                     <classpath>  
+	                             <path refid="classpath"/>
+	                     </classpath>
+	                     <formatter type="plain"/>
+	                     <batchtest todir="${build.junitreport.dir}">
+	                             <fileset dir="${src}">
+	                                     <include name="**/*Test.java"/>
+	                             </fileset>
+	                     </batchtest>
+	             </junit>
+	             <echo message="JUnit results in ${build.junitreport.dir}"/>
 	</target>
 </project>
