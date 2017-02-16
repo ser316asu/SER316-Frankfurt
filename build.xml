@@ -194,7 +194,7 @@
 	                     </classpath>
 	                     <formatter type="plain"/>
 	                     <batchtest todir="${build.junitreport.dir}">
-	                             <fileset dir="${src}">
+	                             <fileset dir="${source.dir}">
 	                                     <include name="**/*Test.java"/>
 	                             </fileset>
 	                     </batchtest>
