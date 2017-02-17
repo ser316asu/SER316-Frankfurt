@@ -2,9 +2,12 @@ package net.sf.memoranda.ui;
 import javax.swing.*;
 import javax.swing.Box.Filler;
 import javax.swing.border.Border;
+import javax.swing.text.DateFormatter;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /** 
  * @author Jacob Leonard
@@ -28,7 +31,8 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 	private JFrame mainFrame;
 	private JPanel centerPane, bottomCenterPane, topCenterPane, topRightPane, topLeftPane;
 
-	private JTextField jTextFieldNameName, startDate, endDate; // String
+	private JFormattedTextField startDate, endDate;
+	private JTextField jTextFieldName; // String
 	private JLabel currentState, nameLabel, startDateLabel, endDateLabel, locEstLabel, hoursEstLabel, numFilesLabel, statusLabel;
 
 	// Code Info
@@ -57,14 +61,21 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		/* COMPONENTS */
 		//Upper-left Quadrant
 		nameLabel = new JLabel("Name");
-		jTextFieldNameName = new JTextField("Name of Task",28);
+		jTextFieldName = new JTextField("Name of Task",28);
 
 		startDateLabel = new JLabel("Start Date");
-		startDate = new JTextField("Start Date",28);
+		DateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		startDate = new JFormattedTextField(newDateFormat); //"Start Date",28
+		startDate.setColumns(28);
+		startDate.setText("MM/DD/YYYY");
+		
 		startDate.setMaximumSize(new Dimension(100, 1));
 		
 		endDateLabel = new JLabel("Due Date");
-		endDate = new JTextField("Due Date", 28);
+		endDate = new JFormattedTextField(newDateFormat);
+		endDate.setColumns(28);
+		endDate.setText("MM/DD/YYYY");
+		
 		
 		locEstLabel = new JLabel("Estimated LOC");
 		locEst = new JTextField("LOC Estimate", 28);
@@ -127,7 +138,7 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		
 		// Top-Left-Center Pane
 		topLeftPane.add(nameLabel);
-		topLeftPane.add(jTextFieldNameName); // Component, row, column
+		topLeftPane.add(jTextFieldName); // Component, row, column
 		topLeftPane.add(startDateLabel);
 		topLeftPane.add(startDate);
 		topLeftPane.add(endDateLabel);
@@ -178,17 +189,80 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		/* instantiate new TaskCard from this and pass it into a collection
 		*/
 		
-		finishButton.setText("test");
-		finishButton.setVisible(false);
 		
-		statusLabel.setFont(new Font("Courier",Font.BOLD,24));
-		statusLabel.setText("FINISHED! — You may now close this window");
-		statusLabel.setBackground(Color.GREEN);
-		statusLabel.setForeground(Color.WHITE);
-
+		// CHECK IF INPUT IS VALID
+		if(validateInput()){
+			
+			// ASK USER TO CONFIRM CHANGES - IF GOOD: CONTINUE. IF CHANGES MADE, RE-VALIDATE.
+		
+			finishButton.setText("test");
+			finishButton.setVisible(false);
+			// Create new taskcard here
+			
+			statusLabel.setFont(new Font("Courier",Font.BOLD,24));
+			statusLabel.setText("FINISHED! — You may now close this window");
+			statusLabel.setBackground(Color.GREEN);
+			statusLabel.setForeground(Color.WHITE);
+			
+			System.out.println("Testing Finalization block");
+			System.out.println(startDate.getText());
+			System.out.println(startDate.getValue()); // Runtime
+			//System.out.println(newDateFormat.get);
+		}
+		
+		
 		statusLabel.setOpaque(true);
 		bottomCenterPane.revalidate();
 		bottomCenterPane.repaint();		
+	}
+	
+	
+	public boolean validateInput(){
+		
+		boolean isValid = true; // If checks below pass, isValid remains true. 
+		
+		
+		// CHECK TASK NAME
+		if(jTextFieldName.getText() == null || jTextFieldName.getText().equals("Name of Task") || jTextFieldName.getText().equals("startDate is invalid")){
+			System.out.println("Task Name is invalid");
+			jTextFieldName.setText("startDate is invalid");
+			statusLabel.setText("Invalid Entry: Please fix marked fields");
+			jTextFieldName.setBackground(Color.red);
+			isValid = false;
+		}
+		else if(jTextFieldName.getText() != null){
+			jTextFieldName.setBackground(Color.WHITE);
+
+		}
+		
+		// CHECK START DATE
+		if(startDate.getValue() == null){
+			System.out.println("startDate is invalid");
+			startDate.setText("RE-ENTER! (dd/mm/yyy)");
+			statusLabel.setText("Invalid Entry: Please fix marked fields");
+			startDate.setBackground(Color.red);
+			isValid = false;
+		}
+		else if(startDate.getValue() != null){
+			startDate.setBackground(Color.WHITE);
+
+		}
+		// CHECK END DATE
+		if(endDate.getValue() == null){
+			System.out.println("endDate is invalid");
+			endDate.setText("RE-ENTER! (dd/mm/yyy)");
+			statusLabel.setText("Invalid Entry: Please fix marked fields");
+			endDate.setBackground(Color.red);
+			isValid = false;
+		}
+		else if(endDate.getValue() != null){
+			endDate.setBackground(Color.WHITE);
+		}		
+		
+		// TODO: Add validation checks for name, LOC, numClasses, numHours
+		
+		return isValid;
+		
 	}
 	
 	/* GETTERS, THEN SETTERS */
@@ -230,14 +304,14 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 	}
 
 	public JTextField getjTextFieldName() {
-		return jTextFieldNameName;
+		return jTextFieldName;
 	}
 
 	public JTextField getStartDate() {
 		return startDate;
 	}
 
-	public JTextField getEndDate() {
+	public JFormattedTextField getEndDate() {
 		return endDate;
 	}
 
@@ -349,15 +423,15 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		this.topLeftPane = topLeftPane;
 	}
 
-	public void setjTextFieldNameName(JTextField jTextFieldNameName) {
-		this.jTextFieldNameName = jTextFieldNameName;
+	public void setjTextFieldName(JTextField jTextFieldName) {
+		this.jTextFieldName = jTextFieldName;
 	}
 
-	public void setStartDate(JTextField startDate) {
+	public void setStartDate(JFormattedTextField startDate) {
 		this.startDate = startDate;
 	}
 
-	public void setEndDate(JTextField endDate) {
+	public void setEndDate(JFormattedTextField endDate) {
 		this.endDate = endDate;
 	}
 
