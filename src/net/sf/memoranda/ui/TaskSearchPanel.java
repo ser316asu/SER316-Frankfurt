@@ -1,6 +1,7 @@
 package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -53,6 +54,7 @@ public class TaskSearchPanel extends JPanel {
     JPanel searchSettingComboBoxesPanel = new JPanel(new BorderLayout());
     JPanel searchFieldPanel = new JPanel(new BorderLayout());
     JPanel searchButtonsPanel = new JPanel(new GridLayout(1,2));
+    JPanel buttonListPanel = new JPanel();
     
     JTextField searchField = new JTextField();
     
@@ -80,6 +82,10 @@ public class TaskSearchPanel extends JPanel {
         this.setLayout(borderLayout1);
 
         searchFieldPanel.setBorder(titledBorder1);
+        
+        buttonListPanel.setPreferredSize(new Dimension(1380, 80));
+        buttonListPanel.setBorder(BorderFactory.createLineBorder(Color.red));
+        buttonListPanel.setVisible(true);
         
         titledBorder1.setTitleFont(new java.awt.Font("Dialog", 1, 11));
         searchField.setFont(new java.awt.Font("Dialog", 1, 10));
@@ -122,7 +128,7 @@ public class TaskSearchPanel extends JPanel {
         searchInputPanel.add(searchSettingsAndButtonPanel, BorderLayout.CENTER);
         searchInputPanel.add(searchFieldPanel, BorderLayout.NORTH);
                 
-        scrollPane.getViewport().add(taskList);
+        scrollPane.getViewport().add(buttonListPanel);
         
         searchButtonsPanel.add(goToDateButton);
         searchButtonsPanel.add(exitSearchButton);
@@ -224,7 +230,7 @@ public class TaskSearchPanel extends JPanel {
         /*progressBar.setMinimum(0);
         progressBar.setStringPainted(true);*/
         Vector tasks = (Vector) CurrentProject.getTaskList().getTopLevelTasks();
-        Vector found = new Vector();
+        Vector<String> found = new Vector();
         /*progressBar.setMaximum(notes.size()-1);
         progressBar.setIndeterminate(false);
         this.add(progressBar, BorderLayout.SOUTH);*/
@@ -247,8 +253,13 @@ public class TaskSearchPanel extends JPanel {
             }
         }
         //this.remove(progressBar);
+        for (int buttonIndex = 0; buttonIndex < found.size(); buttonIndex++) {
+        	TaskListButton foundTaskButton = new TaskListButton();
+        	foundTaskButton.setButtonLabel(found.get(buttonIndex));
+        	buttonListPanel.add(foundTaskButton);
+        }
         JList graphicTaskList = new JList(found);
-        scrollPane.getViewport().add(graphicTaskList);
+        //scrollPane.getViewport().add(buttonListPanel);
         this.updateUI();
     }
 
