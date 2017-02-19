@@ -75,7 +75,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	JMenuItem ppOpenProject = new JMenuItem();	
 	JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
 	JButton ppOpenB = new JButton();
-	ProjectsTablePanel prjTablePanel = new ProjectsTablePanel();
+	private ProjectsTablePanel prjTablePanel = new ProjectsTablePanel();
 
 	public Action newProjectAction =
 		new AbstractAction(
@@ -224,7 +224,7 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		buttonsPanel.add(ppOpenB, null);
 		buttonsPanel.add(component1, null);
 		this.add(topBar, BorderLayout.NORTH);
-		this.add(prjTablePanel, BorderLayout.CENTER);
+		this.add(getPrjTablePanel(), BorderLayout.CENTER);
 		topBar.add(toolbarPanel, null);
 		toolbarPanel.add(buttonsPanel, BorderLayout.EAST);
 		buttonsPanel.add(toggleButton, null);
@@ -246,26 +246,26 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			}
 			public void projectWasChanged() {
 				curProjectTitle.setText(CurrentProject.get().getTitle());
-				prjTablePanel.updateUI();
+				getPrjTablePanel().updateUI();
 			}
 		});
 		CurrentDate.addDateListener(new DateListener() {
 			public void dateChange(CalendarDate d) {
-				prjTablePanel.updateUI();
+				getPrjTablePanel().updateUI();
 			}
 		});
-		prjTablePanel.projectsTable.addMouseListener(new PopupListener());
-		prjTablePanel
+		getPrjTablePanel().projectsTable.addMouseListener(new PopupListener());
+		getPrjTablePanel()
 			.projectsTable
 			.getSelectionModel()
 			.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				boolean enabled =
-					!prjTablePanel
+					!getPrjTablePanel()
 						.projectsTable
 						.getModel()
 						.getValueAt(
-							prjTablePanel.projectsTable.getSelectedRow(),
+							getPrjTablePanel().projectsTable.getSelectedRow(),
 							ProjectsTablePanel.PROJECT_ID)
 						.toString()
 						.equals(CurrentProject.get().getID());
@@ -274,13 +274,13 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 				ppProperties.setEnabled(true);
 			}
 		});
-		prjTablePanel.projectsTable.setToolTipText(
+		getPrjTablePanel().projectsTable.setToolTipText(
 			Local.getString("Double-click to set a current project"));
 
 			// delete projects using the DEL kew
-			prjTablePanel.projectsTable.addKeyListener(new KeyListener() {
+			getPrjTablePanel().projectsTable.addKeyListener(new KeyListener() {
 				public void keyPressed(KeyEvent e){
-					if(prjTablePanel.projectsTable.getSelectedRows().length>0 
+					if(getPrjTablePanel().projectsTable.getSelectedRows().length>0 
 						&& e.getKeyCode()==KeyEvent.VK_DELETE)
 						ppDeleteProject_actionPerformed(null);
 				}
@@ -337,32 +337,32 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 	}
 
 	void ppOpenProject_actionPerformed(ActionEvent e) {
-		CurrentProject.set(prjTablePanel.getSelectedProject());
-		prjTablePanel.updateUI();
+		CurrentProject.set(getPrjTablePanel().getSelectedProject());
+		getPrjTablePanel().updateUI();
 		ppDeleteProject.setEnabled(false);
 		ppOpenProject.setEnabled(false);
 	}
 
 	void ppNewProject_actionPerformed(ActionEvent e) {
 		ProjectDialog.newProject();
-		prjTablePanel.updateUI();
+		getPrjTablePanel().updateUI();
 	}
 
 	void ppDeleteProject_actionPerformed(ActionEvent e) {
 		String msg;
 		Project prj;
 		Vector toremove = new Vector();
-		if (prjTablePanel.projectsTable.getSelectedRows().length > 1)
+		if (getPrjTablePanel().projectsTable.getSelectedRows().length > 1)
 			msg =
 				Local.getString("Delete")
 					+ " "
-					+ prjTablePanel.projectsTable.getSelectedRows().length
+					+ getPrjTablePanel().projectsTable.getSelectedRows().length
 					+ " "
 					+ Local.getString("projects")
 					+ "\n"
 					+ Local.getString("Are you sure?");
 		else {
-			prj = prjTablePanel.getSelectedProject();
+			prj = getPrjTablePanel().getSelectedProject();
 			msg =
 				Local.getString("Delete project")
 					+ " '"
@@ -381,14 +381,14 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			return;
 
 		for (int i = 0;
-			i < prjTablePanel.projectsTable.getSelectedRows().length;
+			i < getPrjTablePanel().projectsTable.getSelectedRows().length;
 			i++) {
 			prj =
-				(net.sf.memoranda.Project) prjTablePanel
+				(net.sf.memoranda.Project) getPrjTablePanel()
 					.projectsTable
 					.getModel()
 					.getValueAt(
-					prjTablePanel.projectsTable.getSelectedRows()[i],
+					getPrjTablePanel().projectsTable.getSelectedRows()[i],
 					ProjectsTablePanel.PROJECT);
 			toremove.add(prj.getID());
 		}
@@ -396,13 +396,13 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 			ProjectManager.removeProject((String) toremove.get(i));
 		}
 		CurrentStorage.get().storeProjectManager();
-		prjTablePanel.projectsTable.clearSelection();
-		prjTablePanel.updateUI();
+		getPrjTablePanel().projectsTable.clearSelection();
+		getPrjTablePanel().updateUI();
 		setMenuEnabled(false);
 	}
 
 	void ppProperties_actionPerformed(ActionEvent e) {
-		Project prj = prjTablePanel.getSelectedProject();
+		Project prj = getPrjTablePanel().getSelectedProject();
 		ProjectDialog dlg =
 			new ProjectDialog(null, Local.getString("Project properties"));
 		Dimension dlgSize = dlg.getSize();
@@ -437,14 +437,14 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 				new CalendarDate((Date) dlg.endDate.getModel().getValue()));
 		else
 			prj.setEndDate(null);
-		prjTablePanel.updateUI();
+		getPrjTablePanel().updateUI();
 		/*
 		 * if (dlg.freezeChB.isSelected()) prj.freeze(); else
 		 */
 	}
 
 	void ppShowActiveOnlyChB_actionPerformed(ActionEvent e) {
-		prjTablePanel.setShowActiveOnly(ppShowActiveOnlyChB.isSelected());
+		getPrjTablePanel().setShowActiveOnly(ppShowActiveOnlyChB.isSelected());
 		Context.put(
 			"SHOW_ACTIVE_PROJECTS_ONLY",
 			new Boolean(ppShowActiveOnlyChB.isSelected()));
@@ -454,6 +454,20 @@ public class ProjectsPanel extends JPanel implements ExpandablePanel {
 		ppDeleteProject.setEnabled(enabled);
 		ppOpenProject.setEnabled(enabled);
 		ppProperties.setEnabled(enabled);		
+	}
+
+	/**
+	 * @return the prjTablePanel
+	 */
+	public ProjectsTablePanel getPrjTablePanel() {
+		return prjTablePanel;
+	}
+
+	/**
+	 * @param prjTablePanel the prjTablePanel to set
+	 */
+	public void setPrjTablePanel(ProjectsTablePanel prjTablePanel) {
+		this.prjTablePanel = prjTablePanel;
 	}
 
 }
