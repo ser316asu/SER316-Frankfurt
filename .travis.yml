@@ -1,1 +1,4 @@
 language: java
+
+notifications:
+  slack: frankfurt-group:8uz342ApGUVAYYA0QwCFiUSk
