@@ -12,7 +12,7 @@ public class Develop extends JFrame
 	public static int SCREEN_HEIGHT;
     public Develop()
     {
-    	this.setLocationRelativeTo(null);
+    	//this.setLocationRelativeTo(null);
     	this.setJMenuBar(new MainMenuBar(this));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();// geting size of screen

@@ -1,5 +1,4 @@
 package net.sf.memoranda.ui.DevelopHomePage;
-import javax.swing.JLabel;
 import javax.swing.*;
 import java.awt.*;
 import java.util.*;
@@ -61,6 +60,7 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 	public void editComponents(){
 		this.setPreferredSize(this.dimension);
 		this.setMinimumSize(this.dimension);
+		this.setMaximumSize(this.dimension);
 
 		//progressDimension = new Dimension(160,(int)((parent.getDimension().getHeight() / 6) - 5));
 		progressTime.setValue(0);
@@ -82,6 +82,8 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 		this.dayStatus.setHorizontalAlignment(CENTER);
 		this.locStatus.setHorizontalAlignment(CENTER);
 		this.timeStatus.setHorizontalAlignment(CENTER);
+		
+		//this.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 	}
 
 	public void addActionListeners(){}
@@ -169,7 +171,7 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 		this.dayStatus.setMaximumSize(d);
 		this.locStatus.setMaximumSize(d);
 		
-		//this.dayStatus.setBorder(BorderFactory.createLineBorder(Color.white));
+		//this.setBorder(BorderFactory.createLineBorder(Color.white));
 		//this.progressLabelsPanel.setBorder(BorderFactory.createLineBorder(Color.white));
 	}
 

@@ -8,7 +8,6 @@ import java.awt.event.*;
 import java.util.Hashtable;
 import java.util.Date;
 import java.util.*;
-import java.awt.Insets;
 import java.util.Arrays;
 
 public class LowerHomePanel extends JLabel implements Styling
@@ -66,6 +65,7 @@ public class LowerHomePanel extends JLabel implements Styling
           addtasks_P.setLayout(new FlowLayout(FlowLayout.RIGHT));
           
           this.setPreferredSize(dimension);
+          this.setMaximumSize(new Dimension(Styling.SCREEN_WIDTH-Styling.MAIN_TOOLBAR_WIDTH,Styling.SCREEN_HEIGHT));
           addTask_B.setPreferredSize(new Dimension(20,25));
           tasks_P.setPreferredSize(dimension);
           toolBar_P.setPreferredSize(dimension);
@@ -94,8 +94,8 @@ public class LowerHomePanel extends JLabel implements Styling
               tasks_P.add(new TaskPanel(Styling.TASK_PANEL_WIDTH,Styling.TASK_PANEL_HEIGHT,tc, topHomePanel),JLayeredPane.DRAG_LAYER);
           }
           
-          addtasks_P.add(sortTasks_CB);
-          addtasks_P.add(addTask_B);
+          //addtasks_P.add(sortTasks_CB);
+          //addtasks_P.add(addTask_B);
           toolBar_P.add(addtasks_P, BorderLayout.NORTH);
           
           
@@ -180,4 +180,10 @@ public class LowerHomePanel extends JLabel implements Styling
 			}
 		}
 	}
+    public void addNewTask(TaskCard tc)
+    {
+    	this.tasks_P.add(new TaskPanel(tc,this.topHomePanel));
+    	this.tasks_P.revalidate();
+    	this.revalidate();
+    }
 }

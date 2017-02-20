@@ -8,11 +8,11 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Color;
 import java.util.*;
-public class HomePanel extends JLayeredPane implements Styling
+public class HomePanel extends JLabel implements Styling
 {
     private TopHomePanel top_P;
 	private LowerHomePanel low_P;
-	private JLabel container, containerForToolbar;
+	private JSplitPane container, containerForToolbar;
     private TaskCard activeTask;
     private Hashtable<String,TaskCard> tasks;
     private LoadAssets assets;
@@ -22,7 +22,7 @@ public class HomePanel extends JLayeredPane implements Styling
     	
         assets = new LoadAssets();
         this.tasks = new Hashtable<String, TaskCard>();
-        this.toolbar = new MainToolBar(this);
+        this.toolbar = new MainToolBar();
         fillTasks();
     	createComponents();
     	editComponents();
@@ -33,7 +33,7 @@ public class HomePanel extends JLayeredPane implements Styling
     {
     	//this.setIcon(LoadAssets.HOMEPAGE_BACKGROUND);
         assets = new LoadAssets();
-        this.toolbar = new MainToolBar(this);
+        this.toolbar = new MainToolBar();
         this.tasks = new Hashtable<String, TaskCard>();
         fillTasks();
         createComponents();
@@ -48,16 +48,27 @@ public class HomePanel extends JLayeredPane implements Styling
     {
     	top_P = new TopHomePanel(this.tasks.get("task 1"));
     	low_P = new LowerHomePanel(this.top_P, this.tasks);
-    	container = new JLabel();
+    	container = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+    	containerForToolbar = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
     }
     public void editComponents()
     {
-    	container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+    	this.setLayout(new GridLayout(1,1,0,0));
     	container.setMaximumSize(new Dimension(Styling.SCREEN_WIDTH,Styling.SCREEN_HEIGHT));
-    	container.setMinimumSize(new Dimension(Styling.SCREEN_WIDTH,Styling.SCREEN_HEIGHT));
-    	this.setBorder(BorderFactory.createLineBorder(Color.red)); 
-    	this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-    	this.container.setLocation(0,0);
+    	container.setMinimumSize(new Dimension(Styling.SCREEN_WIDTH-Styling.MAIN_TOOLBAR_WIDTH-15,Styling.SCREEN_HEIGHT));
+    	container.setDividerLocation(Styling.TERMINAL_PANEL_HEIGHT+1);
+    	container.setOneTouchExpandable(true);
+    	container.setResizeWeight(1);
+    	container.setOpaque(false);
+    	
+    	containerForToolbar.setMaximumSize(new Dimension(Styling.SCREEN_WIDTH,Styling.SCREEN_HEIGHT));
+    	containerForToolbar.setMinimumSize(new Dimension(Styling.SCREEN_WIDTH-Styling.MAIN_TOOLBAR_WIDTH-15,Styling.SCREEN_HEIGHT));
+    	containerForToolbar.setDividerLocation(Styling.MAIN_TOOLBAR_WIDTH);
+    	containerForToolbar.setOneTouchExpandable(true);
+    	containerForToolbar.setResizeWeight(1);
+    	containerForToolbar.setOpaque(false);
+
+    	//this.setIcon(LoadAssets.HOMEPAGE_BACKGROUND);
     }
     public void addActionListeners()
     {
@@ -65,19 +76,23 @@ public class HomePanel extends JLayeredPane implements Styling
     }
     public void addComponents()
     {
-    	container.add(top_P);
-    	container.add(low_P);
+    	container.setTopComponent(this.top_P);
+    	container.setBottomComponent(this.low_P);
     	//this.add(new MainToolBar());
     	//this.setLayer(c, layer);
     	//this.add(this.toolbar, new Integer(10));
-    	this.toolbar.setVisible(true);
-    	this.add(container, new Integer(0));
+    	//this.add(toolbar,JLayeredPane.DRAG_LAYER);
+    	//this.add(container, JLayeredPane.DRAG_LAYER);
+    	containerForToolbar.setLeftComponent(this.toolbar);
+    	containerForToolbar.setRightComponent(this.container);
+    	
+    	this.add(containerForToolbar);
     	this.revalidate();
     }
 
     public void style()
     {
-        this.setBackground(Styling.BACKGROUND_COLOR);
+    	this.setPreferredSize(new Dimension(Styling.SCREEN_WIDTH-2,Styling.SCREEN_HEIGHT-2));
     }
     public void fillTasks()
     {
