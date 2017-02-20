@@ -36,7 +36,7 @@
 	<path id="classpath">
 		<pathelement path="${build.classes.dir}"/>
 		<fileset dir="lib">
-			<include name="*.jar"/>
+			<include name="**/*.jar"/>
 			<include name="*.zip"/>
 		</fileset>
 	</path>
@@ -181,7 +181,7 @@
 	<!-- =================================================================== -->
 	<!-- Runs JUnit Tests                                                    -->
 	<!-- =================================================================== -->
-	<target name="test" depends="build-if-needed"
+	<target name="test" depends="clean,build-if-needed"
 	 description="Runs JUnit tests for classes starts with Test, and generates a report.">
 	             <!-- First, clean the junit directory. -->
 	             <delete dir="${build.junitreport.dir}"/>
