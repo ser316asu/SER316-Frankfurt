@@ -7,7 +7,9 @@ import javax.swing.text.DateFormatter;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /** 
  * @author Jacob Leonard
@@ -31,12 +33,13 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 	private JFrame mainFrame;
 	private JPanel centerPane, bottomCenterPane, topCenterPane, topRightPane, topLeftPane;
 
+	private Date today;
 	private JFormattedTextField startDate, endDate;
 	private JTextField jTextFieldName; // String
 	private JLabel currentState, nameLabel, startDateLabel, endDateLabel, locEstLabel, hoursEstLabel, numFilesLabel, statusLabel;
 
 	// Code Info
-	private JTextField locEst, hoursEst, numFiles; 
+	private JFormattedTextField locEst, hoursEst, numFiles; 
 	
 	private JButton finishButton;
 	private JButton startStop; // Hoping to only use one button that changes when pressed
@@ -63,12 +66,13 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		nameLabel = new JLabel("Name");
 		jTextFieldName = new JTextField("Name of Task",28);
 
-		startDateLabel = new JLabel("Start Date");
+		startDateLabel = new JLabel("Start Date (MM/DD/YYYY)");
 		DateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		startDate = new JFormattedTextField(newDateFormat); //"Start Date",28
-		startDate.setColumns(28);
-		startDate.setText("MM/DD/YYYY");
-		
+		startDate = new JFormattedTextField(newDateFormat); // Setting Date formatted textfield
+		startDate.setColumns(28); // Setting width of text-field
+		today = new Date(); // default constructor for Date class is current-date. This passed to DateFormat instance.
+		startDate.setValue(today); // Set default Date object to today 
+		startDate.setText(newDateFormat.format(today)); // set String text to today's date
 		startDate.setMaximumSize(new Dimension(100, 1));
 		
 		endDateLabel = new JLabel("Due Date");
@@ -78,13 +82,21 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		
 		
 		locEstLabel = new JLabel("Estimated LOC");
-		locEst = new JTextField("LOC Estimate", 28);
+		NumberFormat integerFieldFormatter = NumberFormat.getIntegerInstance(); // Factory?
+		locEst = new JFormattedTextField(integerFieldFormatter);
+		locEst.setColumns(28);
+		locEst.setText("LOC Estimate");
 		
 		hoursEstLabel = new JLabel("Estimated Hours");
-		hoursEst = new JTextField("Hours Estimate", 28);
+		hoursEst = new JFormattedTextField(integerFieldFormatter);
+		hoursEst.setColumns(28);
+		hoursEst.setText("Hours Estimate");
 		
 		numFilesLabel = new JLabel("Estimated # of Files");
-		numFiles = new JTextField("Number of Files", 28);
+		
+		numFiles = new JFormattedTextField(integerFieldFormatter);
+		numFiles.setColumns(28);
+		numFiles.setText("Number of Files/Classes");
 		
 		statusLabel = new JLabel("Please fill out all fields for your new task");
 		
@@ -188,13 +200,12 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		/* Field validation?
 		/* instantiate new TaskCard from this and pass it into a collection
 		*/
-		
+		//System.out.println(startDate.setValue(newFormat));
 		
 		// CHECK IF INPUT IS VALID
 		if(validateInput()){
 			
 			// ASK USER TO CONFIRM CHANGES - IF GOOD: CONTINUE. IF CHANGES MADE, RE-VALIDATE.
-		
 			finishButton.setText("test");
 			finishButton.setVisible(false);
 			// Create new taskcard here
@@ -221,7 +232,7 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		
 		boolean isValid = true; // If checks below pass, isValid remains true. 
 		
-		
+		//TODO: Check if Duplicate task exists
 		// CHECK TASK NAME
 		if(jTextFieldName.getText() == null || jTextFieldName.getText().equals("Name of Task") || jTextFieldName.getText().equals("startDate is invalid")){
 			System.out.println("Task Name is invalid");
@@ -235,6 +246,7 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 
 		}
 		
+
 		// CHECK START DATE
 		if(startDate.getValue() == null){
 			System.out.println("startDate is invalid");
@@ -248,6 +260,7 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 
 		}
 		// CHECK END DATE
+		// TODO: CHECK TO MAKE SURE END-DATE >= START-DATE. Use compareTo()
 		if(endDate.getValue() == null){
 			System.out.println("endDate is invalid");
 			endDate.setText("RE-ENTER! (dd/mm/yyy)");
@@ -255,6 +268,18 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 			endDate.setBackground(Color.red);
 			isValid = false;
 		}
+		
+		
+		//TODO 
+		
+		// CHECK LOC ESTIMATE
+		
+		// CHECK HOURS ESTIMATE
+		
+		// CHECK NUMFILES ESTIMATE
+		
+		// CHECK TASK DESCRIPTION
+		
 		else if(endDate.getValue() != null){
 			endDate.setBackground(Color.WHITE);
 		}		
@@ -467,15 +492,15 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		this.statusLabel = statusLabel;
 	}
 
-	public void setLocEst(JTextField locEst) {
+	public void setLocEst(JFormattedTextField locEst) {
 		this.locEst = locEst;
 	}
 
-	public void setHoursEst(JTextField hoursEst) {
+	public void setHoursEst(JFormattedTextField hoursEst) {
 		this.hoursEst = hoursEst;
 	}
 
-	public void setNumFiles(JTextField numFiles) {
+	public void setNumFiles(JFormattedTextField numFiles) {
 		this.numFiles = numFiles;
 	}
 
