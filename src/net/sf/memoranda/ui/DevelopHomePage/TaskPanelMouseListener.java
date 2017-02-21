@@ -25,9 +25,10 @@ public class TaskPanelMouseListener implements MouseListener
     
     public TaskPanelMouseListener(TaskPanel target, TopHomePanel thp)
     {
+    	this.topPanel = thp;
         this.target = target;
-        task = target.getTaskCard();
-        clickCount = 0;
+        this.task = target.getTaskCard();
+        this.clickCount = 0;
     }
     /**
     * Invoked when the mouse button has been clicked (pressed and released) on a component.
@@ -61,7 +62,7 @@ public class TaskPanelMouseListener implements MouseListener
         {
             clickCount = 0;
         }*/
-        //System.out.println("Double Clicked");
+        System.out.println("Clicked");
         clickCount = 0;
         this.topPanel.addObservers(task);
         /*
