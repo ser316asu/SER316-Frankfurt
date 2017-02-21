@@ -179,6 +179,7 @@ public class JNCalendarPanel extends JPanel {
     monthBackButton.setMinimumSize(new Dimension(100, 100));
     monthBackButton.setOpaque(false);
     monthBackButton.setPreferredSize(new Dimension(100, 100));
+    
     monthBackButton.setRequestFocusEnabled(false);
     monthBackButton.setToolTipText("");
     monthBackButton.setBorderPainted(false);
@@ -192,6 +193,7 @@ public class JNCalendarPanel extends JPanel {
     monthForwardButton.setMinimumSize(new Dimension(100, 100));
     monthForwardButton.setOpaque(false);
     monthForwardButton.setPreferredSize(new Dimension(100, 100));
+
     monthForwardButton.setRequestFocusEnabled(false);
     monthForwardButton.setBorderPainted(false);
     monthForwardButton.setFocusPainted(false);
