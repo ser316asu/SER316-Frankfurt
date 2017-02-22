@@ -1,10 +1,12 @@
 package net.sf.memoranda.ui.DevelopHomePage;
+import javax.imageio.ImageIO;
 /**
 
 **/
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.util.Hashtable;
 import java.util.Date;
 import java.util.*;
@@ -20,6 +22,7 @@ public class LowerHomePanel extends JLabel implements Styling
     private JComboBox<String> sortTasks_CB;
     private final String [] comboCommands;
     private final TopHomePanel topHomePanel;
+    private int oldWidth, oldHeight;
 
     public LowerHomePanel()
     {
@@ -185,5 +188,22 @@ public class LowerHomePanel extends JLabel implements Styling
     	this.tasks_P.add(new TaskPanel(tc,this.topHomePanel));
     	this.tasks_P.revalidate();
     	this.revalidate();
+    	this.oldWidth = this.getWidth();
+    	this.oldHeight = this.getHeight();
+    }
+    
+    @Override
+    public void paint(Graphics g)
+    {
+    	if(this.oldWidth != this.getWidth() || this.oldHeight != this.getHeight())
+    	{
+        	Image img = ((ImageIcon) this.getIcon()).getImage();
+        	img = img.getScaledInstance(this.getWidth(), this.getHeight(),  java.awt.Image.SCALE_SMOOTH);
+        	this.setIcon(new ImageIcon(img));
+        	this.oldWidth = this.getWidth();
+        	this.oldHeight = this.getHeight();
+    	}
+    	
+    	super.paint(g);
     }
 }

@@ -19,6 +19,7 @@ public class TopHomePanel extends JLabel implements Styling
     private TaskCard task;
     private Dimension dimension;
     private LayoutManager layout;
+    private int oldWidth,oldHeight;
     
 
 
@@ -106,5 +107,19 @@ public class TopHomePanel extends JLabel implements Styling
     	tc.addObserver(leftLabels);
     	tc.addObserver(rightLabels);
     	tc.addObserver(statusBarTop);
+    }
+    @Override
+    public void paint(Graphics g)
+    {
+    	if(this.oldWidth != this.getWidth() || this.oldHeight != this.getHeight())
+    	{
+        	Image img = ((ImageIcon) this.getIcon()).getImage();
+        	img = img.getScaledInstance(this.getWidth(), this.getHeight(),  java.awt.Image.SCALE_SMOOTH);
+        	this.setIcon(new ImageIcon(img));
+        	this.oldWidth = this.getWidth();
+        	this.oldHeight = this.getHeight();
+    	}
+    	
+    	super.paint(g);
     }
 }

@@ -23,6 +23,7 @@ public interface Styling{
 	static final Font TERMINAL_FONT = new Font("Staubach",Font.BOLD,20);
 	static final Font TIMER_FONT = new Font("Staubach",Font.BOLD,60);
 	static final Font TASK_PANEL_FONT = new Font("Rudiment",Font.BOLD,20);
+	static final Font TOOLBAR_FONT = new Font("Rudiment",Font.BOLD,14);
 	
 	//sizing <a href="https://clipartfest.com/">clipartfest.com</a>
 	static final int SCREEN_WIDTH = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();
@@ -57,6 +58,9 @@ public interface Styling{
 	
 	static final int PROGRESS_PANEL_LABELS_WIDTH = PROGRESS_PANEL_WIDTH/3 -1;
 	static final int PROGRESS_PANEL_LABELS_HEIGTH = PROGRESS_PANEL_HEIGHT/3 -1;
+	
+	static final int TOOLBAR_BUTTON_WIDTH = MAIN_TOOLBAR_WIDTH -2;
+	static final int TOOLBAR_BUTTON_HEIGHT = MAIN_TOOLBAR_HEIGHT/6;
 	
 	public void style(); 
 }

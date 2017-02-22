@@ -3,6 +3,8 @@ package net.sf.memoranda.ui.DevelopHomePage;
 
 **/
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicSplitPaneDivider;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -60,13 +62,20 @@ public class HomePanel extends JLabel implements Styling
     	container.setOneTouchExpandable(true);
     	container.setResizeWeight(1);
     	container.setOpaque(false);
-    	
+    
     	containerForToolbar.setMaximumSize(new Dimension(Styling.SCREEN_WIDTH,Styling.SCREEN_HEIGHT));
     	containerForToolbar.setMinimumSize(new Dimension(Styling.SCREEN_WIDTH-Styling.MAIN_TOOLBAR_WIDTH-15,Styling.SCREEN_HEIGHT));
     	containerForToolbar.setDividerLocation(Styling.MAIN_TOOLBAR_WIDTH);
+    	containerForToolbar.setDividerSize(10);
+    	containerForToolbar.setForeground(Color.black);
+    	containerForToolbar.setBackground(Color.black);
     	containerForToolbar.setOneTouchExpandable(true);
     	containerForToolbar.setResizeWeight(1);
     	containerForToolbar.setOpaque(false);
+    	
+    	BasicSplitPaneDivider divider = (BasicSplitPaneDivider) containerForToolbar.getComponent(0);
+    	divider.setBackground(Color.black);
+    	divider.setBorder(null);
 
     	//this.setIcon(LoadAssets.HOMEPAGE_BACKGROUND);
     }
