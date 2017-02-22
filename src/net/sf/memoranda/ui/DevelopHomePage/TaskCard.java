@@ -5,7 +5,10 @@ import java.text.*;
 public class TaskCard extends Observable{
 	private int estimatedLOC;
 	private int actualLOC;
+	private int numFiles;
+	private int actualNumFiles;
 	private String taskName;
+	private String taskDescription;
 	private double actualTime;
 	private double estimatedTime;
 	private double locPerHour;
@@ -25,9 +28,12 @@ public class TaskCard extends Observable{
 	public TaskCard(){
 		estimatedLOC = 0;
 		actualLOC = 0;
+		numFiles = 0;
+		actualNumFiles = 0;
 		locPerHour = 0;
 		estimatedLOCPH = 0;
 		taskName = "";
+		taskDescription = "";
 		actualTime = 0;
 		estimatedTime = 0;
 		startDate = null;
@@ -36,6 +42,24 @@ public class TaskCard extends Observable{
 		decimalFormat = new DecimalFormat("#0.0");
         this.isActive = false;
 	}
+	
+	public TaskCard(int estimatedLOC, int estimatedTime, int numFiles, Date startDate, Date endDate, String taskDescription, String taskName){
+		this.estimatedLOC = estimatedLOC;
+		this.estimatedTime = (double) estimatedTime;
+		this.startDate = startDate;
+		this.endDate = endDate;
+        this.isActive = false;
+        
+		locPerHour = 0;
+		estimatedLOCPH = 0;
+		taskName = "";
+		actualTime = 0;
+		actualNumFiles = 0;
+		scheduleStatus = ON_TIME;
+		decimalFormat = new DecimalFormat("#0.0");
+
+	}
+
 
 	/**
 	*This method returns the time left in hours by taking the result of estimatedLOC / actualLOCPH. The value can be negative to signify how many hours overdue the project is 
