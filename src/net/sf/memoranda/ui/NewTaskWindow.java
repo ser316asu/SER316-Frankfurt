@@ -9,6 +9,7 @@ import java.awt.event.*;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /** 
@@ -33,7 +34,7 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 	private JFrame mainFrame;
 	private JPanel centerPane, bottomCenterPane, topCenterPane, topRightPane, topLeftPane;
 
-	private Date today;
+	private Calendar today;
 	private JFormattedTextField startDate, endDate;
 	private JTextField jTextFieldName; // String
 	private JLabel currentState, nameLabel, startDateLabel, endDateLabel, locEstLabel, hoursEstLabel, numFilesLabel, statusLabel;
@@ -54,6 +55,7 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		
 	// Default No-Arg Constructor to initialize window
 	public NewTaskWindow(){
+		
 		Border blackBorder;
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		WIDTH = 690;//(int)screenSize.getWidth()/2; // Casting as int
@@ -70,9 +72,14 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		DateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		startDate = new JFormattedTextField(newDateFormat); // Setting Date formatted textfield
 		startDate.setColumns(28); // Setting width of text-field
-		today = new Date(); // default constructor for Date class is current-date. This passed to DateFormat instance.
-		startDate.setValue(today); // Set default Date object to today 
-		startDate.setText(newDateFormat.format(today)); // set String text to today's date
+		today = Calendar.getInstance(); // default constructor for Date class is current-date. This passed to DateFormat instance.
+		today.set(Calendar.HOUR_OF_DAY, 0);
+		today.set(Calendar.MINUTE, 0);
+		today.set(Calendar.SECOND, 0);
+		today.set(Calendar.MILLISECOND, 0);
+		
+		startDate.setValue(today.getTime()); // Set default Date object to today 
+		//startDate.setText(newDateFormat.format(today)); // set String text to today's date
 		startDate.setMaximumSize(new Dimension(100, 1));
 		
 		endDateLabel = new JLabel("Due Date");
@@ -111,10 +118,11 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		taskDesc = new JTextArea("Enter Task Description here...", 10, 120);
 		taskDesc.setBorder(blackBorder);
 		
+		//###################
 		/* WINDOW SETUP */ 
-	
-		mainPane = getContentPane();
+		//###################
 		
+		mainPane = getContentPane();
 		
 		JPanel centerPane = new JPanel();
 		centerPane.setLayout(new BorderLayout());
@@ -123,9 +131,11 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		
 		topLeftPane = new JPanel(new FlowLayout());
 		topLeftPane.setBorder(blackBorder);
+		topLeftPane.setBackground(Color.LIGHT_GRAY); //new Color(50, 34, 24)
 		
 		topRightPane = new JPanel(new FlowLayout());
 		topRightPane.setBorder(blackBorder);
+		topRightPane.setBackground(Color.LIGHT_GRAY);
 		
 		topCenterPane = new JPanel(new BorderLayout());
 		topCenterPane.setBorder(blackBorder);
@@ -203,9 +213,8 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		//System.out.println(startDate.setValue(newFormat));
 		
 		// CHECK IF INPUT IS VALID
-		if(validateInput()){
+		if(validateInput()){ 
 			
-			// ASK USER TO CONFIRM CHANGES - IF GOOD: CONTINUE. IF CHANGES MADE, RE-VALIDATE.
 			finishButton.setText("test");
 			finishButton.setVisible(false);
 			// Create new taskcard here
@@ -219,6 +228,7 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 			System.out.println(startDate.getText());
 			System.out.println(startDate.getValue()); // Runtime
 			//System.out.println(newDateFormat.get);
+			
 		}
 		
 		
@@ -231,7 +241,9 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 	public boolean validateInput(){
 		
 		boolean isValid = true; // If checks below pass, isValid remains true. 
-		
+		Date startDateObj = (Date) startDate.getValue(); // Casting as Date instead of SimpleDateFormat for conditional.
+		Date endDateObj = (Date) endDate.getValue();
+
 		//TODO: Check if Duplicate task exists
 		// CHECK TASK NAME
 		if(jTextFieldName.getText() == null || jTextFieldName.getText().equals("Name of Task") || jTextFieldName.getText().equals("startDate is invalid")){
@@ -246,11 +258,10 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 
 		}
 		
-
 		// CHECK START DATE
 		if(startDate.getValue() == null){
 			System.out.println("startDate is invalid");
-			startDate.setText("RE-ENTER! (dd/mm/yyy)");
+			startDate.setText("RE-ENTER! (dd/mm/yyyy)");
 			statusLabel.setText("Invalid Entry: Please fix marked fields");
 			startDate.setBackground(Color.red);
 			isValid = false;
@@ -263,30 +274,69 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		// TODO: CHECK TO MAKE SURE END-DATE >= START-DATE. Use compareTo()
 		if(endDate.getValue() == null){
 			System.out.println("endDate is invalid");
-			endDate.setText("RE-ENTER! (dd/mm/yyy)");
+			endDate.setText("RE-ENTER! (dd/mm/yyyy)");
 			statusLabel.setText("Invalid Entry: Please fix marked fields");
 			endDate.setBackground(Color.red);
 			isValid = false;
 		}
-		
-		
-		//TODO 
-		
-		// CHECK LOC ESTIMATE
-		
-		// CHECK HOURS ESTIMATE
-		
-		// CHECK NUMFILES ESTIMATE
-		
-		// CHECK TASK DESCRIPTION
-		
+		else if(!endDateObj.after(startDateObj) && !endDateObj.equals(startDateObj)){ // Is endDate before startDate? Ensure HR/MIN/SEC/MS are set to 0. 
+			endDate.setText("RE-ENTER! (dd/mm/yyyy)");
+			endDate.setBackground(Color.red);
+			isValid = false;
+		}
 		else if(endDate.getValue() != null){
 			endDate.setBackground(Color.WHITE);
 		}		
 		
-		// TODO: Add validation checks for name, LOC, numClasses, numHours
+		// CHECK LOC ESTIMATE
+		if(locEst.getValue() == null){
+			System.out.println("LOC EST is invalid");
+			locEst.setText("Re-Enter Lines of Code Estimate!");
+			statusLabel.setText("Invalid Entry: Please fix marked fields");
+			locEst.setBackground(Color.red);
+			isValid = false;
+		}
+		else if(locEst.getValue() != null){
+			locEst.setBackground(Color.WHITE);
+		}	
 		
-		return isValid;
+		// CHECK HOURS ESTIMATE
+		if(hoursEst.getValue() == null){
+			System.out.println("Hours EST is invalid");
+			hoursEst.setText("Re-Enter Lines of Code Estimate!");
+			statusLabel.setText("Invalid Entry: Please fix marked fields");
+			hoursEst.setBackground(Color.red);
+			isValid = false;
+		}
+		else if(hoursEst.getValue() != null){
+			hoursEst.setBackground(Color.WHITE);
+		}	
+		
+		//TODO
+		// CHECK NUMFILES ESTIMATE
+		if(numFiles.getValue() == null){
+			System.out.println("# of Files is invalid");
+			numFiles.setText("Re-Enter Estimated # of Files");
+			statusLabel.setText("Invalid Entry: Please fix marked fields");
+			numFiles.setBackground(Color.red);
+			isValid = false;
+		}
+		else if(numFiles.getValue() != null){
+			numFiles.setBackground(Color.WHITE);
+		}
+	
+		// CHECK TASK DESCRIPTION
+		if(taskDesc.getText() == null || taskDesc.getText().equals("Enter Task Description here...") || taskDesc.getText().equals("Task Description is invalid")){
+			System.out.println("Task Description is Invalid");
+			taskDesc.setText("Task Description is invalid");
+			statusLabel.setText("Invalid Entry: Please fix marked fields");
+			taskDesc.setBackground(Color.red);
+			isValid = false;
+		}
+		else
+			taskDesc.setBackground(Color.WHITE);
+
+		return isValid; 
 		
 	}
 	
