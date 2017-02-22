@@ -21,7 +21,7 @@ import javax.swing.plaf.LabelUI;
 import net.sf.memoranda.ui.NewTaskWindow;
 
 public class MainToolBar extends JLabel implements Styling{
-	private JButton createNewTask_B;
+	private JButton createNewTask_B, calendar_B;
 	private LowerHomePanel taskBoard;
 	private NewTaskWindow taskFrame;
 	
@@ -55,6 +55,7 @@ public class MainToolBar extends JLabel implements Styling{
 	}
 	private void createComponents() {
 		createNewTask_B = new JButton();
+		calendar_B = new JButton();
 		
 	}
 
@@ -63,14 +64,9 @@ public class MainToolBar extends JLabel implements Styling{
 		//this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
 		this.setOpaque(false);
 		
-		this.createNewTask_B.setFont(Styling.TASK_PANEL_FONT);
-		this.createNewTask_B.setIcon(LoadAssets.TOOLBAR_BUTTON_IMAGE);
-		this.createNewTask_B.setBorderPainted(false);
-		//this.createNewTask_B.setBounds(0, 0, 2, 2);
-		this.createNewTask_B.setMargin(new Insets(15,0,0,0));
-		this.createNewTask_B.setToolTipText("Create a New Task");
-		this.createNewTask_B.setContentAreaFilled(false);
-		this.createNewTask_B.setLayout(new OverlayLayout(this.createNewTask_B));
+		editToolBarButton(createNewTask_B, "Create New Task");
+		
+		editToolBarButton(calendar_B, "Open Calendar");
 		//this.setUI(new ButtonUI());
 		
 	}
@@ -81,8 +77,10 @@ public class MainToolBar extends JLabel implements Styling{
 	}
 
 	private void addComponents() {
-		addButtonLabel(createNewTask_B, "<html>New<br>Task</html>");
+		addButtonLabel(createNewTask_B, "+");
 		this.add(createNewTask_B);
+		addButtonLabel(calendar_B, "#");
+		this.add(calendar_B);
 	}
 	
 	/**
@@ -98,7 +96,20 @@ public class MainToolBar extends JLabel implements Styling{
 		label.setMaximumSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,Styling.TOOLBAR_BUTTON_HEIGHT+1));
 		label.setMinimumSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,Styling.TOOLBAR_BUTTON_HEIGHT+1));
 		label.setHorizontalAlignment(JLabel.CENTER);
+		label.setVerticalAlignment(JLabel.CENTER);
+		label.setVerticalTextPosition(JLabel.CENTER);
 		button.add(label);
+	}
+	private void editToolBarButton(JButton button, String toolTip)
+	{
+		button.setFont(Styling.TASK_PANEL_FONT);
+		button.setIcon(LoadAssets.TOOLBAR_BUTTON_IMAGE);
+		button.setBorderPainted(false);
+		//this.createNewTask_B.setBounds(0, 0, 2, 2);
+		button.setMargin(new Insets(5,0,5,0));
+		button.setToolTipText(toolTip);
+		button.setContentAreaFilled(false);
+		button.setLayout(new OverlayLayout(button));
 	}
 	@Override
 	public void style() {

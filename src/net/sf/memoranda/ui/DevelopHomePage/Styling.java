@@ -23,7 +23,7 @@ public interface Styling{
 	static final Font TERMINAL_FONT = new Font("Staubach",Font.BOLD,20);
 	static final Font TIMER_FONT = new Font("Staubach",Font.BOLD,60);
 	static final Font TASK_PANEL_FONT = new Font("Rudiment",Font.BOLD,20);
-	static final Font TOOLBAR_FONT = new Font("Rudiment",Font.BOLD,14);
+	static final Font TOOLBAR_FONT = new Font("Rudiment",Font.BOLD,35);
 	
 	//sizing <a href="https://clipartfest.com/">clipartfest.com</a>
 	static final int SCREEN_WIDTH = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();
@@ -38,8 +38,8 @@ public interface Styling{
 	static final int TASK_PANEL_WIDTH = TASK_BOARD_WIDTH/5 -110;
 	static final int TASK_PANEL_HEIGHT = TASK_BOARD_HEIGHT/2 - 100;
 	
-	public final int TOP_PANEL_WIDTH = TASK_BOARD_WIDTH;// - MAIN_TOOLBAR_WIDTH-2;
-    public final int TOP_PANEL_HEIGHT = (int) (SCREEN_HEIGHT * .4)-10;
+	static final int TOP_PANEL_WIDTH = TASK_BOARD_WIDTH;// - MAIN_TOOLBAR_WIDTH-2;
+    static final int TOP_PANEL_HEIGHT = (int) (SCREEN_HEIGHT * .4)-10;
     
 	static final int TERMINAL_PANEL_WIDTH = (int) (TOP_PANEL_WIDTH*.6)-1;
 	static final int TERMINAL_PANEL_HEIGHT = (int) (TOP_PANEL_HEIGHT);
