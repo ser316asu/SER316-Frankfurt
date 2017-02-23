@@ -1,8 +1,12 @@
 /**************************************************************
- * Copyright (c) 2017 - 2017, Joshua Becker, Alec Shinn, All rights reserved
- * SER316-Frankfurt
+ * Copyright (c) 2017 - 2017, Joshua Becker, Alec Shinn,
+ * All rights reserved
+ * SER316-Frankfurt is a project for ser216, 
+ * using agile scrum.
  * Description:
- */
+ * 
+ * Contact: jdbecke3@asu.edu, atshinn@asu.edu
+ **************************************************************/
 package net.sf.memoranda.ui.DevelopHomePage;
 import javax.imageio.ImageIO;
 /**
@@ -227,13 +231,18 @@ public class LowerHomePanel extends JLabel implements Styling
     {
     	this.state = !state;
     }
-    /**Listeners
-	* Once an event occurs the program goes here
-	* and decides what to do with each event.
-	*
-	*@peram nothing.
-	* J.B.
-	**/
+    
+    /**
+     * The listener interface for receiving button events.
+     * The class that is interested in processing a button
+     * event implements this interface, and the object created
+     * with that class is registered with a component using the
+     * component's <code>addButtonListener<code> method. When
+     * the button event occurs, that object's appropriate
+     * method is invoked.
+     *
+     * @see ButtonEvent
+     */
 	private class ButtonListener implements ActionListener
 	{
 		

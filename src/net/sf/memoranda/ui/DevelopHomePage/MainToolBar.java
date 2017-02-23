@@ -1,7 +1,12 @@
 /**************************************************************
- * Copyright (c) 2017 - 2017, Joshua Becker, All rights reserved
- * SER316-Frankfurt
- */
+ * Copyright (c) 2017 - 2017, Joshua Becker, Alec Shinn,
+ * All rights reserved
+ * SER316-Frankfurt is a project for ser216, 
+ * using agile scrum.
+ * Description:
+ * 
+ * Contact: jdbecke3@asu.edu, atshinn@asu.edu
+ **************************************************************/
 package net.sf.memoranda.ui.DevelopHomePage;
 
 import java.awt.Color;
@@ -32,13 +37,11 @@ import net.sf.memoranda.ui.NewTaskWindow;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class MainToolBar. is a tool bar
- * Designed for the left of the frame
- * will contain navigation buttons
+ * The Class MainToolBar.
  */
 public class MainToolBar extends JLabel implements Styling, Observer{
 	
-	/** The calendar B. and create new task B*/
+	/** The home B. */
 	private JButton createNewTask_B, calendar_B, home_B;
 	
 	/** The task board. */
@@ -47,7 +50,7 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 	/** The task frame. */
 	private NewTaskWindow taskFrame;
 	
-	/** The old height.  and the old width*/
+	/** The old height. */
 	private int oldWidth = 0, oldHeight = 0; 
 	
 	/**
@@ -78,7 +81,7 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 	}
 	
 	//---------------------Create Actions-----------------------------------
-    /**  Action when called will open the 	new task window for creation of tasks. */
+    /** The create new task action. */
     public Action createNewTaskAction = new AbstractAction("") {
     	
 	private static final long serialVersionUID = -6751747715539881623L;
@@ -88,7 +91,7 @@ public class MainToolBar extends JLabel implements Styling, Observer{
         }
     };
 	
-    /**  when the action is called it 	will open the calendar view. */
+    /** The open calendar action. */
     public Action openCalendarAction = new AbstractAction("") {
     	
 		private static final long serialVersionUID = 6131253764559798328L;
@@ -108,7 +111,7 @@ public class MainToolBar extends JLabel implements Styling, Observer{
         }
     };
     
-    /**  Action when called will open the 	new task window for creation of tasks. */
+    /** The home button action. */
     public Action homeButtonAction = new AbstractAction("") {
     	
 		private static final long serialVersionUID = 48588901517673371L;
@@ -121,8 +124,8 @@ public class MainToolBar extends JLabel implements Styling, Observer{
     //--------------------End Create Actions--------------------------------
 	
 	/**
-	 * Creates the components.
-	 */
+     * Creates the components.
+     */
 	private void createComponents() {
 		createNewTask_B = new JButton();
 		calendar_B = new JButton();
@@ -234,8 +237,8 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 		
 	}
 	
-	/**
-	 * updates the style of the components.
+	/* (non-Javadoc)
+	 * @see net.sf.memoranda.ui.DevelopHomePage.Styling#style()
 	 */
 	@Override
 	public void style() {

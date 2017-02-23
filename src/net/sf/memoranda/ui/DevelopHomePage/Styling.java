@@ -1,8 +1,12 @@
 /**************************************************************
- * Copyright (c) 2017 - 2017, Alec Shinn, Joshua Becker, All rights reserved
- * SER316-Frankfurt
+ * Copyright (c) 2017 - 2017, Joshua Becker, Alec Shinn,
+ * All rights reserved
+ * SER316-Frankfurt is a project for ser216, 
+ * using agile scrum.
  * Description:
- */
+ * 
+ * Contact: jdbecke3@asu.edu, atshinn@asu.edu
+ **************************************************************/
 package net.sf.memoranda.ui.DevelopHomePage;
 import java.awt.*;
 import javax.swing.*;

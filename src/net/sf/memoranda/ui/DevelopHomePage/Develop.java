@@ -1,8 +1,12 @@
 /**************************************************************
- * Copyright (c) 2017 - 2017, Joshua Becker, All rights reserved
- * SER316-Frankfurt
- * Description: this is the frame for the project
- */
+ * Copyright (c) 2017 - 2017, Joshua Becker, Alec Shinn,
+ * All rights reserved
+ * SER316-Frankfurt is a project for ser216, 
+ * using agile scrum.
+ * Description:
+ * 
+ * Contact: jdbecke3@asu.edu, atshinn@asu.edu
+ **************************************************************/
 package net.sf.memoranda.ui.DevelopHomePage;
 
 import javax.swing.*;
@@ -19,7 +23,6 @@ import java.util.Calendar;
 // TODO: Auto-generated Javadoc
 /**
  * The Class Develop.
- * is the jframe for the project.
  */
 public class Develop extends JFrame
 {
@@ -130,8 +133,8 @@ public class Develop extends JFrame
     
     //taken from App.java
 	/**
-	 * Method showSplash.
-	 */
+     * Show splash.
+     */
 	private void showSplash() {
 		splash = new JFrame();
 		ImageIcon spl =
