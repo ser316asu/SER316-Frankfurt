@@ -1,24 +1,47 @@
+/**************************************************************
+ * Copyright (c) 2017 - 2017, Joshua Becker, All rights reserved
+ * SER316-Frankfurt
+ * Description:
+ */
 package net.sf.memoranda.ui.DevelopHomePage;
 import java.util.*;
 import java.text.*;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class MAIN.
+ */
 public class MAIN
 {
+	
+	/** The d. */
 	public static Develop d;
+	
+	/** The task. */
 	public static TaskCard task;
     //public static Hashtable<String,TaskCard> tasks;
    
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     */
     public static void main(String[] args)
     {
     	task = new TaskCard();
 
     	MAIN.createTestCard(task);
 
-    	d = new Develop();
+    	d = new Develop(true);
     }
 
 
+    /**
+     * Creates the test card.
+     *
+     * @param task the task
+     */
     public static void createTestCard(TaskCard task){
     	task.setEstimatedLOC(500);
     	task.setEstimatedTime((double)8.5);

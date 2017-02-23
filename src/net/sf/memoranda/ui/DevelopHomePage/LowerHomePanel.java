@@ -1,3 +1,8 @@
+/**************************************************************
+ * Copyright (c) 2017 - 2017, Joshua Becker, All rights reserved
+ * SER316-Frankfurt
+ * Description:
+ */
 package net.sf.memoranda.ui.DevelopHomePage;
 import javax.imageio.ImageIO;
 /**
@@ -12,18 +17,45 @@ import java.util.Date;
 import java.util.*;
 import java.util.Arrays;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class LowerHomePanel.
+ */
 public class LowerHomePanel extends JLabel implements Styling
 {
+    
+    /** The tasks. */
     private Hashtable<String,TaskCard> tasks;
+	
+	/** The low ratio. */
 	private final double lowRatio = .6;
+    
+    /** The tool bar P. */
     private JPanel tasks_P, addtasks_P, toolBar_P;
+    
+    /** The dimension. */
     private Dimension dimension;
+    
+    /** The add task B. */
     private JButton addTask_B;
+    
+    /** The sort tasks CB. */
     private JComboBox<String> sortTasks_CB;
+    
+    /** The combo commands. */
     private final String [] comboCommands;
+    
+    /** The top home panel. */
     private final TopHomePanel topHomePanel;
+    
+    /** The old height. */
     private int oldWidth, oldHeight;
+    
+    private boolean state;
 
+    /**
+     * Instantiates a new lower home panel.
+     */
     public LowerHomePanel()
     {
         topHomePanel = null;
@@ -37,6 +69,13 @@ public class LowerHomePanel extends JLabel implements Styling
     	addActionListeners();
     	addComponents();
     }
+    
+    /**
+     * Instantiates a new lower home panel.
+     *
+     * @param thp the thp
+     * @param tasks the tasks
+     */
     public LowerHomePanel(TopHomePanel thp, Hashtable<String,TaskCard> tasks)
     {
         this.topHomePanel = thp;
@@ -52,6 +91,9 @@ public class LowerHomePanel extends JLabel implements Styling
     }
 
 
+    /**
+     * Creates the components.
+     */
     public void createComponents()
     {
           tasks_P = new JPanel();
@@ -60,6 +102,10 @@ public class LowerHomePanel extends JLabel implements Styling
           toolBar_P = new JPanel();
           sortTasks_CB = new JComboBox<String>(comboCommands);
     }
+    
+    /**
+     * Edits the components.
+     */
     public void editComponents()
     {            
           this.setLayout(new OverlayLayout(this));
@@ -85,11 +131,19 @@ public class LowerHomePanel extends JLabel implements Styling
           
           addTask_B.setMargin(new Insets(0,0,0,0));
     }
+    
+    /**
+     * Adds the action listeners.
+     */
     public void addActionListeners()
     {
           addTask_B.addActionListener(new ButtonListener());
           sortTasks_CB.addActionListener(new ComboListener());
     }
+    
+    /**
+     * Adds the components.
+     */
     public void addComponents()
     {
           for(TaskCard tc : tasks.values())
@@ -111,11 +165,21 @@ public class LowerHomePanel extends JLabel implements Styling
 
           
     }
+    
+    /**
+     * Sets the transparent.
+     *
+     * @param panel the new transparent
+     */
     private void setTransparent(JPanel panel)
     {
         panel.setOpaque(false);
         panel.setBackground(new Color(0,0,0,255));
     }
+    
+    /* (non-Javadoc)
+     * @see net.sf.memoranda.ui.DevelopHomePage.Styling#style()
+     */
     public void style()
     {
         this.setBackground(Styling.BACKGROUND_COLOR);
@@ -125,6 +189,10 @@ public class LowerHomePanel extends JLabel implements Styling
         //tasks_P.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR)); 
         this.setIcon(LoadAssets.TASK_BOARD_IMAGE);
     }
+    
+    /**
+     * Sort tasks by name.
+     */
     private void sortTasksByName()
     {
         tasks_P.removeAll();
@@ -139,12 +207,21 @@ public class LowerHomePanel extends JLabel implements Styling
             System.out.println(((String) tmp[i]) + " asfd");
         }
     }
+    
+    /**
+     * Sort tasks by date.
+     */
     private void sortTasksByDate()
     {
         tasks_P.removeAll();
         System.out.println("here");
         tasks_P.revalidate();
         tasks_P.repaint();
+    }
+    
+    public void changeState()
+    {
+    	this.state = !state;
     }
     /**Listeners
 	* Once an event occurs the program goes here
@@ -155,6 +232,10 @@ public class LowerHomePanel extends JLabel implements Styling
 	**/
 	private class ButtonListener implements ActionListener
 	{
+		
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
 		public void actionPerformed(ActionEvent event)
 		{
 			String command = event.getActionCommand();
@@ -166,8 +247,24 @@ public class LowerHomePanel extends JLabel implements Styling
 			}
 		}  
 	}
+    
+    /**
+     * The listener interface for receiving combo events.
+     * The class that is interested in processing a combo
+     * event implements this interface, and the object created
+     * with that class is registered with a component using the
+     * component's <code>addComboListener<code> method. When
+     * the combo event occurs, that object's appropriate
+     * method is invoked.
+     *
+     * @see ComboEvent
+     */
     private class ComboListener implements ActionListener
 	{
+		
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
 		public void actionPerformed(ActionEvent event)
 		{
 			String command = (String) sortTasks_CB.getSelectedItem();
@@ -183,6 +280,12 @@ public class LowerHomePanel extends JLabel implements Styling
 			}
 		}
 	}
+    
+    /**
+     * Adds the new task.
+     *
+     * @param tc the tc
+     */
     public void addNewTask(TaskCard tc)
     {
     	this.tasks_P.add(new TaskPanel(tc,this.topHomePanel));
@@ -192,6 +295,9 @@ public class LowerHomePanel extends JLabel implements Styling
     	this.oldHeight = this.getHeight();
     }
     
+    /* (non-Javadoc)
+     * @see javax.swing.JComponent#paint(java.awt.Graphics)
+     */
     @Override
     public void paint(Graphics g)
     {

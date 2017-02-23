@@ -1,3 +1,8 @@
+/**************************************************************
+ * Copyright (c) 2017 - 2017, Joshua Becker, All rights reserved
+ * SER316-Frankfurt
+ * Description:
+ */
 package net.sf.memoranda.ui.DevelopHomePage;
 /**
 
@@ -10,32 +15,59 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Color;
 import java.util.*;
+// TODO: Auto-generated Javadoc
+
+/**
+ * The Class HomePanel.
+ */
 public class HomePanel extends JLabel implements Styling
 {
+    
+    /** The top P. */
     private TopHomePanel top_P;
+	
+	/** The low P. */
 	private LowerHomePanel low_P;
+	
+	/** The container for toolbar. */
 	private JSplitPane container, containerForToolbar;
+    
+    /** The active task. */
     private TaskCard activeTask;
+    
+    /** The tasks. */
     private Hashtable<String,TaskCard> tasks;
+    
+    /** The assets. */
     private LoadAssets assets;
+    
+    /** The toolbar. */
     private MainToolBar toolbar;
+    
+    /**
+     * Instantiates a new home panel.
+     */
     public HomePanel()
     {
     	
         assets = new LoadAssets();
         this.tasks = new Hashtable<String, TaskCard>();
-        this.toolbar = new MainToolBar();
         fillTasks();
     	createComponents();
     	editComponents();
     	addActionListeners();
     	addComponents();
     }
+    
+    /**
+     * Instantiates a new home panel.
+     *
+     * @param task the task
+     */
     public HomePanel(TaskCard task)
     {
     	//this.setIcon(LoadAssets.HOMEPAGE_BACKGROUND);
         assets = new LoadAssets();
-        this.toolbar = new MainToolBar();
         this.tasks = new Hashtable<String, TaskCard>();
         fillTasks();
         createComponents();
@@ -46,13 +78,21 @@ public class HomePanel extends JLabel implements Styling
     }
 
 
+    /**
+     * Creates the components.
+     */
     public void createComponents()
     {
     	top_P = new TopHomePanel(this.tasks.get("task 1"));
     	low_P = new LowerHomePanel(this.top_P, this.tasks);
     	container = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
     	containerForToolbar = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        this.toolbar = new MainToolBar(low_P);
     }
+    
+    /**
+     * Edits the components.
+     */
     public void editComponents()
     {
     	this.setLayout(new GridLayout(1,1,0,0));
@@ -79,10 +119,18 @@ public class HomePanel extends JLabel implements Styling
 
     	//this.setIcon(LoadAssets.HOMEPAGE_BACKGROUND);
     }
+    
+    /**
+     * Adds the action listeners.
+     */
     public void addActionListeners()
     {
 
     }
+    
+    /**
+     * Adds the components.
+     */
     public void addComponents()
     {
     	container.setTopComponent(this.top_P);
@@ -99,10 +147,17 @@ public class HomePanel extends JLabel implements Styling
     	this.revalidate();
     }
 
+    /* (non-Javadoc)
+     * @see net.sf.memoranda.ui.DevelopHomePage.Styling#style()
+     */
     public void style()
     {
     	this.setPreferredSize(new Dimension(Styling.SCREEN_WIDTH-2,Styling.SCREEN_HEIGHT-2));
     }
+    
+    /**
+     * Fill tasks.
+     */
     public void fillTasks()
     {
         TaskCard tmpTask;
@@ -120,6 +175,10 @@ public class HomePanel extends JLabel implements Styling
         }
         this.tasks.get("task 1").setActive(true);
     }
+    
+    /**
+     * Creates the tasks.
+     */
     public void createTasks()
     {
 
