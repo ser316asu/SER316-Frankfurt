@@ -1,8 +1,12 @@
 /**************************************************************
- * Copyright (c) 2017 - 2017, Joshua Becker, All rights reserved
- * SER316-Frankfurt
+ * Copyright (c) 2017 - 2017, Joshua Becker, Alec Shinn,
+ * All rights reserved
+ * SER316-Frankfurt is a project for ser216, 
+ * using agile scrum.
  * Description:
- */
+ * 
+ * Contact: jdbecke3@asu.edu, atshinn@asu.edu
+ **************************************************************/
 package net.sf.memoranda.ui.DevelopHomePage;
 
 import java.awt.*;
@@ -69,11 +73,11 @@ public class ProgressCircleUI extends BasicProgressBarUI {
 	  }
 	  
   	/**
-  	 * Make UI.
-  	 *
-  	 * @param color the color
-  	 * @return the j progress bar
-  	 */
+	   * Make UI.
+	   *
+	   * @param color the color
+	   * @return the j progress bar
+	   */
   	public static JProgressBar makeUI(Color color) {
 		    JProgressBar progress = new JProgressBar();
 		    // use JProgressBar#setUI(...) method

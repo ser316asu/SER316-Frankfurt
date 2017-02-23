@@ -1,3 +1,8 @@
+/**************************************************************
+ * Copyright (c) 2017 - 2017, Alec Shinn, Joshua Becker, All rights reserved
+ * SER316-Frankfurt
+ * Description:
+ */
 package net.sf.memoranda.ui.DevelopHomePage;
 /**
 
@@ -8,21 +13,50 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TopHomePanel.
+ */
 public class TopHomePanel extends JLabel implements Styling
 {
+    
+    /** The Constant RIGHT_LABEL_PANEL. */
     final static int LEFT_LABEL_PANEL = 0, RIGHT_LABEL_PANEL = 1;
+    
+    /** The right child. */
     private TopInnerPanel leftChild,rightChild;
+    
+    /** The right labels. */
     private TopLabelPanel leftLabels,rightLabels;
+    
+    /** The container for right. */
     private JLabel containerForRight;
+    
+    /** The status bar top. */
     private StatusBarPanel statusBarTop;
+    
+    /** The timer panel. */
     private TimerPanel timerPanel;
+    
+    /** The task. */
     private TaskCard task;
+    
+    /** The dimension. */
     private Dimension dimension;
+    
+    /** The layout. */
     private LayoutManager layout;
+    
+    /** The old height. */
     private int oldWidth,oldHeight;
     
 
 
+    /**
+     * Instantiates a new top home panel.
+     *
+     * @param task the task
+     */
     public TopHomePanel(TaskCard task)
     {
         this.task = task;
@@ -36,6 +70,9 @@ public class TopHomePanel extends JLabel implements Styling
 
     }
 
+    /**
+     * Creates the child panels.
+     */
     public void createChildPanels(){
     	containerForRight = new JLabel();
     	containerForRight.setLayout(new BoxLayout(containerForRight,BoxLayout.Y_AXIS));
@@ -62,6 +99,9 @@ public class TopHomePanel extends JLabel implements Styling
         task.addObserver(statusBarTop);
     }
 
+    /**
+     * Adds the panels.
+     */
     public void addPanels(){
         leftChild.add(leftLabels);
         leftChild.add(rightLabels);
@@ -78,15 +118,26 @@ public class TopHomePanel extends JLabel implements Styling
         this.add(rightChild);
     }
 
+    /**
+     * Sets the size.
+     */
     public void setSize(){
         dimension = new Dimension(Styling.TOP_PANEL_WIDTH,Styling.TOP_PANEL_HEIGHT);
         this.setPreferredSize(dimension);
     }
 
+    /**
+     * Gets the dimension.
+     *
+     * @return the dimension
+     */
     public Dimension getDimension(){
         return dimension;
     }
 
+    /* (non-Javadoc)
+     * @see net.sf.memoranda.ui.DevelopHomePage.Styling#style()
+     */
     public void style(){
     	this.setMaximumSize(new Dimension(Styling.SCREEN_WIDTH-Styling.MAIN_TOOLBAR_WIDTH,Styling.SCREEN_HEIGHT));
         this.setBackground(Styling.BACKGROUND_COLOR);
@@ -102,12 +153,21 @@ public class TopHomePanel extends JLabel implements Styling
         //containerForRight.setBorder(BorderFactory.createLineBorder(Color.green));
         }
     
+    /**
+     * Adds the observers.
+     *
+     * @param tc the tc
+     */
     public void addObservers(TaskCard tc)
     {
     	tc.addObserver(leftLabels);
     	tc.addObserver(rightLabels);
     	tc.addObserver(statusBarTop);
     }
+    
+    /* (non-Javadoc)
+     * @see javax.swing.JComponent#paint(java.awt.Graphics)
+     */
     @Override
     public void paint(Graphics g)
     {

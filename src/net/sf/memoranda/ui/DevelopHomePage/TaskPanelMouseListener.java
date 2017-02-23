@@ -1,8 +1,12 @@
 /**************************************************************
- * Copyright (c) 2017 - 2017, Joshua Becker, All rights reserved
- * SER316-Frankfurt
+ * Copyright (c) 2017 - 2017, Joshua Becker, Alec Shinn,
+ * All rights reserved
+ * SER316-Frankfurt is a project for ser216, 
+ * using agile scrum.
  * Description:
- */
+ * 
+ * Contact: jdbecke3@asu.edu, atshinn@asu.edu
+ **************************************************************/
 package net.sf.memoranda.ui.DevelopHomePage;
 /**
 
@@ -68,10 +72,8 @@ public class TaskPanelMouseListener implements MouseListener
         this.clickCount = 0;
     }
     
-    /**
-     * Invoked when the mouse button has been clicked (pressed and released) on a component.
-     *
-     * @param e the e
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
      */
     @Override
     public void mouseClicked(MouseEvent e)
@@ -116,10 +118,8 @@ public class TaskPanelMouseListener implements MouseListener
     	
     } 
     
-    /**
-     * Invoked when the mouse enters a component.
-     *
-     * @param e the e
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
      */
     @Override
     public void mouseEntered(MouseEvent e)
@@ -127,10 +127,8 @@ public class TaskPanelMouseListener implements MouseListener
     	target.setIcon(LoadAssets.TASK_PANEL_SELCETED_IMAGE);
     }
     
-    /**
-     * Invoked when the mouse exits a component.
-     *
-     * @param e the e
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
      */
     @Override
     public void mouseExited(MouseEvent e)
@@ -138,10 +136,8 @@ public class TaskPanelMouseListener implements MouseListener
     	target.setIcon(LoadAssets.TASK_PANEL_IMAGE);
     }
     
-    /**
-     * Invoked when a mouse button has been pressed on a component.
-     *
-     * @param e the e
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
      */
     @Override
     public void mousePressed(MouseEvent e)
@@ -149,10 +145,8 @@ public class TaskPanelMouseListener implements MouseListener
         
     }
     
-    /**
-     * Invoked when a mouse button has been released on a component.
-     *
-     * @param e the e
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
      */
     @Override
     public void mouseReleased(MouseEvent e)

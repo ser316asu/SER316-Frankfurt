@@ -16,6 +16,7 @@ import net.sf.memoranda.util.Configuration;
 import java.awt.*;
 import java.util.Calendar;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Develop.
  * is the jframe for the project.
@@ -29,10 +30,13 @@ public class Develop extends JFrame
 	/** The screen height. */
 	public static int SCREEN_HEIGHT;
 	
+	/** The splash. */
 	private JFrame splash;
     
     /**
      * Instantiates a new develop.
+     *
+     * @param fullmode the fullmode
      */
     public Develop(boolean fullmode)
     {
@@ -79,6 +83,9 @@ public class Develop extends JFrame
 			splash.dispose();
     }
     
+    /**
+     * Inits the.
+     */
     void init() {
 		/*
 		 * if (packFrame) { frame.pack(); } else { frame.validate(); }

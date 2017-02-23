@@ -1,5 +1,5 @@
 /**************************************************************
- * Copyright (c) 2017 - 2017, Joshua Becker, All rights reserved
+ * Copyright (c) 2017 - 2017, Joshua Becker, Alec Shinn, All rights reserved
  * SER316-Frankfurt
  * Description:
  */
@@ -51,6 +51,7 @@ public class LowerHomePanel extends JLabel implements Styling
     /** The old height. */
     private int oldWidth, oldHeight;
     
+    /** The state. */
     private boolean state;
 
     /**
@@ -219,6 +220,9 @@ public class LowerHomePanel extends JLabel implements Styling
         tasks_P.repaint();
     }
     
+    /**
+     * Change state.
+     */
     public void changeState()
     {
     	this.state = !state;

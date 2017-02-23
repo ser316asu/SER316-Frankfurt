@@ -39,7 +39,7 @@ import net.sf.memoranda.ui.NewTaskWindow;
 public class MainToolBar extends JLabel implements Styling, Observer{
 	
 	/** The calendar B. and create new task B*/
-	private JButton createNewTask_B, calendar_B;
+	private JButton createNewTask_B, calendar_B, home_B;
 	
 	/** The task board. */
 	private LowerHomePanel taskBoard;
@@ -49,8 +49,6 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 	
 	/** The old height.  and the old width*/
 	private int oldWidth = 0, oldHeight = 0; 
-	
-	JNCalendarPanel calendar_P = new JNCalendarPanel();
 	
 	/**
 	 * Instantiates a new main tool bar.
@@ -80,8 +78,7 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 	}
 	
 	//---------------------Create Actions-----------------------------------
-    /** Action when called will open the
-     * 	new task window for creation of tasks */
+    /**  Action when called will open the 	new task window for creation of tasks. */
     public Action createNewTaskAction = new AbstractAction("") {
     	
 	private static final long serialVersionUID = -6751747715539881623L;
@@ -91,24 +88,33 @@ public class MainToolBar extends JLabel implements Styling, Observer{
         }
     };
 	
-    /** when the action is called it
-     * 	will open the calendar view */
+    /**  when the action is called it 	will open the calendar view. */
     public Action openCalendarAction = new AbstractAction("") {
     	
-	private static final long serialVersionUID = -6751747715539881623L;
+		private static final long serialVersionUID = 6131253764559798328L;
 
-	public void actionPerformed(ActionEvent e) {
-        /*
-         * setValue: changes the state of the current taskCard and
-         * 			 notifies observers (Task Panels)
-         * setChangeVar: changes the state of the new TaskCard and 
-         * 				 returns itself in order to pass to the 
-         * 				 other observers
-         * getChangeVar: is used to make a change in order to modify 
-         * 				 the state of the observing panels
-         */
-        //taskBoard.changeState();
+		public void actionPerformed(ActionEvent e) {
+			//TODO create an observer
+			/*
+			 * setValue: changes the state of the current taskCard and
+			 * 			 notifies observers (Task Panels)
+			 * setChangeVar: changes the state of the new TaskCard and 
+			 * 				 returns itself in order to pass to the 
+			 * 				 other observers
+			 * getChangeVar: is used to make a change in order to modify 
+			 * 				 the state of the observing panels
+			 */
     	
+        }
+    };
+    
+    /**  Action when called will open the 	new task window for creation of tasks. */
+    public Action homeButtonAction = new AbstractAction("") {
+    	
+		private static final long serialVersionUID = 48588901517673371L;
+
+		public void actionPerformed(ActionEvent e) {
+			//TODO create an observer
         }
     };
     
@@ -120,7 +126,7 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 	private void createComponents() {
 		createNewTask_B = new JButton();
 		calendar_B = new JButton();
-		calendar_P = new JNCalendarPanel();
+		home_B = new JButton();
 		
 	}
 
@@ -135,6 +141,8 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 		editToolBarButton(createNewTask_B, "Create New Task");
 		
 		editToolBarButton(calendar_B, "Open Calendar");
+		
+		editToolBarButton(home_B, "Go To Home");
 		//this.setUI(new ButtonUI());
 		
 	}
@@ -145,13 +153,17 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 	private void addActionListeners() {
 		this.createNewTask_B.setAction(createNewTaskAction);
 		this.calendar_B.setAction(openCalendarAction);
-		
+		this.home_B.setAction(homeButtonAction);
 	}
 
 	/**
 	 * Adds the components.
 	 */
 	private void addComponents() {
+		this.add(addButtonSpacer());
+		
+		addButtonLabel(home_B, LoadAssets.TOOLABR_HOME_BUTTON_IMAGE);
+		this.add(home_B);
 		this.add(addButtonSpacer());
 		
 		addButtonLabel(createNewTask_B, LoadAssets.TOOLBAR_TASK_BUTTON_IMAGE);
@@ -195,7 +207,6 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 	private void editToolBarButton(JButton button, String toolTip)
 	{
 		button.setFont(Styling.TASK_PANEL_FONT);
-		button.setIcon(LoadAssets.TOOLBAR_BUTTON_IMAGE);
 		button.setBorderPainted(false);
 		//this.createNewTask_B.setBounds(0, 0, 2, 2);
 		button.setMargin(new Insets(0,0,0,0));
@@ -231,8 +242,6 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 		this.setPreferredSize(new Dimension(Styling.MAIN_TOOLBAR_WIDTH,Styling.MAIN_TOOLBAR_HEIGHT));
 		this.setMaximumSize(new Dimension(Styling.MAIN_TOOLBAR_WIDTH,Styling.MAIN_TOOLBAR_HEIGHT));
 		this.setMinimumSize(new Dimension(Styling.MAIN_TOOLBAR_WIDTH,Styling.MAIN_TOOLBAR_HEIGHT));
-		this.calendar_P.setMinimumSize(new Dimension(0,1000));
-		this.calendar_P.setMaximumSize(new Dimension(Styling.TASK_BOARD_WIDTH,Styling.TASK_BOARD_HEIGHT));
 	}
 	
 	/* (non-Javadoc)
@@ -253,6 +262,9 @@ public class MainToolBar extends JLabel implements Styling, Observer{
     	super.paint(g);
     }
 
+	/* (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub

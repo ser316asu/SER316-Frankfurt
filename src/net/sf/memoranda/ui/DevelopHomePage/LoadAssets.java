@@ -1,5 +1,5 @@
 /**************************************************************
- * Copyright (c) 2017 - 2017, Joshua Becker, All rights reserved
+ * Copyright (c) 2017 - 2017, Joshua Becker, Alec Shinn, All rights reserved
  * SER316-Frankfurt
  * Description:
  */
@@ -32,14 +32,14 @@ class LoadAssets
     /** The terminal image. */
     public static Icon TERMINAL_IMAGE = loadImage("Assets/ui/terminalBackground.png",Styling.TOP_PANEL_WIDTH, Styling.TOP_PANEL_HEIGHT);
     
-    /** The toolbar button image. */
-    public static ImageIcon TOOLBAR_BUTTON_IMAGE = loadImage("Assets/ui/ToolBarButton.png",Styling.TOOLBAR_BUTTON_WIDTH,Styling.TOOLBAR_BUTTON_HEIGHT);
-    
     /** The toolbar calendar button image. */
     public static ImageIcon TOOLBAR_CALENDAR_BUTTON_IMAGE = loadImage("Assets/ui/calendarIconWhite.png",Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
     
     /** The toolbar task button image. */
     public static ImageIcon TOOLBAR_TASK_BUTTON_IMAGE = loadImage("Assets/ui/NewTaskButton.png",Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
+    
+    /** The toolabr home button image. */
+    public static ImageIcon TOOLABR_HOME_BUTTON_IMAGE = loadImage("Assets/ui/HomeButton.png",Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
     
     /**
      * Instantiates a new load assets.

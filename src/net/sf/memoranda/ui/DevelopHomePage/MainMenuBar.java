@@ -1,9 +1,26 @@
+/**************************************************************
+ * Copyright (c) 2017 - 2017, Joshua Becker, All rights reserved
+ * SER316-Frankfurt
+ * Description:
+ */
 package net.sf.memoranda.ui.DevelopHomePage;
 import javax.swing.*;
+// TODO: Auto-generated Javadoc
+
+/**
+ * The Class MainMenuBar.
+ */
 public class MainMenuBar extends JMenuBar implements Styling
 {
+	
+	/** The help. */
 	private JMenu file,edit,insert,format,go,help;
 	
+    /**
+     * Instantiates a new main menu bar.
+     *
+     * @param parent the parent
+     */
     public MainMenuBar(JFrame parent)
     {
         buildComponents();
@@ -15,6 +32,9 @@ public class MainMenuBar extends JMenuBar implements Styling
         addMenus();
     }
     
+    /**
+     * Builds the components.
+     */
     public void buildComponents(){
     	file = new JMenu("File");
     	edit = new JMenu("Edit");
@@ -24,6 +44,9 @@ public class MainMenuBar extends JMenuBar implements Styling
     	help = new JMenu("Help");
     }
     
+    /**
+     * Builds the file menu.
+     */
     public void buildFileMenu(){
     	JMenuItem newProject = new JMenuItem("New Project");
     	JMenuItem newTask = new JMenuItem("New Task");
@@ -48,14 +71,29 @@ public class MainMenuBar extends JMenuBar implements Styling
     	file.add(exit);
     }
     
+    /**
+     * Builds the edit menu.
+     */
     public void buildEditMenu(){}
     
+    /**
+     * Builds the insert menu.
+     */
     public void buildInsertMenu(){}
     
+    /**
+     * Builds the format menu.
+     */
     public void buildFormatMenu(){}
     
+    /**
+     * Builds the go menu.
+     */
     public void buildGoMenu(){}
     
+    /**
+     * Builds the help menu.
+     */
     public void buildHelpMenu(){
     	JMenuItem onlineUserGuide = new JMenuItem("Online User's Guide");
     	JMenuItem website = new JMenuItem("Memoranda Website");
@@ -68,6 +106,9 @@ public class MainMenuBar extends JMenuBar implements Styling
     	help.add(aboutMemoranda);
     }
     
+    /**
+     * Adds the menus.
+     */
     public void addMenus(){
     	this.add(file);
     	this.add(edit);
@@ -77,9 +118,15 @@ public class MainMenuBar extends JMenuBar implements Styling
     	this.add(help);
     }
     
+    /**
+     * Edits the components.
+     */
     public void editComponents(){
     	
     }
     
+    /* (non-Javadoc)
+     * @see net.sf.memoranda.ui.DevelopHomePage.Styling#style()
+     */
     public void style(){}
 }

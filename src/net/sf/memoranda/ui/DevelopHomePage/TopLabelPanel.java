@@ -1,18 +1,47 @@
+/**************************************************************
+ * Copyright (c) 2017 - 2017, Alec Shinn, Joshua Becker, All rights reserved
+ * SER316-Frankfurt
+ * Description:
+ */
 package net.sf.memoranda.ui.DevelopHomePage;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TopLabelPanel.
+ */
 public class TopLabelPanel extends JLabel implements Styling, Observer{
+	
+	/** The task. */
 	private TaskCard task;
+	
+	/** The layout. */
 	private LayoutManager layout;
+	
+	/** The dimension. */
 	private Dimension dimension;
+    
+    /** The labels. */
     private JLabel[] labels;
+    
+    /** The location. */
     private int location;
+    
+    /** The label count. */
     private final int LABEL_COUNT = 5;
+    
+    /** The height ratio. */
     private final double WIDTH_RATIO = .5,HEIGHT_RATIO = 1.0;
 
+    /**
+     * Instantiates a new top label panel.
+     *
+     * @param task the task
+     * @param location the location
+     */
     public TopLabelPanel(TaskCard task,int location){
     	this.task = task;
     	this.location = location;
@@ -25,6 +54,12 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
     	addLabels();
         style();
     }
+    
+    /**
+     * Instantiates a new top label panel.
+     *
+     * @param location the location
+     */
     public TopLabelPanel(int location){
     	this.task = new TaskCard();
     	this.location = location;
@@ -38,6 +73,9 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
         style();
     }
 
+    /**
+     * Creates the labels.
+     */
     public void createLabels(){
     	if(location == TopHomePanel.LEFT_LABEL_PANEL){
     		labels[0] = new JLabel(" Task Name ");
@@ -65,12 +103,18 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
         }
     }
 
+    /**
+     * Align labels.
+     */
     public void alignLabels(){
     	for(int i = 0; i < LABEL_COUNT*2; i++){
     		labels[i].setAlignmentX(Component.LEFT_ALIGNMENT);
     	}
     }
 	
+    /**
+     * Sets the size.
+     */
     public void setSize(){
     	int width = (int) (Styling.TERMINAL_PANEL_WIDTH * WIDTH_RATIO);
     	int height = (int) (Styling.TERMINAL_PANEL_HEIGHT * HEIGHT_RATIO);
@@ -80,12 +124,18 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
 		this.setMaximumSize(dimension);
     }
 
+    /**
+     * Adds the labels.
+     */
     public void addLabels(){
     	for(int i = 0; i < LABEL_COUNT*2; i++){
             this.add(labels[i]);
     	}
     }
 
+    /* (non-Javadoc)
+     * @see net.sf.memoranda.ui.DevelopHomePage.Styling#style()
+     */
     public void style(){
         this.setBackground(Styling.BACKGROUND_COLOR);
         for(int i = 0; i < LABEL_COUNT*2; i++){
@@ -94,6 +144,9 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
         }
     }
 
+    /* (non-Javadoc)
+     * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+     */
     public void update(Observable taskCard,Object ars){
     	this.task.setActive(false);
     	this.task = (TaskCard) taskCard;

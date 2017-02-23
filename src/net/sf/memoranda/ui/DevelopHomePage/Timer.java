@@ -1,20 +1,58 @@
+/**************************************************************
+ * Copyright (c) 2017 - 2017, Joshua Becker, Alec Shinn,
+ * All rights reserved
+ * SER316-Frankfurt is a project for ser216, 
+ * using agile scrum.
+ * Description:
+ * 
+ * Contact: jdbecke3@asu.edu, atshinn@asu.edu
+ **************************************************************/
 package net.sf.memoranda.ui.DevelopHomePage;
 import javax.swing.*;
 import java.util.*;
 import java.text.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Date getStartDate().
+ */
 public class Timer implements Runnable{
+	
+	/** The thread. */
 	private Thread thread;
+	
+	/** The thread name. */
 	private String threadName;
+	
+	/** The label. */
 	private JLabel label;
+	
+	/** The current time. */
 	private long currentTime;
+	
+	/** The start time. */
 	private long startTime;
+	
+	/** The delta time. */
 	private long deltaTime;
+	
+	/** The total time. */
 	private long totalTime;
+	
+	/** The stopped. */
 	private boolean paused,stopped;
+	
+	/** The sdf. */
 	SimpleDateFormat sdf;
+	
+	/** The result. */
 	Date result;
 	
+	/**
+	 * Instantiates a new timer.
+	 *
+	 * @param label the label
+	 */
 	public Timer(JLabel label){
 		threadName = "Task Timer";
 		this.label = label;
@@ -31,10 +69,18 @@ public class Timer implements Runnable{
 		result = new Date(deltaTime);
 	}
 
+	/**
+	 * Gets the label.
+	 *
+	 * @return the active
+	 */
 	public JLabel getLabel(){
 		return label;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	public void run(){		
 		startTime = System.currentTimeMillis();
 		
@@ -81,6 +127,9 @@ public class Timer implements Runnable{
 		label.setText(sdf.format(result));		
 	}
 
+	/**
+	 * Stop.
+	 */
 	public void stop(){
 		stopped = true;
 		try{
@@ -90,20 +139,35 @@ public class Timer implements Runnable{
 		}
 
 	}
+	
+	/**
+	 * Pause.
+	 */
 	public void pause(){
 		paused = true;
 	}
 
+	/**
+	 * Resume.
+	 */
 	synchronized void resume(){
 		paused = false;
 		notify();
 	}	
 
+	/**
+	 * Start.
+	 */
 	public void start(){
 		thread = new Thread(this,threadName);
 		thread.start();
 	}
 
+	/**
+	 * Gets the date formatter.
+	 *
+	 * @return the date formatter
+	 */
 	public SimpleDateFormat getDateFormatter(){
 		return sdf;
 	}
