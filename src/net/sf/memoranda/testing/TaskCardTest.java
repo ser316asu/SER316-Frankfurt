@@ -42,7 +42,7 @@ public class TaskCardTest {
 		assertTrue(taskCard.getEstimatedLOC() == 0);
 		
 		taskCard.setActuaLOC(104);
-		assertTrue(taskCard.getActualLOC() == 105);
+		assertTrue(taskCard.getActualLOC() == 104);
 	}
 
 }
