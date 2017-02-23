@@ -10,14 +10,11 @@
 package net.sf.memoranda.ui.DevelopHomePage;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 
 import javax.swing.*;
-import javax.swing.Timer;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 
 // TODO: Auto-generated Javadoc

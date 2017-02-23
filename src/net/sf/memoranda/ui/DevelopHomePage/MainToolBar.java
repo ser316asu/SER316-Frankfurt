@@ -11,7 +11,6 @@ package net.sf.memoranda.ui.DevelopHomePage;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
@@ -24,30 +23,30 @@ import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
-import javax.swing.JToolBar;
 import javax.swing.OverlayLayout;
-import javax.swing.plaf.ButtonUI;
-import javax.swing.plaf.LabelUI;
 
-import net.sf.memoranda.ui.JNCalendarPanel;
 import net.sf.memoranda.ui.NewTaskWindow;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class MainToolBar.
  */
 public class MainToolBar extends JLabel implements Styling, Observer{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4229258425606324012L;
+
 	/** The home B. */
 	private JButton createNewTask_B, calendar_B, home_B;
 	
 	/** The task board. */
+	@SuppressWarnings("unused")
 	private LowerHomePanel taskBoard;
 	
 	/** The task frame. */
+	@SuppressWarnings("unused")
 	private NewTaskWindow taskFrame;
 	
 	/** The old height. */

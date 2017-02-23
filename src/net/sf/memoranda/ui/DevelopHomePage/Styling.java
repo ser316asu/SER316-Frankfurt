@@ -9,7 +9,6 @@
  **************************************************************/
 package net.sf.memoranda.ui.DevelopHomePage;
 import java.awt.*;
-import javax.swing.*;
 // TODO: Auto-generated Javadoc
 
 /**

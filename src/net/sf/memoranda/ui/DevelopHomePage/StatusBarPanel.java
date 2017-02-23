@@ -18,32 +18,29 @@ import java.util.*;
  */
 public class StatusBarPanel extends JLabel implements Styling, Observer{
 	
-	/** The parent. */
-	private TopInnerPanel parent;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 48641522633589340L;
 	
 	/** The progress labels panel. */
-	private JLabel buttonPanel,progressPanel, circlesPanel, progressLabelsPanel;
+	private JLabel progressPanel, circlesPanel, progressLabelsPanel;
 	
 	/** The task. */
 	private TaskCard task;
 	
 	/** The progress dimension. */
+	@SuppressWarnings("unused")
 	private Dimension dimension,progressDimension;
 	
-	/** The grid. */
-	private LayoutManager border,grid;
-	
 	/** The spacer. */
-	private JLabel timeStatus,locStatus,dayStatus,spacer;
+	private JLabel timeStatus,locStatus,dayStatus;
 	
 	/** The progress days. */
 	private JProgressBar progressTime,progressLoc,progressDays;
 	
 	/** The open. */
 	private JButton open;
-	
-	/** The height ratio. */
-	private final double WIDTH_RATIO = 1.0,HEIGHT_RATIO = .5;
 	
 	
 	/**
@@ -87,12 +84,11 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 		dayStatus = new JLabel("Progress in Days");
 		locStatus = new JLabel("Progress in LOC");
 		timeStatus = new JLabel("Progress in Hours");
-		spacer = new JLabel(" ");
+		
 		progressTime = ProgressCircleUI.makeUI(Styling.PROGRESSBAR_HOURS_COLOR);
 		progressLoc = ProgressCircleUI.makeUI(Styling.PROGRESSBAR_LOC_COLOR);
 		progressDays = ProgressCircleUI.makeUI(Styling.PROGRESSBAR_DAYS_COLOR);
 
-		buttonPanel = new JLabel();
 		progressPanel = new JLabel();
 
 	}

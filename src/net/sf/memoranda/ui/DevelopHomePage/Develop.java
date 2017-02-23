@@ -39,15 +39,15 @@ public class Develop extends JFrame
     /**
      * Instantiates a new develop.
      *
-     * @param fullmode the fullmode
+     * @param fullWindowMode the fullWindowMode
      */
-    public Develop(boolean fullmode)
+    public Develop(boolean fullWindowMode)
     {
     	super();
-		if (fullmode)
-			fullmode = !Configuration.get("START_MINIMIZED").equals("yes");
+		if (fullWindowMode)
+			fullWindowMode = !Configuration.get("START_MINIMIZED").equals("yes");
 		/* DEBUG */
-		if (!fullmode)
+		if (!fullWindowMode)
 			System.out.println("Minimized mode");
 		if (!Configuration.get("SHOW_SPLASH").equals("no"))
 			showSplash();
@@ -79,7 +79,7 @@ public class Develop extends JFrame
 		}
 
 		EventsScheduler.init();
-		if (fullmode) {
+		if (fullWindowMode) {
 			this.init();
 		}
 		if (!Configuration.get("SHOW_SPLASH").equals("no"))
@@ -87,9 +87,9 @@ public class Develop extends JFrame
     }
     
     /**
-     * Inits the.
+     * sets up the frame and uses the splash while loading.
      */
-    void init() {
+    private void init() {
 		/*
 		 * if (packFrame) { frame.pack(); } else { frame.validate(); }
 		 * 
