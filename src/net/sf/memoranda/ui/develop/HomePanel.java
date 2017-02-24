@@ -3,16 +3,15 @@
  * All rights reserved
  * SER316-Frankfurt is a project for ser216, 
  * using agile scrum.
- * Description:
+ * Description: resources
  * 
  * Contact: jdbecke3@asu.edu, atshinn@asu.edu
  **************************************************************/
-package net.sf.memoranda.ui.DevelopHomePage;
+package net.sf.memoranda.ui.develop;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Color;
 import java.util.*;
@@ -24,7 +23,12 @@ import java.util.*;
 public class HomePanel extends JLabel implements Styling
 {
     
-    /** The top P. */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4595243106140665520L;
+
+	/** The top P. */
     private TopHomePanel top_P;
 	
 	/** The low P. */
@@ -32,9 +36,6 @@ public class HomePanel extends JLabel implements Styling
 	
 	/** The container for toolbar. */
 	private JSplitPane container, containerForToolbar;
-    
-    /** The active task. */
-    private TaskCard activeTask;
     
     /** The tasks. */
     private Hashtable<String,TaskCard> tasks;
@@ -175,13 +176,5 @@ public class HomePanel extends JLabel implements Styling
             this.tasks.put(tmpTask.getTaskName(), tmpTask);
         }
         this.tasks.get("task 1").setActive(true);
-    }
-    
-    /**
-     * Creates the tasks.
-     */
-    public void createTasks()
-    {
-
     }
 }

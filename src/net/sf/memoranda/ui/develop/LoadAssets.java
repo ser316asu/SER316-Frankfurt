@@ -7,12 +7,11 @@
  * 
  * Contact: jdbecke3@asu.edu, atshinn@asu.edu
  **************************************************************/
-package net.sf.memoranda.ui.DevelopHomePage;
+package net.sf.memoranda.ui.develop;
 import java.awt.*;
 import javax.swing.*;
 import javax.imageio.*;
 import java.io.*;
-import java.net.URL;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -44,6 +43,9 @@ class LoadAssets
     
     /** The toolabr home button image. */
     public static ImageIcon TOOLABR_HOME_BUTTON_IMAGE = loadImage("Assets/ui/HomeButton.png",Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
+    
+    /** The toolabr notification button image. */
+    public static ImageIcon TOOLABR_BELL_BUTTON_IMAGE = loadImage("Assets/ui/bellnotifcation.png",Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
     
     /**
      * Instantiates a new load assets.

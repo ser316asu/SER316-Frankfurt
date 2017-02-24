@@ -7,7 +7,7 @@
  * 
  * Contact: jdbecke3@asu.edu, atshinn@asu.edu
  **************************************************************/
-package net.sf.memoranda.ui.DevelopHomePage;
+package net.sf.memoranda.ui.develop;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -39,7 +39,7 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 	private static final long serialVersionUID = -4229258425606324012L;
 
 	/** The home B. */
-	private JButton createNewTask_B, calendar_B, home_B;
+	private JButton createNewTask_B, calendar_B, home_B, notifcation_B;
 	
 	/** The task board. */
 	@SuppressWarnings("unused")
@@ -120,6 +120,16 @@ public class MainToolBar extends JLabel implements Styling, Observer{
         }
     };
     
+    /** The Notification button action. */
+    public Action notifcationButtonAction = new AbstractAction("") {
+    	
+		private static final long serialVersionUID = 48588901517673371L;
+
+		public void actionPerformed(ActionEvent e) {
+			//TODO create an observer
+        }
+    };
+    
     //--------------------End Create Actions--------------------------------
 	
 	/**
@@ -129,7 +139,7 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 		createNewTask_B = new JButton();
 		calendar_B = new JButton();
 		home_B = new JButton();
-		
+		notifcation_B = new JButton();
 	}
 
 	/**
@@ -145,6 +155,8 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 		editToolBarButton(calendar_B, "Open Calendar");
 		
 		editToolBarButton(home_B, "Go To Home");
+		
+		editToolBarButton(notifcation_B, "Notifcations");
 		//this.setUI(new ButtonUI());
 		
 	}
@@ -156,6 +168,7 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 		this.createNewTask_B.setAction(createNewTaskAction);
 		this.calendar_B.setAction(openCalendarAction);
 		this.home_B.setAction(homeButtonAction);
+		this.notifcation_B.setAction(notifcationButtonAction);
 	}
 
 	/**
@@ -172,9 +185,15 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 		this.add(createNewTask_B);
 		this.add(addButtonSpacer());
 		
+		addButtonLabel(this.notifcation_B, LoadAssets.TOOLABR_BELL_BUTTON_IMAGE);
+		this.add(this.notifcation_B);
+		this.add(addButtonSpacer());
+		
 		addButtonLabel(calendar_B, LoadAssets.TOOLBAR_CALENDAR_BUTTON_IMAGE);
 		this.add(calendar_B);
 		this.add(addButtonSpacer());
+		
+		
 	}
 	
 	/**

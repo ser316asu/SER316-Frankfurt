@@ -7,32 +7,27 @@
  * 
  * Contact: jdbecke3@asu.edu, atshinn@asu.edu
  **************************************************************/
-package net.sf.memoranda.ui.DevelopHomePage;
+package net.sf.memoranda.ui.develop;
 
 import javax.swing.*;
 
 import net.sf.memoranda.EventsScheduler;
 import net.sf.memoranda.ui.App;
-import net.sf.memoranda.ui.AppFrame;
 import net.sf.memoranda.ui.ExceptionDialog;
 import net.sf.memoranda.util.Configuration;
 
 import java.awt.*;
 import java.util.Calendar;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Develop.
  */
-public class Develop extends JFrame
-{
+public class Develop extends JFrame {
 	
-	/** The screen width. */
-	public static int SCREEN_WIDTH;
-	
-	/** The screen height. */
-	public static int SCREEN_HEIGHT;
-	
+	/**
+	 * auto gen serialversion UID.
+	 */
+	private static final long serialVersionUID = 5124674529848101573L;
 	/** The splash. */
 	private JFrame splash;
     
@@ -41,37 +36,45 @@ public class Develop extends JFrame
      *
      * @param fullWindowMode the fullWindowMode
      */
-    public Develop(boolean fullWindowMode)
-    {
+    public Develop(boolean fullWindowMode) {
     	super();
-		if (fullWindowMode)
+		if (fullWindowMode) {
 			fullWindowMode = !Configuration.get("START_MINIMIZED").equals("yes");
+		}
 		/* DEBUG */
-		if (!fullWindowMode)
+		if (!fullWindowMode){
 			System.out.println("Minimized mode");
-		if (!Configuration.get("SHOW_SPLASH").equals("no"))
+		}
+		if (!Configuration.get("SHOW_SPLASH").equals("no")) {
 			showSplash();
+		}
 		try {
-			if (Configuration.get("LOOK_AND_FEEL").equals("system"))
+			if (Configuration.get("LOOK_AND_FEEL").equals("system")) {
 				UIManager.setLookAndFeel(
 					UIManager.getSystemLookAndFeelClassName());
-			else if (Configuration.get("LOOK_AND_FEEL").equals("default"))
+			} else if (Configuration.get("LOOK_AND_FEEL").equals("default")) {
 				UIManager.setLookAndFeel(
-					UIManager.getCrossPlatformLookAndFeelClassName());					
-			else if (
-				Configuration.get("LOOK_AND_FEEL").toString().length() > 0)
+					UIManager.
+					getCrossPlatformLookAndFeelClassName());		
+			} else if (
+				Configuration.get("LOOK_AND_FEEL").toString().length() > 0) {
 				UIManager.setLookAndFeel(
 					Configuration.get("LOOK_AND_FEEL").toString());
+			}
 
 		} catch (Exception e) {		    
-			new ExceptionDialog(e, "Error when initializing a pluggable look-and-feel. Default LF will be used.", "Make sure that specified look-and-feel library classes are on the CLASSPATH.");
+			new ExceptionDialog(e, "Error when initializing a "
+					+ "pluggable look-and-feel. Default LF will be used.",
+					"Make sure that specified look-and-feel library"
+					+ " classes are on the CLASSPATH.");
 		}
 		if (Configuration.get("FIRST_DAY_OF_WEEK").equals("")) {
 			String fdow;
-			if (Calendar.getInstance().getFirstDayOfWeek() == 2)
+			if (Calendar.getInstance().getFirstDayOfWeek() == 2) {
 				fdow = "mon";
-			else
+			} else {
 				fdow = "sun";
+			}
 			Configuration.put("FIRST_DAY_OF_WEEK", fdow);
 			Configuration.saveConfig();
 			/* DEBUG */
@@ -82,8 +85,9 @@ public class Develop extends JFrame
 		if (fullWindowMode) {
 			this.init();
 		}
-		if (!Configuration.get("SHOW_SPLASH").equals("no"))
+		if (!Configuration.get("SHOW_SPLASH").equals("no")) {
 			splash.dispose();
+		}
     }
     
     /**
@@ -107,16 +111,14 @@ public class Develop extends JFrame
 		 */
 		/* Used to maximize the screen if the JVM Version if 1.4 or higher */
 		/* --------------------------------------------------------------- */
-		double JVMVer =
-			Double
-				.valueOf(System.getProperty("java.version").substring(0, 3))
-				.doubleValue();
+		double jvmVer = Double.valueOf(
+				System.getProperty("java.version").substring(0, 3)).doubleValue();
 
 		HomePanel hp = new HomePanel();
-		hp.setPreferredSize(new Dimension(Develop.SCREEN_WIDTH,Develop.SCREEN_HEIGHT));
+		hp.setPreferredSize(new Dimension(Styling.SCREEN_WIDTH,Styling.SCREEN_HEIGHT));
 		this.add(hp);
 		this.pack();
-		if (JVMVer >= 1.4) {
+		if (jvmVer >= 1.4) {
 			this.setExtendedState(Frame.MAXIMIZED_BOTH);
 		} else {
 			this.setExtendedState(Frame.NORMAL);
@@ -130,7 +132,6 @@ public class Develop extends JFrame
 		this.requestFocus();
 
 	}
-    
     //taken from App.java
 	/**
      * Show splash.
@@ -139,10 +140,10 @@ public class Develop extends JFrame
 		splash = new JFrame();
 		ImageIcon spl =
 			new ImageIcon(App.class.getResource("resources/splash.png"));
-		JLabel l = new JLabel();
-		l.setSize(400, 300);
-		l.setIcon(spl);
-		splash.getContentPane().add(l);
+		JLabel label = new JLabel();
+		label.setSize(400, 300);
+		label.setIcon(spl);
+		splash.getContentPane().add(label);
 		splash.setSize(400, 300);
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		splash.setLocation(

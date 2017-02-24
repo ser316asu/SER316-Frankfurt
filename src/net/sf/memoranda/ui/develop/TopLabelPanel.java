@@ -7,7 +7,7 @@
  * 
  * Contact: jdbecke3@asu.edu, atshinn@asu.edu
  **************************************************************/
-package net.sf.memoranda.ui.DevelopHomePage;
+package net.sf.memoranda.ui.develop;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
