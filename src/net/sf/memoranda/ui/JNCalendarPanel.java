@@ -84,7 +84,15 @@ public class JNCalendarPanel extends JPanel {
   JSpinner yearSpin = new JSpinner(new SpinnerNumberModel(jnCalendar.get().getYear(), 1980, 2999, 1));
   JSpinner.NumberEditor yearSpinner = new JSpinner.NumberEditor(yearSpin, "####");
 
-  boolean ignoreChange = false;
+  public JNCalendar getJnCalendar() {
+	return jnCalendar;
+}
+
+public void setJnCalendar(JNCalendar jnCalendar) {
+	this.jnCalendar = jnCalendar;
+}
+
+boolean ignoreChange = false;
 
   private Vector selectionListeners = new Vector();
 

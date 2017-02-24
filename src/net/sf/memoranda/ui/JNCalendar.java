@@ -40,6 +40,12 @@ public class JNCalendar extends JTable {
 	public JNCalendar() {
 		this(CurrentDate.get());
 	}
+	public JNCalendarCellRenderer getRenderer() {
+		return renderer;
+	}
+	public void setRenderer(JNCalendarCellRenderer renderer) {
+		this.renderer = renderer;
+	}
 	/**
 	 * Constructor for JNCalendar.
 	 */

@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
@@ -33,6 +35,8 @@ import net.sf.memoranda.util.Local;
 	JToolBar toolBar = new JToolBar();
 	JPanel panel = new JPanel();
 	CardLayout cardLayout1 = new CardLayout();
+	Toolkit tk = Toolkit.getDefaultToolkit();
+	Dimension screenSizeDimensions = tk.getScreenSize();
 
 	public JButton notesB = new JButton();
 	public DailyItemsPanel dailyItemsPanel = new DailyItemsPanel(this);
@@ -89,7 +93,7 @@ import net.sf.memoranda.util.Local;
 		 //main.add(calendar, BorderLayout.CENTER);
          
 		calendar.setFont(new java.awt.Font("Dialog", 0, 11));
-        calendar.setMinimumSize(new Dimension(0, 1000));
+       // calendar.setMinimumSize(new Dimension(0, 1000));
 
 		agendaB.setBackground(Color.white);
 		agendaB.setMaximumSize(new Dimension(60, 80));
@@ -228,6 +232,28 @@ import net.sf.memoranda.util.Local;
 		panel.add(calendarPanel, "CALENDAR");
 
 		calendarPanel.add(calendar);
+		//calendar.setLayout(null);
+		//calendar.setPreferredSize(new Dimension(1500,3000));
+		calendarPanel.setPreferredSize(new Dimension(500, 1000));
+		//calendarPanel.setLayout(null);
+		// Height of calendar is .85*screenSize / 6 rows 
+		//calendar.setPreferredSize(new Dimension(1500,900));
+		//calendar.setFillsViewportHeight(true);
+		calendarPanel.setSize(1500,1500);
+		calendar.setPreferredSize(new Dimension(1500,1500));
+
+		JTable calendarTable = calendar.getJnCalendar();
+		calendarTable.setRowHeight((int)(screenSizeDimensions.height*(.80)/8));
+		calendar.setSize(calendarPanel.getWidth(), calendarPanel.getHeight());
+		System.out.println(calendarPanel.getHeight());
+		System.out.println(calendar.getHeight());
+		//JNCalendarCellRenderer renderer = calendar.getRenderer();
+		//renderer.setSize(1500, 1000);
+		//calendar.setBounds(50,50,1000, 2000);
+		//calendarPanel.setPreferredSize(new Dimension(1500,1500));
+		//calendarPanel.setBounds(50,50,1500,1500);
+
+
 
 		toolBar.add(agendaB, null);
 		toolBar.add(eventsB, null);
