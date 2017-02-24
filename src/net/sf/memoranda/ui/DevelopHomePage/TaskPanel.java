@@ -15,7 +15,7 @@ public class TaskPanel extends JLabel implements Styling
     private TopHomePanel topHomePanel;
     public TaskPanel()
     {
-        this.dimension = new Dimension(200,400);
+        this.dimension = new Dimension(Styling.TASK_PANEL_WIDTH,Styling.TASK_PANEL_HEIGHT);
     	createComponents();
     	editComponents();
     	addActionListeners();
@@ -32,7 +32,17 @@ public class TaskPanel extends JLabel implements Styling
         style();
         addComponents();
     }
-
+    public TaskPanel(TaskCard card, TopHomePanel thp)
+    {
+        this.topHomePanel = thp;
+        this.dimension = new Dimension(Styling.TASK_PANEL_WIDTH,Styling.TASK_PANEL_HEIGHT);
+        this.task = card;
+        createComponents();
+        editComponents();
+        addActionListeners();
+        style();
+        addComponents();
+    }
 
     public void createComponents()
     {
@@ -79,14 +89,14 @@ public class TaskPanel extends JLabel implements Styling
            header_L.setLayout(new BoxLayout(header_L, BoxLayout.Y_AXIS));
            footer_L.setLayout(new BoxLayout(footer_L, BoxLayout.Y_AXIS));
            
-           header_L.setPreferredSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.31)));
-           footer_L.setPreferredSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.69)));
+           header_L.setPreferredSize(new Dimension(this.dimension.width,(int)(this.dimension.height)));
+           footer_L.setPreferredSize(this.dimension);
            this.setPreferredSize(this.dimension);
            
-           header_L.setMinimumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.31)));
-           footer_L.setMinimumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.69)));
-           header_L.setMaximumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.31)));
-           footer_L.setMaximumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.69)));
+           header_L.setMinimumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.35)));
+           footer_L.setMinimumSize(this.dimension);
+           header_L.setMaximumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.35)));
+           footer_L.setMaximumSize(this.dimension);
            
            schStat_L.setText(this.task.scheduleStatusToString());
            startDate_L.setText(this.task.formatDate(this.task.getEndDate()));
@@ -98,12 +108,12 @@ public class TaskPanel extends JLabel implements Styling
     }
     public void addComponents()
     {
-           addSpacing(header_L);
+           addSpacing(footer_L);
            labelName.setText("Task Name");
-           header_L.add(labelName);
-           header_L.add(name_L);
+           footer_L.add(labelName);
+           footer_L.add(name_L);
            addSpacing(header_L);
-           
+           //addSpacing(header_L);
            addSpacing(footer_L);
            labelSched.setText("Schedule State");
            footer_L.add(labelSched);
@@ -117,7 +127,7 @@ public class TaskPanel extends JLabel implements Styling
            centerLabels(header_L);
            centerLabels(footer_L);
            
-           this.add(header_L);
+           //this.add(header_L);
            this.add(footer_L);
            centerLabels(this);
 

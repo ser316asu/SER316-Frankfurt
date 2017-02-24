@@ -25,7 +25,6 @@ public class TaskPanelMouseListener implements MouseListener
     
     public TaskPanelMouseListener(TaskPanel target, TopHomePanel thp)
     {
-        this.topPanel = thp;
         this.target = target;
         task = target.getTaskCard();
         clickCount = 0;
@@ -38,7 +37,7 @@ public class TaskPanelMouseListener implements MouseListener
     @Override
     public void mouseClicked(MouseEvent e)
     {
-        if(clickCount == 0)
+        /*(if(clickCount == 0)
         {
             firstClickTime = System.currentTimeMillis();
             clickCount++;
@@ -57,11 +56,25 @@ public class TaskPanelMouseListener implements MouseListener
              * getChangeVar: is used to make a change in order to modify 
              * 				 the state of the observing panels
              */
-            task.setValue(task.setChangeVar(task.getChangeVar()+1));
+            /*task.setValue(task.setChangeVar(task.getChangeVar()+1));
         }else
         {
             clickCount = 0;
-        }
+        }*/
+        //System.out.println("Double Clicked");
+        clickCount = 0;
+        this.topPanel.addObservers(task);
+        /*
+         * setValue: changes the state of the current taskCard and
+         * 			 notifies observers (Task Panels)
+         * setChangeVar: changes the state of the new TaskCard and 
+         * 				 returns itself in order to pass to the 
+         * 				 other observers
+         * getChangeVar: is used to make a change in order to modify 
+         * 				 the state of the observing panels
+         */
+        task.setValue(task.setChangeVar(task.getChangeVar()+1));
+    	
     } 
     /**
     * Invoked when the mouse enters a component.
@@ -71,7 +84,7 @@ public class TaskPanelMouseListener implements MouseListener
     @Override
     public void mouseEntered(MouseEvent e)
     {
-        this.target.setBackground(Styling.TASK_PANEL_COLOR_ONHOVER);
+    	target.setIcon(LoadAssets.TASK_PANEL_SELCETED_IMAGE);
     }
     /**
     * Invoked when the mouse exits a component.
@@ -81,7 +94,7 @@ public class TaskPanelMouseListener implements MouseListener
     @Override
     public void mouseExited(MouseEvent e)
     {
-        this.target.setBackground(Styling.TASK_PANEL_COLOR);
+    	target.setIcon(LoadAssets.TASK_PANEL_IMAGE);
     }
     /**
     * Invoked when a mouse button has been pressed on a component.

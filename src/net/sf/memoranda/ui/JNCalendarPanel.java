@@ -42,6 +42,7 @@ import net.sf.memoranda.util.Local;
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
 
+// For test commit
 /*$Id: JNCalendarPanel.java,v 1.9 2004/04/05 10:05:44 alexeya Exp $*/
 public class JNCalendarPanel extends JPanel {
 
@@ -163,9 +164,9 @@ public class JNCalendarPanel extends JPanel {
     
     // Creation of Buttons
     todayButton.setAction(todayAction);
-    todayButton.setMinimumSize(new Dimension(24, 24));
+    todayButton.setMinimumSize(new Dimension(100, 100));
     todayButton.setOpaque(false);
-    todayButton.setPreferredSize(new Dimension(24, 24));
+    todayButton.setPreferredSize(new Dimension(100, 100));
     todayButton.setRequestFocusEnabled(false);
     todayButton.setBorderPainted(false);
     todayButton.setFocusPainted(false);
@@ -175,9 +176,10 @@ public class JNCalendarPanel extends JPanel {
     todayButton.setToolTipText(Local.getString("To today"));
     
     monthBackButton.setAction(dayBackAction);
-    monthBackButton.setMinimumSize(new Dimension(24, 24));
+    monthBackButton.setMinimumSize(new Dimension(100, 100));
     monthBackButton.setOpaque(false);
-    monthBackButton.setPreferredSize(new Dimension(24, 24));
+    monthBackButton.setPreferredSize(new Dimension(100, 100));
+    
     monthBackButton.setRequestFocusEnabled(false);
     monthBackButton.setToolTipText("");
     monthBackButton.setBorderPainted(false);
@@ -188,9 +190,9 @@ public class JNCalendarPanel extends JPanel {
     monthBackButton.setToolTipText(Local.getString("One day back"));
     
     monthForwardButton.setAction(dayForwardAction);
-    monthForwardButton.setMinimumSize(new Dimension(24, 24));
+    monthForwardButton.setMinimumSize(new Dimension(100, 100));
     monthForwardButton.setOpaque(false);
-    monthForwardButton.setPreferredSize(new Dimension(24, 24));
+    monthForwardButton.setPreferredSize(new Dimension(100, 100));
     monthForwardButton.setRequestFocusEnabled(false);
     monthForwardButton.setBorderPainted(false);
     monthForwardButton.setFocusPainted(false);
@@ -200,9 +202,9 @@ public class JNCalendarPanel extends JPanel {
     monthForwardButton.setToolTipText(Local.getString("One day forward"));
     
     searchButton.setAction(searchAction);
-    searchButton.setMinimumSize(new Dimension(24, 24));
+    searchButton.setMinimumSize(new Dimension(100, 100));
     searchButton.setOpaque(false);
-    searchButton.setPreferredSize(new Dimension(24, 24));
+    searchButton.setPreferredSize(new Dimension(100, 100));
     searchButton.setRequestFocusEnabled(false);
     searchButton.setToolTipText("");
     searchButton.setBorderPainted(false);
@@ -213,9 +215,9 @@ public class JNCalendarPanel extends JPanel {
     searchButton.setToolTipText(Local.getString("Search for Task"));
     
     addTaskButton.setAction(addTaskAction);
-    addTaskButton.setMinimumSize(new Dimension(24, 24));
+    addTaskButton.setMinimumSize(new Dimension(100, 100));
     addTaskButton.setOpaque(false);
-    addTaskButton.setPreferredSize(new Dimension(24, 24));
+    addTaskButton.setPreferredSize(new Dimension(100, 100));
     addTaskButton.setRequestFocusEnabled(false);
     addTaskButton.setToolTipText("");
     addTaskButton.setBorderPainted(false);
@@ -226,33 +228,33 @@ public class JNCalendarPanel extends JPanel {
     addTaskButton.setToolTipText(Local.getString("Add Task"));
     
     // Creation of Button Specific Panels
-    todayButtonPanel.setMinimumSize(new Dimension(68, 24));
+    todayButtonPanel.setMinimumSize(new Dimension(80, 40));
     todayButtonPanel.setOpaque(false);
-    todayButtonPanel.setPreferredSize(new Dimension(51, 24));
+    todayButtonPanel.setPreferredSize(new Dimension(80, 40));
     todayButtonPanel.add(todayButton, null);
     
     monthForwardButtonPanel.setAlignmentX((float) 0.0);
-    monthForwardButtonPanel.setMinimumSize(new Dimension(40, 24));
+    monthForwardButtonPanel.setMinimumSize(new Dimension(80, 40));
     monthForwardButtonPanel.setOpaque(false);
-    monthForwardButtonPanel.setPreferredSize(new Dimension(40, 24));
+    monthForwardButtonPanel.setPreferredSize(new Dimension(80, 40));
     monthForwardButtonPanel.add(monthForwardButton, null);
     
     monthBackButtonPanel.setAlignmentX((float) 1.5);
-    monthBackButtonPanel.setMinimumSize(new Dimension(40, 24));
+    monthBackButtonPanel.setMinimumSize(new Dimension(80, 40));
     monthBackButtonPanel.setOpaque(false);
-    monthBackButtonPanel.setPreferredSize(new Dimension(40, 24));
+    monthBackButtonPanel.setPreferredSize(new Dimension(80, 40));
     monthBackButtonPanel.add(monthBackButton, null);  
     
     searchButtonPanel.setAlignmentX((float) 1.5);
-    searchButtonPanel.setMinimumSize(new Dimension(40, 24));
+    searchButtonPanel.setMinimumSize(new Dimension(80, 40));
     searchButtonPanel.setOpaque(false);
-    searchButtonPanel.setPreferredSize(new Dimension(40, 24));
+    searchButtonPanel.setPreferredSize(new Dimension(80, 40));
     searchButtonPanel.add(searchButton, null);  
     
     addTaskButtonPanel.setAlignmentX((float) 1.5);
-    addTaskButtonPanel.setMinimumSize(new Dimension(40, 24));
+    addTaskButtonPanel.setMinimumSize(new Dimension(80, 40));
     addTaskButtonPanel.setOpaque(false);
-    addTaskButtonPanel.setPreferredSize(new Dimension(40, 24));
+    addTaskButtonPanel.setPreferredSize(new Dimension(80, 40));
     addTaskButtonPanel.add(addTaskButton, null); 
 
     prevAndNextMonthPanel.add(monthBackButtonPanel);
@@ -273,14 +275,15 @@ public class JNCalendarPanel extends JPanel {
     yearSpin.setPreferredSize(new Dimension(70, 20));
     yearSpin.setRequestFocusEnabled(false);
         yearSpin.setEditor(yearSpinner);
-    navigationPanel.setMinimumSize(new Dimension(202, 30));
+    navigationPanel.setMinimumSize(new Dimension(1380, 80));
     navigationPanel.setOpaque(false);
-    navigationPanel.setPreferredSize(new Dimension(155, 30));
+    navigationPanel.setPreferredSize(new Dimension(1380, 80));
     jnCalendar.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 10));
     jnCalendar.setFont(new java.awt.Font("Dialog", 0, 10));
     jnCalendar.setGridColor(Color.lightGray);
     jnCalendarPanel.setLayout(borderLayout5);    
-    
+    //calendar.setFont(new java.awt.Font("Dialog", 0, 11));
+    //calendar.setMaximumSize(new Dimension(0, 1000));
     navigationBar.add(navigationPanel, null);
     
     mntyPanel.add(monthsCB, BorderLayout.CENTER);
@@ -291,7 +294,7 @@ public class JNCalendarPanel extends JPanel {
     this.add(jnCalendarPanel,  BorderLayout.CENTER);
 //    this.add(mntyPanel,  BorderLayout.SOUTH); Temp Removal of month and year scroll pickers
     
-    jnCalendar.getTableHeader().setPreferredSize(new Dimension(200, 15));
+    jnCalendar.getTableHeader().setPreferredSize(new Dimension(900, 80));
     jnCalendarPanel.add(jnCalendar.getTableHeader(), BorderLayout.NORTH);
     jnCalendarPanel.add(jnCalendar, BorderLayout.CENTER);
     jnCalendar.addSelectionListener(new ActionListener()  {

@@ -3,9 +3,7 @@ import javax.swing.*;
 import javax.swing.Box.Filler;
 import javax.swing.border.Border;
 import javax.swing.text.DateFormatter;
-
 import net.sf.memoranda.ui.DevelopHomePage.TaskCard;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DateFormat;
@@ -13,6 +11,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
 
 /** 
  * @author Jacob Leonard
@@ -32,6 +31,7 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 	private Container mainPane;
 	
 	private static final long serialVersionUID = 1L;
+
 	
 	private JFrame mainFrame;
 	private JPanel centerPane, bottomCenterPane, topCenterPane, topRightPane, topLeftPane;
@@ -43,7 +43,6 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 
 	// Code Info
 	private JFormattedTextField locEst, hoursEst, numFiles; 
-	
 	private JButton finishButton;
 	private JButton startStop; // Hoping to only use one button that changes when pressed
 	private JLabel trackedMinutes; // Timer with stored data ---> will need XML 
@@ -57,7 +56,6 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		
 	// Default No-Arg Constructor to initialize window
 	public NewTaskWindow(){
-		
 		Border blackBorder;
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		WIDTH = 690;//(int)screenSize.getWidth()/2; // Casting as int
@@ -106,7 +104,6 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		numFiles = new JFormattedTextField(integerFieldFormatter);
 		numFiles.setColumns(28);
 		numFiles.setText("Number of Files/Classes");
-		
 		statusLabel = new JLabel("Please fill out all fields for your new task");
 		
 		// Upper-right Quadrant
@@ -120,12 +117,12 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		taskDesc = new JTextArea("Enter Task Description here...", 10, 120);
 		taskDesc.setBorder(blackBorder);
 		
+
 		//###################
 		/* WINDOW SETUP */ 
 		//###################
 		
 		mainPane = getContentPane();
-		
 		JPanel centerPane = new JPanel();
 		centerPane.setLayout(new BorderLayout());
 		centerPane.setBorder(blackBorder);
@@ -138,7 +135,6 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		topRightPane = new JPanel(new FlowLayout());
 		topRightPane.setBorder(blackBorder);
 		topRightPane.setBackground(Color.LIGHT_GRAY);
-		
 		topCenterPane = new JPanel(new BorderLayout());
 		topCenterPane.setBorder(blackBorder);
 		
@@ -168,7 +164,7 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		topLeftPane.add(endDateLabel);
 		topLeftPane.add(endDate);
 		topLeftPane.setPreferredSize(centerPanelSize);
-		
+	
 		// Top-Right-Center Pane
 		topRightPane.add(locEstLabel);
 		topRightPane.add(locEst);
@@ -197,9 +193,7 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		setSize(WIDTH, HEIGHT);
 		setLocation(WIDTH/2,HEIGHT/2);
 		setResizable(true); // Fixed window size
-
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE); // Enum value EXIT_ON_CLOSE, not String. Interesting.
-		
 		finishButton.addActionListener(this);
 
 	}
@@ -211,7 +205,6 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		/* COMPLETED: Maybe in a later Iteration: Check if all fields are filled
 		/* instantiate new TaskCard from this and pass it into a collection
 		*/
-		
 		// CHECK IF INPUT IS VALID
 		if(validateInput()){ 
 			
@@ -223,7 +216,7 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 			System.out.println(task.getStartDate() + " " + task.getEndDate() + " " + task.getEstimatedTime());
 			
 			statusLabel.setFont(new Font("Courier",Font.BOLD,24));
-			statusLabel.setText("FINISHED! — You may now close this window");
+			statusLabel.setText("FINISHED! â€” You may now close this window");
 			statusLabel.setBackground(Color.GREEN);
 			statusLabel.setForeground(Color.WHITE);
 			
@@ -231,11 +224,11 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 
 		}
 		
+
 		statusLabel.setOpaque(true);
 		bottomCenterPane.revalidate();
 		bottomCenterPane.repaint();		
 	}
-	
 	
 	public boolean validateInput(){
 		
@@ -496,7 +489,7 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 	public void setTopLeftPane(JPanel topLeftPane) {
 		this.topLeftPane = topLeftPane;
 	}
-
+  
 	public void setjTextFieldName(JTextField jTextFieldName) {
 		this.jTextFieldName = jTextFieldName;
 	}

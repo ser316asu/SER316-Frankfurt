@@ -2,6 +2,14 @@ Project SER316
 
 # spring17project
 
+Master Branch Build Status ->
+[![Build Status](https://travis-ci.org/trevorforrey/SER316-Frankfurt.svg?branch=master)](https://travis-ci.org/trevorforrey/SER316-Frankfurt)
+
+Development Branch Build Status ->
+[![Build Status](https://travis-ci.org/trevorforrey/SER316-Frankfurt.svg?branch=development)](https://travis-ci.org/trevorforrey/SER316-Frankfurt)
+
+Codacy Project Grade -> [![Codacy Badge](https://api.codacy.com/project/badge/Grade/5e62684cfe9f4e85a3c402c3533fdc72)](https://www.codacy.com/app/trevorforrey/SER316-Frankfurt?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=trevorforrey/SER316-Frankfurt&amp;utm_campaign=Badge_Grade)
+
 This is the initial dump for the ser316 spring 2017 project. It is a slightly modified version of the Memoranda project from memoranda.sf.net
 
 The purpose of this project is to enhance the Memoranda application to support Time Management for Software Engineers. In essence, to augment Memoranda with features that support the time management concepts in the Personal Software Process, which you learned some of last year in SER215.

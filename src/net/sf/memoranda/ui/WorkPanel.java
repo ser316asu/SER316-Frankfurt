@@ -5,6 +5,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -27,7 +28,7 @@ import net.sf.memoranda.util.Local;
  */
 
 /*$Id: WorkPanel.java,v 1.9 2004/04/05 10:05:44 alexeya Exp $*/
-public class WorkPanel extends JPanel {
+    public class WorkPanel extends JPanel {
 	BorderLayout borderLayout1 = new BorderLayout();
 	JToolBar toolBar = new JToolBar();
 	JPanel panel = new JPanel();
@@ -80,10 +81,16 @@ public class WorkPanel extends JPanel {
 		toolBar.setBorderPainted(false);
 		toolBar.setFloatable(false);
 		panel.setLayout(cardLayout1);
-		
-		 calendar.setFont(new java.awt.Font("Dialog", 0, 11));
-	     calendar.setMinimumSize(new Dimension(0, 1000));
+    
+		//calendar.setFont(new java.awt.Font("Dialog", 0, 11));
+        //calendar.setMaximumSize(new Dimension(0, 1000));
+		 //calendar.setFont(new java.awt.Font("Dialog", 0, 11));
+	    // calendar.setSize(calendar.getMaximumSize());
 		 //main.add(calendar, BorderLayout.CENTER);
+         
+		calendar.setFont(new java.awt.Font("Dialog", 0, 11));
+        calendar.setMinimumSize(new Dimension(0, 1000));
+
 
 		agendaB.setBackground(Color.white);
 		agendaB.setMaximumSize(new Dimension(60, 80));
@@ -213,12 +220,14 @@ public class WorkPanel extends JPanel {
 		filesB.setOpaque(false);
 		filesB.setMaximumSize(new Dimension(60, 80));
 		filesB.setBackground(Color.white);
+		panel.setBackground(SystemColor.desktop);
+		panel.setMinimumSize(new Dimension(0, 1000));
 		this.add(toolBar, BorderLayout.WEST);
 		this.add(panel, BorderLayout.CENTER);
 		panel.add(dailyItemsPanel, "DAILYITEMS");
 		panel.add(filesPanel, "FILES");
 		panel.add(calendarPanel, "CALENDAR");
-		calendarPanel.add(calendar, BorderLayout.CENTER);
+		calendarPanel.add(calendar);
 		toolBar.add(agendaB, null);
 		toolBar.add(eventsB, null);
 		toolBar.add(tasksB, null);
@@ -229,7 +238,7 @@ public class WorkPanel extends JPanel {
 		// Default blue color
 		currentB.setBackground(new Color(215, 225, 250));
 		currentB.setOpaque(true);
-		
+		//calendar.setMaximumSize(calendar.getPreferredSize());
 		
 		
 		calendarB.setSelected(true);

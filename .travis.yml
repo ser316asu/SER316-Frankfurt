@@ -1,0 +1,5 @@
+language: java
+jdk: oraclejdk8
+
+notifications:
+  slack: frankfurt-group:8uz342ApGUVAYYA0QwCFiUSk
