@@ -318,7 +318,7 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 		}
 	
 		// CHECK TASK DESCRIPTION
-		if(taskDesc.getText() == null || taskDesc.getText().equals("Enter Task Description here...") || taskDesc.getText().equals("Task Description is invalid")){
+		if(taskDesc.getText() == null || taskDesc.getText().equals("") || taskDesc.getText().equals("Enter Task Description here...") || taskDesc.getText().equals("Task Description is invalid")){
 			System.out.println("Task Description is Invalid");
 			taskDesc.setText("Task Description is invalid");
 			statusLabel.setText("Invalid Entry: Please fix marked fields");
