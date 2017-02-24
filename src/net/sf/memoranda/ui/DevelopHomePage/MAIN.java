@@ -15,7 +15,7 @@ public class MAIN
 
     	MAIN.createTestCard(task);
 
-    	d = new Develop(task);
+    	d = new Develop();
     }
 
 
