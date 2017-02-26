@@ -19,8 +19,8 @@ import net.sf.memoranda.ui.JNCalendarPanel;
  */
 public class JNCalendarPanelTest {
 
-	JNCalendarPanel testPanel;
-	JNCalendarPanel samePanel;
+	private JNCalendarPanel testPanel;
+	private JNCalendarPanel samePanel;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -44,7 +44,7 @@ public class JNCalendarPanelTest {
 		testPanel.setSize(new Dimension(100,100));
 		assertEquals(testPanel.getSize(), samePanel.getSize());
 		testPanel.setAutoscrolls(true);
-		assertTrue(samePanel.getAutoscrolls() == true);
+		assertTrue(samePanel.getAutoscrolls());
 	}
 
 }
