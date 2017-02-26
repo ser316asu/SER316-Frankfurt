@@ -24,9 +24,6 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
 	
 	/** The layout. */
 	private LayoutManager layout;
-	
-	/** The dimension. */
-	private Dimension dimension;
     
     /** The labels. */
     private JLabel[] labels;
@@ -51,7 +48,6 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
     	this.location = location;
     	this.labels = new JLabel[LABEL_COUNT*2];
     	layout = new GridLayout(LABEL_COUNT,2);
-    	setSize();
     	createLabels();
     	this.setLayout(layout);
     	alignLabels();
@@ -68,13 +64,11 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
     	this.task = new TaskCard();
     	this.location = location;
     	this.labels = new JLabel[LABEL_COUNT*2];
-    	layout = new GridLayout(LABEL_COUNT,2);
-    	setSize();
     	createLabels();
-    	this.setLayout(layout);
+    	this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
     	alignLabels();
-    	addLabels();
         style();
+    	addLabels();
     }
 
     /**
@@ -92,8 +86,7 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
             labels[7] = new JLabel("");
         	labels[8] = new JLabel(" Actual Time(hrs): ");
         	labels[9] = new JLabel("");
-      	}
-    	else if(location == TopHomePanel.RIGHT_LABEL_PANEL){
+      	}else if(location == TopHomePanel.RIGHT_LABEL_PANEL){
     		labels[0] = new JLabel(" Schedule Status: ");
             labels[1] = new JLabel(" ");
         	labels[2] = new JLabel(" Actual LOC/h: ");
@@ -115,18 +108,6 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
     		labels[i].setAlignmentX(Component.LEFT_ALIGNMENT);
     	}
     }
-	
-    /**
-     * Sets the size.
-     */
-    public void setSize(){
-    	int width = (int) (Styling.TERMINAL_PANEL_WIDTH * WIDTH_RATIO);
-    	int height = (int) (Styling.TERMINAL_PANEL_HEIGHT * HEIGHT_RATIO);
-    	dimension = new Dimension(width,height);
-		this.setMinimumSize(dimension);
-		this.setPreferredSize(dimension);
-		this.setMaximumSize(dimension);
-    }
 
     /**
      * Adds the labels.
@@ -146,6 +127,13 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
             labels[i].setFont(Styling.TERMINAL_FONT);
             labels[i].setForeground(Styling.LABEL_PANEL_TEXT_COLOR);
         }
+        this.setMinimumSize(new Dimension(300,100));
+        this.setMaximumSize(new Dimension(
+        		Styling.TERMINAL_PANEL_WIDTH,Styling.TERMINAL_PANEL_HEIGHT));
+        this.setPreferredSize(new Dimension(
+        		Styling.TERMINAL_PANEL_WIDTH,Styling.TERMINAL_PANEL_HEIGHT));
+        
+        this.setBorder(BorderFactory.createLineBorder(Color.blue));
     }
 
     /* (non-Javadoc)
@@ -155,15 +143,13 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
     	this.task.setActive(false);
     	this.task = (TaskCard) taskCard;
     	this.task.setActive(true);
-    	//this.removeAll();
         if(location == TopHomePanel.LEFT_LABEL_PANEL){
             labels[1].setText(task.getTaskName()+ "");// = new JLabel(task.getTaskName()+ "");
             labels[3].setText(task.getEstimatedLOC()+ "");
             labels[5].setText(task.getActualLOC()+ "");
             labels[7].setText(task.getEstimatedTime()+ "");
             labels[9].setText(task.getActualTime()+ "");
-        }
-        else if(location == TopHomePanel.RIGHT_LABEL_PANEL){
+        }else if(location == TopHomePanel.RIGHT_LABEL_PANEL){
             labels[1].setText(task.scheduleStatusToString());
             labels[3].setText(task.getLocPerHour() + "");
             labels[5].setText(task.getEstimatedLOCPH()+ "");

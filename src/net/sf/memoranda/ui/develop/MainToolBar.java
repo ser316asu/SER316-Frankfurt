@@ -15,8 +15,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -31,15 +29,18 @@ import net.sf.memoranda.ui.NewTaskWindow;
 /**
  * The Class MainToolBar.
  */
-public class MainToolBar extends JLabel implements Styling, Observer{
+public class MainToolBar extends JLabel implements Styling{
 	
 	/**
-	 * 
+	 * Generated serial version UID.
 	 */
 	private static final long serialVersionUID = -4229258425606324012L;
 
 	/** The home B. */
-	private JButton createNewTask_B, calendar_B, home_B, notifcation_B;
+	private JButton createNewTaskB;
+	private JButton calendarB;
+	private JButton homeB;
+	private JButton notifcationB;
 	
 	/** The task board. */
 	@SuppressWarnings("unused")
@@ -50,13 +51,66 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 	private NewTaskWindow taskFrame;
 	
 	/** The old height. */
-	private int oldWidth = 0, oldHeight = 0; 
+	private int oldWidth = 0;
+	private int oldHeight = 0; 
 	
+	//---------------------Create Actions-----------------------------------
+	/** The create new task action. */
+	public Action createNewTaskAction = new AbstractAction("") {
+		
+	private static final long serialVersionUID = -6751747715539881623L;
+	
+	public void actionPerformed(ActionEvent event) {
+		taskFrame = new NewTaskWindow();
+	    }
+	};
+	
+	/** The open calendar action. */
+	public Action openCalendarAction = new AbstractAction("") {
+		
+		private static final long serialVersionUID = 6131253764559798328L;
+	
+		public void actionPerformed(ActionEvent event) {
+			HomePanel.setActivePanel(HomePanel.CALENDAR_PANEL);
+			//TODO create an observer
+			/*
+			 * setValue: changes the state of the current taskCard and
+			 * 			 notifies observers (Task Panels)
+			 * setChangeVar: changes the state of the new TaskCard and 
+			 * 				 returns itself in order to pass to the 
+			 * 				 other observers
+			 * getChangeVar: is used to make a change in order to modify 
+			 * 				 the state of the observing panels
+			 */
+		
+	    }
+	};
+	
+	/** The home button action. */
+	public Action homeButtonAction = new AbstractAction("") {
+		
+		private static final long serialVersionUID = 48588901517673371L;
+	
+		public void actionPerformed(ActionEvent event) {
+			HomePanel.setActivePanel(HomePanel.HOME_PANEL);
+	    }
+	};
+	
+	/** The Notification button action. */
+	public Action notifcationButtonAction = new AbstractAction("") {
+		
+		private static final long serialVersionUID = 48588901517673371L;
+	
+		public void actionPerformed(ActionEvent event) {
+			
+	    }
+	};
+	
+	//--------------------End Create Actions--------------------------------
 	/**
 	 * Instantiates a new main tool bar.
 	 */
-	public MainToolBar()
-	{
+	public MainToolBar(){
 		createComponents();
 		addActionListeners();
 		editComponents();
@@ -69,8 +123,7 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 	 *
 	 * @param taskBoard the task board
 	 */
-	public MainToolBar(LowerHomePanel taskBoard)
-	{
+	public MainToolBar(LowerHomePanel taskBoard){
 		this.taskBoard = taskBoard;
 		createComponents();
 		editComponents();
@@ -79,67 +132,14 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 		this.revalidate();
 	}
 	
-	//---------------------Create Actions-----------------------------------
-    /** The create new task action. */
-    public Action createNewTaskAction = new AbstractAction("") {
-    	
-	private static final long serialVersionUID = -6751747715539881623L;
-    
-	public void actionPerformed(ActionEvent e) {
-		taskFrame = new NewTaskWindow();
-        }
-    };
-	
-    /** The open calendar action. */
-    public Action openCalendarAction = new AbstractAction("") {
-    	
-		private static final long serialVersionUID = 6131253764559798328L;
-
-		public void actionPerformed(ActionEvent e) {
-			//TODO create an observer
-			/*
-			 * setValue: changes the state of the current taskCard and
-			 * 			 notifies observers (Task Panels)
-			 * setChangeVar: changes the state of the new TaskCard and 
-			 * 				 returns itself in order to pass to the 
-			 * 				 other observers
-			 * getChangeVar: is used to make a change in order to modify 
-			 * 				 the state of the observing panels
-			 */
-    	
-        }
-    };
-    
-    /** The home button action. */
-    public Action homeButtonAction = new AbstractAction("") {
-    	
-		private static final long serialVersionUID = 48588901517673371L;
-
-		public void actionPerformed(ActionEvent e) {
-			//TODO create an observer
-        }
-    };
-    
-    /** The Notification button action. */
-    public Action notifcationButtonAction = new AbstractAction("") {
-    	
-		private static final long serialVersionUID = 48588901517673371L;
-
-		public void actionPerformed(ActionEvent e) {
-			//TODO create an observer
-        }
-    };
-    
-    //--------------------End Create Actions--------------------------------
-	
 	/**
      * Creates the components.
      */
 	private void createComponents() {
-		createNewTask_B = new JButton();
-		calendar_B = new JButton();
-		home_B = new JButton();
-		notifcation_B = new JButton();
+		createNewTaskB = new JButton();
+		calendarB = new JButton();
+		homeB = new JButton();
+		notifcationB = new JButton();
 	}
 
 	/**
@@ -150,13 +150,13 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 		this.setIcon(LoadAssets.TERMINAL_IMAGE);
 		this.setOpaque(false);
 		
-		editToolBarButton(createNewTask_B, "Create New Task");
+		editToolBarButton(createNewTaskB, "Create New Task");
 		
-		editToolBarButton(calendar_B, "Open Calendar");
+		editToolBarButton(calendarB, "Open Calendar");
 		
-		editToolBarButton(home_B, "Go To Home");
+		editToolBarButton(homeB, "Go To Home");
 		
-		editToolBarButton(notifcation_B, "Notifcations");
+		editToolBarButton(notifcationB, "Notifcations");
 		//this.setUI(new ButtonUI());
 		
 	}
@@ -165,10 +165,10 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 	 * Adds the action listeners.
 	 */
 	private void addActionListeners() {
-		this.createNewTask_B.setAction(createNewTaskAction);
-		this.calendar_B.setAction(openCalendarAction);
-		this.home_B.setAction(homeButtonAction);
-		this.notifcation_B.setAction(notifcationButtonAction);
+		this.createNewTaskB.setAction(createNewTaskAction);
+		this.calendarB.setAction(openCalendarAction);
+		this.homeB.setAction(homeButtonAction);
+		this.notifcationB.setAction(notifcationButtonAction);
 	}
 
 	/**
@@ -177,20 +177,20 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 	private void addComponents() {
 		this.add(addButtonSpacer());
 		
-		addButtonLabel(home_B, LoadAssets.TOOLABR_HOME_BUTTON_IMAGE);
-		this.add(home_B);
+		addButtonLabel(homeB, LoadAssets.TOOLABR_HOME_BUTTON_IMAGE);
+		this.add(homeB);
 		this.add(addButtonSpacer());
 		
-		addButtonLabel(createNewTask_B, LoadAssets.TOOLBAR_TASK_BUTTON_IMAGE);
-		this.add(createNewTask_B);
+		addButtonLabel(createNewTaskB, LoadAssets.TOOLBAR_TASK_BUTTON_IMAGE);
+		this.add(createNewTaskB);
 		this.add(addButtonSpacer());
 		
-		addButtonLabel(this.notifcation_B, LoadAssets.TOOLABR_BELL_BUTTON_IMAGE);
-		this.add(this.notifcation_B);
+		addButtonLabel(this.notifcationB, LoadAssets.TOOLABR_BELL_BUTTON_IMAGE);
+		this.add(this.notifcationB);
 		this.add(addButtonSpacer());
 		
-		addButtonLabel(calendar_B, LoadAssets.TOOLBAR_CALENDAR_BUTTON_IMAGE);
-		this.add(calendar_B);
+		addButtonLabel(calendarB, LoadAssets.TOOLBAR_CALENDAR_BUTTON_IMAGE);
+		this.add(calendarB);
 		this.add(addButtonSpacer());
 		
 		
@@ -202,16 +202,18 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 	 * @param button the button
 	 * @param ic the ic
 	 */
-	private void addButtonLabel(JButton button, ImageIcon ic)
-	{
+	private void addButtonLabel(JButton button, ImageIcon ic){
 		JLabel label = new JLabel();
 		
 		label.setFont(Styling.TOOLBAR_FONT);
 		label.setOpaque(false);
 		label.setForeground(Color.WHITE);
-		label.setPreferredSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,Styling.TOOLBAR_BUTTON_HEIGHT+1));
-		label.setMaximumSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,Styling.TOOLBAR_BUTTON_HEIGHT+1));
-		label.setMinimumSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,Styling.TOOLBAR_BUTTON_HEIGHT+1));
+		label.setPreferredSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,
+				Styling.TOOLBAR_BUTTON_HEIGHT+1));
+		label.setMaximumSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,
+				Styling.TOOLBAR_BUTTON_HEIGHT+1));
+		label.setMinimumSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,
+				Styling.TOOLBAR_BUTTON_HEIGHT+1));
 		label.setHorizontalAlignment(JLabel.CENTER);
 		label.setVerticalAlignment(JLabel.CENTER);
 		label.setVerticalTextPosition(JLabel.CENTER);
@@ -225,19 +227,21 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 	 * @param button the button
 	 * @param toolTip the tool tip
 	 */
-	private void editToolBarButton(JButton button, String toolTip)
-	{
+	private void editToolBarButton(JButton button, String toolTip){
 		button.setFont(Styling.TASK_PANEL_FONT);
 		button.setBorderPainted(false);
-		//this.createNewTask_B.setBounds(0, 0, 2, 2);
+		//this.createNewTaskB.setBounds(0, 0, 2, 2);
 		button.setMargin(new Insets(0,0,0,0));
 		button.setToolTipText(toolTip);
 		button.setContentAreaFilled(false);
 		button.setLayout(new OverlayLayout(button));
 		
-		button.setPreferredSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,Styling.TOOLBAR_BUTTON_HEIGHT));
-		button.setMaximumSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,Styling.TOOLBAR_BUTTON_HEIGHT));
-		button.setMinimumSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,Styling.TOOLBAR_BUTTON_HEIGHT));
+		button.setPreferredSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,
+				Styling.TOOLBAR_BUTTON_HEIGHT));
+		button.setMaximumSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,
+				Styling.TOOLBAR_BUTTON_HEIGHT));
+		button.setMinimumSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,
+				Styling.TOOLBAR_BUTTON_HEIGHT));
 	}
 	
 	/**
@@ -245,12 +249,14 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 	 *
 	 * @return the j label
 	 */
-	private JLabel addButtonSpacer()
-	{
+	private JLabel addButtonSpacer(){
 		JLabel label = new JLabel("\n");
-		label.setPreferredSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,Styling.TOOLBAR_BUTTON_HEIGHT));
-		label.setMaximumSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,Styling.TOOLBAR_BUTTON_HEIGHT));
-		label.setMinimumSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,Styling.TOOLBAR_BUTTON_HEIGHT));
+		label.setPreferredSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,
+				Styling.TOOLBAR_BUTTON_HEIGHT));
+		label.setMaximumSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,
+				Styling.TOOLBAR_BUTTON_HEIGHT));
+		label.setMinimumSize(new Dimension(Styling.TOOLBAR_BUTTON_WIDTH,
+				Styling.TOOLBAR_BUTTON_HEIGHT));
 		return label;
 		
 	}
@@ -260,35 +266,30 @@ public class MainToolBar extends JLabel implements Styling, Observer{
 	 */
 	@Override
 	public void style() {
-		this.setPreferredSize(new Dimension(Styling.MAIN_TOOLBAR_WIDTH,Styling.MAIN_TOOLBAR_HEIGHT));
-		this.setMaximumSize(new Dimension(Styling.MAIN_TOOLBAR_WIDTH,Styling.MAIN_TOOLBAR_HEIGHT));
-		this.setMinimumSize(new Dimension(Styling.MAIN_TOOLBAR_WIDTH,Styling.MAIN_TOOLBAR_HEIGHT));
+		this.setPreferredSize(new Dimension(Styling.MAIN_TOOLBAR_WIDTH,
+				Styling.MAIN_TOOLBAR_HEIGHT));
+		this.setMaximumSize(new Dimension(Styling.MAIN_TOOLBAR_WIDTH,
+				Styling.MAIN_TOOLBAR_HEIGHT));
+		this.setMinimumSize(new Dimension(Styling.MAIN_TOOLBAR_WIDTH,
+				Styling.MAIN_TOOLBAR_HEIGHT));
 	}
 	
 	/* (non-Javadoc)
 	 * @see javax.swing.JComponent#paint(java.awt.Graphics)
 	 */
 	@Override
-    public void paint(Graphics g)
-    {
-    	if(this.oldWidth != this.getWidth() || this.oldHeight != this.getHeight())
-    	{
+    public void paint(Graphics graph){
+    	if(this.oldWidth != this.getWidth() || this.oldHeight != this.getHeight()){
         	Image img = ((ImageIcon) this.getIcon()).getImage();
-        	img = img.getScaledInstance(this.getWidth(), this.getHeight(),  java.awt.Image.SCALE_SMOOTH);
+        	img = img.getScaledInstance(this.getWidth(), this.getHeight(),
+        			java.awt.Image.SCALE_SMOOTH);
         	this.setIcon(new ImageIcon(img));
         	this.oldWidth = this.getWidth();
         	this.oldHeight = this.getHeight();
     	}
     	
-    	super.paint(g);
+    	super.paint(graph);
     }
-
-	/* (non-Javadoc)
-	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
-	 */
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
-	}
+	
+	
 }

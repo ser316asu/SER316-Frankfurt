@@ -8,16 +8,11 @@
  * Contact: jdbecke3@asu.edu, atshinn@asu.edu
  **************************************************************/
 package net.sf.memoranda.ui.develop;
-import java.util.*;
-import java.text.*;
 
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class MAIN.
  */
-public class MAIN
-{
+public class Main{
 	
 	/** The d. */
 	public static Develop d;
@@ -31,29 +26,10 @@ public class MAIN
      *
      * @param args the arguments
      */
-    public static void main(String[] args)
-    {
-    	task = new TaskCard();
-
-    	MAIN.createTestCard(task);
-
+    public static void main(String[] args){
     	d = new Develop(true);
     }
 
 
-    /**
-     * Creates the test card.
-     *
-     * @param task the task
-     */
-    public static void createTestCard(TaskCard task){
-    	task.setEstimatedLOC(500);
-    	task.setEstimatedTime((double)8.5);
-    	task.setActualLOC(256);
-    	task.setActualTime(4.5);
-    	task.setTaskName("test");
-    	task.setStartDate(new Date("02/02/2017"));
-    	task.setEndDate(new Date("02/20/2017"));
 
-    }
 }

@@ -9,48 +9,27 @@
  **************************************************************/
 package net.sf.memoranda.ui.develop;
 import javax.swing.*;
-import java.awt.*; 
-import java.awt.event.*;
-
-// TODO: Auto-generated Javadoc
 /**
  * The Class TopInnerPanel.
  */
 public class TopInnerPanel extends JLabel implements Styling{
 	
+	/**
+	 * Generated serial version UID.
+	 */
+	private static final long serialVersionUID = 8276692589852376728L;
+
 	/** The child 2. */
-	private JPanel child1,child2;
+	private JPanel child1;
 	
-	/** The dimension. */
-	private Dimension dimension;
-	
-	/** The layout. */
-	private LayoutManager layout;
-	
-	/** The panel count. */
-	private static int panelCount = 0;
+	private JPanel child2;
 	
 	/**
 	 * Instantiates a new top inner panel.
 	 */
 	public TopInnerPanel(){
 		style();
-		panelCount++;
 	}
-	
-	/**
-	 * Instantiates a new top inner panel.
-	 *
-	 * @param width the width
-	 * @param height the height
-	 */
-	public TopInnerPanel(int width, int height)
-	{
-		this.dimension = new Dimension(width, height);
-		style();
-		panelCount++;
-	}
-	
 	/**
 	 * Give children.
 	 *
@@ -60,32 +39,6 @@ public class TopInnerPanel extends JLabel implements Styling{
 	public void giveChildren(JPanel child1,JPanel child2){
 		this.child1 = child1;
 		this.child2 = child2;
-	}
-
-	/**
-	 * Sets the panel layout.
-	 *
-	 * @param layout the layout
-	 * @return the int
-	 */
-	public int setPanelLayout(LayoutManager layout){
-		int success = 0;
-		int err = 1;
-		if(layout != null){
-			this.layout = layout;
-			this.setLayout(layout);
-			return success;
-		}	
-		return err;
-	}
-
-	/**
-	 * Gets the dimension.
-	 *
-	 * @return the dimension
-	 */
-	public Dimension getDimension(){
-		return dimension;
 	}
 
 	/**
@@ -101,19 +54,15 @@ public class TopInnerPanel extends JLabel implements Styling{
 			this.add(child1);
 			this.add(child2);
 			return success;
-		}
-		else
+		}else{
 			return err;
+		}
+			
 	}
 
 	/* (non-Javadoc)
 	 * @see net.sf.memoranda.ui.DevelopHomePage.Styling#style()
 	 */
 	public void style(){
-		//this.setBackground(Styling.PROGRESS_PANEL_COLOR);
-		//ths.setForeground(Styling.FOREGROUND_COLOR);}
-		this.setMinimumSize(dimension);
-		this.setPreferredSize(dimension);
-		this.setMaximumSize(dimension);
 	}	
 }

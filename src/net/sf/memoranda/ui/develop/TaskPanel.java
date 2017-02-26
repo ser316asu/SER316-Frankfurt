@@ -141,13 +141,16 @@ public class TaskPanel extends JLabel implements Styling
            header_L.setLayout(new BoxLayout(header_L, BoxLayout.Y_AXIS));
            footer_L.setLayout(new BoxLayout(footer_L, BoxLayout.Y_AXIS));
            
-           header_L.setPreferredSize(new Dimension(this.dimension.width,(int)(this.dimension.height)));
+           header_L.setPreferredSize(new Dimension(this.dimension.width,
+        		   (int)(this.dimension.height)));
            footer_L.setPreferredSize(this.dimension);
            this.setPreferredSize(this.dimension);
            
-           header_L.setMinimumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.35)));
+           header_L.setMinimumSize(new Dimension(this.dimension.width,
+        		   (int)(this.dimension.height*.35)));
            footer_L.setMinimumSize(this.dimension);
-           header_L.setMaximumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.35)));
+           header_L.setMaximumSize(new Dimension(this.dimension.width,
+        		   (int)(this.dimension.height*.35)));
            footer_L.setMaximumSize(this.dimension);
            
            schStat_L.setText(this.task.scheduleStatusToString());

@@ -25,17 +25,11 @@ public class LowerHomePanel extends JLabel implements Styling {
 
 	/** The tasks. */
 	private Hashtable<String,TaskCard> tasks;
-	
-	/** The low ratio. */
-	private final double lowRatio = .6;
     
     /** The tool bar P. */
     private JPanel addTasksP;
     private JPanel toolBarP;
     private JPanel tasksP;
-    
-    /** The dimension. */
-    private Dimension dimension;
     
     /** The top home panel. */
     private final TopHomePanel topHomePanel;
@@ -54,8 +48,6 @@ public class LowerHomePanel extends JLabel implements Styling {
     public LowerHomePanel() {
         topHomePanel = null;
         tasks = new Hashtable<String,TaskCard>();
-        this.dimension = new Dimension(
-        		Styling.SCREEN_WIDTH -5,((int) (Styling.SCREEN_HEIGHT*lowRatio))-7);
         
     	createComponents();
         style();
@@ -73,8 +65,6 @@ public class LowerHomePanel extends JLabel implements Styling {
     public LowerHomePanel(TopHomePanel thp, Hashtable<String,TaskCard> tasks){
         this.topHomePanel = thp;
         this.tasks = tasks;
-        this.dimension = new Dimension(Styling.TASK_BOARD_WIDTH,Styling.TASK_BOARD_HEIGHT);
-        
     	createComponents();
         style();
     	editComponents();
@@ -97,20 +87,9 @@ public class LowerHomePanel extends JLabel implements Styling {
      */
     public void editComponents() {            
           this.setLayout(new OverlayLayout(this));
-          tasksP.setLayout(new FlowLayout(FlowLayout.CENTER,10,35));
+          tasksP.setLayout(new FlowLayout(FlowLayout.CENTER,15,40));
           toolBarP.setLayout(new BorderLayout());
           addTasksP.setLayout(new FlowLayout(FlowLayout.RIGHT));
-          
-          this.setPreferredSize(dimension);
-          this.setMaximumSize(new Dimension(Styling.SCREEN_WIDTH-Styling.MAIN_TOOLBAR_WIDTH,
-        		  Styling.SCREEN_HEIGHT));
-          tasksP.setPreferredSize(dimension);
-          toolBarP.setPreferredSize(dimension);
-          
-          tasksP.setMinimumSize(dimension);
-          tasksP.setMaximumSize(dimension);
-          toolBarP.setMinimumSize(dimension);
-          toolBarP.setMaximumSize(dimension);
           
           setTransparent(addTasksP);
           setTransparent(tasksP);
@@ -164,6 +143,12 @@ public class LowerHomePanel extends JLabel implements Styling {
         this.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));
         //tasksP.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR)); 
         this.setIcon(LoadAssets.TASK_BOARD_IMAGE);
+        
+        this.setMaximumSize(new Dimension(Styling.TASK_BOARD_WIDTH,Styling.TASK_BOARD_HEIGHT));
+        this.setPreferredSize(new Dimension(
+        		Styling.TASK_BOARD_WIDTH - Styling.MAIN_TOOLBAR_WIDTH - 10,
+        		Styling.TASK_BOARD_HEIGHT));
+        this.setMinimumSize(new Dimension(700,400));
     }
     
     /**

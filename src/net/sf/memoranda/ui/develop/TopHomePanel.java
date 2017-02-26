@@ -8,33 +8,32 @@
  * Contact: jdbecke3@asu.edu, atshinn@asu.edu
  **************************************************************/
 package net.sf.memoranda.ui.develop;
-/**
 
-*@author Alec Shinn, Josh Becker
-**/
 import javax.swing.*;
 import java.awt.*; 
-import java.awt.event.*;
-import java.util.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class TopHomePanel.
  */
-public class TopHomePanel extends JLabel implements Styling
-{
-    
-    /** The Constant RIGHT_LABEL_PANEL. */
-    final static int LEFT_LABEL_PANEL = 0, RIGHT_LABEL_PANEL = 1;
+public class TopHomePanel extends JSplitPane implements Styling{
+	
+    public final static int LEFT_LABEL_PANEL = 0;
+    public final static int RIGHT_LABEL_PANEL = 1;
+    /**
+	 * Generated serial version UID.
+	 */
+    private static final long serialVersionUID = -3435226563742560282L;
     
     /** The right child. */
-    private TopInnerPanel leftChild,rightChild;
+    private TopInnerPanel leftChild;
+    private TopInnerPanel rightChild;
     
     /** The right labels. */
-    private TopLabelPanel leftLabels,rightLabels;
+    private TopLabelPanel leftLabels;
+    private TopLabelPanel rightLabels;
     
     /** The container for right. */
-    private JLabel containerForRight;
+    private JSplitPane containerForRight;
     
     /** The status bar top. */
     private StatusBarPanel statusBarTop;
@@ -45,14 +44,10 @@ public class TopHomePanel extends JLabel implements Styling
     /** The task. */
     private TaskCard task;
     
-    /** The dimension. */
-    private Dimension dimension;
-    
-    /** The layout. */
-    private LayoutManager layout;
-    
     /** The old height. */
-    private int oldWidth,oldHeight;
+    private int oldWidth;
+    
+    private int oldHeight;
     
 
 
@@ -61,12 +56,8 @@ public class TopHomePanel extends JLabel implements Styling
      *
      * @param task the task
      */
-    public TopHomePanel(TaskCard task)
-    {
+    public TopHomePanel(TaskCard task){
         this.task = task;
-        layout = new OverlayLayout(this);
-        setSize();
-        this.setLayout(layout);
         createChildPanels();
         style();
         addPanels();  
@@ -78,25 +69,15 @@ public class TopHomePanel extends JLabel implements Styling
      * Creates the child panels.
      */
     public void createChildPanels(){
-    	containerForRight = new JLabel();
-    	containerForRight.setLayout(new BoxLayout(containerForRight,BoxLayout.Y_AXIS));
-    	containerForRight.setOpaque(false);
-    	containerForRight.setPreferredSize(new Dimension(Styling.PROGRESS_PANEL_WIDTH,Styling.TOP_PANEL_HEIGHT-1));
-    	containerForRight.setMaximumSize(new Dimension(Styling.PROGRESS_PANEL_WIDTH,Styling.TOP_PANEL_HEIGHT-1));
-    	
-        leftChild = new TopInnerPanel(Styling.TERMINAL_PANEL_WIDTH, Styling.TERMINAL_PANEL_HEIGHT);
-        rightChild = new TopInnerPanel(Styling.TERMINAL_RIGHT_PANEL_WIDTH,Styling.TERMINAL_RIGHT_PANEL_HEIGHT);
-        rightChild.setLayout(new BorderLayout());
-        //rightChild.setLocation(Styling.TERMINAL_PANEL_WIDTH,0);
-
-        //leftLabels = new TopLabelPanel(task,TopHomePanel.LEFT_LABEL_PANEL);
-        //rightLabels = new TopLabelPanel(task,TopHomePanel.RIGHT_LABEL_PANEL);
-        
         leftLabels = new TopLabelPanel(TopHomePanel.LEFT_LABEL_PANEL);
         rightLabels = new TopLabelPanel(TopHomePanel.RIGHT_LABEL_PANEL);
 
         statusBarTop = new StatusBarPanel(rightChild,task);
         timerPanel = new TimerPanel(rightChild,task);
+    	containerForRight = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+    	
+        leftChild = new TopInnerPanel();
+        rightChild = new TopInnerPanel();
 
         task.addObserver(leftLabels);
         task.addObserver(rightLabels);
@@ -107,54 +88,48 @@ public class TopHomePanel extends JLabel implements Styling
      * Adds the panels.
      */
     public void addPanels(){
-        leftChild.add(leftLabels);
-        leftChild.add(rightLabels);
+        leftChild.add(leftLabels, BorderLayout.EAST);
+        leftChild.add(rightLabels,BorderLayout.WEST);
 
-        containerForRight.add(statusBarTop);
-        //rightChild.add(horizontalSeparator);
-        //rightChild.add(new JSeparator(SwingConstants.HORIZONTAL));
-        containerForRight.add(timerPanel);
+        containerForRight.setTopComponent(statusBarTop);
+        containerForRight.setBottomComponent(timerPanel);
+        
         rightChild.add(containerForRight, BorderLayout.EAST);
-        //rightChild.add(horizontalSeparator);
 
-        this.add(leftChild);
-        //this.add(verticalSeparator);
-        this.add(rightChild);
-    }
-
-    /**
-     * Sets the size.
-     */
-    public void setSize(){
-        dimension = new Dimension(Styling.TOP_PANEL_WIDTH,Styling.TOP_PANEL_HEIGHT);
-        this.setPreferredSize(dimension);
-    }
-
-    /**
-     * Gets the dimension.
-     *
-     * @return the dimension
-     */
-    public Dimension getDimension(){
-        return dimension;
+        this.setLeftComponent(leftChild);
+        this.setRightComponent(rightChild);
     }
 
     /* (non-Javadoc)
      * @see net.sf.memoranda.ui.DevelopHomePage.Styling#style()
      */
     public void style(){
-    	this.setMaximumSize(new Dimension(Styling.SCREEN_WIDTH-Styling.MAIN_TOOLBAR_WIDTH,Styling.SCREEN_HEIGHT));
         this.setBackground(Styling.BACKGROUND_COLOR);
-        leftChild.setLayout(new GridLayout(1,2,0,0));
-        rightChild.setLayout(new BorderLayout(0,0));//rightChild.setLayout(new GridLayout(2,1,3,3));//new BoxLayout(rightChild,BoxLayout.Y_AXIS));
+        this.setOpaque(false);
+        this.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
+        this.setDividerLocation(Styling.TERMINAL_PANEL_WIDTH);
+        this.setDividerSize(10);
+        this.setOneTouchExpandable(true);
+        this.setResizeWeight(1);
+        
+    	containerForRight.setOpaque(false);
+    	containerForRight.setPreferredSize(new Dimension(
+    			Styling.PROGRESS_PANEL_WIDTH,
+    			Styling.TOP_PANEL_HEIGHT-1));
+    	containerForRight.setMaximumSize(new Dimension(
+    			Styling.PROGRESS_PANEL_WIDTH,
+    			Styling.TOP_PANEL_HEIGHT-1));
+    	
+    	containerForRight.setDividerLocation(Styling.PROGRESS_PANEL_HEIGHT);
+    	containerForRight.setDividerSize(10);
+    	containerForRight.setOneTouchExpandable(true);
+    	containerForRight.setResizeWeight(1);
+    	containerForRight.setOpaque(false);
+    	
+    	
+        leftChild.setLayout(new BorderLayout(0,0));
+        rightChild.setLayout(new BorderLayout(0,0));
         rightChild.setBackground(Styling.TIMER_PANEL_COLOR);
-        this.setIcon(LoadAssets.TERMINAL_IMAGE);
-        //rightChild.setIcon(LoadAssets.TERMINAL_IMAGE);
-        
-        
-        //rightChild.setPreferredSize(new Dimension(Styling.TERMINAL_RIGHT_PANEL_WIDTH,Styling.TERMINAL_RIGHT_PANEL_HEIGHT));
-        //rightChild.setBorder(BorderFactory.createLineBorder(Color.red));
-        //containerForRight.setBorder(BorderFactory.createLineBorder(Color.green));
         }
     
     /**
@@ -162,8 +137,7 @@ public class TopHomePanel extends JLabel implements Styling
      *
      * @param tc the tc
      */
-    public void addObservers(TaskCard tc)
-    {
+    public void addObservers(TaskCard tc){
     	tc.addObserver(leftLabels);
     	tc.addObserver(rightLabels);
     	tc.addObserver(statusBarTop);
@@ -173,17 +147,16 @@ public class TopHomePanel extends JLabel implements Styling
      * @see javax.swing.JComponent#paint(java.awt.Graphics)
      */
     @Override
-    public void paint(Graphics g)
-    {
-    	if(this.oldWidth != this.getWidth() || this.oldHeight != this.getHeight())
-    	{
+    public void paint(Graphics graph){
+    	/*if(this.oldWidth != this.getWidth() || this.oldHeight != this.getHeight()){
         	Image img = ((ImageIcon) this.getIcon()).getImage();
-        	img = img.getScaledInstance(this.getWidth(), this.getHeight(),  java.awt.Image.SCALE_SMOOTH);
+        	img = img.getScaledInstance(this.getWidth(), this.getHeight(),
+        			java.awt.Image.SCALE_SMOOTH);
         	this.setIcon(new ImageIcon(img));
         	this.oldWidth = this.getWidth();
         	this.oldHeight = this.getHeight();
-    	}
+    	}*/
     	
-    	super.paint(g);
+    	super.paint(graph);
     }
 }
