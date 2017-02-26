@@ -163,11 +163,11 @@ public class TaskSearchPanel extends JPanel {
             }
         });
         
-        goToDateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                goToDateButton_actionPerformed(e);
-            }
-        });
+//        goToDateButton.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                goToDateButton_actionPerformed(e);
+//            }
+//        });
         
         exitSearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -194,9 +194,9 @@ public class TaskSearchPanel extends JPanel {
         App.getFrame().setCursor(cur);
     }
     
-    void goToDateButton_actionPerformed(ActionEvent e) {
-        // TODO go to date functionality
-    }
+//    void goToDateButton_actionPerformed(ActionEvent e) {
+//        // TODO go to date functionality
+//    }
     
     void exitSearchButton_actionPerformed(ActionEvent e) {
     	this.removeAll();

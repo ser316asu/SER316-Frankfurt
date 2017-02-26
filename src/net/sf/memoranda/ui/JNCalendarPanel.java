@@ -93,7 +93,7 @@ public class JNCalendarPanel extends JPanel {
   static Border border1;
   static Border border2;
   
-  public static JNCalendarPanel getInstance() {
+  public synchronized static JNCalendarPanel getInstance() {
 	  if (singletonCalendarPanel == null) {
 		  singletonCalendarPanel = new JNCalendarPanel();
 		  try {
