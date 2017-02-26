@@ -84,14 +84,14 @@ public class JNCalendarPanel extends JPanel {
   private static JPanel jnCalendarPanel = new JPanel();
   private static BorderLayout borderLayout5 = new BorderLayout();
   private static JSpinner yearSpin = new JSpinner(new SpinnerNumberModel(jnCalendar.get().getYear(), 1980, 2999, 1));
-  static JSpinner.NumberEditor yearSpinner = new JSpinner.NumberEditor(yearSpin, "####");
+  private static JSpinner.NumberEditor yearSpinner = new JSpinner.NumberEditor(yearSpin, "####");
 
-  static boolean ignoreChange = false;
+  private static boolean ignoreChange = false;
 
   private static Vector selectionListeners = new Vector();
 
-  static Border border1;
-  static Border border2;
+  private static Border border1;
+  private static Border border2;
   
   public synchronized static JNCalendarPanel getInstance() {
 	  if (singletonCalendarPanel == null) {
@@ -164,7 +164,7 @@ public class JNCalendarPanel extends JPanel {
   };
   
       
-  static void jbInit() throws Exception {
+  private static void jbInit() throws Exception {
 	singletonCalendarPanel = JNCalendarPanel.getInstance();
     //dayBackAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, KeyEvent.ALT_MASK));
     //dayForwardAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_UP, KeyEvent.ALT_MASK));
