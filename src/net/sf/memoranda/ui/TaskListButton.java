@@ -3,13 +3,17 @@ package net.sf.memoranda.ui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.util.Calendar;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.util.Local;
 
 public class TaskListButton extends JButton {
+	
+	private CalendarDate dateDue;
 	
 	public TaskListButton() {
 		this.setMinimumSize(new Dimension(500, 20));
@@ -38,8 +42,19 @@ public class TaskListButton extends JButton {
 		this.getText();
 	}
 	
+	public CalendarDate getDateDue() {
+		return dateDue;
+	}
+	
+	public void setDateDue(CalendarDate dateDue) {
+		this.dateDue = dateDue;
+	}
+	
 	void taskButton_actionPerformed(ActionEvent e) {
-    	this.setBackground(Color.CYAN);
+		JNCalendarPanel currentPanel = JNCalendarPanel.getInstance();
+		System.out.println("Inside button listener");
+		currentPanel.set(dateDue);
+    	//this.setBackground(Color.CYAN);
     }
 
 }
