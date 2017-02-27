@@ -33,7 +33,7 @@ public class HomePanel extends JLabel implements Styling {
 	public static final int ALARM = 3;
 	
 	private static final JNCalendarPanel CALENDAR_JNPANEL = 
-			new JNCalendarPanel();
+			JNCalendarPanel.getInstance();
 	
 	private static final DailyItemsPanel ITEMS_PANEL =
 			new DailyItemsPanel();
