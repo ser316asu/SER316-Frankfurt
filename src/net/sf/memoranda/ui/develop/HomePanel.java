@@ -15,6 +15,7 @@ import net.sf.memoranda.ui.JNCalendarPanel;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.*;
@@ -33,8 +34,14 @@ public class HomePanel extends JLabel implements Styling {
 	private static final JSplitPane OUTER_SPLITPANE = 
 			new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 	
-	private static final JSplitPane RIGHT_SPLITPANE = 
+	private static final JSplitPane HOME_SPLITPANE = 
 			new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+	
+	private static final CardLayout  CONTENT_CARDLAYOUT = 
+			new CardLayout();
+	
+	private static final JPanel CONTENT_PANEL =
+			new JPanel();
 	
 	private static Component activeComponent;
 	/**
@@ -47,8 +54,6 @@ public class HomePanel extends JLabel implements Styling {
 	
 	/** The low P. */
 	private LowerHomePanel lowP;
-	
-	private JLabel rightSidePanel;
     
     /** The tasks. */
     private Hashtable<String,TaskCard> tasks;
@@ -64,7 +69,7 @@ public class HomePanel extends JLabel implements Styling {
      * Instantiates a new home panel.
      */
     public HomePanel(){
-    	activeComponent = RIGHT_SPLITPANE;
+    	activeComponent = HOME_SPLITPANE;
         assets = new LoadAssets();
         this.tasks = new Hashtable<String, TaskCard>();
         fillTasks();
@@ -81,7 +86,7 @@ public class HomePanel extends JLabel implements Styling {
      */
     public HomePanel(TaskCard task) {
     	//this.setIcon(LoadAssets.HOMEPAGE_BACKGROUND);
-    	activeComponent = RIGHT_SPLITPANE;
+    	activeComponent = HOME_SPLITPANE;
     	assets = new LoadAssets();
         this.tasks = new Hashtable<String, TaskCard>();
         fillTasks();
@@ -100,7 +105,6 @@ public class HomePanel extends JLabel implements Styling {
     	topP = new TopHomePanel(this.tasks.get("task 1"));
     	lowP = new LowerHomePanel(this.topP, this.tasks);
         this.toolbar = new MainToolBar(lowP);
-        this.rightSidePanel = new JLabel();
     }
     
     /**
@@ -108,19 +112,19 @@ public class HomePanel extends JLabel implements Styling {
      */
     public void editComponents(){
     	this.setLayout(new OverlayLayout(this));
-    	this.rightSidePanel.setIcon(LoadAssets.TERMINAL_IMAGE);
+    	this.setIcon(LoadAssets.TERMINAL_IMAGE);
     	
-    	setRightSideSize(this.rightSidePanel, 0, 0);
+    	setRightSideSize(HomePanel.CONTENT_PANEL, 0, 0);
     	
-    	this.rightSidePanel.setOpaque(false);
-    	this.rightSidePanel.setLayout(new OverlayLayout(this.rightSidePanel));
-    	//this.rightSidePanel.setBorder(BorderFactory.createLineBorder(Color.green));
+    	HomePanel.CONTENT_PANEL.setOpaque(false);
+    	HomePanel.CONTENT_PANEL.setLayout(CONTENT_CARDLAYOUT);
+    	//this.CONTENT_PANEL.setBorder(BorderFactory.createLineBorder(Color.green));
     	
-    	RIGHT_SPLITPANE.setDividerLocation(Styling.TERMINAL_PANEL_HEIGHT+1);
-    	RIGHT_SPLITPANE.setOneTouchExpandable(true);
-    	RIGHT_SPLITPANE.setResizeWeight(1);
-    	RIGHT_SPLITPANE.setOpaque(false);
-    	//RIGHT_SPLITPANE.setBorder(BorderFactory.createLineBorder(Color.blue));
+    	HomePanel.HOME_SPLITPANE.setDividerLocation(Styling.TERMINAL_PANEL_HEIGHT+1);
+    	HomePanel.HOME_SPLITPANE.setOneTouchExpandable(true);
+    	HomePanel.HOME_SPLITPANE.setResizeWeight(1);
+    	HomePanel.HOME_SPLITPANE.setOpaque(false);
+    	//HOME_SPLITPANE.setBorder(BorderFactory.createLineBorder(Color.blue));
     	
     	OUTER_SPLITPANE.setDividerLocation(Styling.MAIN_TOOLBAR_WIDTH);
     	OUTER_SPLITPANE.setDividerSize(10);
@@ -133,8 +137,6 @@ public class HomePanel extends JLabel implements Styling {
     	BasicSplitPaneDivider divider = (BasicSplitPaneDivider) OUTER_SPLITPANE.getComponent(0);
     	divider.setBackground(Color.black);
     	divider.setBorder(null);
-
-    	HomePanel.CALENDAR_JNPANEL.setVisible(true);
     }
     
     /**
@@ -148,16 +150,22 @@ public class HomePanel extends JLabel implements Styling {
      * Adds the components.
      */
     public void addComponents() {
-    	RIGHT_SPLITPANE.setTopComponent(this.topP);
-    	RIGHT_SPLITPANE.setBottomComponent(this.lowP);
+    	HOME_SPLITPANE.setTopComponent(this.topP);
+    	HOME_SPLITPANE.setBottomComponent(this.lowP);
     	
-    	this.rightSidePanel.add(HomePanel.RIGHT_SPLITPANE);
-    	//this.rightSidePanel.add(HomePanel.CALENDAR_JNPANEL);
+    	CONTENT_PANEL.add(HomePanel.HOME_SPLITPANE, "HOME");
+    	CONTENT_PANEL.add(HomePanel.CALENDAR_JNPANEL, "CALENDAR");
+    	
+    	//HomePanel.CONTENT_CARDLAYOUT.addLayoutComponent(HomePanel.HOME_SPLITPANE, "HOME");
+    	//HomePanel.CONTENT_CARDLAYOUT.addLayoutComponent(HomePanel.CALENDAR_JNPANEL, "CALENDAR");
     	
     	OUTER_SPLITPANE.setLeftComponent(this.toolbar);
-    	OUTER_SPLITPANE.setRightComponent(this.rightSidePanel);
+    	OUTER_SPLITPANE.setRightComponent(HomePanel.CONTENT_PANEL);
     	
     	this.add(OUTER_SPLITPANE);
+    	
+    	setActivePanel(HomePanel.HOME_PANEL);
+    	
     	this.revalidate();
     }
 
@@ -208,20 +216,22 @@ public class HomePanel extends JLabel implements Styling {
     public static void setActivePanel(int activePanel){
     	switch(activePanel){
     		case HomePanel.HOME_PANEL:
-    			activeComponent.setVisible(false);
-    			RIGHT_SPLITPANE.setVisible(true);
-    			activeComponent = RIGHT_SPLITPANE;
+    			CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "HOME");
+    			activeComponent = HOME_SPLITPANE;
     			break;
     		case HomePanel.CALENDAR_PANEL:
-    			activeComponent.setVisible(false);
-    			CALENDAR_JNPANEL.setVisible(true);
+    			CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "CALENDAR");
     			activeComponent = CALENDAR_JNPANEL;
     			break;
 		default:
-				activeComponent.setVisible(false);
-				RIGHT_SPLITPANE.setVisible(true);
-				activeComponent = RIGHT_SPLITPANE;
+				CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "HOME");
+				activeComponent = HOME_SPLITPANE;
 				break;	
     	}
+    }
+    
+    public Component getActiveComponent()
+    {
+    	return activeComponent;
     }
 }
