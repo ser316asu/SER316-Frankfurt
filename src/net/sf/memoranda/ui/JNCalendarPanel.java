@@ -2,6 +2,7 @@ package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -20,6 +21,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
@@ -106,12 +108,16 @@ public class JNCalendarPanel extends JPanel {
 	  return singletonCalendarPanel;
   }
   
-  public JNCalendar getJnCalendar() {
+  public static JNCalendar getJnCalendar() {
 	  return jnCalendar;
   }
 
-  public void setJnCalendar(JNCalendar jnCalendar) {
+  public static void setJnCalendar(JNCalendar jnCalendar) {
 	  singletonCalendarPanel.jnCalendar = jnCalendar;
+  }
+  
+  public static JPanel getNavigationPanel() {
+	  return navigationPanel;
   }
 
   private JNCalendarPanel() {
@@ -206,7 +212,7 @@ public class JNCalendarPanel extends JPanel {
     monthBackButton.setContentAreaFilled(false);
     monthBackButton.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/prevday_icon.png")));
     monthBackButton.setText("");
-    monthBackButton.setToolTipText(Local.getString("One day back"));
+    monthBackButton.setToolTipText(Local.getString("One month back"));
     
     monthForwardButton.setAction(dayForwardAction);
     monthForwardButton.setMinimumSize(new Dimension(100, 100));
@@ -219,7 +225,7 @@ public class JNCalendarPanel extends JPanel {
     monthForwardButton.setContentAreaFilled(false);
     monthForwardButton.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/nextday_icon.png")));
     monthForwardButton.setText("");
-    monthForwardButton.setToolTipText(Local.getString("One day forward"));
+    monthForwardButton.setToolTipText(Local.getString("One month forward"));
     
     searchButton.setAction(searchAction);
     searchButton.setMinimumSize(new Dimension(100, 100));
@@ -295,15 +301,15 @@ public class JNCalendarPanel extends JPanel {
     yearSpin.setPreferredSize(new Dimension(70, 20));
     yearSpin.setRequestFocusEnabled(false);
         yearSpin.setEditor(yearSpinner);
-    navigationPanel.setMinimumSize(new Dimension(1380, 80));
+    navigationPanel.setMinimumSize(new Dimension(1380, 40));
     navigationPanel.setOpaque(false);
     navigationPanel.setPreferredSize(new Dimension(1380, 80));
     jnCalendar.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 10));
     jnCalendar.setFont(new java.awt.Font("Dialog", 0, 10));
     jnCalendar.setGridColor(Color.lightGray);
+    jnCalendar.setRowHeight((int)(Toolkit.getDefaultToolkit().getScreenSize().height*(.75)/8));
     jnCalendarPanel.setLayout(borderLayout5);    
-    //calendar.setFont(new java.awt.Font("Dialog", 0, 11));
-    //calendar.setMaximumSize(new Dimension(0, 1000));
+
     navigationBar.add(navigationPanel, null);
     
     mntyPanel.add(monthsCB, BorderLayout.CENTER);
@@ -427,10 +433,17 @@ public class JNCalendarPanel extends JPanel {
   
   static void searchButton_actionPerformed(ActionEvent e) {
 	  System.out.println("Called to search tasks");
-	  TaskSearchPanel searchPanel = new TaskSearchPanel();
-	  jnCalendarPanel.setSize(new Dimension(500,500));
-	  singletonCalendarPanel.add(searchPanel,  BorderLayout.SOUTH);
-	  refreshView();
+	  
+	  if (!TaskSearchPanel.isOpen()) {
+		  jnCalendar.setRowHeight((int)(Toolkit.getDefaultToolkit().getScreenSize().height*(.35)/8));
+		  jnCalendar.getTableHeader().setPreferredSize(new Dimension(900, 40));
+		  navigationPanel.setPreferredSize(new Dimension(1380, 50));
+		  
+		  TaskSearchPanel searchPanel = new TaskSearchPanel();
+		  //jnCalendarPanel.setSize(new Dimension(500,500));
+		  singletonCalendarPanel.add(searchPanel,  BorderLayout.SOUTH);
+		  refreshView();
+	  }
   }
   
   static void addTaskButton_actionPerformed(ActionEvent e) {

@@ -55,8 +55,7 @@ import net.sf.memoranda.util.Local;
     boolean dateChangedByCalendar = false;
     boolean changedByHistory = false;
     
-	//JNCalendarPanel calendar = JNCalendarPanel.getInstance();
-    JNCalendarPanel calendar = new JNCalendarPanel();
+	JNCalendarPanel calendar = JNCalendarPanel.getInstance();
 	JPanel main = new JPanel();
 
 
@@ -233,29 +232,6 @@ import net.sf.memoranda.util.Local;
 		panel.add(calendarPanel, "CALENDAR");
 
 		calendarPanel.add(calendar);
-		//calendar.setLayout(null);
-		//calendar.setPreferredSize(new Dimension(1500,3000));
-//		calendarPanel.setPreferredSize(new Dimension(500, 1000));
-		//calendarPanel.setLayout(null);
-		// Height of calendar is .85*screenSize / 6 rows 
-		//calendar.setPreferredSize(new Dimension(1500,900));
-		//calendar.setFillsViewportHeight(true);
-
-		calendarPanel.setSize(1500,1500);
-		calendar.setPreferredSize(new Dimension(1500,1500));
-
-		JTable calendarTable = calendar.getJnCalendar();
-		calendarTable.setRowHeight((int)(screenSizeDimensions.height*(.35)/8));
-		calendar.setSize(calendarPanel.getWidth(), calendarPanel.getHeight());
-		System.out.println(calendarPanel.getHeight());
-		System.out.println(calendar.getHeight());
-
-		//JNCalendarCellRenderer renderer = calendar.getRenderer();
-		//renderer.setSize(1500, 1000);
-		//calendar.setBounds(50,50,1000, 2000);
-		//calendarPanel.setPreferredSize(new Dimension(1500,1500));
-		//calendarPanel.setBounds(50,50,1500,1500);
-
 
 		toolBar.add(agendaB, null);
 		toolBar.add(eventsB, null);
@@ -371,8 +347,6 @@ import net.sf.memoranda.util.Local;
 		setCurrentButton(calendarB);
 		Context.put("CURRENT_PANEL", "CALENDAR");
 	}
-	
-	
 
 	void setCurrentButton(JButton cb) {
 		currentB.setBackground(Color.white);

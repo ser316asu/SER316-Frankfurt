@@ -6,6 +6,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
@@ -42,6 +43,8 @@ import net.sf.memoranda.util.Local;
 /*$Id: TaskSearchPanel.java,v 1.5 2017/02/07 10:05:44 trevor forrey Exp $*/
 public class TaskSearchPanel extends JPanel {
 	
+	static boolean isOpen;
+	
     BorderLayout borderLayout1 = new BorderLayout();
     Border border1;
     TitledBorder titledBorder1;
@@ -75,6 +78,8 @@ public class TaskSearchPanel extends JPanel {
     }
     
     void jbInit() throws Exception {
+    	isOpen = true;
+    	
         border1 = BorderFactory.createEmptyBorder(2, 2, 2, 2);
 
         titledBorder1 = new TitledBorder(BorderFactory.createEmptyBorder(), Local.getString("Search") + ":");
@@ -201,6 +206,12 @@ public class TaskSearchPanel extends JPanel {
     void exitSearchButton_actionPerformed(ActionEvent e) {
     	this.removeAll();
     	this.updateUI();
+    	
+    	isOpen = false;
+    	JNCalendarPanel.getInstance().getJnCalendar().setRowHeight((int)(Toolkit.getDefaultToolkit().getScreenSize().height*(.8)/8));
+    	JNCalendarPanel.getInstance().getJnCalendar().getTableHeader().setPreferredSize(new Dimension(900, 80));
+  	  	JNCalendarPanel.getInstance().getNavigationPanel().setPreferredSize(new Dimension(1100, 80));
+    	
     }
 
     void searchField_caretUpdate(CaretEvent e) {
@@ -209,6 +220,10 @@ public class TaskSearchPanel extends JPanel {
     
     void scrollPane_mouseClick(MouseEvent e) {
     	goToDateButton.setEnabled(true);
+    }
+    
+    static boolean isOpen() {
+    	return isOpen;
     }
     
     void doSearch() {
