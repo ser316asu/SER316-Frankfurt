@@ -55,7 +55,8 @@ import net.sf.memoranda.util.Local;
     boolean dateChangedByCalendar = false;
     boolean changedByHistory = false;
     
-	JNCalendarPanel calendar = new JNCalendarPanel();
+	//JNCalendarPanel calendar = JNCalendarPanel.getInstance();
+    JNCalendarPanel calendar = new JNCalendarPanel();
 	JPanel main = new JPanel();
 
 
@@ -93,7 +94,7 @@ import net.sf.memoranda.util.Local;
 		 //main.add(calendar, BorderLayout.CENTER);
          
 		calendar.setFont(new java.awt.Font("Dialog", 0, 11));
-       // calendar.setMinimumSize(new Dimension(0, 1000));
+        calendar.setMinimumSize(new Dimension(0, 1000));
 
 		agendaB.setBackground(Color.white);
 		agendaB.setMaximumSize(new Dimension(60, 80));
@@ -234,11 +235,12 @@ import net.sf.memoranda.util.Local;
 		calendarPanel.add(calendar);
 		//calendar.setLayout(null);
 		//calendar.setPreferredSize(new Dimension(1500,3000));
-		calendarPanel.setPreferredSize(new Dimension(500, 1000));
+//		calendarPanel.setPreferredSize(new Dimension(500, 1000));
 		//calendarPanel.setLayout(null);
 		// Height of calendar is .85*screenSize / 6 rows 
 		//calendar.setPreferredSize(new Dimension(1500,900));
 		//calendar.setFillsViewportHeight(true);
+
 		calendarPanel.setSize(1500,1500);
 		calendar.setPreferredSize(new Dimension(1500,1500));
 
@@ -247,6 +249,7 @@ import net.sf.memoranda.util.Local;
 		calendar.setSize(calendarPanel.getWidth(), calendarPanel.getHeight());
 		System.out.println(calendarPanel.getHeight());
 		System.out.println(calendar.getHeight());
+
 		//JNCalendarCellRenderer renderer = calendar.getRenderer();
 		//renderer.setSize(1500, 1000);
 		//calendar.setBounds(50,50,1000, 2000);

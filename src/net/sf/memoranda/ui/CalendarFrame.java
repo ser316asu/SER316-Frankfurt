@@ -13,7 +13,7 @@ import net.sf.memoranda.util.Local;
 /*$Id: CalendarFrame.java,v 1.5 2004/04/05 10:05:44 alexeya Exp $*/
 public class CalendarFrame extends JInternalFrame {
 
-  public JNCalendarPanel cal = new JNCalendarPanel();
+  public JNCalendarPanel cal = JNCalendarPanel.getInstance();
   Border border1;
 
   public CalendarFrame() {

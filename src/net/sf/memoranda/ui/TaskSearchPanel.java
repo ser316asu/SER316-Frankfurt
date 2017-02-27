@@ -84,7 +84,6 @@ public class TaskSearchPanel extends JPanel {
         searchFieldPanel.setBorder(titledBorder1);
         
         buttonListPanel.setPreferredSize(new Dimension(1380, 80));
-        buttonListPanel.setBorder(BorderFactory.createLineBorder(Color.red));
         buttonListPanel.setVisible(true);
         
         titledBorder1.setTitleFont(new java.awt.Font("Dialog", 1, 11));
@@ -102,13 +101,13 @@ public class TaskSearchPanel extends JPanel {
         searchB.setMargin(new Insets(0, 0, 0, 0));
         searchB.setText(Local.getString("Search"));
         
-        goToDateButton.setEnabled(false);
-        goToDateButton.setFont(new java.awt.Font("Dialog", 1, 11));
-        goToDateButton.setMaximumSize(new Dimension(72, 25));
-        goToDateButton.setMinimumSize(new Dimension(2, 25));
-        goToDateButton.setPreferredSize(new Dimension(70, 25));
-        goToDateButton.setMargin(new Insets(0, 0, 0, 0));
-        goToDateButton.setText(Local.getString("Go to Date"));
+//        goToDateButton.setEnabled(false);
+//        goToDateButton.setFont(new java.awt.Font("Dialog", 1, 11));
+//        goToDateButton.setMaximumSize(new Dimension(72, 25));
+//        goToDateButton.setMinimumSize(new Dimension(2, 25));
+//        goToDateButton.setPreferredSize(new Dimension(70, 25));
+//        goToDateButton.setMargin(new Insets(0, 0, 0, 0));
+//        goToDateButton.setText(Local.getString("Go to Date"));
         
         exitSearchButton.setEnabled(true);
         exitSearchButton.setFont(new java.awt.Font("Dialog", 1, 11));
@@ -130,7 +129,7 @@ public class TaskSearchPanel extends JPanel {
                 
         scrollPane.getViewport().add(buttonListPanel);
         
-        searchButtonsPanel.add(goToDateButton);
+        //searchButtonsPanel.add(goToDateButton);
         searchButtonsPanel.add(exitSearchButton);
 
         this.add(scrollPane, BorderLayout.CENTER);
@@ -164,11 +163,11 @@ public class TaskSearchPanel extends JPanel {
             }
         });
         
-        goToDateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                goToDateButton_actionPerformed(e);
-            }
-        });
+//        goToDateButton.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                goToDateButton_actionPerformed(e);
+//            }
+//        });
         
         exitSearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -195,9 +194,9 @@ public class TaskSearchPanel extends JPanel {
         App.getFrame().setCursor(cur);
     }
     
-    void goToDateButton_actionPerformed(ActionEvent e) {
-        // TODO go to date functionality
-    }
+//    void goToDateButton_actionPerformed(ActionEvent e) {
+//        // TODO go to date functionality
+//    }
     
     void exitSearchButton_actionPerformed(ActionEvent e) {
     	this.removeAll();
@@ -246,6 +245,10 @@ public class TaskSearchPanel extends JPanel {
                 	System.out.println("Found Task: " + txt);
                 	String fullTaskInfo = txt + " - " + dateDue.getFullDateString();
                     found.add(fullTaskInfo);
+                    TaskListButton foundTask = new TaskListButton();
+                    foundTask.setButtonLabel(fullTaskInfo);
+                    foundTask.setDateDue(dateDue);
+                    buttonListPanel.add(foundTask);
                 }
             }
             catch (Exception ex) {
@@ -253,11 +256,11 @@ public class TaskSearchPanel extends JPanel {
             }
         }
         //this.remove(progressBar);
-        for (int buttonIndex = 0; buttonIndex < found.size(); buttonIndex++) {
-        	TaskListButton foundTaskButton = new TaskListButton();
-        	foundTaskButton.setButtonLabel(found.get(buttonIndex));
-        	buttonListPanel.add(foundTaskButton);
-        }
+//        for (int buttonIndex = 0; buttonIndex < found.size(); buttonIndex++) {
+//        	TaskListButton foundTaskButton = new TaskListButton();
+//        	foundTaskButton.setButtonLabel(found.get(buttonIndex));
+//        	buttonListPanel.add(foundTaskButton);
+//        }
         JList graphicTaskList = new JList(found);
         //scrollPane.getViewport().add(buttonListPanel);
         this.updateUI();
