@@ -1,4 +1,13 @@
-package net.sf.memoranda.ui.DevelopHomePage;
+/**************************************************************
+ * Copyright (c) 2017 - 2017, Joshua Becker, Alec Shinn,
+ * All rights reserved
+ * SER316-Frankfurt is a project for ser216, 
+ * using agile scrum.
+ * Description:
+ * 
+ * Contact: jdbecke3@asu.edu, atshinn@asu.edu
+ **************************************************************/
+package net.sf.memoranda.ui.develop;
 /**
 
 swhacks.org
@@ -7,12 +16,28 @@ Joshua Becker
 import javax.swing.*;
 import java.awt.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TaskPanel.
+ */
 public class TaskPanel extends JLabel implements Styling
 {
+    
+    /** The dimension. */
     private Dimension dimension;
+    
+    /** The task. */
     private TaskCard task;
+    
+    /** The label start. */
     private JLabel name_L, schStat_L, startDate_L, header_L, footer_L,labelName,labelSched,labelStart;
+    
+    /** The top home panel. */
     private TopHomePanel topHomePanel;
+    
+    /**
+     * Instantiates a new task panel.
+     */
     public TaskPanel()
     {
         this.dimension = new Dimension(Styling.TASK_PANEL_WIDTH,Styling.TASK_PANEL_HEIGHT);
@@ -21,6 +46,15 @@ public class TaskPanel extends JLabel implements Styling
     	addActionListeners();
     	addComponents();
     }
+    
+    /**
+     * Instantiates a new task panel.
+     *
+     * @param width the width
+     * @param height the height
+     * @param card the card
+     * @param thp the thp
+     */
     public TaskPanel(int width,int height, TaskCard card, TopHomePanel thp)
     {
         this.topHomePanel = thp;
@@ -32,6 +66,13 @@ public class TaskPanel extends JLabel implements Styling
         style();
         addComponents();
     }
+    
+    /**
+     * Instantiates a new task panel.
+     *
+     * @param card the card
+     * @param thp the thp
+     */
     public TaskPanel(TaskCard card, TopHomePanel thp)
     {
         this.topHomePanel = thp;
@@ -44,6 +85,9 @@ public class TaskPanel extends JLabel implements Styling
         addComponents();
     }
 
+    /**
+     * Creates the components.
+     */
     public void createComponents()
     {
            name_L = new JLabel(this.task.getTaskName());
@@ -55,6 +99,10 @@ public class TaskPanel extends JLabel implements Styling
            labelSched = new JLabel();
            labelStart = new JLabel();
     }
+       
+       /* (non-Javadoc)
+        * @see net.sf.memoranda.ui.DevelopHomePage.Styling#style()
+        */
        public void style()
        {
            this.setBackground(Styling.TASK_PANEL_COLOR);
@@ -83,29 +131,44 @@ public class TaskPanel extends JLabel implements Styling
            
            this.setIcon(LoadAssets.TASK_PANEL_IMAGE);
        }
+    
+    /**
+     * Edits the components.
+     */
     public void editComponents()
     {
            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
            header_L.setLayout(new BoxLayout(header_L, BoxLayout.Y_AXIS));
            footer_L.setLayout(new BoxLayout(footer_L, BoxLayout.Y_AXIS));
            
-           header_L.setPreferredSize(new Dimension(this.dimension.width,(int)(this.dimension.height)));
+           header_L.setPreferredSize(new Dimension(this.dimension.width,
+        		   (int)(this.dimension.height)));
            footer_L.setPreferredSize(this.dimension);
            this.setPreferredSize(this.dimension);
            
-           header_L.setMinimumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.35)));
+           header_L.setMinimumSize(new Dimension(this.dimension.width,
+        		   (int)(this.dimension.height*.35)));
            footer_L.setMinimumSize(this.dimension);
-           header_L.setMaximumSize(new Dimension(this.dimension.width,(int)(this.dimension.height*.35)));
+           header_L.setMaximumSize(new Dimension(this.dimension.width,
+        		   (int)(this.dimension.height*.35)));
            footer_L.setMaximumSize(this.dimension);
            
            schStat_L.setText(this.task.scheduleStatusToString());
            startDate_L.setText(this.task.formatDate(this.task.getEndDate()));
            
     }
+    
+    /**
+     * Adds the action listeners.
+     */
     public void addActionListeners()
     {
            this.addMouseListener(new TaskPanelMouseListener(this, this.topHomePanel));
     }
+    
+    /**
+     * Adds the components.
+     */
     public void addComponents()
     {
            addSpacing(footer_L);
@@ -132,6 +195,12 @@ public class TaskPanel extends JLabel implements Styling
            centerLabels(this);
 
     }
+       
+       /**
+        * Center labels.
+        *
+        * @param label the label
+        */
        private void centerLabels(JLabel label)
        {
            for(Component tmp : label.getComponents())
@@ -139,6 +208,12 @@ public class TaskPanel extends JLabel implements Styling
                ((JLabel) tmp).setAlignmentX(Component.CENTER_ALIGNMENT);
            }
        }
+       
+       /**
+        * Center labels.
+        *
+        * @param panel the panel
+        */
        private void centerLabels(JPanel panel)
        {
            for(Component tmp : panel.getComponents())
@@ -146,40 +221,87 @@ public class TaskPanel extends JLabel implements Styling
                ((JLabel) tmp).setAlignmentX(Component.CENTER_ALIGNMENT);
            }
        }
+       
+       /**
+        * Adds the spacing.
+        *
+        * @param label the label
+        */
        private void addSpacing(JLabel label)
        {
            label.add(new JLabel("\n"));
        }
+       
+       /**
+        * Adds the spacing.
+        *
+        * @param panel the panel
+        */
        private void addSpacing(JPanel panel)
        {
            panel.add(new JLabel("\n"));
        }
+       
+       /**
+        * Reset size.
+        */
        public void resetSize()
        {
            this.setPreferredSize(this.dimension);
            this.revalidate();
        }
 
+       /* (non-Javadoc)
+        * @see javax.swing.JComponent#getHeight()
+        */
        public int getHeight()
        {
            return this.dimension.height;
        }
+       
+       /* (non-Javadoc)
+        * @see javax.swing.JComponent#getWidth()
+        */
        public int getWidth()
        {
            return this.dimension.width;
        }
+       
+       /**
+        * Sets the width.
+        *
+        * @param width the new width
+        */
        public void setWidth(int width)
        {
            this.dimension.width = width;
        }
+       
+       /**
+        * Sets the height.
+        *
+        * @param height the new height
+        */
        public void setHeight(int height)
        {
            this.dimension.height = height;
        }
+       
+       /**
+        * Gets the task card.
+        *
+        * @return the task card
+        */
        public TaskCard getTaskCard()
        {
            return this.task;
        }
+       
+       /**
+        * Sets the task card.
+        *
+        * @param task the new task card
+        */
        public void setTaskCard(TaskCard task)
        {
            this.task = task;

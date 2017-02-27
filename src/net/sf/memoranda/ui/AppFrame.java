@@ -626,7 +626,7 @@ public class AppFrame extends JFrame
 
         String pan = (String) Context.get("CURRENT_PANEL");
         if (pan != null) {
-            workPanel.selectPanel(pan);
+            //workPanel.selectPanel(pan);
             setEnabledEditorMenus(pan.equalsIgnoreCase("NOTES"));
         }
 
