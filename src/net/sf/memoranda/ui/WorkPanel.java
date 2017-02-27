@@ -257,7 +257,6 @@ import net.sf.memoranda.util.Local;
 		//calendarPanel.setBounds(50,50,1500,1500);
 
 
-
 		toolBar.add(agendaB, null);
 		toolBar.add(eventsB, null);
 		toolBar.add(tasksB, null);
