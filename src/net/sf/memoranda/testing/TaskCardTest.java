@@ -18,7 +18,7 @@ import net.sf.memoranda.TaskCard;
  */
 public class TaskCardTest {
 	
-	TaskCard taskCard;
+	private TaskCard taskCard;
 
 	/**
 	 * @throws java.lang.Exception

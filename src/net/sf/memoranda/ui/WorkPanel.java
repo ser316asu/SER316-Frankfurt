@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
@@ -35,6 +37,8 @@ import net.sf.memoranda.util.Local;
 	JToolBar toolBar = new JToolBar();
 	JPanel panel = new JPanel();
 	CardLayout cardLayout1 = new CardLayout();
+	Toolkit tk = Toolkit.getDefaultToolkit();
+	Dimension screenSizeDimensions = tk.getScreenSize();
 
 	public JButton notesB = new JButton();
 	public DailyItemsPanel dailyItemsPanel = new DailyItemsPanel(this);
@@ -54,7 +58,7 @@ import net.sf.memoranda.util.Local;
     boolean dateChangedByCalendar = false;
     boolean changedByHistory = false;
     
-	JNCalendarPanel calendar = new JNCalendarPanel();
+	JNCalendarPanel calendar = JNCalendarPanel.getInstance();
 	JPanel main = new JPanel();
 
 
@@ -311,8 +315,7 @@ import net.sf.memoranda.util.Local;
 			else if (pan.equals("TASKS"))
 				tasksB_actionPerformed(null);
 			else if (pan.equals("EVENTS"))
-				eventsB_actionPerformed(null);
-			else if (pan.equals("FILES"))
+				eventsB_actionPerformed(null);			else if (pan.equals("FILES"))
 				filesB_actionPerformed(null);
 			else if (pan.equals("CALENDAR"))
 				calendarB_actionPerformed(null);
@@ -359,9 +362,13 @@ import net.sf.memoranda.util.Local;
 		//dailyItemsPanel.selectPanel("CALENDAR");
 		setCurrentButton(calendarB);
 		Context.put("CURRENT_PANEL", "CALENDAR");
+
+	}
+
 	}*/
 	
 	
+
 
 	void setCurrentButton(JButton cb) {
 		currentB.setBackground(Color.white);

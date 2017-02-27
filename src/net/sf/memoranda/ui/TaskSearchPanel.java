@@ -1,10 +1,12 @@
 package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseEvent;
@@ -41,6 +43,8 @@ import net.sf.memoranda.util.Local;
 /*$Id: TaskSearchPanel.java,v 1.5 2017/02/07 10:05:44 trevor forrey Exp $*/
 public class TaskSearchPanel extends JPanel {
 	
+	static boolean isOpen;
+	
     BorderLayout borderLayout1 = new BorderLayout();
     Border border1;
     TitledBorder titledBorder1;
@@ -53,6 +57,7 @@ public class TaskSearchPanel extends JPanel {
     JPanel searchSettingComboBoxesPanel = new JPanel(new BorderLayout());
     JPanel searchFieldPanel = new JPanel(new BorderLayout());
     JPanel searchButtonsPanel = new JPanel(new GridLayout(1,2));
+    JPanel buttonListPanel = new JPanel();
     
     JTextField searchField = new JTextField();
     
@@ -73,6 +78,8 @@ public class TaskSearchPanel extends JPanel {
     }
     
     void jbInit() throws Exception {
+    	isOpen = true;
+    	
         border1 = BorderFactory.createEmptyBorder(2, 2, 2, 2);
 
         titledBorder1 = new TitledBorder(BorderFactory.createEmptyBorder(), Local.getString("Search") + ":");
@@ -80,6 +87,9 @@ public class TaskSearchPanel extends JPanel {
         this.setLayout(borderLayout1);
 
         searchFieldPanel.setBorder(titledBorder1);
+        
+        buttonListPanel.setPreferredSize(new Dimension(1380, 80));
+        buttonListPanel.setVisible(true);
         
         titledBorder1.setTitleFont(new java.awt.Font("Dialog", 1, 11));
         searchField.setFont(new java.awt.Font("Dialog", 1, 10));
@@ -96,13 +106,13 @@ public class TaskSearchPanel extends JPanel {
         searchB.setMargin(new Insets(0, 0, 0, 0));
         searchB.setText(Local.getString("Search"));
         
-        goToDateButton.setEnabled(false);
-        goToDateButton.setFont(new java.awt.Font("Dialog", 1, 11));
-        goToDateButton.setMaximumSize(new Dimension(72, 25));
-        goToDateButton.setMinimumSize(new Dimension(2, 25));
-        goToDateButton.setPreferredSize(new Dimension(70, 25));
-        goToDateButton.setMargin(new Insets(0, 0, 0, 0));
-        goToDateButton.setText(Local.getString("Go to Date"));
+//        goToDateButton.setEnabled(false);
+//        goToDateButton.setFont(new java.awt.Font("Dialog", 1, 11));
+//        goToDateButton.setMaximumSize(new Dimension(72, 25));
+//        goToDateButton.setMinimumSize(new Dimension(2, 25));
+//        goToDateButton.setPreferredSize(new Dimension(70, 25));
+//        goToDateButton.setMargin(new Insets(0, 0, 0, 0));
+//        goToDateButton.setText(Local.getString("Go to Date"));
         
         exitSearchButton.setEnabled(true);
         exitSearchButton.setFont(new java.awt.Font("Dialog", 1, 11));
@@ -122,9 +132,9 @@ public class TaskSearchPanel extends JPanel {
         searchInputPanel.add(searchSettingsAndButtonPanel, BorderLayout.CENTER);
         searchInputPanel.add(searchFieldPanel, BorderLayout.NORTH);
                 
-        scrollPane.getViewport().add(taskList);
+        scrollPane.getViewport().add(buttonListPanel);
         
-        searchButtonsPanel.add(goToDateButton);
+        //searchButtonsPanel.add(goToDateButton);
         searchButtonsPanel.add(exitSearchButton);
 
         this.add(scrollPane, BorderLayout.CENTER);
@@ -158,11 +168,11 @@ public class TaskSearchPanel extends JPanel {
             }
         });
         
-        goToDateButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                goToDateButton_actionPerformed(e);
-            }
-        });
+//        goToDateButton.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                goToDateButton_actionPerformed(e);
+//            }
+//        });
         
         exitSearchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -189,13 +199,19 @@ public class TaskSearchPanel extends JPanel {
         App.getFrame().setCursor(cur);
     }
     
-    void goToDateButton_actionPerformed(ActionEvent e) {
-        // TODO go to date functionality
-    }
+//    void goToDateButton_actionPerformed(ActionEvent e) {
+//        // TODO go to date functionality
+//    }
     
     void exitSearchButton_actionPerformed(ActionEvent e) {
     	this.removeAll();
     	this.updateUI();
+    	
+    	isOpen = false;
+    	JNCalendarPanel.getInstance().getJnCalendar().setRowHeight((int)(Toolkit.getDefaultToolkit().getScreenSize().height*(.8)/8));
+    	JNCalendarPanel.getInstance().getJnCalendar().getTableHeader().setPreferredSize(new Dimension(900, 80));
+  	  	JNCalendarPanel.getInstance().getNavigationPanel().setPreferredSize(new Dimension(1100, 80));
+    	
     }
 
     void searchField_caretUpdate(CaretEvent e) {
@@ -204,6 +220,10 @@ public class TaskSearchPanel extends JPanel {
     
     void scrollPane_mouseClick(MouseEvent e) {
     	goToDateButton.setEnabled(true);
+    }
+    
+    static boolean isOpen() {
+    	return isOpen;
     }
     
     void doSearch() {
@@ -224,7 +244,7 @@ public class TaskSearchPanel extends JPanel {
         /*progressBar.setMinimum(0);
         progressBar.setStringPainted(true);*/
         Vector tasks = (Vector) CurrentProject.getTaskList().getTopLevelTasks();
-        Vector found = new Vector();
+        Vector<String> found = new Vector();
         /*progressBar.setMaximum(notes.size()-1);
         progressBar.setIndeterminate(false);
         this.add(progressBar, BorderLayout.SOUTH);*/
@@ -240,6 +260,10 @@ public class TaskSearchPanel extends JPanel {
                 	System.out.println("Found Task: " + txt);
                 	String fullTaskInfo = txt + " - " + dateDue.getFullDateString();
                     found.add(fullTaskInfo);
+                    TaskListButton foundTask = new TaskListButton();
+                    foundTask.setButtonLabel(fullTaskInfo);
+                    foundTask.setDateDue(dateDue);
+                    buttonListPanel.add(foundTask);
                 }
             }
             catch (Exception ex) {
@@ -247,8 +271,13 @@ public class TaskSearchPanel extends JPanel {
             }
         }
         //this.remove(progressBar);
+//        for (int buttonIndex = 0; buttonIndex < found.size(); buttonIndex++) {
+//        	TaskListButton foundTaskButton = new TaskListButton();
+//        	foundTaskButton.setButtonLabel(found.get(buttonIndex));
+//        	buttonListPanel.add(foundTaskButton);
+//        }
         JList graphicTaskList = new JList(found);
-        scrollPane.getViewport().add(graphicTaskList);
+        //scrollPane.getViewport().add(buttonListPanel);
         this.updateUI();
     }
 

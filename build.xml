@@ -188,7 +188,7 @@
 	             <mkdir dir="${build.junitreport.dir}"/> 
 	             <!-- Run the tests -->
 	             <echo message="JUnit testing is running..."/>
-	             <junit printsummary="withOutAndErr" haltonfailure="no" fork="on">      
+	             <junit printsummary="withOutAndErr" haltonfailure="yes" fork="on">      
 	                     <classpath>  
 	                             <path refid="classpath"/>
 	                     </classpath>

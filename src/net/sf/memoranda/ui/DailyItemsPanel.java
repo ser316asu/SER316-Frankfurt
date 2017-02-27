@@ -79,7 +79,7 @@ public class DailyItemsPanel extends JPanel {
     boolean dateChangedByCalendar = false;
     boolean changedByHistory = false;
     JPanel cmainPanel = new JPanel();
-    private JNCalendarPanel calendar = new JNCalendarPanel();
+    private JNCalendarPanel calendar = JNCalendarPanel.getInstance();
     JToolBar toggleToolBar = new JToolBar();
     BorderLayout borderLayout5 = new BorderLayout();
     Border border1;
