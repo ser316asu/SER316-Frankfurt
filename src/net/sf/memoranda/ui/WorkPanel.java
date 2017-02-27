@@ -19,6 +19,8 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
 import net.sf.memoranda.date.CurrentDate;
+import net.sf.memoranda.ui.develop.HomePanel;
+import net.sf.memoranda.ui.develop.Styling;
 import net.sf.memoranda.util.Context;
 import net.sf.memoranda.util.Local;
 
@@ -43,6 +45,7 @@ import net.sf.memoranda.util.Local;
 	public JButton eventsB = new JButton();
 	public JButton filesB = new JButton();
 	public JButton calendarB = new JButton();
+	private HomePanel homePanel = new HomePanel();
 	JButton currentB = null;
 	Border border1;
 	
@@ -56,11 +59,25 @@ import net.sf.memoranda.util.Local;
 
 
 	public WorkPanel() {
-		try {
+		/*try {
 			jbInit();
 		} catch (Exception ex) {
 			new ExceptionDialog(ex);
-		}
+		}*/
+		border1 =
+				BorderFactory.createCompoundBorder(
+					BorderFactory.createBevelBorder(
+						BevelBorder.LOWERED,
+						Color.white,
+						Color.white,
+						new Color(124, 124, 124),
+						new Color(178, 178, 178)),
+					BorderFactory.createEmptyBorder(0, 2, 0, 0));
+
+		this.setLayout(borderLayout1);
+		this.setPreferredSize(new Dimension(1073, 300));
+		//this.setPreferredSize(new Dimension(Styling.SCREEN_WIDTH-100,Styling.SCREEN_HEIGHT-100));
+		this.add(homePanel, BorderLayout.CENTER);
 	}
 
 	void jbInit() throws Exception {
@@ -106,7 +123,7 @@ import net.sf.memoranda.util.Local;
 		agendaB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		agendaB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				agendaB_actionPerformed(e);
+				//agendaB_actionPerformed(e);
 			}
 		});
 		agendaB.setIcon(
@@ -132,7 +149,7 @@ import net.sf.memoranda.util.Local;
 		eventsB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		eventsB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventsB_actionPerformed(e);
+				//eventsB_actionPerformed(e);
 			}
 		});
 		eventsB.setIcon(
@@ -153,7 +170,7 @@ import net.sf.memoranda.util.Local;
 		tasksB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		tasksB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				tasksB_actionPerformed(e);
+				//tasksB_actionPerformed(e);
 			}
 		});
 		tasksB.setVerticalAlignment(SwingConstants.TOP);
@@ -184,7 +201,7 @@ import net.sf.memoranda.util.Local;
 		notesB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		notesB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				notesB_actionPerformed(e);
+				//notesB_actionPerformed(e);
 			}
 		});
 		notesB.setIcon(
@@ -204,7 +221,7 @@ import net.sf.memoranda.util.Local;
 		filesB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		filesB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				filesB_actionPerformed(e);
+				//filesB_actionPerformed(e);
 			}
 		});
 		filesB.setFont(new java.awt.Font("Dialog", 1, 10));
@@ -252,7 +269,7 @@ import net.sf.memoranda.util.Local;
 		calendarB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		calendarB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				calendarB_actionPerformed(e);
+				//calendarB_actionPerformed(e);
 			}
 		});
 		calendarB.setVerticalAlignment(SwingConstants.TOP);
@@ -287,7 +304,7 @@ import net.sf.memoranda.util.Local;
 
 	}
 
-	public void selectPanel(String pan) {
+	/*public void selectPanel(String pan) {
 		if (pan != null) {
 			if (pan.equals("NOTES"))
 				notesB_actionPerformed(null);
@@ -300,9 +317,9 @@ import net.sf.memoranda.util.Local;
 			else if (pan.equals("CALENDAR"))
 				calendarB_actionPerformed(null);
 		}
-	}
+	}*/
 
-	public void agendaB_actionPerformed(ActionEvent e) {
+	/*public void agendaB_actionPerformed(ActionEvent e) {
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("AGENDA");
 		setCurrentButton(agendaB);
@@ -342,7 +359,7 @@ import net.sf.memoranda.util.Local;
 		//dailyItemsPanel.selectPanel("CALENDAR");
 		setCurrentButton(calendarB);
 		Context.put("CURRENT_PANEL", "CALENDAR");
-	}
+	}*/
 	
 	
 

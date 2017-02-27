@@ -61,7 +61,7 @@ public class MainToolBar extends JLabel implements Styling{
 	private static final long serialVersionUID = -6751747715539881623L;
 	
 	public void actionPerformed(ActionEvent event) {
-		taskFrame = new NewTaskWindow();
+		HomePanel.setActivePanel(HomePanel.TASK_PANEL);
 	    }
 	};
 	
@@ -72,17 +72,6 @@ public class MainToolBar extends JLabel implements Styling{
 	
 		public void actionPerformed(ActionEvent event) {
 			HomePanel.setActivePanel(HomePanel.CALENDAR_PANEL);
-			//TODO create an observer
-			/*
-			 * setValue: changes the state of the current taskCard and
-			 * 			 notifies observers (Task Panels)
-			 * setChangeVar: changes the state of the new TaskCard and 
-			 * 				 returns itself in order to pass to the 
-			 * 				 other observers
-			 * getChangeVar: is used to make a change in order to modify 
-			 * 				 the state of the observing panels
-			 */
-		
 	    }
 	};
 	
@@ -102,7 +91,6 @@ public class MainToolBar extends JLabel implements Styling{
 		private static final long serialVersionUID = 48588901517673371L;
 	
 		public void actionPerformed(ActionEvent event) {
-			
 	    }
 	};
 	
@@ -150,7 +138,7 @@ public class MainToolBar extends JLabel implements Styling{
 		this.setIcon(LoadAssets.TERMINAL_IMAGE);
 		this.setOpaque(false);
 		
-		editToolBarButton(createNewTaskB, "Create New Task");
+		editToolBarButton(createNewTaskB, "Tasks");
 		
 		editToolBarButton(calendarB, "Open Calendar");
 		

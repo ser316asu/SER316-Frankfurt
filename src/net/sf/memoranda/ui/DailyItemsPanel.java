@@ -40,6 +40,7 @@ import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.date.DateListener;
+import net.sf.memoranda.ui.develop.HomePanel;
 import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Util;
@@ -83,7 +84,7 @@ public class DailyItemsPanel extends JPanel {
     BorderLayout borderLayout5 = new BorderLayout();
     Border border1;
     JButton toggleButton = new JButton();
-    WorkPanel parentPanel = null;
+    HomePanel parentPanel = null;
     
     boolean addedToHistory = false;
     JPanel indicatorsPanel = new JPanel();
@@ -105,14 +106,22 @@ public class DailyItemsPanel extends JPanel {
 
     public DailyItemsPanel(WorkPanel _parentPanel) {
         try {
-            parentPanel = _parentPanel;
+           // parentPanel = _parentPanel;
             jbInit();
         }
         catch (Exception ex) {
             new ExceptionDialog(ex);
         }
     }
-    void jbInit() throws Exception {
+    public DailyItemsPanel() {
+        try {
+            //parentPanel = homePanel;
+            jbInit();
+        }catch (Exception ex) {
+            new ExceptionDialog(ex);
+        }
+	}
+	void jbInit() throws Exception {
         border1 = BorderFactory.createEtchedBorder(Color.white, Color.gray);
         border2 = BorderFactory.createEtchedBorder(Color.white, new Color(161, 161, 161));
         this.setLayout(borderLayout1);
@@ -476,11 +485,11 @@ public class DailyItemsPanel extends JPanel {
 		return CurrentPanel;
 	}
     void taskB_actionPerformed(ActionEvent e) {
-        parentPanel.tasksB_actionPerformed(null);
+        HomePanel.setActivePanel(HomePanel.TASK_PANEL);
     }
 
     void alarmB_actionPerformed(ActionEvent e) {
-        parentPanel.eventsB_actionPerformed(null);
+        HomePanel.setActivePanel(HomePanel.ALARM);
     }
 	/**
 	 * @return the notesControlPane

@@ -11,7 +11,9 @@ package net.sf.memoranda.ui.develop;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 
+import net.sf.memoranda.ui.DailyItemsPanel;
 import net.sf.memoranda.ui.JNCalendarPanel;
+import net.sf.memoranda.util.Context;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -27,9 +29,14 @@ public class HomePanel extends JLabel implements Styling {
     
 	public static final int HOME_PANEL = 0;
 	public static final int CALENDAR_PANEL = 1;
+	public static final int TASK_PANEL = 2;
+	public static final int ALARM = 3;
 	
 	private static final JNCalendarPanel CALENDAR_JNPANEL = 
 			new JNCalendarPanel();
+	
+	private static final DailyItemsPanel ITEMS_PANEL =
+			new DailyItemsPanel();
 	
 	private static final JSplitPane OUTER_SPLITPANE = 
 			new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -155,6 +162,7 @@ public class HomePanel extends JLabel implements Styling {
     	
     	CONTENT_PANEL.add(HomePanel.HOME_SPLITPANE, "HOME");
     	CONTENT_PANEL.add(HomePanel.CALENDAR_JNPANEL, "CALENDAR");
+    	CONTENT_PANEL.add(HomePanel.ITEMS_PANEL, "ITEMS");
     	
     	//HomePanel.CONTENT_CARDLAYOUT.addLayoutComponent(HomePanel.HOME_SPLITPANE, "HOME");
     	//HomePanel.CONTENT_CARDLAYOUT.addLayoutComponent(HomePanel.CALENDAR_JNPANEL, "CALENDAR");
@@ -222,6 +230,13 @@ public class HomePanel extends JLabel implements Styling {
     		case HomePanel.CALENDAR_PANEL:
     			CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "CALENDAR");
     			activeComponent = CALENDAR_JNPANEL;
+    			Context.put("CURRENT_PANEL", "CALENDAR" );
+    			break;
+    		case HomePanel.TASK_PANEL:
+    			CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "ITEMS");
+    			ITEMS_PANEL.selectPanel("TASKS");
+    			//activeComponent = TASK_
+    			Context.put("CURRENT_PANEL", "TASKS");
     			break;
 		default:
 				CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "HOME");
