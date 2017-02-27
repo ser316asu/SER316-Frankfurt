@@ -238,7 +238,8 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 
 		//TODO: Check if Duplicate task exists
 		// CHECK TASK NAME
-		if(jTextFieldName.getText() == null || jTextFieldName.getText().equals("Name of Task") || jTextFieldName.getText().equals("startDate is invalid")){
+		if(jTextFieldName.getText() == null || jTextFieldName.getText().equals("Name of Task") 
+				|| jTextFieldName.getText().equals("startDate is invalid") || jTextFieldName.getText().equals("")){
 			System.out.println("Task Name is invalid");
 			jTextFieldName.setText("startDate is invalid");
 			statusLabel.setText("Invalid Entry: Please fix marked fields");
