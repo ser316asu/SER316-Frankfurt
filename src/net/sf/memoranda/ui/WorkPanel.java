@@ -243,7 +243,7 @@ import net.sf.memoranda.util.Local;
 		calendar.setPreferredSize(new Dimension(1500,1500));
 
 		JTable calendarTable = calendar.getJnCalendar();
-		calendarTable.setRowHeight((int)(screenSizeDimensions.height*(.80)/8));
+		calendarTable.setRowHeight((int)(screenSizeDimensions.height*(.35)/8));
 		calendar.setSize(calendarPanel.getWidth(), calendarPanel.getHeight());
 		System.out.println(calendarPanel.getHeight());
 		System.out.println(calendar.getHeight());
