@@ -33,6 +33,8 @@ public class HomePanel extends JLabel implements Styling {
 	public static final int ALARM = 3;
 	public static final int RESOURCES_PANEL = 4;
 	public static final int AGENDA_PANEL = 5;
+	public static final int NOTES_PANEL = 6;
+	public static final int EVENT_PANEL = 7;
 	
 	private static final JNCalendarPanel CALENDAR_JNPANEL = 
 			JNCalendarPanel.getInstance();
@@ -241,8 +243,25 @@ public class HomePanel extends JLabel implements Styling {
     			Context.put("CURRENT_PANEL", "TASKS");
     			break;
     		case HomePanel.AGENDA_PANEL:
-    			HomePanel.CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "AGENDA");
+    			HomePanel.CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "ITEMS");
     			ITEMS_PANEL.selectPanel("AGENDA");
+    			Context.put("CURRENT_PANEL", "AGENDA");
+    			break;
+    		case HomePanel.NOTES_PANEL:
+    			HomePanel.CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "ITEMS");
+    			ITEMS_PANEL.selectPanel("NOTES");
+    			Context.put("CURRENT_PANEL", "NOTES");
+    			break;
+    		case HomePanel.EVENT_PANEL:
+    			HomePanel.CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "ITEMS");
+    			ITEMS_PANEL.selectPanel("EVENTS");
+    			Context.put("CURRENT_PANEL", "EVENTS");
+    			break;
+    		case HomePanel.RESOURCES_PANEL:
+    			HomePanel.CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "ITEMS");
+    			ITEMS_PANEL.selectPanel("FILES");
+    			Context.put("CURRENT_PANEL", "FILES");
+    			break;
 		default:
 				CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "HOME");
 				activeComponent = HOME_SPLITPANE;

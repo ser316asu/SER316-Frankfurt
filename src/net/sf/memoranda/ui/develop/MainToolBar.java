@@ -41,6 +41,8 @@ public class MainToolBar extends JLabel implements Styling{
 	private JButton calendarB;
 	private JButton homeB;
 	private JButton notifcationB;
+	private JButton filesB;
+	private JButton notesB;
 	
 	/** The task board. */
 	@SuppressWarnings("unused")
@@ -91,6 +93,7 @@ public class MainToolBar extends JLabel implements Styling{
 		private static final long serialVersionUID = 48588901517673371L;
 	
 		public void actionPerformed(ActionEvent event) {
+			HomePanel.setActivePanel(HomePanel.EVENT_PANEL);
 	    }
 	};
 	
@@ -99,7 +102,8 @@ public class MainToolBar extends JLabel implements Styling{
 		private static final long serialVersionUID = 48588901517673371L;
 	
 		public void actionPerformed(ActionEvent event) {
-			//HomePanel.setActivePanel(HomePanel.RESOURCES_PANEL);
+			HomePanel.setActivePanel(HomePanel.RESOURCES_PANEL);
+			System.out.println("FIELS");
 	    }
 	};
 	
@@ -108,7 +112,25 @@ public class MainToolBar extends JLabel implements Styling{
 		private static final long serialVersionUID = 48588901517673371L;
 	
 		public void actionPerformed(ActionEvent event) {
-			//HomePanel.setActivePanel(HomePanel.AGENDA_PANEL);
+			HomePanel.setActivePanel(HomePanel.AGENDA_PANEL);
+	    }
+	};
+	
+	public Action notesButtonAction = new AbstractAction("") {
+		
+		private static final long serialVersionUID = 48588901517673371L;
+	
+		public void actionPerformed(ActionEvent event) {
+			HomePanel.setActivePanel(HomePanel.NOTES_PANEL);
+	    }
+	};
+	
+	public Action filesButtonAction = new AbstractAction("") {
+		
+		private static final long serialVersionUID = 48588901517673371L;
+	
+		public void actionPerformed(ActionEvent event) {
+			HomePanel.setActivePanel(HomePanel.RESOURCES_PANEL);
 	    }
 	};
 	//--------------------End Create Actions--------------------------------
@@ -145,6 +167,8 @@ public class MainToolBar extends JLabel implements Styling{
 		calendarB = new JButton();
 		homeB = new JButton();
 		notifcationB = new JButton();
+		filesB = new JButton();
+		notesB = new JButton();
 	}
 
 	/**
@@ -162,7 +186,10 @@ public class MainToolBar extends JLabel implements Styling{
 		editToolBarButton(homeB, "Go To Home");
 		
 		editToolBarButton(notifcationB, "Notifcations");
-		//this.setUI(new ButtonUI());
+		
+		editToolBarButton(filesB, "Resources");
+		
+		editToolBarButton(notesB, "Notes");
 		
 	}
 
@@ -174,6 +201,8 @@ public class MainToolBar extends JLabel implements Styling{
 		this.calendarB.setAction(openCalendarAction);
 		this.homeB.setAction(homeButtonAction);
 		this.notifcationB.setAction(notifcationButtonAction);
+		this.filesB.setAction(resourcesButtonAction);
+		this.notesB.setAction(notesButtonAction);
 	}
 
 	/**
@@ -182,7 +211,7 @@ public class MainToolBar extends JLabel implements Styling{
 	private void addComponents() {
 		this.add(addButtonSpacer());
 		
-		addButtonLabel(homeB, LoadAssets.TOOLABR_HOME_BUTTON_IMAGE);
+		addButtonLabel(homeB, LoadAssets.TOOLBAR_HOME_BUTTON_IMAGE);
 		this.add(homeB);
 		this.add(addButtonSpacer());
 		
@@ -190,8 +219,16 @@ public class MainToolBar extends JLabel implements Styling{
 		this.add(tasksB);
 		this.add(addButtonSpacer());
 		
-		addButtonLabel(this.notifcationB, LoadAssets.TOOLABR_BELL_BUTTON_IMAGE);
+		addButtonLabel(this.notifcationB, LoadAssets.TOOLBAR_BELL_BUTTON_IMAGE);
 		this.add(this.notifcationB);
+		this.add(addButtonSpacer());
+		
+		addButtonLabel(this.filesB, LoadAssets.TOOLBAR_FILE_BUTTON_IMAGE);
+		this.add(this.filesB);
+		this.add(addButtonSpacer());
+		
+		addButtonLabel(notesB, LoadAssets.TOOLBAR_NOTES_BUTTON_IMAGE);
+		this.add(notesB);
 		this.add(addButtonSpacer());
 		
 		addButtonLabel(calendarB, LoadAssets.TOOLBAR_CALENDAR_BUTTON_IMAGE);
