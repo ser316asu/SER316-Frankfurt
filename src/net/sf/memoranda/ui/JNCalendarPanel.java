@@ -171,6 +171,7 @@ public class JNCalendarPanel extends JPanel {
   
       
   private static void jbInit() throws Exception {
+	  
 	singletonCalendarPanel = JNCalendarPanel.getInstance();
     //dayBackAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, KeyEvent.ALT_MASK));
     //dayForwardAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_UP, KeyEvent.ALT_MASK));
@@ -307,8 +308,12 @@ public class JNCalendarPanel extends JPanel {
     jnCalendar.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 10));
     jnCalendar.setFont(new java.awt.Font("Dialog", 0, 10));
     jnCalendar.setGridColor(Color.lightGray);
-    jnCalendar.setRowHeight((int)(Toolkit.getDefaultToolkit().getScreenSize().height*(.75)/8));
-    jnCalendarPanel.setLayout(borderLayout5);    
+    try {
+      jnCalendar.setRowHeight((int)(Toolkit.getDefaultToolkit().getScreenSize().height*(.75)/8));
+    } catch (Exception e) {
+    	System.out.println("* DEBUG: Travis CI getToolKit Fail");
+    }
+    jnCalendarPanel.setLayout(borderLayout5);  
 
     navigationBar.add(navigationPanel, null);
     

@@ -125,7 +125,7 @@ public class Local {
         String[] localwdnames = new String[7];
         String[] localnames = weekdaynames;
 
-        if (Configuration.get("FIRST_DAY_OF_WEEK").equals("mon"))
+        if (Configuration.get("FIRST_DAY_OF_WEEK").equals("mon")) {
             localnames =
                 new String[] {
                     "Mon",
@@ -135,6 +135,7 @@ public class Local {
                     "Fri",
                     "Sat",
                     "Sun" };
+        }
 
         for (int i = 0; i < 7; i++) {
             localwdnames[i] = getString(localnames[i]);
