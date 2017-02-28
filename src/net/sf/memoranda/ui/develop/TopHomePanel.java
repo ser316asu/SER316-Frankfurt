@@ -12,12 +12,16 @@ package net.sf.memoranda.ui.develop;
 import javax.swing.*;
 import java.awt.*; 
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class TopHomePanel.
  */
 public class TopHomePanel extends JSplitPane implements Styling{
 	
+    /** The Constant LEFT_LABEL_PANEL. */
     public final static int LEFT_LABEL_PANEL = 0;
+    
+    /** The Constant RIGHT_LABEL_PANEL. */
     public final static int RIGHT_LABEL_PANEL = 1;
     /**
 	 * Generated serial version UID.
@@ -26,10 +30,14 @@ public class TopHomePanel extends JSplitPane implements Styling{
     
     /** The right child. */
     private TopInnerPanel leftChild;
+    
+    /** The right child. */
     private TopInnerPanel rightChild;
     
     /** The right labels. */
     private TopLabelPanel leftLabels;
+    
+    /** The right labels. */
     private TopLabelPanel rightLabels;
     
     /** The container for right. */
@@ -47,6 +55,7 @@ public class TopHomePanel extends JSplitPane implements Styling{
     /** The old height. */
     private int oldWidth;
     
+    /** The old height. */
     private int oldHeight;
     
 
@@ -127,7 +136,7 @@ public class TopHomePanel extends JSplitPane implements Styling{
     	containerForRight.setOpaque(false);
     	
     	
-        leftChild.setLayout(new BorderLayout(0,0));
+        leftChild.setLayout(new BoxLayout(leftChild, BoxLayout.X_AXIS));
         rightChild.setLayout(new BorderLayout(0,0));
         rightChild.setBackground(Styling.TIMER_PANEL_COLOR);
         }

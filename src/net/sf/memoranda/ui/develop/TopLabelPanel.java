@@ -65,7 +65,7 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
     	this.location = location;
     	this.labels = new JLabel[LABEL_COUNT*2];
     	createLabels();
-    	this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+    	this.setLayout(new GridLayout(LABEL_COUNT,2,0,0));
     	alignLabels();
         style();
     	addLabels();
@@ -127,13 +127,13 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
             labels[i].setFont(Styling.TERMINAL_FONT);
             labels[i].setForeground(Styling.LABEL_PANEL_TEXT_COLOR);
         }
-        this.setMinimumSize(new Dimension(300,100));
+        this.setMinimumSize(new Dimension(400,100));
         this.setMaximumSize(new Dimension(
-        		Styling.TERMINAL_PANEL_WIDTH,Styling.TERMINAL_PANEL_HEIGHT));
+        		Styling.SCREEN_WIDTH/2-50,Styling.SCREEN_HEIGHT-400));
         this.setPreferredSize(new Dimension(
-        		Styling.TERMINAL_PANEL_WIDTH,Styling.TERMINAL_PANEL_HEIGHT));
+        		Styling.TERMINAL_PANEL_WIDTH/2-1,Styling.TERMINAL_PANEL_HEIGHT));
         
-        this.setBorder(BorderFactory.createLineBorder(Color.blue));
+        //this.setBorder(BorderFactory.createLineBorder(Color.blue));
     }
 
     /* (non-Javadoc)
