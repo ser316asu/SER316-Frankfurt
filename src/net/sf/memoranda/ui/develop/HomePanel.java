@@ -31,6 +31,8 @@ public class HomePanel extends JLabel implements Styling {
 	public static final int CALENDAR_PANEL = 1;
 	public static final int TASK_PANEL = 2;
 	public static final int ALARM = 3;
+	public static final int RESOURCES_PANEL = 4;
+	public static final int AGENDA_PANEL = 5;
 	
 	private static final JNCalendarPanel CALENDAR_JNPANEL = 
 			JNCalendarPanel.getInstance();
@@ -238,6 +240,9 @@ public class HomePanel extends JLabel implements Styling {
     			//activeComponent = TASK_
     			Context.put("CURRENT_PANEL", "TASKS");
     			break;
+    		case HomePanel.AGENDA_PANEL:
+    			HomePanel.CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "AGENDA");
+    			ITEMS_PANEL.selectPanel("AGENDA");
 		default:
 				CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "HOME");
 				activeComponent = HOME_SPLITPANE;

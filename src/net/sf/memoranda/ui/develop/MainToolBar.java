@@ -37,7 +37,7 @@ public class MainToolBar extends JLabel implements Styling{
 	private static final long serialVersionUID = -4229258425606324012L;
 
 	/** The home B. */
-	private JButton createNewTaskB;
+	private JButton tasksB;
 	private JButton calendarB;
 	private JButton homeB;
 	private JButton notifcationB;
@@ -94,6 +94,23 @@ public class MainToolBar extends JLabel implements Styling{
 	    }
 	};
 	
+	public Action resourcesButtonAction = new AbstractAction("") {
+		
+		private static final long serialVersionUID = 48588901517673371L;
+	
+		public void actionPerformed(ActionEvent event) {
+			//HomePanel.setActivePanel(HomePanel.RESOURCES_PANEL);
+	    }
+	};
+	
+	public Action agendaButtonAction = new AbstractAction("") {
+		
+		private static final long serialVersionUID = 48588901517673371L;
+	
+		public void actionPerformed(ActionEvent event) {
+			//HomePanel.setActivePanel(HomePanel.AGENDA_PANEL);
+	    }
+	};
 	//--------------------End Create Actions--------------------------------
 	/**
 	 * Instantiates a new main tool bar.
@@ -124,7 +141,7 @@ public class MainToolBar extends JLabel implements Styling{
      * Creates the components.
      */
 	private void createComponents() {
-		createNewTaskB = new JButton();
+		tasksB = new JButton();
 		calendarB = new JButton();
 		homeB = new JButton();
 		notifcationB = new JButton();
@@ -138,7 +155,7 @@ public class MainToolBar extends JLabel implements Styling{
 		this.setIcon(LoadAssets.TERMINAL_IMAGE);
 		this.setOpaque(false);
 		
-		editToolBarButton(createNewTaskB, "Tasks");
+		editToolBarButton(tasksB, "Tasks");
 		
 		editToolBarButton(calendarB, "Open Calendar");
 		
@@ -153,7 +170,7 @@ public class MainToolBar extends JLabel implements Styling{
 	 * Adds the action listeners.
 	 */
 	private void addActionListeners() {
-		this.createNewTaskB.setAction(createNewTaskAction);
+		this.tasksB.setAction(createNewTaskAction);
 		this.calendarB.setAction(openCalendarAction);
 		this.homeB.setAction(homeButtonAction);
 		this.notifcationB.setAction(notifcationButtonAction);
@@ -169,8 +186,8 @@ public class MainToolBar extends JLabel implements Styling{
 		this.add(homeB);
 		this.add(addButtonSpacer());
 		
-		addButtonLabel(createNewTaskB, LoadAssets.TOOLBAR_TASK_BUTTON_IMAGE);
-		this.add(createNewTaskB);
+		addButtonLabel(tasksB, LoadAssets.TOOLBAR_TASK_BUTTON_IMAGE);
+		this.add(tasksB);
 		this.add(addButtonSpacer());
 		
 		addButtonLabel(this.notifcationB, LoadAssets.TOOLABR_BELL_BUTTON_IMAGE);
@@ -218,7 +235,7 @@ public class MainToolBar extends JLabel implements Styling{
 	private void editToolBarButton(JButton button, String toolTip){
 		button.setFont(Styling.TASK_PANEL_FONT);
 		button.setBorderPainted(false);
-		//this.createNewTaskB.setBounds(0, 0, 2, 2);
+		//this.tasksB.setBounds(0, 0, 2, 2);
 		button.setMargin(new Insets(0,0,0,0));
 		button.setToolTipText(toolTip);
 		button.setContentAreaFilled(false);
