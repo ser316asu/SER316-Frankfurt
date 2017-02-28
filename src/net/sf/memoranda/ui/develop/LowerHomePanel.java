@@ -8,13 +8,11 @@
  * Contact: jdbecke3@asu.edu, atshinn@asu.edu
  **************************************************************/
 package net.sf.memoranda.ui.develop;
-/**
-
-**/
 import javax.swing.*;
 import java.awt.*;
 import java.util.Hashtable;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class LowerHomePanel.
  */
@@ -28,7 +26,11 @@ public class LowerHomePanel extends JLabel implements Styling {
     
     /** The tool bar P. */
     private JPanel addTasksP;
+    
+    /** The tool bar P. */
     private JPanel toolBarP;
+    
+    /** The tasks P. */
     private JPanel tasksP;
     
     /** The top home panel. */
@@ -37,6 +39,7 @@ public class LowerHomePanel extends JLabel implements Styling {
     /** The old height. */
     private int oldWidth;
     
+    /** The old height. */
     private int oldHeight;
     
     /** The state. */
