@@ -26,6 +26,7 @@ import javax.swing.OverlayLayout;
 
 import net.sf.memoranda.ui.NewTaskWindow;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class MainToolBar.
  */
@@ -38,10 +39,20 @@ public class MainToolBar extends JLabel implements Styling{
 
 	/** The home B. */
 	private JButton tasksB;
+	
+	/** The calendar B. */
 	private JButton calendarB;
+	
+	/** The home B. */
 	private JButton homeB;
+	
+	/** The notifcation B. */
 	private JButton notifcationB;
+	
+	/** The files B. */
 	private JButton filesB;
+	
+	/** The notes B. */
 	private JButton notesB;
 	
 	/** The task board. */
@@ -54,6 +65,8 @@ public class MainToolBar extends JLabel implements Styling{
 	
 	/** The old height. */
 	private int oldWidth = 0;
+	
+	/** The old height. */
 	private int oldHeight = 0; 
 	
 	//---------------------Create Actions-----------------------------------
@@ -97,6 +110,7 @@ public class MainToolBar extends JLabel implements Styling{
 	    }
 	};
 	
+	/** The resources button action. */
 	public Action resourcesButtonAction = new AbstractAction("") {
 		
 		private static final long serialVersionUID = 48588901517673371L;
@@ -107,6 +121,7 @@ public class MainToolBar extends JLabel implements Styling{
 	    }
 	};
 	
+	/** The agenda button action. */
 	public Action agendaButtonAction = new AbstractAction("") {
 		
 		private static final long serialVersionUID = 48588901517673371L;
@@ -116,6 +131,7 @@ public class MainToolBar extends JLabel implements Styling{
 	    }
 	};
 	
+	/** The notes button action. */
 	public Action notesButtonAction = new AbstractAction("") {
 		
 		private static final long serialVersionUID = 48588901517673371L;
@@ -125,6 +141,7 @@ public class MainToolBar extends JLabel implements Styling{
 	    }
 	};
 	
+	/** The files button action. */
 	public Action filesButtonAction = new AbstractAction("") {
 		
 		private static final long serialVersionUID = 48588901517673371L;
