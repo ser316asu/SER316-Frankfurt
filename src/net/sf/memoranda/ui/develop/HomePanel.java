@@ -23,41 +23,65 @@ import java.awt.Color;
 import java.awt.Component;
 import java.util.*;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class HomePanel.
  */
 public class HomePanel extends JLabel implements Styling {
     
+	/** The Constant HOME_PANEL. */
 	public static final int HOME_PANEL = 0;
+	
+	/** The Constant CALENDAR_PANEL. */
 	public static final int CALENDAR_PANEL = 1;
+	
+	/** The Constant TASK_PANEL. */
 	public static final int TASK_PANEL = 2;
+	
+	/** The Constant ALARM. */
 	public static final int ALARM = 3;
+	
+	/** The Constant RESOURCES_PANEL. */
 	public static final int RESOURCES_PANEL = 4;
+	
+	/** The Constant AGENDA_PANEL. */
 	public static final int AGENDA_PANEL = 5;
+	
+	/** The Constant NOTES_PANEL. */
 	public static final int NOTES_PANEL = 6;
+	
+	/** The Constant EVENT_PANEL. */
 	public static final int EVENT_PANEL = 7;
 	
+	/** The Constant CALENDAR_JNPANEL. */
 	private static final JNCalendarPanel CALENDAR_JNPANEL = 
 			JNCalendarPanel.getInstance();
 	
+	/** The Constant ITEMS_PANEL. */
 	private static final DailyItemsPanel ITEMS_PANEL =
 			new DailyItemsPanel();
 	
+	/** The Constant FILES_PANEL. */
 	private static final ResourcesPanel FILES_PANEL =
 			new ResourcesPanel();
 	
+	/** The Constant OUTER_SPLITPANE. */
 	private static final JSplitPane OUTER_SPLITPANE = 
 			new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 	
+	/** The Constant HOME_SPLITPANE. */
 	private static final JSplitPane HOME_SPLITPANE = 
 			new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 	
+	/** The Constant CONTENT_CARDLAYOUT. */
 	private static final CardLayout  CONTENT_CARDLAYOUT = 
 			new CardLayout();
 	
+	/** The Constant CONTENT_PANEL. */
 	private static final JPanel CONTENT_PANEL =
 			new JPanel();
 	
+	/** The active component. */
 	private static Component activeComponent;
 	/**
 	 * Generated SerialVersion UID.
@@ -193,6 +217,13 @@ public class HomePanel extends JLabel implements Styling {
     	this.setPreferredSize(new Dimension(Styling.SCREEN_WIDTH-2,Styling.SCREEN_HEIGHT-2));
     }
     
+    /**
+     * Sets the right side size.
+     *
+     * @param comp the comp
+     * @param widthMargin the width margin
+     * @param heightMargin the height margin
+     */
     private void setRightSideSize(Component comp, int widthMargin, int heightMargin){
     	comp.setMaximumSize(new Dimension(
     			Styling.SCREEN_WIDTH-widthMargin,
@@ -230,6 +261,11 @@ public class HomePanel extends JLabel implements Styling {
         this.tasks.get("task 1").setActive(true);
     }
     
+    /**
+     * Sets the active panel.
+     *
+     * @param activePanel the new active panel
+     */
     public static void setActivePanel(int activePanel){
     	switch(activePanel){
     		case HomePanel.HOME_PANEL:
@@ -276,6 +312,11 @@ public class HomePanel extends JLabel implements Styling {
     	}
     }
     
+    /**
+     * Gets the active component.
+     *
+     * @return the active component
+     */
     public Component getActiveComponent()
     {
     	return activeComponent;
