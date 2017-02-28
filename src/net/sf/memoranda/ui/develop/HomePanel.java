@@ -13,6 +13,7 @@ import javax.swing.plaf.basic.BasicSplitPaneDivider;
 
 import net.sf.memoranda.ui.DailyItemsPanel;
 import net.sf.memoranda.ui.JNCalendarPanel;
+import net.sf.memoranda.ui.ResourcesPanel;
 import net.sf.memoranda.util.Context;
 
 import java.awt.Dimension;
@@ -41,6 +42,9 @@ public class HomePanel extends JLabel implements Styling {
 	
 	private static final DailyItemsPanel ITEMS_PANEL =
 			new DailyItemsPanel();
+	
+	private static final ResourcesPanel FILES_PANEL =
+			new ResourcesPanel();
 	
 	private static final JSplitPane OUTER_SPLITPANE = 
 			new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -167,6 +171,7 @@ public class HomePanel extends JLabel implements Styling {
     	CONTENT_PANEL.add(HomePanel.HOME_SPLITPANE, "HOME");
     	CONTENT_PANEL.add(HomePanel.CALENDAR_JNPANEL, "CALENDAR");
     	CONTENT_PANEL.add(HomePanel.ITEMS_PANEL, "ITEMS");
+    	CONTENT_PANEL.add(HomePanel.FILES_PANEL, "FILES");
     	
     	//HomePanel.CONTENT_CARDLAYOUT.addLayoutComponent(HomePanel.HOME_SPLITPANE, "HOME");
     	//HomePanel.CONTENT_CARDLAYOUT.addLayoutComponent(HomePanel.CALENDAR_JNPANEL, "CALENDAR");
@@ -230,6 +235,7 @@ public class HomePanel extends JLabel implements Styling {
     		case HomePanel.HOME_PANEL:
     			CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "HOME");
     			activeComponent = HOME_SPLITPANE;
+    			Context.put("CURRENT_PANEL", "HOME");
     			break;
     		case HomePanel.CALENDAR_PANEL:
     			CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "CALENDAR");
@@ -258,13 +264,14 @@ public class HomePanel extends JLabel implements Styling {
     			Context.put("CURRENT_PANEL", "EVENTS");
     			break;
     		case HomePanel.RESOURCES_PANEL:
-    			HomePanel.CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "ITEMS");
-    			ITEMS_PANEL.selectPanel("FILES");
+    			HomePanel.CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "FILES");
+    			activeComponent = HomePanel.FILES_PANEL;
     			Context.put("CURRENT_PANEL", "FILES");
     			break;
 		default:
 				CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "HOME");
 				activeComponent = HOME_SPLITPANE;
+				Context.put("CURRENT_PANEL", "HOME");
 				break;	
     	}
     }
