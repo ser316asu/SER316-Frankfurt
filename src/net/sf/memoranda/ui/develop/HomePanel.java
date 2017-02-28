@@ -17,13 +17,11 @@ import net.sf.memoranda.ui.ResourcesPanel;
 import net.sf.memoranda.util.Context;
 
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.*;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class HomePanel.
  */
@@ -53,6 +51,8 @@ public class HomePanel extends JLabel implements Styling {
 	/** The Constant EVENT_PANEL. */
 	public static final int EVENT_PANEL = 7;
 	
+	public static JButton currentB;
+	
 	/** The Constant CALENDAR_JNPANEL. */
 	private static final JNCalendarPanel CALENDAR_JNPANEL = 
 			JNCalendarPanel.getInstance();
@@ -80,9 +80,6 @@ public class HomePanel extends JLabel implements Styling {
 	/** The Constant CONTENT_PANEL. */
 	private static final JPanel CONTENT_PANEL =
 			new JPanel();
-	
-	/** The active component. */
-	private static Component activeComponent;
 	/**
 	 * Generated SerialVersion UID.
 	 */
@@ -108,7 +105,6 @@ public class HomePanel extends JLabel implements Styling {
      * Instantiates a new home panel.
      */
     public HomePanel(){
-    	activeComponent = HOME_SPLITPANE;
         assets = new LoadAssets();
         this.tasks = new Hashtable<String, TaskCard>();
         fillTasks();
@@ -124,8 +120,6 @@ public class HomePanel extends JLabel implements Styling {
      * @param task the task
      */
     public HomePanel(TaskCard task) {
-    	//this.setIcon(LoadAssets.HOMEPAGE_BACKGROUND);
-    	activeComponent = HOME_SPLITPANE;
     	assets = new LoadAssets();
         this.tasks = new Hashtable<String, TaskCard>();
         fillTasks();
@@ -270,12 +264,10 @@ public class HomePanel extends JLabel implements Styling {
     	switch(activePanel){
     		case HomePanel.HOME_PANEL:
     			CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "HOME");
-    			activeComponent = HOME_SPLITPANE;
     			Context.put("CURRENT_PANEL", "HOME");
     			break;
     		case HomePanel.CALENDAR_PANEL:
     			CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "CALENDAR");
-    			activeComponent = CALENDAR_JNPANEL;
     			Context.put("CURRENT_PANEL", "CALENDAR" );
     			break;
     		case HomePanel.TASK_PANEL:
@@ -301,24 +293,14 @@ public class HomePanel extends JLabel implements Styling {
     			break;
     		case HomePanel.RESOURCES_PANEL:
     			HomePanel.CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "FILES");
-    			activeComponent = HomePanel.FILES_PANEL;
     			Context.put("CURRENT_PANEL", "FILES");
     			break;
 		default:
 				CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "HOME");
-				activeComponent = HOME_SPLITPANE;
+				
 				Context.put("CURRENT_PANEL", "HOME");
 				break;	
     	}
     }
-    
-    /**
-     * Gets the active component.
-     *
-     * @return the active component
-     */
-    public Component getActiveComponent()
-    {
-    	return activeComponent;
-    }
+   
 }

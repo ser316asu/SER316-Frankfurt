@@ -327,9 +327,9 @@ public class MainToolBar extends JLabel implements Styling{
 	public void style() {
 		this.setPreferredSize(new Dimension(Styling.MAIN_TOOLBAR_WIDTH,
 				Styling.MAIN_TOOLBAR_HEIGHT));
-		this.setMaximumSize(new Dimension(Styling.MAIN_TOOLBAR_WIDTH,
+		this.setMaximumSize(new Dimension(Styling.MAIN_TOOLBAR_WIDTH+10,
 				Styling.MAIN_TOOLBAR_HEIGHT));
-		this.setMinimumSize(new Dimension(Styling.MAIN_TOOLBAR_WIDTH,
+		this.setMinimumSize(new Dimension(Styling.MAIN_TOOLBAR_WIDTH-10,
 				Styling.MAIN_TOOLBAR_HEIGHT));
 	}
 	

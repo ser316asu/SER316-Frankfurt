@@ -19,7 +19,22 @@ public class Local {
     static Locale currentLocale = Locale.getDefault();
     static LoadableProperties messages = new LoadableProperties();
     static boolean disabled = false;
+    static String monthnames[] = {
+            "Jan",
+            "Feb",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December" };
 
+    static String weekdaynames[] =
+        { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
     static {
     	if (!Configuration.get("DISABLE_L10N").equals("yes")) {
 	    	String fn = "messages_"
@@ -31,8 +46,7 @@ public class Local {
 	        		messages.load(new FileInputStream(
 	        			Configuration.get("LOCALES_DIR")+File.separator+fn));
 	        		System.out.println(" - found");
-	        	}
-	        	catch (IOException ex) {
+	        	}catch (IOException ex) {
 	        		// Do nothing ...
 	        		System.out.println(" - not found");
 	        		ex.printStackTrace();
@@ -43,20 +57,18 @@ public class Local {
 		            messages.load(
 		                Local.class.getResourceAsStream(
 		                    "localmessages/"+fn));            
-		        }
-		        catch (Exception e) {
+		        }catch (Exception e) {
 		            // Do nothing ...
 		        }
 	        }
-    	}
-    	else {
+    	}else {
     		currentLocale = new Locale("en", "US");
     		/*DEBUG*/
     		System.out.println("* DEBUG: Locales are disabled");
-    	}       
-    	if (messages.size() == 0) 
+    	}   
+    	if (messages.size() == 0){
     		messages = null;
-    		
+    	}
         /*** DEBUG PURPOSES ***/
         System.out.println("Default locale: " + currentLocale.getDisplayName());
         if (messages != null) {
@@ -64,8 +76,7 @@ public class Local {
                 "Use local messages: messages_"
                     + currentLocale.getLanguage()
                     + ".properties");
-        }
-        else {
+        }else {
             System.out.println(
                 "* DEBUG: Locales are disabled or not found: messages_"
                     + currentLocale.getLanguage()
@@ -82,24 +93,6 @@ public class Local {
         return currentLocale;
     }
 
-    static String monthnames[] =
-        {
-            "Jan",
-            "Feb",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December" };
-
-    static String weekdaynames[] =
-        { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
-
     public static String getString(String key) {
         if ((messages == null) || (disabled)) {
             return key;
@@ -107,8 +100,7 @@ public class Local {
         String msg = (String) messages.get(key.trim().toUpperCase());
         if ((msg != null) && (msg.length() > 0)) {
             return msg;
-        }
-        else {
+        }else {
             return key;
         }
     }
@@ -125,7 +117,7 @@ public class Local {
         String[] localwdnames = new String[7];
         String[] localnames = weekdaynames;
 
-        if (Configuration.get("FIRST_DAY_OF_WEEK").equals("mon"))
+        if (Configuration.get("FIRST_DAY_OF_WEEK").equals("mon")){
             localnames =
                 new String[] {
                     "Mon",
@@ -135,26 +127,26 @@ public class Local {
                     "Fri",
                     "Sat",
                     "Sun" };
-
+        }
         for (int i = 0; i < 7; i++) {
             localwdnames[i] = getString(localnames[i]);
         }
         return localwdnames;
     }
 
-    public static String getMonthName(int m) {
-        return getString(monthnames[m]);
+    public static String getMonthName(int month) {
+        return getString(monthnames[month]);
     }
 
     public static String getWeekdayName(int wd) {
         return getString(weekdaynames[wd - 1]);
     }
 
-    public static String getDateString(Date d, int f) {
-        DateFormat dateFormat = DateFormat.getDateInstance(f, currentLocale);
-        return dateFormat.format(d);
+    public static String getDateString(Date day, int front) {
+        DateFormat dateFormat = DateFormat.getDateInstance(front, currentLocale);
+        return dateFormat.format(day);
     }
-    public static String getDateString(Calendar cal, int f) {
+    public static String getDateString(Calendar cal, int front) {
         /*@todo: Get date string format from locale*/
         /*String s =
             getMonthName(cal.get(Calendar.MONTH))
@@ -166,11 +158,11 @@ public class Local {
                 + getWeekdayName(cal.get(Calendar.DAY_OF_WEEK))
                 + ")";
         return s;*/
-        return getDateString(cal.getTime(), f);
+        return getDateString(cal.getTime(), front);
     }
 
-    public static String getDateString(CalendarDate date, int f) {
-        return getDateString(date.getDate(), f);
+    public static String getDateString(CalendarDate date, int front) {
+        return getDateString(date.getDate(), front);
     }
 
     public static String getDateString(int m, int d, int y, int f) {
@@ -183,10 +175,10 @@ public class Local {
         return getDateString(cal.getTime(), f);
     }
 
-    public static String getTimeString(Date d) {
+    public static String getTimeString(Date day) {
         DateFormat dateFormat =
             DateFormat.getTimeInstance(DateFormat.SHORT, currentLocale);
-        return dateFormat.format(d);
+        return dateFormat.format(day);
     }
 
     public static String getTimeString(Calendar cal) {
