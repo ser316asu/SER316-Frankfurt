@@ -155,17 +155,17 @@ public class HomePanel extends JLabel implements Styling {
     	
     	HomePanel.HOME_SPLITPANE.setDividerLocation(Styling.TERMINAL_PANEL_HEIGHT+1);
     	HomePanel.HOME_SPLITPANE.setOneTouchExpandable(true);
-    	HomePanel.HOME_SPLITPANE.setResizeWeight(1);
+    	//HomePanel.HOME_SPLITPANE.setResizeWeight(1);
     	HomePanel.HOME_SPLITPANE.setOpaque(false);
     	//HOME_SPLITPANE.setBorder(BorderFactory.createLineBorder(Color.blue));
     	
-    	OUTER_SPLITPANE.setDividerLocation(Styling.MAIN_TOOLBAR_WIDTH);
-    	OUTER_SPLITPANE.setDividerSize(10);
-    	OUTER_SPLITPANE.setForeground(Color.black);
-    	OUTER_SPLITPANE.setBackground(Color.black);
-    	OUTER_SPLITPANE.setOneTouchExpandable(true);
-    	OUTER_SPLITPANE.setResizeWeight(1);
-    	OUTER_SPLITPANE.setOpaque(false);
+    	HomePanel.OUTER_SPLITPANE.setDividerLocation(Styling.MAIN_TOOLBAR_WIDTH);
+    	HomePanel.OUTER_SPLITPANE.setDividerSize(10);
+    	HomePanel.OUTER_SPLITPANE.setForeground(Color.black);
+    	HomePanel.OUTER_SPLITPANE.setBackground(Color.black);
+    	HomePanel.OUTER_SPLITPANE.setOneTouchExpandable(true);
+    	//HomePanel.OUTER_SPLITPANE.setResizeWeight(1);
+    	HomePanel.OUTER_SPLITPANE.setOpaque(false);
     	
     	BasicSplitPaneDivider divider = (BasicSplitPaneDivider) OUTER_SPLITPANE.getComponent(0);
     	divider.setBackground(Color.black);

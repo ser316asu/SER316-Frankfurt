@@ -119,7 +119,7 @@ public class TopHomePanel extends JSplitPane implements Styling{
         this.setDividerLocation(Styling.TERMINAL_PANEL_WIDTH);
         this.setDividerSize(10);
         this.setOneTouchExpandable(true);
-        this.setResizeWeight(1);
+        //this.setResizeWeight(1);
         
     	containerForRight.setOpaque(false);
     	containerForRight.setPreferredSize(new Dimension(
@@ -132,7 +132,7 @@ public class TopHomePanel extends JSplitPane implements Styling{
     	containerForRight.setDividerLocation(Styling.PROGRESS_PANEL_HEIGHT);
     	containerForRight.setDividerSize(10);
     	containerForRight.setOneTouchExpandable(true);
-    	containerForRight.setResizeWeight(1);
+    	//containerForRight.setResizeWeight(1);
     	containerForRight.setOpaque(false);
     	
     	

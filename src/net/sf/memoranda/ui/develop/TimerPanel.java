@@ -155,7 +155,7 @@ public class TimerPanel extends JLabel implements Styling{
 
 		buttonPanel.setBackground(Styling.BACKGROUND_COLOR);
 		
-		this.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));
+		//this.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));
 	}
 
 	/**
