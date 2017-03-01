@@ -48,11 +48,19 @@ class LoadAssets {
     		Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
     
     /** The toolabr home button image. */
-    public static ImageIcon TOOLABR_HOME_BUTTON_IMAGE = loadImage("Assets/ui/HomeButton.png",
+    public static ImageIcon TOOLBAR_HOME_BUTTON_IMAGE = loadImage("Assets/ui/HomeButton.png",
     		Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
     
     /** The toolabr notification button image. */
-    public static ImageIcon TOOLABR_BELL_BUTTON_IMAGE = loadImage("Assets/ui/bellnotifcation.png",
+    public static ImageIcon TOOLBAR_BELL_BUTTON_IMAGE = loadImage("Assets/ui/bellnotifcation.png",
+    		Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
+    
+    /** The toolbar file button image. */
+    public static ImageIcon TOOLBAR_FILE_BUTTON_IMAGE = loadImage("Assets/ui/fileIcon.png",
+    		Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
+    
+    /** The toolbar notes button image. */
+    public static ImageIcon TOOLBAR_NOTES_BUTTON_IMAGE = loadImage("Assets/ui/notesIcon.png",
     		Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
     
     /**

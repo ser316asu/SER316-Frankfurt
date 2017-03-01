@@ -18,9 +18,7 @@ import java.util.*;
  */
 public class StatusBarPanel extends JLabel implements Styling, Observer{
 	
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 48641522633589340L;
 	
 	/** The progress labels panel. */

@@ -9,6 +9,7 @@
  **************************************************************/
 package net.sf.memoranda.ui.develop;
 import javax.swing.*;
+// TODO: Auto-generated Javadoc
 /**
  * The Class TopInnerPanel.
  */
@@ -22,6 +23,7 @@ public class TopInnerPanel extends JLabel implements Styling{
 	/** The child 2. */
 	private JPanel child1;
 	
+	/** The child 2. */
 	private JPanel child2;
 	
 	/**

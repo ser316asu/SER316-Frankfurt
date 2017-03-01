@@ -201,7 +201,7 @@ public class DailyItemsPanel extends JPanel {
 
         getNotesControlPane().setFont(new java.awt.Font("Dialog", 1, 10));
         mainTabsPanel.setLayout(cardLayout2);
-        this.add(splitPane, BorderLayout.CENTER);
+        
 
         controlPanel.add(cmainPanel, BorderLayout.CENTER);
         cmainPanel.add(getCalendar(), BorderLayout.NORTH);
@@ -218,14 +218,15 @@ public class DailyItemsPanel extends JPanel {
         editorsPanel.add(editorPanel, "NOTES");
        // editorsPanel.add(calendarPanel, "CALENDAR");
         
-        splitPane.add(mainPanel, JSplitPane.RIGHT);
-        splitPane.add(controlPanel, JSplitPane.LEFT);
+       // splitPane.add(mainPanel, JSplitPane.RIGHT);
+        //splitPane.add(controlPanel, JSplitPane.LEFT);
         controlPanel.add(toggleToolBar, BorderLayout.SOUTH);
         toggleToolBar.add(toggleButton, null);
 
         splitPane.setDividerLocation((int) controlPanel.getPreferredSize().getWidth());
         //splitPane.setResizeWeight(0.0);
-
+        this.add(mainPanel, BorderLayout.CENTER);
+        
         CurrentDate.addDateListener(new DateListener() {
             public void dateChange(CalendarDate d) {
                 currentDateChanged(d);
