@@ -157,6 +157,7 @@ public class MainToolBar extends JLabel implements Styling{
 	public MainToolBar(){
 		createComponents();
 		addActionListeners();
+		addRollOverEffects();
 		editComponents();
 		addComponents();
 		this.revalidate();
@@ -172,6 +173,7 @@ public class MainToolBar extends JLabel implements Styling{
 		createComponents();
 		editComponents();
 		addActionListeners();
+		addRollOverEffects();
 		addComponents();
 		this.revalidate();
 	}
@@ -220,6 +222,29 @@ public class MainToolBar extends JLabel implements Styling{
 		this.notifcationB.setAction(notifcationButtonAction);
 		this.filesB.setAction(resourcesButtonAction);
 		this.notesB.setAction(notesButtonAction);
+	}
+	
+	/**
+	 * Adds the roll-over effects
+	 */
+	private void addRollOverEffects() {
+		this.tasksB.setRolloverEnabled(true);
+		this.tasksB.setRolloverIcon(new ImageIcon("../../../../../Assets/ui/NewTaskButton_hover.png"));
+		
+		this.calendarB.setRolloverEnabled(true);
+		this.calendarB.setRolloverIcon(new ImageIcon("../../../../../Assets/ui/calendarIconWhite_hover.png"));
+		
+		this.homeB.setRolloverEnabled(true);
+		this.homeB.setRolloverIcon(new ImageIcon("../../../../../Assets/ui/HomeButton_hover.png"));
+		
+		this.notifcationB.setRolloverEnabled(true);
+		this.notifcationB.setRolloverIcon(new ImageIcon("../../../../../Assets/ui/bellnotification_hover.png"));
+		
+		this.filesB.setRolloverEnabled(true);
+		this.filesB.setRolloverIcon(new ImageIcon("../../../../../Assets/ui/FileIcon_hover.png"));
+		
+		this.notesB.setRolloverEnabled(true);
+		this.notesB.setRolloverIcon(new ImageIcon("../../../../../Assets/ui/notesIcon_hover.png"));
 	}
 
 	/**
