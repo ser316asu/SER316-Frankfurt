@@ -457,6 +457,7 @@ public class JNCalendarPanel extends JPanel {
 	  NewTaskWindow taskCreationWindow = new NewTaskWindow(); // Creates task creation window
   }
 
+  
 
 
 }
