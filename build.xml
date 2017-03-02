@@ -196,6 +196,7 @@
 	                     <batchtest todir="${build.junitreport.dir}">
 	                             <fileset dir="${source.dir}">
 	                                     <include name="**/*Test.java"/>
+	                             		 <exclude name="**/JNCalendarPanelTest.java"/>
 	                             </fileset>
 	                     </batchtest>
 	             </junit>

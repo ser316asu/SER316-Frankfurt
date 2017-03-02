@@ -305,19 +305,11 @@ public class JNCalendarPanel extends JPanel {
         yearSpin.setEditor(yearSpinner);
     navigationPanel.setMinimumSize(new Dimension(200, 40));
     navigationPanel.setOpaque(false);
-    try {
-    	navigationPanel.setPreferredSize(new Dimension(Styling.SCREEN_WIDTH-200, 80));
-    } catch (Exception e) {
-    	System.out.println("* DEBUG: Travis CI scrren width Fail");
-    }
+    navigationPanel.setPreferredSize(new Dimension(Styling.SCREEN_WIDTH-200, 80));
     jnCalendar.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 10));
     jnCalendar.setFont(new java.awt.Font("Dialog", 0, 10));
     jnCalendar.setGridColor(Color.lightGray);
-    try {
-      jnCalendar.setRowHeight((int)(Toolkit.getDefaultToolkit().getScreenSize().height*(.75)/8));
-    } catch (Exception e) {
-    	System.out.println("* DEBUG: Travis CI getToolKit Fail");
-    }
+    jnCalendar.setRowHeight((int)(Toolkit.getDefaultToolkit().getScreenSize().height*(.75)/8));
     jnCalendarPanel.setLayout(borderLayout5);  
 
     navigationBar.add(navigationPanel, null);
