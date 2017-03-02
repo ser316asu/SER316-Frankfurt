@@ -37,6 +37,7 @@ import net.sf.memoranda.ResourcesList;
 import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
+import net.sf.memoranda.ui.develop.Styling;
 import net.sf.memoranda.util.Local;
 
 /**
@@ -302,9 +303,9 @@ public class JNCalendarPanel extends JPanel {
     yearSpin.setPreferredSize(new Dimension(70, 20));
     yearSpin.setRequestFocusEnabled(false);
         yearSpin.setEditor(yearSpinner);
-    navigationPanel.setMinimumSize(new Dimension(1380, 40));
+    navigationPanel.setMinimumSize(new Dimension(200, 40));
     navigationPanel.setOpaque(false);
-    navigationPanel.setPreferredSize(new Dimension(1380, 80));
+    navigationPanel.setPreferredSize(new Dimension(Styling.SCREEN_WIDTH-200, 80));
     jnCalendar.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 10));
     jnCalendar.setFont(new java.awt.Font("Dialog", 0, 10));
     jnCalendar.setGridColor(Color.lightGray);
