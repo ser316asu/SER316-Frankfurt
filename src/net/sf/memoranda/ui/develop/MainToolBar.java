@@ -25,6 +25,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.OverlayLayout;
+import javax.*;
 
 import net.sf.memoranda.ui.NewTaskWindow;
 
@@ -246,7 +247,7 @@ public class MainToolBar extends JLabel implements Styling{
 		this.filesB.setRolloverIcon(LoadAssets.TOOLBAR_FILE_HOVER_BUTTON_IMAGE);
 		
 		this.notesB.setRolloverEnabled(true);
-		this.notesB.setRolloverIcon(LoadAssets.TOOLBAR_CALENDAR_HOVER_BUTTON_IMAGE);
+		this.notesB.setRolloverIcon((LoadAssets.TOOLBAR_CALENDAR_HOVER_BUTTON_IMAGE));
 	}
 
 	/**
@@ -303,7 +304,8 @@ public class MainToolBar extends JLabel implements Styling{
 		label.setHorizontalAlignment(JLabel.CENTER);
 		label.setVerticalAlignment(JLabel.CENTER);
 		label.setVerticalTextPosition(JLabel.CENTER);
-		label.setIcon(ic);
+		label.setFocusable(false);
+		button.setIcon(ic);
 		button.add(label);
 	}
 	
