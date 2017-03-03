@@ -235,7 +235,7 @@ public class MainToolBar extends JLabel implements Styling{
 		this.tasksB.setRolloverIcon(LoadAssets.TOOLBAR_TASK_HOVER_BUTTON_IMAGE);
 		
 		this.calendarB.setRolloverEnabled(true);
-		this.calendarB.setRolloverIcon(LoadAssets.TOOLBAR_BELL_HOVER_BUTTON_IMAGE);
+		this.calendarB.setRolloverIcon(LoadAssets.TOOLBAR_CALENDAR_HOVER_BUTTON_IMAGE);
 		
 		this.homeB.setRolloverEnabled(true);
 		this.homeB.setRolloverIcon(LoadAssets.TOOLBAR_HOME_HOVER_BUTTON_IMAGE);
@@ -247,7 +247,7 @@ public class MainToolBar extends JLabel implements Styling{
 		this.filesB.setRolloverIcon(LoadAssets.TOOLBAR_FILE_HOVER_BUTTON_IMAGE);
 		
 		this.notesB.setRolloverEnabled(true);
-		this.notesB.setRolloverIcon((LoadAssets.TOOLBAR_CALENDAR_HOVER_BUTTON_IMAGE));
+		this.notesB.setRolloverIcon((LoadAssets.TOOLBAR_NOTES_HOVER_BUTTON_IMAGE));
 	}
 
 	/**
