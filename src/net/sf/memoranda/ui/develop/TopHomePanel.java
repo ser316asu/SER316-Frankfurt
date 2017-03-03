@@ -10,6 +10,9 @@
 package net.sf.memoranda.ui.develop;
 
 import javax.swing.*;
+
+import net.sf.memoranda.Task;
+
 import java.awt.*; 
 
 // TODO: Auto-generated Javadoc
@@ -50,7 +53,7 @@ public class TopHomePanel extends JSplitPane implements Styling{
     private TimerPanel timerPanel;
     
     /** The task. */
-    private TaskCard task;
+    private Task task;
     
     /** The old height. */
     private int oldWidth;
@@ -59,13 +62,26 @@ public class TopHomePanel extends JSplitPane implements Styling{
     private int oldHeight;
     
 
+    /**
+     * Instantiates a new top home panel.
+     *
+     * @param task the task
+     */
+    public TopHomePanel(){
+        this.task = null;
+        createChildPanels();
+        style();
+        addPanels();  
+
+
+    }
 
     /**
      * Instantiates a new top home panel.
      *
      * @param task the task
      */
-    public TopHomePanel(TaskCard task){
+    public TopHomePanel(Task task){
         this.task = task;
         createChildPanels();
         style();
@@ -87,10 +103,6 @@ public class TopHomePanel extends JSplitPane implements Styling{
     	
         leftChild = new TopInnerPanel();
         rightChild = new TopInnerPanel();
-
-        task.addObserver(leftLabels);
-        task.addObserver(rightLabels);
-        task.addObserver(statusBarTop);
     }
 
     /**
@@ -146,10 +158,9 @@ public class TopHomePanel extends JSplitPane implements Styling{
      *
      * @param tc the tc
      */
-    public void addObservers(TaskCard tc){
-    	tc.addObserver(leftLabels);
-    	tc.addObserver(rightLabels);
-    	tc.addObserver(statusBarTop);
+    public void addObservers(Task tc){
+    	timerPanel.setTask(tc);
+    	tc.addObserver(leftLabels, rightLabels, statusBarTop);
     }
     
     /* (non-Javadoc)

@@ -9,14 +9,17 @@
 package net.sf.memoranda;
 
 import java.util.Collection;
+import java.util.Observable;
 
 import net.sf.memoranda.date.CalendarDate;
+import net.sf.memoranda.ui.develop.StatusBarPanel;
+import net.sf.memoranda.ui.develop.TopLabelPanel;
 
 /**
  * 
  */
 /*$Id: Task.java,v 1.9 2005/06/16 04:21:32 alexeya Exp $*/
-public interface Task {
+public interface Task{
     
     public static final int SCHEDULED = 0;
 
@@ -61,6 +64,25 @@ public interface Task {
     String getText();
     void setText(String s);
     
+    int getActualLOC();
+    void setActualLOC(int loc);
+    
+    int getActualTime();
+    void setActualTime(double time);
+    
+    int getHoursEst();
+    void setHoursEst(double hrs);
+    
+    int getNumOfFiles();
+    void setNumOfFiles(int files);
+    
+    int getEstLOC();
+    void setEstLOC(int loc);
+    
+    int getTaskTotalTime();
+    
+    int getDaysLeft();
+    
     /*Collection getDependsFrom();
     
     void addDependsFrom(Task task);
@@ -85,5 +107,11 @@ public interface Task {
     void unfreeze();
 	long getRate();
     
+	void addObserver(TopLabelPanel tlpl, TopLabelPanel tlpr, StatusBarPanel sbp);
+	void setChangeVal(int val);
+	int getChangeVal();
+	void setValue(Task task);
+	
     nu.xom.Element getContent();
+
 }

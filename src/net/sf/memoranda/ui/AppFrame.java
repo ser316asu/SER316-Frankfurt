@@ -66,7 +66,6 @@ import nu.xom.Elements;
 
 public class AppFrame extends JFrame 
 {
-
     JPanel contentPane;
     JMenuBar menuBar = new JMenuBar();
     JMenu jMenuFile = new JMenu();
@@ -94,7 +93,7 @@ public class AppFrame extends JFrame
     
     public Action newTaskAction = new AbstractAction("New Task") {
         public void actionPerformed(ActionEvent e) {
-        	NewTaskWindow newTask = new NewTaskWindow();
+        	NewTaskWindow newTask = new NewTaskWindow(App.getFrame(),"Create A New Task");
         }
     };
 

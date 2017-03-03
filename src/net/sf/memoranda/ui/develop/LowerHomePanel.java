@@ -9,6 +9,10 @@
  **************************************************************/
 package net.sf.memoranda.ui.develop;
 import javax.swing.*;
+
+import net.sf.memoranda.CurrentProject;
+import net.sf.memoranda.Task;
+
 import java.awt.*;
 import java.util.Hashtable;
 
@@ -20,9 +24,6 @@ public class LowerHomePanel extends JLabel implements Styling {
     
 	/** auto generated serialversion UID. */
 	private static final long serialVersionUID = -8015237809090141365L;
-
-	/** The tasks. */
-	private Hashtable<String,TaskCard> tasks;
     
     /** The tool bar P. */
     private JPanel addTasksP;
@@ -31,10 +32,10 @@ public class LowerHomePanel extends JLabel implements Styling {
     private JPanel toolBarP;
     
     /** The tasks P. */
-    private JPanel tasksP;
+    private static JPanel tasksP;
     
     /** The top home panel. */
-    private final TopHomePanel topHomePanel;
+    private static TopHomePanel topHomePanel;
     
     /** The old height. */
     private int oldWidth;
@@ -50,7 +51,6 @@ public class LowerHomePanel extends JLabel implements Styling {
      */
     public LowerHomePanel() {
         topHomePanel = null;
-        tasks = new Hashtable<String,TaskCard>();
         
     	createComponents();
         style();
@@ -65,9 +65,8 @@ public class LowerHomePanel extends JLabel implements Styling {
      * @param thp the thp
      * @param tasks the tasks
      */
-    public LowerHomePanel(TopHomePanel thp, Hashtable<String,TaskCard> tasks){
+    public LowerHomePanel(TopHomePanel thp){
         this.topHomePanel = thp;
-        this.tasks = tasks;
     	createComponents();
         style();
     	editComponents();
@@ -109,9 +108,8 @@ public class LowerHomePanel extends JLabel implements Styling {
      * Adds the components.
      */
     public void addComponents(){
-          for(TaskCard tc : tasks.values()){
-              tasksP.add(new TaskPanel(Styling.TASK_PANEL_WIDTH,Styling.TASK_PANEL_HEIGHT,tc,
-            		  topHomePanel),JLayeredPane.DRAG_LAYER);
+          for(Object task : CurrentProject.getTaskList().getTopLevelTasks()){
+              tasksP.add(new TaskPanel(((Task) task), topHomePanel),JLayeredPane.DRAG_LAYER);
           }
           
           //addTasksP.add(sortTasks_CB);
@@ -127,7 +125,13 @@ public class LowerHomePanel extends JLabel implements Styling {
 
           
     }
-    
+    public static void updateTaskBoard()
+    {
+    	tasksP.removeAll();
+    	for(Object task : CurrentProject.getTaskList().getTopLevelTasks())
+    		tasksP.add(new TaskPanel(((Task) task), topHomePanel),JLayeredPane.DRAG_LAYER);
+    	tasksP.revalidate();
+    }
     /**
      * Sets the transparent.
      *
@@ -177,8 +181,8 @@ public class LowerHomePanel extends JLabel implements Styling {
      *
      * @param tc the tc
      */
-    public void addNewTask(TaskCard tc) {
-    	this.tasksP.add(new TaskPanel(tc,this.topHomePanel));
+    public void addNewTask(Task task) {
+    	this.tasksP.add(new TaskPanel(task,this.topHomePanel));
     	this.tasksP.revalidate();
     	this.revalidate();
     	this.oldWidth = this.getWidth();

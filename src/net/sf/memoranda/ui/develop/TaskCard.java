@@ -9,6 +9,9 @@
  **************************************************************/
 package net.sf.memoranda.ui.develop;
 import java.util.*;
+
+import net.sf.memoranda.Task;
+
 import java.text.*;
 
 // TODO: Auto-generated Javadoc
@@ -377,7 +380,7 @@ public class TaskCard extends Observable{
 	 *
 	 * @param task the new value
 	 */
-	public void setValue(TaskCard task){
+	public void setValue(Task task){
 		this.setChanged();
 		this.notifyObservers(task);
 	}

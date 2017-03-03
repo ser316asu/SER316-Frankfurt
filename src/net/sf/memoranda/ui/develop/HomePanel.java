@@ -11,6 +11,9 @@ package net.sf.memoranda.ui.develop;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicSplitPaneDivider;
 
+import net.sf.memoranda.CurrentProject;
+import net.sf.memoranda.Task;
+import net.sf.memoranda.TaskImpl;
 import net.sf.memoranda.ui.DailyItemsPanel;
 import net.sf.memoranda.ui.JNCalendarPanel;
 import net.sf.memoranda.ui.ResourcesPanel;
@@ -103,26 +106,11 @@ public class HomePanel extends JLabel implements Styling {
     
     /**
      * Instantiates a new home panel.
-     */
-    public HomePanel(){
-        assets = new LoadAssets();
-        this.tasks = new Hashtable<String, TaskCard>();
-        fillTasks();
-    	createComponents();
-    	editComponents();
-    	addActionListeners();
-    	addComponents();
-    }
-    
-    /**
-     * Instantiates a new home panel.
      *
      * @param task the task
      */
-    public HomePanel(TaskCard task) {
+    public HomePanel() {
     	assets = new LoadAssets();
-        this.tasks = new Hashtable<String, TaskCard>();
-        fillTasks();
         createComponents();
         editComponents();
         addActionListeners();
@@ -135,8 +123,8 @@ public class HomePanel extends JLabel implements Styling {
      * Creates the components.
      */
     public void createComponents() {
-    	topP = new TopHomePanel(this.tasks.get("task 1"));
-    	lowP = new LowerHomePanel(this.topP, this.tasks);
+    	topP = new TopHomePanel();
+    	lowP = new LowerHomePanel(this.topP);
         this.toolbar = new MainToolBar(lowP);
     }
     
@@ -236,25 +224,6 @@ public class HomePanel extends JLabel implements Styling {
     			Styling.SCREEN_HEIGHT-heightMargin));
     	
     }
-    /**
-     * Fill tasks.
-     */
-    private void fillTasks(){
-        TaskCard tmpTask;
-        for(int i = 0; i < 10; i++) {
-            tmpTask = new TaskCard();
-            tmpTask.setEstimatedLOC(500+i);
-            tmpTask.setEstimatedTime((double)8.5+i);
-            tmpTask.setActualLOC(256+i);
-            tmpTask.setActualTime(4.5+i);
-            tmpTask.setTaskName("task " + i);
-            tmpTask.setStartDate(new Date());
-            tmpTask.setEndDate(new Date());
-            this.tasks.put(tmpTask.getTaskName(), tmpTask);
-        }
-        this.tasks.get("task 1").setActive(true);
-    }
-    
     /**
      * Sets the active panel.
      *

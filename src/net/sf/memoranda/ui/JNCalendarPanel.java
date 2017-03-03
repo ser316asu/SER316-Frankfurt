@@ -2,6 +2,7 @@ package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -9,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -34,11 +36,14 @@ import net.sf.memoranda.NoteList;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
 import net.sf.memoranda.ResourcesList;
+import net.sf.memoranda.Task;
 import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.ui.develop.Styling;
+import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
+import net.sf.memoranda.util.Util;
 
 /**
  * 
@@ -449,8 +454,32 @@ public class JNCalendarPanel extends JPanel {
   }
   
   static void addTaskButton_actionPerformed(ActionEvent e) {
-	  System.out.println("Called to add a task");
-	  NewTaskWindow taskCreationWindow = new NewTaskWindow(); // Creates task creation window
+  	NewTaskWindow dlg = new NewTaskWindow(App.getFrame(),"Create a New Task"); // Creates task creation window
+    
+    //XXX String parentTaskId = taskTable.getCurrentRootTask();
+    
+    //Dimension frmSize = App.getFrame().getSize();
+    //Point loc = App.getFrame().getLocation();
+    //dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.width - dlg.getSize().height) / 2 + loc.y);
+    dlg.setVisible(true);
+    if (dlg.CANCELLED)
+        return;
+    /*CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
+//    CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+      CalendarDate ed;
+		if(dlg.chkEndDate.isSelected())
+			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+		else
+			ed = null;*/
+    long effort = Util.getMillisFromHours(dlg.getActualLoc().getText());
+	//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
+	Task newTask = CurrentProject.getTaskList().createTask(dlg.getStartDate().getText(), dlg.getEndDate().getText(), dlg.getName(), 
+			dlg.priorityCB.getSelectedIndex(),effort, dlg.getTaskDesc().getText(),null, dlg.getHoursEst().getText(),
+			dlg.getLocEst().getText(), dlg.getNumFiles().getText());
+//	CurrentProject.getTaskList().adjustParentTasks(newTask);
+	newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
+    CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+    //taskTable.updateUI();
   }
 
   

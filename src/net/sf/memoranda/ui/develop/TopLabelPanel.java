@@ -9,6 +9,9 @@
  **************************************************************/
 package net.sf.memoranda.ui.develop;
 import javax.swing.*;
+
+import net.sf.memoranda.Task;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -20,7 +23,7 @@ import java.util.*;
 public class TopLabelPanel extends JLabel implements Styling, Observer{
 	
 	/** The task. */
-	private TaskCard task;
+	private Task task;
 	
 	/** The layout. */
 	private LayoutManager layout;
@@ -44,7 +47,7 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
      * @param location the location
      */
     public TopLabelPanel(TaskCard task,int location){
-    	this.task = task;
+    	this.task = null;
     	this.location = location;
     	this.labels = new JLabel[LABEL_COUNT*2];
     	layout = new GridLayout(LABEL_COUNT,2);
@@ -61,7 +64,7 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
      * @param location the location
      */
     public TopLabelPanel(int location){
-    	this.task = new TaskCard();
+    	this.task = null;
     	this.location = location;
     	this.labels = new JLabel[LABEL_COUNT*2];
     	createLabels();
@@ -140,21 +143,19 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
      * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
     public void update(Observable taskCard,Object ars){
-    	this.task.setActive(false);
-    	this.task = (TaskCard) taskCard;
-    	this.task.setActive(true);
+    	this.task = (Task) taskCard;
         if(location == TopHomePanel.LEFT_LABEL_PANEL){
-            labels[1].setText(task.getTaskName()+ "");// = new JLabel(task.getTaskName()+ "");
-            labels[3].setText(task.getEstimatedLOC()+ "");
+            labels[1].setText(task.getText()+ "");// = new JLabel(task.getTaskName()+ "");
+            labels[3].setText(task.getEstLOC()+ "");
             labels[5].setText(task.getActualLOC()+ "");
-            labels[7].setText(task.getEstimatedTime()+ "");
+            labels[7].setText(task.getHoursEst()+ "");
             labels[9].setText(task.getActualTime()+ "");
         }else if(location == TopHomePanel.RIGHT_LABEL_PANEL){
-            labels[1].setText(task.scheduleStatusToString());
-            labels[3].setText(task.getLocPerHour() + "");
-            labels[5].setText(task.getEstimatedLOCPH()+ "");
-            labels[7].setText(task.formatDate(task.getStartDate())+ "");
-            labels[9].setText(task.formatDate(task.getEndDate())+ "");
+            labels[1].setText(task.getDaysLeft()+"");
+            labels[3].setText(task.getActualLOC() + "");
+            labels[5].setText(task.getHoursEst()+ "");
+            labels[7].setText(task.getStartDate()+ "");
+            labels[9].setText(task.getEndDate()+ "");
         }
         //this.addLabels();
         //style();

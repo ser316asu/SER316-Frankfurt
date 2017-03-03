@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import net.sf.memoranda.date.CalendarDate;
+import net.sf.memoranda.ui.develop.LowerHomePanel;
 import net.sf.memoranda.util.Util;
 import nu.xom.Attribute;
 import nu.xom.Document;
@@ -103,10 +104,12 @@ public class TaskListImpl implements TaskList {
         return filterActiveTasks(allTasks,date);
     }
 
-    public Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority,
-    		long effort, String description, String parentTaskId, String scheduleStatus, 
-    		String estimatedLOC, String actualLoc, String locPerHour, String estimatedLOCPH, 
-    		String estimatedTime, String actualTime) {
+    //		newTask = CurrentProject.getTaskList().createTask(dlg.getStartDate().getText(), dlg.getEndDate().getText(), dlg.getName(), 
+	//                                                        dlg.priorityCB.getSelectedIndex(),effort, dlg.getTaskDesc().getText(),null, dlg.getHoursEst().getText(),
+	//      												  dlg.getLocEst(), dlg.getNumFiles().getText());
+    public Task createTask(String startDate, String endDate, String text, int priority,
+    		long effort, String description, String parentTaskId,String estimatedTime, String estimatedLOCPH,
+    		String numOfFiles) {
         Element el = new Element("task");
         el.addAttribute(new Attribute("startDate", startDate.toString()));
         el.addAttribute(new Attribute("endDate", endDate != null? endDate.toString():""));
@@ -115,14 +118,12 @@ public class TaskListImpl implements TaskList {
         el.addAttribute(new Attribute("progress", "0"));
         el.addAttribute(new Attribute("effort", String.valueOf(effort)));
         el.addAttribute(new Attribute("priority", String.valueOf(priority)));
-        el.addAttribute(new Attribute("scheduleStatus", String.valueOf(scheduleStatus)));
-        el.addAttribute(new Attribute("estimatedLOC", String.valueOf(estimatedLOC)));
-        el.addAttribute(new Attribute("actualLoc", String.valueOf(actualLoc)));
-        el.addAttribute(new Attribute("locPerHour", String.valueOf(locPerHour)));
         el.addAttribute(new Attribute("estimatedLOCPH", String.valueOf(estimatedLOCPH)));
         el.addAttribute(new Attribute("estimatedTime", String.valueOf(estimatedTime)));
-        el.addAttribute(new Attribute("actualTime", String.valueOf(actualTime)));
-                
+        el.addAttribute(new Attribute("numberOfFiles", String.valueOf(numOfFiles)));
+        el.addAttribute(new Attribute("actualLOC", "0"));
+        el.addAttribute(new Attribute("actualTime", "0"));
+        
         Element txt = new Element("text");
         txt.appendChild(text);
         el.appendChild(txt);
@@ -142,7 +143,10 @@ public class TaskListImpl implements TaskList {
 		
         Util.debug("Created task with parent " + parentTaskId);
         
-        return new TaskImpl(el, this);
+        Task task = new TaskImpl(el, this);
+        LowerHomePanel.updateTaskBoard();
+        
+        return task;
     }
 	
 	/**
@@ -158,6 +162,7 @@ public class TaskListImpl implements TaskList {
             parentNode.removeChild(task.getContent());
         }
 		elements.remove(task.getID());
+		LowerHomePanel.updateTaskBoard();
     }
 
     public boolean hasSubTasks(String id) {

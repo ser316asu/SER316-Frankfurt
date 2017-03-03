@@ -9,6 +9,10 @@
  **************************************************************/
 package net.sf.memoranda.ui.develop;
 import javax.swing.*;
+
+import net.sf.memoranda.CurrentProject;
+import net.sf.memoranda.Task;
+
 import java.awt.*;
 import java.util.*;
 
@@ -25,7 +29,7 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 	private JLabel progressPanel, circlesPanel, progressLabelsPanel;
 	
 	/** The task. */
-	private TaskCard task;
+	private Task task;
 	
 	/** The progress dimension. */
 	@SuppressWarnings("unused")
@@ -40,14 +44,33 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 	/** The open. */
 	private JButton open;
 	
-	
 	/**
 	 * Instantiates a new status bar panel.
 	 *
 	 * @param parent the parent
 	 * @param task the task
 	 */
-	public StatusBarPanel(TopInnerPanel parent,TaskCard task){
+	public StatusBarPanel(TopInnerPanel parent){
+		this.dimension = new Dimension(Styling.PROGRESS_PANEL_WIDTH,Styling.PROGRESS_PANEL_HEIGHT);
+		this.task = null;
+		
+		buildComponents();
+
+		editComponents();
+
+		style();
+
+		addActionListeners();
+
+		addComponents();
+	}
+	/**
+	 * Instantiates a new status bar panel.
+	 *
+	 * @param parent the parent
+	 * @param task the task
+	 */
+	public StatusBarPanel(TopInnerPanel parent,Task task){
 		this.dimension = new Dimension(Styling.PROGRESS_PANEL_WIDTH,Styling.PROGRESS_PANEL_HEIGHT);
 		
 		buildComponents();
@@ -225,14 +248,14 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
 	public void update(Observable taskCard,Object args){
-		this.task = (TaskCard) taskCard;
+		this.task = (Task) taskCard;
 		
-		progressLoc.setMaximum(this.task.getEstimatedLOC());
-		progressDays.setMaximum(this.task.getLength());
-		progressTime.setMaximum((int)this.task.getEstimatedTime());
+		progressLoc.setMaximum(this.task.getEstLOC());
+		progressDays.setMaximum(this.task.getTaskTotalTime());
+		progressTime.setMaximum(task.getHoursEst());
 		
-		progressTime.setValue((int)task.getActualTime());
-		progressDays.setValue(task.getLength() - task.getDaysLeft());
+		progressTime.setValue(task.getActualTime());
+		progressDays.setValue(task.getTaskTotalTime() - task.getDaysLeft());
 		progressLoc.setValue(task.getActualLOC());
 		
 		progressTime.setStringPainted(true);

@@ -14,6 +14,9 @@ swhacks.org
 Joshua Becker
 **/
 import javax.swing.*;
+
+import net.sf.memoranda.Task;
+
 import java.awt.*;
 
 // TODO: Auto-generated Javadoc
@@ -27,7 +30,7 @@ public class TaskPanel extends JLabel implements Styling
     private Dimension dimension;
     
     /** The task. */
-    private TaskCard task;
+    private Task task;
     
     /** The label start. */
     private JLabel name_L, schStat_L, startDate_L, header_L, footer_L,labelName,labelSched,labelStart;
@@ -50,34 +53,14 @@ public class TaskPanel extends JLabel implements Styling
     /**
      * Instantiates a new task panel.
      *
-     * @param width the width
-     * @param height the height
      * @param card the card
      * @param thp the thp
      */
-    public TaskPanel(int width,int height, TaskCard card, TopHomePanel thp)
-    {
-        this.topHomePanel = thp;
-        this.dimension = new Dimension(width, height);
-        this.task = card;
-        createComponents();
-        editComponents();
-        addActionListeners();
-        style();
-        addComponents();
-    }
-    
-    /**
-     * Instantiates a new task panel.
-     *
-     * @param card the card
-     * @param thp the thp
-     */
-    public TaskPanel(TaskCard card, TopHomePanel thp)
+    public TaskPanel(Task task, TopHomePanel thp)
     {
         this.topHomePanel = thp;
         this.dimension = new Dimension(Styling.TASK_PANEL_WIDTH,Styling.TASK_PANEL_HEIGHT);
-        this.task = card;
+        this.task = task;
         createComponents();
         editComponents();
         addActionListeners();
@@ -90,7 +73,7 @@ public class TaskPanel extends JLabel implements Styling
      */
     public void createComponents()
     {
-           name_L = new JLabel(this.task.getTaskName());
+           name_L = new JLabel(task.getText());
            startDate_L = new JLabel();
            schStat_L = new JLabel();
            header_L = new JLabel();
@@ -153,8 +136,8 @@ public class TaskPanel extends JLabel implements Styling
         		   (int)(this.dimension.height*.35)));
            footer_L.setMaximumSize(this.dimension);
            
-           schStat_L.setText(this.task.scheduleStatusToString());
-           startDate_L.setText(this.task.formatDate(this.task.getEndDate()));
+           schStat_L.setText(this.task.getProgress() + "");
+           startDate_L.setText(this.task.getEndDate().toString());
            
     }
     
@@ -292,7 +275,7 @@ public class TaskPanel extends JLabel implements Styling
         *
         * @return the task card
         */
-       public TaskCard getTaskCard()
+       public Task getTask()
        {
            return this.task;
        }
@@ -302,7 +285,7 @@ public class TaskPanel extends JLabel implements Styling
         *
         * @param task the new task card
         */
-       public void setTaskCard(TaskCard task)
+       public void setTask(Task task)
        {
            this.task = task;
        }

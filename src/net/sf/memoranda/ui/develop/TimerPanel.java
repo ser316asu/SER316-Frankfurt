@@ -9,6 +9,9 @@
  **************************************************************/
 package net.sf.memoranda.ui.develop;
 import javax.swing.*;
+
+import net.sf.memoranda.Task;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -35,7 +38,7 @@ public class TimerPanel extends JLabel implements Styling{
 	private LayoutManager layout;
 	
 	/** The task. */
-	private TaskCard task;
+	private Task task;
 	
 	/** The button panel. */
 	private JPanel buttonPanel;
@@ -49,7 +52,7 @@ public class TimerPanel extends JLabel implements Styling{
 	 * @param parent the parent
 	 * @param task the task
 	 */
-	public TimerPanel(TopInnerPanel parent,TaskCard task){
+	public TimerPanel(TopInnerPanel parent,Task task){
 		this.task = task;
 		dimension = new Dimension(Styling.TIMER_PANEL_WIDTH,Styling.TIMER_PANEL_HEIGHT);
 		this.parent = parent;
@@ -206,17 +209,40 @@ public class TimerPanel extends JLabel implements Styling{
 			}
 			else if(event.getActionCommand().equalsIgnoreCase("stop")){
 				timer.stop();
-				task.addTime(task.convertTimer(timer.getLabel().getText()));
+				if(task == null)
+				{
+					System.out.println("null task");
+				}
+				int acttime = task.getActualTime();
+				task.setActualTime(acttime + (convertTimer(timer.getLabel().getText())));
 
-				task.setValue(task.setChangeVar(task.getChangeVar()+1));
+				task.setValue(task);
 				timer = new Timer(time);
 
 				start.setText("Start");
 				start.setActionCommand("start");
 
 				time.setText("00:00:00");
-			}
+				}
+			
 			
 		}
+		public double convertTimer(String time){
+			String[] hhmmss = time.split(":");
+
+			double hours = Double.parseDouble(hhmmss[0]);
+			double minutes = Double.parseDouble(hhmmss[1]);
+			double seconds = Double.parseDouble(hhmmss[2]);
+
+			 
+			 hours += (minutes/60.0) + (seconds/3600);
+
+
+			return hours;
+		}
+	}
+
+	public void setTask(Task tc) {
+		this.task = tc;
 	}
 }

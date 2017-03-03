@@ -489,34 +489,35 @@ public class TaskPanel extends JPanel {
     }
 
     void newTaskB_actionPerformed(ActionEvent e) {
-        TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("New task"));
+    	NewTaskWindow dlg = new NewTaskWindow(App.getFrame(),"Create a New Task"); // Creates task creation window
         
         //XXX String parentTaskId = taskTable.getCurrentRootTask();
         
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
-        dlg.startDate.getModel().setValue(CurrentDate.get().getDate());
-        dlg.endDate.getModel().setValue(CurrentDate.get().getDate());
-        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.width - dlg.getSize().height) / 2 + loc.y);
         dlg.setVisible(true);
         if (dlg.CANCELLED)
             return;
-        CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
+        /*CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
 //        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
           CalendarDate ed;
  		if(dlg.chkEndDate.isSelected())
  			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
  		else
- 			ed = null;
-        long effort = Util.getMillisFromHours(dlg.effortField.getText());
+ 			ed = null;*/
+        long effort = Util.getMillisFromHours(dlg.progress.getValue().toString());
 		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
-		//TODO:Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),null);
+		Task newTask = CurrentProject.getTaskList().createTask(dlg.getStartDate().getText(), dlg.getEndDate().getText(), dlg.getjTextFieldName().getText(), 
+				dlg.priorityCB.getSelectedIndex(),effort, dlg.getTaskDesc().getText(),null, dlg.getHoursEst().getText(),
+				dlg.getLocEst().getText(), dlg.getNumFiles().getText());
 //		CurrentProject.getTaskList().adjustParentTasks(newTask);
-		//TODO:newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
+		newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
         CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
         taskTable.tableChanged();
         parentPanel.updateIndicators();
-        //taskTable.updateUI();
+        taskTable.updateUI();
+        System.out.println("new Task Create" + CurrentProject.getTaskList());
     }
 
     void addSubTask_actionPerformed(ActionEvent e) {

@@ -20,6 +20,8 @@ package net.sf.memoranda.ui.develop;
 **/
 import java.awt.event.*;
 
+import net.sf.memoranda.Task;
+
 // TODO: Auto-generated Javadoc
 /**
  * The listener interface for receiving taskPanelMouse events.
@@ -45,7 +47,7 @@ public class TaskPanelMouseListener implements MouseListener
     private TaskPanel target;
     
     /** The task. */
-    private TaskCard task;
+    private Task task;
     
     /** The top panel. */
     private TopHomePanel topPanel;
@@ -68,7 +70,7 @@ public class TaskPanelMouseListener implements MouseListener
     {
     	this.topPanel = thp;
         this.target = target;
-        this.task = target.getTaskCard();
+        this.task = target.getTask();
         this.clickCount = 0;
     }
     
@@ -114,7 +116,7 @@ public class TaskPanelMouseListener implements MouseListener
          * getChangeVar: is used to make a change in order to modify 
          * 				 the state of the observing panels
          */
-        task.setValue(task.setChangeVar(task.getChangeVar()+1));
+        task.setValue(task);
     	
     } 
     
