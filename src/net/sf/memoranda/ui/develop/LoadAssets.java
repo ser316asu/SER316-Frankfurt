@@ -43,24 +43,48 @@ class LoadAssets {
     public static ImageIcon TOOLBAR_CALENDAR_BUTTON_IMAGE = loadImage("Assets/ui/calendarIconWhite.png",
     		Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
     
+    /** The toolbar calendar button hover image */
+    public static ImageIcon TOOLBAR_CALENDAR_HOVER_BUTTON_IMAGE = loadImage("Assets/ui/calendarIconWhite_hover.png",
+    		Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
+    
     /** The toolbar task button image. */
     public static ImageIcon TOOLBAR_TASK_BUTTON_IMAGE = loadImage("Assets/ui/NewTaskButton.png",
     		Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
     
-    /** The toolabr home button image. */
+    /** The toolbar task button hover image */
+    public static ImageIcon TOOLBAR_TASK_HOVER_BUTTON_IMAGE = loadImage("Assets/ui/NewTaskButton_hover.png",
+    		Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
+    
+    /** The toolbar home button image. */
     public static ImageIcon TOOLBAR_HOME_BUTTON_IMAGE = loadImage("Assets/ui/HomeButton.png",
     		Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
     
-    /** The toolabr notification button image. */
+    /** The toolbar home button hover image. */
+    public static ImageIcon TOOLBAR_HOME_HOVER_BUTTON_IMAGE = loadImage("Assets/ui/HomeButton_hover.png",
+    		Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
+    
+    /** The toolbar notification button image. */
     public static ImageIcon TOOLBAR_BELL_BUTTON_IMAGE = loadImage("Assets/ui/bellnotifcation.png",
+    		Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
+    
+    /** The toolbar notification button image. */
+    public static ImageIcon TOOLBAR_BELL_HOVER_BUTTON_IMAGE = loadImage("Assets/ui/bellnotifcation_hover.png",
     		Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
     
     /** The toolbar file button image. */
     public static ImageIcon TOOLBAR_FILE_BUTTON_IMAGE = loadImage("Assets/ui/fileIcon.png",
     		Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
     
+    /** The toolbar file button hover image. */
+    public static ImageIcon TOOLBAR_FILE_HOVER_BUTTON_IMAGE = loadImage("Assets/ui/fileIcon_hover.png",
+    		Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
+    
     /** The toolbar notes button image. */
     public static ImageIcon TOOLBAR_NOTES_BUTTON_IMAGE = loadImage("Assets/ui/notesIcon.png",
+    		Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
+    
+    /** The toolbar notes button image. */
+    public static ImageIcon TOOLBAR_NOTES_HOVER_BUTTON_IMAGE = loadImage("Assets/ui/notesIcon_hover.png",
     		Styling.TOOLBAR_BUTTON_WIDTH-10,Styling.TOOLBAR_BUTTON_HEIGHT-10);
     
     /**
