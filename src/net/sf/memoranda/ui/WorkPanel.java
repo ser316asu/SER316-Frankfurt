@@ -5,17 +5,24 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Insets;
+import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
+import net.sf.memoranda.date.CurrentDate;
+import net.sf.memoranda.ui.develop.HomePanel;
+import net.sf.memoranda.ui.develop.Styling;
 import net.sf.memoranda.util.Context;
 import net.sf.memoranda.util.Local;
 
@@ -25,28 +32,56 @@ import net.sf.memoranda.util.Local;
  */
 
 /*$Id: WorkPanel.java,v 1.9 2004/04/05 10:05:44 alexeya Exp $*/
-public class WorkPanel extends JPanel {
+    public class WorkPanel extends JPanel {
 	BorderLayout borderLayout1 = new BorderLayout();
 	JToolBar toolBar = new JToolBar();
 	JPanel panel = new JPanel();
 	CardLayout cardLayout1 = new CardLayout();
+	Toolkit tk = Toolkit.getDefaultToolkit();
+	Dimension screenSizeDimensions = tk.getScreenSize();
 
 	public JButton notesB = new JButton();
 	public DailyItemsPanel dailyItemsPanel = new DailyItemsPanel(this);
 	public ResourcesPanel filesPanel = new ResourcesPanel();
+	public CalendarPanel calendarPanel = new CalendarPanel();
 	public JButton agendaB = new JButton();
 	public JButton tasksB = new JButton();
 	public JButton eventsB = new JButton();
 	public JButton filesB = new JButton();
+	public JButton calendarB = new JButton();
+	private HomePanel homePanel = new HomePanel();
 	JButton currentB = null;
 	Border border1;
+	
+	
+	boolean calendarIgnoreChange = false;
+    boolean dateChangedByCalendar = false;
+    boolean changedByHistory = false;
+    
+	JNCalendarPanel calendar = JNCalendarPanel.getInstance();
+	JPanel main = new JPanel();
+
 
 	public WorkPanel() {
-		try {
+		/*try {
 			jbInit();
 		} catch (Exception ex) {
 			new ExceptionDialog(ex);
-		}
+		}*/
+		border1 =
+				BorderFactory.createCompoundBorder(
+					BorderFactory.createBevelBorder(
+						BevelBorder.LOWERED,
+						Color.white,
+						Color.white,
+						new Color(124, 124, 124),
+						new Color(178, 178, 178)),
+					BorderFactory.createEmptyBorder(0, 2, 0, 0));
+
+		this.setLayout(borderLayout1);
+		this.setPreferredSize(new Dimension(1073, 300));
+		//this.setPreferredSize(new Dimension(Styling.SCREEN_WIDTH-100,Styling.SCREEN_HEIGHT-100));
+		this.add(homePanel, BorderLayout.CENTER);
 	}
 
 	void jbInit() throws Exception {
@@ -67,6 +102,16 @@ public class WorkPanel extends JPanel {
 		toolBar.setBorderPainted(false);
 		toolBar.setFloatable(false);
 		panel.setLayout(cardLayout1);
+    
+		//calendar.setFont(new java.awt.Font("Dialog", 0, 11));
+        //calendar.setMaximumSize(new Dimension(0, 1000));
+		 //calendar.setFont(new java.awt.Font("Dialog", 0, 11));
+	    // calendar.setSize(calendar.getMaximumSize());
+		 //main.add(calendar, BorderLayout.CENTER);
+         
+		calendar.setFont(new java.awt.Font("Dialog", 0, 11));
+        calendar.setMinimumSize(new Dimension(0, 1000));
+
 
 		agendaB.setBackground(Color.white);
 		agendaB.setMaximumSize(new Dimension(60, 80));
@@ -83,7 +128,7 @@ public class WorkPanel extends JPanel {
 		agendaB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		agendaB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				agendaB_actionPerformed(e);
+				//agendaB_actionPerformed(e);
 			}
 		});
 		agendaB.setIcon(
@@ -109,7 +154,7 @@ public class WorkPanel extends JPanel {
 		eventsB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		eventsB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				eventsB_actionPerformed(e);
+				//eventsB_actionPerformed(e);
 			}
 		});
 		eventsB.setIcon(
@@ -130,7 +175,7 @@ public class WorkPanel extends JPanel {
 		tasksB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		tasksB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				tasksB_actionPerformed(e);
+				//tasksB_actionPerformed(e);
 			}
 		});
 		tasksB.setVerticalAlignment(SwingConstants.TOP);
@@ -161,7 +206,7 @@ public class WorkPanel extends JPanel {
 		notesB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		notesB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				notesB_actionPerformed(e);
+				//notesB_actionPerformed(e);
 			}
 		});
 		notesB.setIcon(
@@ -181,7 +226,7 @@ public class WorkPanel extends JPanel {
 		filesB.setVerticalTextPosition(SwingConstants.BOTTOM);
 		filesB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				filesB_actionPerformed(e);
+				//filesB_actionPerformed(e);
 			}
 		});
 		filesB.setFont(new java.awt.Font("Dialog", 1, 10));
@@ -196,41 +241,87 @@ public class WorkPanel extends JPanel {
 		filesB.setOpaque(false);
 		filesB.setMaximumSize(new Dimension(60, 80));
 		filesB.setBackground(Color.white);
+		panel.setBackground(SystemColor.desktop);
+		panel.setMinimumSize(new Dimension(0, 1000));
 		this.add(toolBar, BorderLayout.WEST);
 		this.add(panel, BorderLayout.CENTER);
 		panel.add(dailyItemsPanel, "DAILYITEMS");
 		panel.add(filesPanel, "FILES");
+		panel.add(calendarPanel, "CALENDAR");
+		calendarPanel.add(calendar);
 		toolBar.add(agendaB, null);
 		toolBar.add(eventsB, null);
 		toolBar.add(tasksB, null);
 		toolBar.add(notesB, null);
 		toolBar.add(filesB, null);
+		toolBar.add(calendarB, null);
 		currentB = agendaB;
 		// Default blue color
 		currentB.setBackground(new Color(215, 225, 250));
 		currentB.setOpaque(true);
+		//calendar.setMaximumSize(calendar.getPreferredSize());
+		
+		
+		calendarB.setSelected(true);
+		calendarB.setFont(new java.awt.Font("Dialog", 1, 10));
+		calendarB.setMargin(new Insets(0, 0, 0, 0));
+		calendarB.setIcon(
+			new ImageIcon(
+				net.sf.memoranda.ui.AppFrame.class.getResource(
+					"resources/icons/calendar2.png")));
+		calendarB.setVerticalTextPosition(SwingConstants.BOTTOM);
+		calendarB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//calendarB_actionPerformed(e);
+			}
+		});
+		calendarB.setVerticalAlignment(SwingConstants.TOP);
+		calendarB.setText(Local.getString("Calendar"));
+		calendarB.setHorizontalTextPosition(SwingConstants.CENTER);
+		calendarB.setFocusPainted(false);
+		calendarB.setBorderPainted(false);
+		calendarB.setContentAreaFilled(false);
+		calendarB.setPreferredSize(new Dimension(50, 50));
+		calendarB.setMinimumSize(new Dimension(30, 30));
+		calendarB.setOpaque(false);
+		calendarB.setMaximumSize(new Dimension(60, 80));
+		calendarB.setBackground(Color.white);
+
+		
+		
 
 		toolBar.setBorder(null);
 		panel.setBorder(null);
 		dailyItemsPanel.setBorder(null);
 		filesPanel.setBorder(null);
+		
+		 calendar.addSelectionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	                if (calendarIgnoreChange)
+	                    return;
+	                dateChangedByCalendar = true;
+	                CurrentDate.set(calendar.get());
+	                dateChangedByCalendar = false;
+	            }
+	        });
 
 	}
 
-	public void selectPanel(String pan) {
+	/*public void selectPanel(String pan) {
 		if (pan != null) {
 			if (pan.equals("NOTES"))
 				notesB_actionPerformed(null);
 			else if (pan.equals("TASKS"))
 				tasksB_actionPerformed(null);
 			else if (pan.equals("EVENTS"))
-				eventsB_actionPerformed(null);
-			else if (pan.equals("FILES"))
+				eventsB_actionPerformed(null);			else if (pan.equals("FILES"))
 				filesB_actionPerformed(null);
+			else if (pan.equals("CALENDAR"))
+				calendarB_actionPerformed(null);
 		}
-	}
+	}*/
 
-	public void agendaB_actionPerformed(ActionEvent e) {
+	/*public void agendaB_actionPerformed(ActionEvent e) {
 		cardLayout1.show(panel, "DAILYITEMS");
 		dailyItemsPanel.selectPanel("AGENDA");
 		setCurrentButton(agendaB);
@@ -263,6 +354,20 @@ public class WorkPanel extends JPanel {
 		setCurrentButton(filesB);
 		Context.put("CURRENT_PANEL", "FILES");
 	}
+	
+	
+	public void calendarB_actionPerformed(ActionEvent e) {
+		cardLayout1.show(panel, "CALENDAR");
+		//dailyItemsPanel.selectPanel("CALENDAR");
+		setCurrentButton(calendarB);
+		Context.put("CURRENT_PANEL", "CALENDAR");
+
+	}
+
+	}*/
+	
+	
+
 
 	void setCurrentButton(JButton cb) {
 		currentB.setBackground(Color.white);
@@ -272,4 +377,6 @@ public class WorkPanel extends JPanel {
 		currentB.setBackground(new Color(215, 225, 250));
 		currentB.setOpaque(true);
 	}
+	
+	
 }

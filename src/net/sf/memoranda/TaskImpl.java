@@ -9,11 +9,15 @@
 package net.sf.memoranda;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.Observable;
 import java.util.Vector;
 import java.util.Calendar;
 
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
+import net.sf.memoranda.ui.develop.StatusBarPanel;
+import net.sf.memoranda.ui.develop.TopLabelPanel;
 import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Elements;
@@ -23,10 +27,11 @@ import nu.xom.Node;
  *
  */
 /*$Id: TaskImpl.java,v 1.15 2005/12/01 08:12:26 alexeya Exp $*/
-public class TaskImpl implements Task, Comparable {
+public class TaskImpl  extends Observable implements Task, Comparable {
 
     private Element _element = null;
     private TaskList _tl = null;
+    private int changeVal = 0;
 
     /**
      * Constructor for DefaultTask.
@@ -387,6 +392,106 @@ public class TaskImpl implements Task, Comparable {
 				return true;
 		return false;
 	}
+	public void addObserver(TopLabelPanel tlpl, TopLabelPanel tlpr, StatusBarPanel sbp)
+	{
+    	this.addObserver(tlpl);
+    	this.addObserver(tlpr);
+    	this.addObserver(sbp);
+	}
+	
+	/**
+	 * sets the change value for the observer
+	 * @param val
+	 * @return
+	 */
+    public void setChangeVal(int val)
+    {
+    	if(this.changeVal == 10)
+    		this.changeVal = 0;
+    	
+    	this.changeVal = val;
+    }
+    
+    public int getChangeVal()
+    {
+    	return this.changeVal;
+    }
+    
+	/**
+	 * Sets the value.
+	 *
+	 * @param task the new value
+	 */
+	public void setValue(Task task){
+		this.setChanged();
+		this.notifyObservers(task);
+	}
 
+	@Override
+	public int getActualLOC() {
+		return (new Integer(this._element.getAttribute("actualLOC").getValue())).intValue();
+	}
+
+	@Override
+	public void setActualLOC(int loc) {
+		this.setAttr("actualLOC", loc +"");
+		
+	}
+
+	@Override
+	public int getActualTime() {
+		return (new Double(this._element.getAttribute("actualTime").getValue())).intValue();
+	}
+
+	@Override
+	public void setActualTime(double time) {
+		this.setAttr("actualTime", time +"");
+		
+	}
+
+	@Override
+	public int getHoursEst() {
+		return (new Integer(this._element.getAttribute("estimatedLOCPH").getValue())).intValue();
+	}
+
+	@Override
+	public void setHoursEst(double hrs) {
+		this.setAttr("estimatedLOCPH", hrs +"");
+		
+	}
+
+	@Override
+	public int getNumOfFiles() {
+		return (new Integer(this._element.getAttribute("numberOfFiles").getValue())).intValue();
+	}
+
+	@Override
+	public void setNumOfFiles(int files) {
+		this.setAttr("numberOfFiles", files +"");
+		
+	}
+
+	@Override
+	public int getEstLOC() {
+		return (new Integer(this._element.getAttribute("estimatedLOCPH").getValue())).intValue();
+	}
+
+	@Override
+	public void setEstLOC(int loc) {
+		this.setAttr("estimatedLOCPH", loc +"");
+		
+	}
+
+	@Override
+	public int getTaskTotalTime() {
+		long timeDif = this.getStartDate().getDate().getTime() - this.getEndDate().getDate().getTime();
+		return (int) timeDif;
+	}
+
+	@Override
+	public int getDaysLeft() {
+		long timeDif = this.getEndDate().getDate().getTime() - (new Date().getTime());
+		return (int) timeDif;
+	}
 	
 }

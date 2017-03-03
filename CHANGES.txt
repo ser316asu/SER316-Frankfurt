@@ -1,4 +1,4 @@
-Done by Cristian Andrade
+Done by Cristian Andrade 
 - Color to the foreground on stickers
 - Simple HTML Format to stickers 
 
