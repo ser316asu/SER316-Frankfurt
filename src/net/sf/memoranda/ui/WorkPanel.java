@@ -102,7 +102,7 @@ import net.sf.memoranda.util.Local;
 		toolBar.setBorderPainted(false);
 		toolBar.setFloatable(false);
 		panel.setLayout(cardLayout1);
-		
+    
 		//calendar.setFont(new java.awt.Font("Dialog", 0, 11));
         //calendar.setMaximumSize(new Dimension(0, 1000));
 		 //calendar.setFont(new java.awt.Font("Dialog", 0, 11));
@@ -111,6 +111,7 @@ import net.sf.memoranda.util.Local;
          
 		calendar.setFont(new java.awt.Font("Dialog", 0, 11));
         calendar.setMinimumSize(new Dimension(0, 1000));
+
 
 		agendaB.setBackground(Color.white);
 		agendaB.setMaximumSize(new Dimension(60, 80));
@@ -247,9 +248,7 @@ import net.sf.memoranda.util.Local;
 		panel.add(dailyItemsPanel, "DAILYITEMS");
 		panel.add(filesPanel, "FILES");
 		panel.add(calendarPanel, "CALENDAR");
-
 		calendarPanel.add(calendar);
-
 		toolBar.add(agendaB, null);
 		toolBar.add(eventsB, null);
 		toolBar.add(tasksB, null);
