@@ -61,7 +61,7 @@ public class DailyItemsPanel extends JPanel {
     JPanel editorsPanel = new JPanel();
     CardLayout cardLayout1 = new CardLayout();
     public EditorPanel editorPanel = new EditorPanel(this);
-    JLabel currentDateLabel = new JLabel();
+    JLabel currentPageLabel = new JLabel();
     BorderLayout borderLayout4 = new BorderLayout();
     TaskPanel tasksPanel = new TaskPanel(this);
     EventsPanel eventsPanel = new EventsPanel(this);
@@ -137,9 +137,9 @@ public class DailyItemsPanel extends JPanel {
         statusPanel.setMinimumSize(new Dimension(14, 24));
         statusPanel.setPreferredSize(new Dimension(14, 24));
         statusPanel.setLayout(borderLayout4);
-        currentDateLabel.setFont(new java.awt.Font("Dialog", 0, 16));
-        currentDateLabel.setForeground(Color.white);
-        currentDateLabel.setText(CurrentDate.get().getFullDateString());
+        currentPageLabel.setFont(new java.awt.Font("Dialog", 0, 16));
+        currentPageLabel.setForeground(Color.white);
+        currentPageLabel.setText(CurrentDate.get().getFullDateString());
         borderLayout4.setHgap(4);
         controlPanel.setBackground(new Color(230, 230, 230));
         controlPanel.setBorder(border2);
@@ -207,7 +207,7 @@ public class DailyItemsPanel extends JPanel {
         cmainPanel.add(getCalendar(), BorderLayout.NORTH);
 
         mainPanel.add(statusPanel, BorderLayout.NORTH);
-        statusPanel.add(currentDateLabel, BorderLayout.CENTER);
+        statusPanel.add(currentPageLabel, BorderLayout.CENTER);
         statusPanel.add(indicatorsPanel, BorderLayout.EAST);
 
         mainPanel.add(editorsPanel, BorderLayout.CENTER);
@@ -346,13 +346,13 @@ public class DailyItemsPanel extends JPanel {
             }
         }*/
 
-		currentDateLabel.setText(newdate.getFullDateString());
+		currentPageLabel.setText(newdate.getFullDateString());
         if ((currentNote != null) && (currentNote.isMarked())) {
-            currentDateLabel.setIcon(bookmarkIcon);
-            currentDateLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+            currentPageLabel.setIcon(bookmarkIcon);
+            currentPageLabel.setHorizontalTextPosition(SwingConstants.LEFT);
         }
         else {
-            currentDateLabel.setIcon(null);
+            currentPageLabel.setIcon(null);
         }		
 
         updateIndicators(newdate, CurrentProject.getTaskList());
@@ -480,6 +480,7 @@ public class DailyItemsPanel extends JPanel {
         cardLayout2.show(mainTabsPanel, pan + "TAB");
 		getCalendar().jnCalendar.updateUI();
 		CurrentPanel=pan;
+		currentPageLabel.setText(CurrentPanel);
     }
 
 	public String getCurrentPanel() {
