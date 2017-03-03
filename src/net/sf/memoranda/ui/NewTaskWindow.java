@@ -218,7 +218,7 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 			//System.out.println(task.getStartDate() + " " + task.getEndDate() + " " + task.getEstimatedTime());
 			
 			statusLabel.setFont(new Font("Courier",Font.BOLD,24));
-			statusLabel.setText("FINISHED! — You may now close this window");
+			statusLabel.setText("FINISHED! You may now close this window");
 			statusLabel.setBackground(Color.GREEN);
 			statusLabel.setForeground(Color.WHITE);
 			
