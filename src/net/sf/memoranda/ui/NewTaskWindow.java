@@ -215,7 +215,7 @@ public class NewTaskWindow extends JFrame implements ActionListener {
 			//public TaskCard(int estimatedLOC, int estimatedTime, Date startDate, Date endDate, String taskDescription, String taskName){
 //			/TaskCard task = new TaskCard(Integer.parseInt(locEst.getText()), Integer.parseInt(hoursEst.getText()), Integer.parseInt(numFiles.getText()), (Date)startDate.getValue(), (Date)endDate.getValue(), taskDesc.getText(), jTextFieldName.getText());
 			
-			System.out.println(task.getStartDate() + " " + task.getEndDate() + " " + task.getEstimatedTime());
+			//System.out.println(task.getStartDate() + " " + task.getEndDate() + " " + task.getEstimatedTime());
 			
 			statusLabel.setFont(new Font("Courier",Font.BOLD,24));
 			statusLabel.setText("FINISHED! — You may now close this window");
