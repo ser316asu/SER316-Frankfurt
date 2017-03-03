@@ -4,6 +4,7 @@ import javax.swing.Box.Filler;
 import javax.swing.border.Border;
 import javax.swing.text.DateFormatter;
 
+import net.sf.memoranda.Task;
 import net.sf.memoranda.TaskCard;
 import net.sf.memoranda.util.Local;
 
@@ -81,6 +82,34 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		
 		//this.pack();
 		//this.setVisible(true);
+	}
+	
+	public NewTaskWindow(JFrame parentFrame, String title, Task task){
+		super(parentFrame,title, true);
+		WIDTH = 690;//(int)screenSize.getWidth()/2; // Casting as int
+		HEIGHT = 450; //(int)screenSize.getHeight()/2;
+		// Upper-right Quadrant
+		// TODO Consider adding JLabel here to clarify what button does
+		//startStop = new JButton("START"); // Have states. OnClick, startStop.setText("STOP")
+		createComponents();
+		editComponents();
+		addTaskElements(task);
+		addComponents();
+		
+		//this.pack();
+		//this.setVisible(true);
+	}
+
+	private void addTaskElements(Task task) {
+		/*this.actualLoc.setText(task.getActualLOC() + "");
+		this.actualNumFiles.setText(task.getNumOfFiles() + "");
+		this.endDate.setText(task.getEndDate().toString());
+		this.startDate.setText(task.getStartDate().toString());
+		this.progress.setValue(task.getProgress());
+		this.jTextFieldName.setText(task.getText());
+		this.priorityCB.setSelectedItem(task.getPriority());
+		this.locEst.setText(task.getEstLOC() + "");
+		this.taskDesc.setText(task.getDescription());*/
 	}
 
 	private void createComponents() {
