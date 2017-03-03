@@ -61,6 +61,11 @@ public class TimerPanel extends JLabel implements Styling{
 		addActionListener();
 		style();
 		addComponents();
+		if(task == null){
+			start.setEnabled(false);
+			stop.setEnabled(false);
+			pause.setEnabled(false);
+		}
 	}
 
 	/**
@@ -192,42 +197,52 @@ public class TimerPanel extends JLabel implements Styling{
 		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 		 */
 		public void actionPerformed(ActionEvent event){
-			if(event.getActionCommand().equalsIgnoreCase("start")){
-				timer.start();
+			if(task == null)
+			{
+				System.out.println("null task");
+				stop.setEnabled(false);
+				start.setEnabled(false);
+				pause.setEnabled(false);
 			}
-			else if(event.getActionCommand().equalsIgnoreCase("pause")){
-				paused = !paused;
-				if(paused){
-					timer.pause();
-					pause.setText("Play");					
+			else{
+				if(event.getActionCommand().equalsIgnoreCase("start")){
+					timer.start();
+					start.setEnabled(false);
 				}
-				else{
-					timer.resume();
-					pause.setText("Pause");
+				else if(event.getActionCommand().equalsIgnoreCase("pause")){
+					paused = !paused;
+					if(paused){
+						timer.pause();
+						pause.setText("Play");	
+						stop.setEnabled(false);
+					}
+					else{
+						timer.resume();
+						pause.setText("Pause");
+						stop.setEnabled(true);
+					}
+				
 				}
-			
+				else if(event.getActionCommand().equalsIgnoreCase("stop")){
+					timer.stop();
+					int acttime = task.getActualTime();
+					task.setActualTime(acttime + (convertTimer(timer.getLabel().getText())));
+		
+					task.setValue(task);
+					timer = new Timer(time);
+		
+					start.setText("Start");
+					start.setActionCommand("start");
+					start.setEnabled(true);
+		
+					time.setText("00:00:00");
+				}
 			}
-			else if(event.getActionCommand().equalsIgnoreCase("stop")){
-				timer.stop();
-				if(task == null)
-				{
-					System.out.println("null task");
-				}
-				int acttime = task.getActualTime();
-				task.setActualTime(acttime + (convertTimer(timer.getLabel().getText())));
-
-				task.setValue(task);
-				timer = new Timer(time);
-
-				start.setText("Start");
-				start.setActionCommand("start");
-
-				time.setText("00:00:00");
-				}
-			
-			
 		}
-		public double convertTimer(String time){
+			
+	}
+		
+	public double convertTimer(String time){
 			String[] hhmmss = time.split(":");
 
 			double hours = Double.parseDouble(hhmmss[0]);
@@ -240,9 +255,12 @@ public class TimerPanel extends JLabel implements Styling{
 
 			return hours;
 		}
-	}
+	
 
 	public void setTask(Task tc) {
 		this.task = tc;
+		stop.setEnabled(true);
+		start.setEnabled(true);
+		pause.setEnabled(true);
 	}
 }
