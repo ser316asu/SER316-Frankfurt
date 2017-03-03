@@ -110,6 +110,7 @@ public class TaskDialog extends JDialog {
     public TaskDialog(Frame frame, String title) {
         super(frame, title, true);
         try {
+        	System.out.println("In Task Window");
             jbInit();            
             pack();
         }

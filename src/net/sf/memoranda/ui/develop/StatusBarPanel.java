@@ -1,21 +1,76 @@
-package net.sf.memoranda.ui.DevelopHomePage;
+/**************************************************************
+ * Copyright (c) 2017 - 2017, Joshua Becker, Alec Shinn,
+ * All rights reserved
+ * SER316-Frankfurt is a project for ser216, 
+ * using agile scrum.
+ * Description:
+ * 
+ * Contact: jdbecke3@asu.edu, atshinn@asu.edu
+ **************************************************************/
+package net.sf.memoranda.ui.develop;
 import javax.swing.*;
+
+import net.sf.memoranda.CurrentProject;
+import net.sf.memoranda.Task;
+
 import java.awt.*;
 import java.util.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class StatusBarPanel.
+ */
 public class StatusBarPanel extends JLabel implements Styling, Observer{
-	private TopInnerPanel parent;
-	private JLabel buttonPanel,progressPanel, circlesPanel, progressLabelsPanel;
-	private TaskCard task;
+	
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 48641522633589340L;
+	
+	/** The progress labels panel. */
+	private JLabel progressPanel, circlesPanel, progressLabelsPanel;
+	
+	/** The task. */
+	private Task task;
+	
+	/** The progress dimension. */
+	@SuppressWarnings("unused")
 	private Dimension dimension,progressDimension;
-	private LayoutManager border,grid;
-	private JLabel timeStatus,locStatus,dayStatus,spacer;
+	
+	/** The spacer. */
+	private JLabel timeStatus,locStatus,dayStatus;
+	
+	/** The progress days. */
 	private JProgressBar progressTime,progressLoc,progressDays;
+	
+	/** The open. */
 	private JButton open;
-	private final double WIDTH_RATIO = 1.0,HEIGHT_RATIO = .5;
 	
-	
-	public StatusBarPanel(TopInnerPanel parent,TaskCard task){
+	/**
+	 * Instantiates a new status bar panel.
+	 *
+	 * @param parent the parent
+	 * @param task the task
+	 */
+	public StatusBarPanel(TopInnerPanel parent){
+		this.dimension = new Dimension(Styling.PROGRESS_PANEL_WIDTH,Styling.PROGRESS_PANEL_HEIGHT);
+		this.task = null;
+		
+		buildComponents();
+
+		editComponents();
+
+		style();
+
+		addActionListeners();
+
+		addComponents();
+	}
+	/**
+	 * Instantiates a new status bar panel.
+	 *
+	 * @param parent the parent
+	 * @param task the task
+	 */
+	public StatusBarPanel(TopInnerPanel parent,Task task){
 		this.dimension = new Dimension(Styling.PROGRESS_PANEL_WIDTH,Styling.PROGRESS_PANEL_HEIGHT);
 		
 		buildComponents();
@@ -29,6 +84,9 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 		addComponents();
 	}
 
+	/**
+	 * Builds the components.
+	 */
 	public void buildComponents(){
 		progressTime = new JProgressBar(0,100);
 		progressDays = new JProgressBar(0,100);
@@ -47,16 +105,18 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 		dayStatus = new JLabel("Progress in Days");
 		locStatus = new JLabel("Progress in LOC");
 		timeStatus = new JLabel("Progress in Hours");
-		spacer = new JLabel(" ");
+		
 		progressTime = ProgressCircleUI.makeUI(Styling.PROGRESSBAR_HOURS_COLOR);
 		progressLoc = ProgressCircleUI.makeUI(Styling.PROGRESSBAR_LOC_COLOR);
 		progressDays = ProgressCircleUI.makeUI(Styling.PROGRESSBAR_DAYS_COLOR);
 
-		buttonPanel = new JLabel();
 		progressPanel = new JLabel();
 
 	}
 
+	/**
+	 * Edits the components.
+	 */
 	public void editComponents(){
 		this.setPreferredSize(this.dimension);
 		this.setMinimumSize(this.dimension);
@@ -86,8 +146,14 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 		//this.setBorder(BorderFactory.createLineBorder(Color.WHITE));
 	}
 
+	/**
+	 * Adds the action listeners.
+	 */
 	public void addActionListeners(){}
 
+	/**
+	 * Adds the components.
+	 */
 	public void addComponents(){
 		//progressPanel.add(dayStac);tus);
 		this.circlesPanel.add(progressTime);
@@ -116,6 +182,9 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 		//this.add(buttonPanel,BorderLayout.SOUTH);
 	}
 
+	/* (non-Javadoc)
+	 * @see net.sf.memoranda.ui.DevelopHomePage.Styling#style()
+	 */
 	public void style(){
 		//this.setBackground(Styling.BACKGROUND_COLOR);
 		//progressPanel.setBorder(BorderFactory.createLineBorder(Color.red));
@@ -175,15 +244,18 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 		//this.progressLabelsPanel.setBorder(BorderFactory.createLineBorder(Color.white));
 	}
 
+	/* (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	public void update(Observable taskCard,Object args){
-		this.task = (TaskCard) taskCard;
+		this.task = (Task) taskCard;
 		
-		progressLoc.setMaximum(this.task.getEstimatedLOC());
-		progressDays.setMaximum(this.task.getLength());
-		progressTime.setMaximum((int)this.task.getEstimatedTime());
+		progressLoc.setMaximum(this.task.getEstLOC());
+		progressDays.setMaximum(this.task.getTaskTotalTime());
+		progressTime.setMaximum(task.getHoursEst());
 		
-		progressTime.setValue((int)task.getActualTime());
-		progressDays.setValue(task.getLength() - task.getDaysLeft());
+		progressTime.setValue(task.getActualTime());
+		progressDays.setValue(task.getTaskTotalTime() - task.getDaysLeft());
 		progressLoc.setValue(task.getActualLOC());
 		
 		progressTime.setStringPainted(true);

@@ -2,12 +2,15 @@ package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -20,6 +23,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
@@ -32,10 +36,14 @@ import net.sf.memoranda.NoteList;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
 import net.sf.memoranda.ResourcesList;
+import net.sf.memoranda.Task;
 import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
+import net.sf.memoranda.ui.develop.Styling;
+import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
+import net.sf.memoranda.util.Util;
 
 /**
  * 
@@ -45,62 +53,84 @@ import net.sf.memoranda.util.Local;
 // For test commit
 /*$Id: JNCalendarPanel.java,v 1.9 2004/04/05 10:05:44 alexeya Exp $*/
 public class JNCalendarPanel extends JPanel {
+	
+  private static JNCalendarPanel singletonCalendarPanel;
 
-  CalendarDate _date = CurrentDate.get();
-  JToolBar navigationBar = new JToolBar();
-  JPanel mntyPanel = new JPanel(new BorderLayout());
-  JPanel navigationPanel = new JPanel(new GridLayout(1,3));
+  private static CalendarDate _date = CurrentDate.get();
+  private static JToolBar navigationBar = new JToolBar();
+  private static JPanel mntyPanel = new JPanel(new BorderLayout());
+  private static JPanel navigationPanel = new JPanel(new GridLayout(1,3));
   
   // 1st level Panels
-  JPanel todayAndPrevNextPanel = new JPanel(new GridLayout(1,2));
-  JPanel monthAndYearPanel =  new JPanel();
-  JPanel searchAndCreateTaskPanel = new JPanel(new GridLayout(1,2));
+  private static JPanel todayAndPrevNextPanel = new JPanel(new GridLayout(1,2));
+  private static JPanel monthAndYearPanel =  new JPanel();
+  private static JPanel searchAndCreateTaskPanel = new JPanel(new GridLayout(1,2));
   
   // 2nd level Panels
-  JPanel todayButtonPanel = new JPanel();
-  JPanel prevAndNextMonthPanel = new JPanel(new GridLayout(1,2));
-  JPanel searchButtonPanel = new JPanel();
-  JPanel addTaskButtonPanel = new JPanel();
+  private static JPanel todayButtonPanel = new JPanel();
+  private static JPanel prevAndNextMonthPanel = new JPanel(new GridLayout(1,2));
+  private static JPanel searchButtonPanel = new JPanel();
+  private static JPanel addTaskButtonPanel = new JPanel();
   
   // 3rd level Panels
-  JPanel monthBackButtonPanel = new JPanel();
-  JPanel monthForwardButtonPanel = new JPanel();
+  private static JPanel monthBackButtonPanel = new JPanel();
+  private static JPanel monthForwardButtonPanel = new JPanel();
   
   // Buttons
-  JButton todayButton = new JButton();
-  JButton monthBackButton = new JButton();
-  JButton monthForwardButton = new JButton();
-  JButton searchButton = new JButton();
-  JButton addTaskButton = new JButton(); 
+  private static JButton todayButton = new JButton();
+  private static JButton monthBackButton = new JButton();
+  private static JButton monthForwardButton = new JButton();
+  private static JButton searchButton = new JButton();
+  private static JButton addTaskButton = new JButton(); 
   
   // Labels
-  JLabel monthAndYearLabel = new JLabel();
+  private static JLabel monthAndYearLabel = new JLabel();
   
-  JComboBox monthsCB = new JComboBox(Local.getMonthNames());
+  private static JComboBox monthsCB = new JComboBox(Local.getMonthNames());
   BorderLayout borderLayout4 = new BorderLayout();
-  JNCalendar jnCalendar = new JNCalendar(CurrentDate.get());
-  JPanel jnCalendarPanel = new JPanel();
-  BorderLayout borderLayout5 = new BorderLayout();
-  JSpinner yearSpin = new JSpinner(new SpinnerNumberModel(jnCalendar.get().getYear(), 1980, 2999, 1));
-  JSpinner.NumberEditor yearSpinner = new JSpinner.NumberEditor(yearSpin, "####");
+  public static JNCalendar jnCalendar = new JNCalendar(CurrentDate.get());
+  private static JPanel jnCalendarPanel = new JPanel();
+  private static BorderLayout borderLayout5 = new BorderLayout();
+  private static JSpinner yearSpin = new JSpinner(new SpinnerNumberModel(jnCalendar.get().getYear(), 1980, 2999, 1));
+  private static JSpinner.NumberEditor yearSpinner = new JSpinner.NumberEditor(yearSpin, "####");
 
-  boolean ignoreChange = false;
+  private static boolean ignoreChange = false;
 
-  private Vector selectionListeners = new Vector();
+  private static Vector selectionListeners = new Vector();
 
-  Border border1;
-  Border border2;
-
-  public JNCalendarPanel() {
-    try {
-      jbInit();
-    }
-    catch(Exception ex) {
-      new ExceptionDialog(ex);
-    }
+  private static Border border1;
+  private static Border border2;
+  
+  public synchronized static JNCalendarPanel getInstance() {
+	  if (singletonCalendarPanel == null) {
+		  singletonCalendarPanel = new JNCalendarPanel();
+		  try {
+		     jbInit();
+		   }
+		    catch(Exception ex) {
+		      new ExceptionDialog(ex);
+		   }
+	  }
+	  return singletonCalendarPanel;
   }
   
-  public Action todayAction =
+  public static JNCalendar getJnCalendar() {
+	  return jnCalendar;
+  }
+
+  public static void setJnCalendar(JNCalendar jnCalendar) {
+	  singletonCalendarPanel.jnCalendar = jnCalendar;
+  }
+  
+  public static JPanel getNavigationPanel() {
+	  return navigationPanel;
+  }
+
+  private JNCalendarPanel() {
+    
+  }
+  
+  public static Action todayAction =
 	        new AbstractAction(
 	            "Go to today",
 	            new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/today16.png"))) {
@@ -109,7 +139,7 @@ public class JNCalendarPanel extends JPanel {
 	        }
 	  };
 
-  public Action dayBackAction =
+  public static Action dayBackAction =
         new AbstractAction(
             "Go one month back",
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/back16.png"))) {
@@ -118,7 +148,7 @@ public class JNCalendarPanel extends JPanel {
         }
   };
   
-  public Action dayForwardAction =
+  public static Action dayForwardAction =
         new AbstractAction(
             "Go one month forward",
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/forward16.png"))) {
@@ -127,7 +157,7 @@ public class JNCalendarPanel extends JPanel {
         }
   };
   
-  public Action searchAction =
+  public static Action searchAction =
         new AbstractAction(
             "search for task",
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/today16.png"))) {
@@ -136,7 +166,7 @@ public class JNCalendarPanel extends JPanel {
         }
   };
 	  
-  public Action addTaskAction =
+  public static Action addTaskAction =
         new AbstractAction(
             "add task",
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/today16.png"))) {
@@ -146,7 +176,9 @@ public class JNCalendarPanel extends JPanel {
   };
   
       
-  void jbInit() throws Exception {
+  private static void jbInit() throws Exception {
+	  
+	singletonCalendarPanel = JNCalendarPanel.getInstance();
     //dayBackAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, KeyEvent.ALT_MASK));
     //dayForwardAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_UP, KeyEvent.ALT_MASK));
     todayAction.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_HOME, KeyEvent.ALT_MASK));
@@ -156,7 +188,7 @@ public class JNCalendarPanel extends JPanel {
     monthsCB.setPreferredSize(new Dimension(50 , 20));
     border1 = BorderFactory.createEmptyBorder(0,0,5,0);
     border2 = BorderFactory.createEmptyBorder();
-    this.setLayout(new BorderLayout());
+    singletonCalendarPanel.setLayout(new BorderLayout());
     navigationBar.setFloatable(false);
     
     // Month / Year Label Creation
@@ -187,7 +219,7 @@ public class JNCalendarPanel extends JPanel {
     monthBackButton.setContentAreaFilled(false);
     monthBackButton.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/prevday_icon.png")));
     monthBackButton.setText("");
-    monthBackButton.setToolTipText(Local.getString("One day back"));
+    monthBackButton.setToolTipText(Local.getString("One month back"));
     
     monthForwardButton.setAction(dayForwardAction);
     monthForwardButton.setMinimumSize(new Dimension(100, 100));
@@ -199,7 +231,7 @@ public class JNCalendarPanel extends JPanel {
     monthForwardButton.setContentAreaFilled(false);
     monthForwardButton.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/nextday_icon.png")));
     monthForwardButton.setText("");
-    monthForwardButton.setToolTipText(Local.getString("One day forward"));
+    monthForwardButton.setToolTipText(Local.getString("One month forward"));
     
     searchButton.setAction(searchAction);
     searchButton.setMinimumSize(new Dimension(100, 100));
@@ -275,23 +307,23 @@ public class JNCalendarPanel extends JPanel {
     yearSpin.setPreferredSize(new Dimension(70, 20));
     yearSpin.setRequestFocusEnabled(false);
         yearSpin.setEditor(yearSpinner);
-    navigationPanel.setMinimumSize(new Dimension(1380, 80));
+    navigationPanel.setMinimumSize(new Dimension(200, 40));
     navigationPanel.setOpaque(false);
-    navigationPanel.setPreferredSize(new Dimension(1380, 80));
+    navigationPanel.setPreferredSize(new Dimension(Styling.SCREEN_WIDTH-200, 80));
     jnCalendar.getTableHeader().setFont(new java.awt.Font("Dialog", 1, 10));
     jnCalendar.setFont(new java.awt.Font("Dialog", 0, 10));
     jnCalendar.setGridColor(Color.lightGray);
-    jnCalendarPanel.setLayout(borderLayout5);    
-    //calendar.setFont(new java.awt.Font("Dialog", 0, 11));
-    //calendar.setMaximumSize(new Dimension(0, 1000));
+    jnCalendar.setRowHeight((int)(Toolkit.getDefaultToolkit().getScreenSize().height*(.75)/8));
+    jnCalendarPanel.setLayout(borderLayout5);  
+
     navigationBar.add(navigationPanel, null);
     
     mntyPanel.add(monthsCB, BorderLayout.CENTER);
     mntyPanel.add(yearSpin,  BorderLayout.EAST);
 
     // Putting Large Pieces together for calendar
-    this.add(navigationBar, BorderLayout.NORTH);
-    this.add(jnCalendarPanel,  BorderLayout.CENTER);
+    singletonCalendarPanel.add(navigationBar, BorderLayout.NORTH);
+    singletonCalendarPanel.add(jnCalendarPanel,  BorderLayout.CENTER);
 //    this.add(mntyPanel,  BorderLayout.SOUTH); Temp Removal of month and year scroll pickers
     
     jnCalendar.getTableHeader().setPreferredSize(new Dimension(900, 80));
@@ -337,6 +369,7 @@ public class JNCalendarPanel extends JPanel {
   public void set(CalendarDate date) {
     _date = date;
     refreshView();
+    notifyListeners();
   }
 
   public CalendarDate get() {
@@ -347,19 +380,19 @@ public class JNCalendarPanel extends JPanel {
         selectionListeners.add(al);
     }
 
-  private void notifyListeners() {
+  private static void notifyListeners() {
         for (Enumeration en = selectionListeners.elements(); en.hasMoreElements();)
-             ((ActionListener) en.nextElement()).actionPerformed(new ActionEvent(this, 0, "Calendar event"));
+             ((ActionListener) en.nextElement()).actionPerformed(new ActionEvent(singletonCalendarPanel, 0, "Calendar event"));
   }
 
-  private void setCurrentDateDay(CalendarDate dt, int d) {
+  private static void setCurrentDateDay(CalendarDate dt, int d) {
     if (ignoreChange) return;
     if (_date.equals(dt)) return;
     _date = new CalendarDate(d, _date.getMonth(), _date.getYear());
     notifyListeners();
   }
 
-  private void refreshView() {
+  private static void refreshView() {
     ignoreChange = true;
     jnCalendar.set(_date);
     monthsCB.setSelectedIndex(new Integer(_date.getMonth()));
@@ -368,21 +401,21 @@ public class JNCalendarPanel extends JPanel {
     ignoreChange = false;
   }
 
-  void monthsCB_actionPerformed(ActionEvent e) {
+  static void monthsCB_actionPerformed(ActionEvent e) {
     if (ignoreChange) return;
     _date = new CalendarDate(_date.getDay(), monthsCB.getSelectedIndex(), _date.getYear());
     jnCalendar.set(_date);
     notifyListeners();
   }
 
-  void yearSpin_actionPerformed() {
+  static void yearSpin_actionPerformed() {
     if (ignoreChange) return;
     _date = new CalendarDate(_date.getDay(), _date.getMonth(), ((Integer)yearSpin.getValue()).intValue());
     jnCalendar.set(_date);
     notifyListeners();
   }
 
-  void monthBackButton_actionPerformed(ActionEvent e) {
+  static void monthBackButton_actionPerformed(ActionEvent e) {
     Calendar cal = _date.getCalendar();
     cal.add(Calendar.MONTH, -1); cal.getTime();
     _date = new CalendarDate(cal);
@@ -390,13 +423,13 @@ public class JNCalendarPanel extends JPanel {
     notifyListeners();
   }
 
-  void todayButton_actionPerformed(ActionEvent e) {
+  static void todayButton_actionPerformed(ActionEvent e) {
     _date = CalendarDate.today();
     refreshView();
     notifyListeners();
   }
 
-  void monthForwardButton_actionPerformed(ActionEvent e) {
+  static void monthForwardButton_actionPerformed(ActionEvent e) {
     Calendar cal = _date.getCalendar();
     cal.add(Calendar.MONTH, 1); cal.getTime();
     _date = new CalendarDate(cal);
@@ -404,19 +437,51 @@ public class JNCalendarPanel extends JPanel {
     notifyListeners();
   }
   
-  // TODO search button backend logic
-  void searchButton_actionPerformed(ActionEvent e) {
+  static void searchButton_actionPerformed(ActionEvent e) {
 	  System.out.println("Called to search tasks");
-	  TaskSearchPanel searchPanel = new TaskSearchPanel();
-	  this.add(searchPanel,  BorderLayout.SOUTH);
-	  refreshView();
+	  
+	  if (!TaskSearchPanel.isOpen()) {
+		  jnCalendar.setRowHeight((int)(Toolkit.getDefaultToolkit().getScreenSize().height*(.35)/8));
+		  jnCalendar.getTableHeader().setPreferredSize(new Dimension(900, 40));
+		  navigationPanel.setPreferredSize(new Dimension(1380, 50));
+		  
+		  TaskSearchPanel searchPanel = new TaskSearchPanel();
+		  //jnCalendarPanel.setSize(new Dimension(500,500));
+		  singletonCalendarPanel.add(searchPanel,  BorderLayout.SOUTH);
+		  refreshView();
+	  }
   }
   
-  void addTaskButton_actionPerformed(ActionEvent e) {
-	  System.out.println("Called to add a task");
-	  NewTaskWindow taskCreationWindow = new NewTaskWindow(); // Creates task creation window
+  static void addTaskButton_actionPerformed(ActionEvent e) {
+  	NewTaskWindow dlg = new NewTaskWindow(App.getFrame(),"Create a New Task"); // Creates task creation window
+    
+    //XXX String parentTaskId = taskTable.getCurrentRootTask();
+    
+    //Dimension frmSize = App.getFrame().getSize();
+    //Point loc = App.getFrame().getLocation();
+    //dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.width - dlg.getSize().height) / 2 + loc.y);
+    dlg.setVisible(true);
+    if (dlg.CANCELLED)
+        return;
+    /*CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
+//    CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+      CalendarDate ed;
+		if(dlg.chkEndDate.isSelected())
+			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
+		else
+			ed = null;*/
+    long effort = Util.getMillisFromHours(dlg.getActualLoc().getText());
+	//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
+	Task newTask = CurrentProject.getTaskList().createTask(dlg.getStartDate().getText(), dlg.getEndDate().getText(), dlg.getName(), 
+			dlg.priorityCB.getSelectedIndex(),effort, dlg.getTaskDesc().getText(),null, dlg.getHoursEst().getText(),
+			dlg.getLocEst().getText(), dlg.getNumFiles().getText());
+//	CurrentProject.getTaskList().adjustParentTasks(newTask);
+	newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
+    CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+    //taskTable.updateUI();
   }
 
+  
 
 
 }

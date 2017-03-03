@@ -40,6 +40,7 @@ import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.date.DateListener;
+import net.sf.memoranda.ui.develop.HomePanel;
 import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Util;
@@ -60,7 +61,7 @@ public class DailyItemsPanel extends JPanel {
     JPanel editorsPanel = new JPanel();
     CardLayout cardLayout1 = new CardLayout();
     public EditorPanel editorPanel = new EditorPanel(this);
-    JLabel currentDateLabel = new JLabel();
+    JLabel currentPageLabel = new JLabel();
     BorderLayout borderLayout4 = new BorderLayout();
     TaskPanel tasksPanel = new TaskPanel(this);
     EventsPanel eventsPanel = new EventsPanel(this);
@@ -78,12 +79,12 @@ public class DailyItemsPanel extends JPanel {
     boolean dateChangedByCalendar = false;
     boolean changedByHistory = false;
     JPanel cmainPanel = new JPanel();
-    private JNCalendarPanel calendar = new JNCalendarPanel();
+    private JNCalendarPanel calendar = JNCalendarPanel.getInstance();
     JToolBar toggleToolBar = new JToolBar();
     BorderLayout borderLayout5 = new BorderLayout();
     Border border1;
     JButton toggleButton = new JButton();
-    WorkPanel parentPanel = null;
+    HomePanel parentPanel = null;
     
     boolean addedToHistory = false;
     JPanel indicatorsPanel = new JPanel();
@@ -105,14 +106,22 @@ public class DailyItemsPanel extends JPanel {
 
     public DailyItemsPanel(WorkPanel _parentPanel) {
         try {
-            parentPanel = _parentPanel;
+           // parentPanel = _parentPanel;
             jbInit();
         }
         catch (Exception ex) {
             new ExceptionDialog(ex);
         }
     }
-    void jbInit() throws Exception {
+    public DailyItemsPanel() {
+        try {
+            //parentPanel = homePanel;
+            jbInit();
+        }catch (Exception ex) {
+            new ExceptionDialog(ex);
+        }
+	}
+	void jbInit() throws Exception {
         border1 = BorderFactory.createEtchedBorder(Color.white, Color.gray);
         border2 = BorderFactory.createEtchedBorder(Color.white, new Color(161, 161, 161));
         this.setLayout(borderLayout1);
@@ -128,9 +137,9 @@ public class DailyItemsPanel extends JPanel {
         statusPanel.setMinimumSize(new Dimension(14, 24));
         statusPanel.setPreferredSize(new Dimension(14, 24));
         statusPanel.setLayout(borderLayout4);
-        currentDateLabel.setFont(new java.awt.Font("Dialog", 0, 16));
-        currentDateLabel.setForeground(Color.white);
-        currentDateLabel.setText(CurrentDate.get().getFullDateString());
+        currentPageLabel.setFont(new java.awt.Font("Dialog", 0, 16));
+        currentPageLabel.setForeground(Color.white);
+        currentPageLabel.setText(CurrentDate.get().getFullDateString());
         borderLayout4.setHgap(4);
         controlPanel.setBackground(new Color(230, 230, 230));
         controlPanel.setBorder(border2);
@@ -192,13 +201,13 @@ public class DailyItemsPanel extends JPanel {
 
         getNotesControlPane().setFont(new java.awt.Font("Dialog", 1, 10));
         mainTabsPanel.setLayout(cardLayout2);
-        this.add(splitPane, BorderLayout.CENTER);
+        
 
         controlPanel.add(cmainPanel, BorderLayout.CENTER);
         cmainPanel.add(getCalendar(), BorderLayout.NORTH);
 
         mainPanel.add(statusPanel, BorderLayout.NORTH);
-        statusPanel.add(currentDateLabel, BorderLayout.CENTER);
+        statusPanel.add(currentPageLabel, BorderLayout.CENTER);
         statusPanel.add(indicatorsPanel, BorderLayout.EAST);
 
         mainPanel.add(editorsPanel, BorderLayout.CENTER);
@@ -209,14 +218,15 @@ public class DailyItemsPanel extends JPanel {
         editorsPanel.add(editorPanel, "NOTES");
        // editorsPanel.add(calendarPanel, "CALENDAR");
         
-        splitPane.add(mainPanel, JSplitPane.RIGHT);
-        splitPane.add(controlPanel, JSplitPane.LEFT);
+       // splitPane.add(mainPanel, JSplitPane.RIGHT);
+        //splitPane.add(controlPanel, JSplitPane.LEFT);
         controlPanel.add(toggleToolBar, BorderLayout.SOUTH);
         toggleToolBar.add(toggleButton, null);
 
         splitPane.setDividerLocation((int) controlPanel.getPreferredSize().getWidth());
         //splitPane.setResizeWeight(0.0);
-
+        this.add(mainPanel, BorderLayout.CENTER);
+        
         CurrentDate.addDateListener(new DateListener() {
             public void dateChange(CalendarDate d) {
                 currentDateChanged(d);
@@ -336,13 +346,13 @@ public class DailyItemsPanel extends JPanel {
             }
         }*/
 
-		currentDateLabel.setText(newdate.getFullDateString());
+		currentPageLabel.setText(newdate.getFullDateString());
         if ((currentNote != null) && (currentNote.isMarked())) {
-            currentDateLabel.setIcon(bookmarkIcon);
-            currentDateLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+            currentPageLabel.setIcon(bookmarkIcon);
+            currentPageLabel.setHorizontalTextPosition(SwingConstants.LEFT);
         }
         else {
-            currentDateLabel.setIcon(null);
+            currentPageLabel.setIcon(null);
         }		
 
         updateIndicators(newdate, CurrentProject.getTaskList());
@@ -470,17 +480,18 @@ public class DailyItemsPanel extends JPanel {
         cardLayout2.show(mainTabsPanel, pan + "TAB");
 		getCalendar().jnCalendar.updateUI();
 		CurrentPanel=pan;
+		currentPageLabel.setText(CurrentPanel);
     }
 
 	public String getCurrentPanel() {
 		return CurrentPanel;
 	}
     void taskB_actionPerformed(ActionEvent e) {
-        parentPanel.tasksB_actionPerformed(null);
+        HomePanel.setActivePanel(HomePanel.TASK_PANEL);
     }
 
     void alarmB_actionPerformed(ActionEvent e) {
-        parentPanel.eventsB_actionPerformed(null);
+        HomePanel.setActivePanel(HomePanel.ALARM);
     }
 	/**
 	 * @return the notesControlPane

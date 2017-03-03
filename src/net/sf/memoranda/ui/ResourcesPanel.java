@@ -13,6 +13,7 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -24,6 +25,7 @@ import javax.swing.event.ListSelectionListener;
 
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.Resource;
+import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.util.AppList;
 import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
@@ -37,16 +39,19 @@ import java.io.*;
 public class ResourcesPanel extends JPanel {
     BorderLayout borderLayout1 = new BorderLayout();
     JToolBar toolBar = new JToolBar();
+    JPanel titleAndToolBar = new JPanel();
     JButton newResB = new JButton();
     ResourcesTable resourcesTable = new ResourcesTable();
     JButton removeResB = new JButton();
     JScrollPane scrollPane = new JScrollPane();
     JButton refreshB = new JButton();
-  JPopupMenu resPPMenu = new JPopupMenu();
-  JMenuItem ppRun = new JMenuItem();
-  JMenuItem ppRemoveRes = new JMenuItem();
-  JMenuItem ppNewRes = new JMenuItem();
-  JMenuItem ppRefresh = new JMenuItem();
+	JPopupMenu resPPMenu = new JPopupMenu();
+	JMenuItem ppRun = new JMenuItem();
+	JMenuItem ppRemoveRes = new JMenuItem();
+	JMenuItem ppNewRes = new JMenuItem();
+	JMenuItem ppRefresh = new JMenuItem();
+	JPanel currentPagePanel = new JPanel();
+	JLabel currentPageLabel = new JLabel();
 
     public ResourcesPanel() {
         try {
@@ -57,8 +62,20 @@ public class ResourcesPanel extends JPanel {
         }
     }
     void jbInit() throws Exception {
+    	
         toolBar.setFloatable(false);
         this.setLayout(borderLayout1);
+        
+        titleAndToolBar.setLayout(new BorderLayout());
+        currentPagePanel.setBackground(Color.black);
+        currentPagePanel.setForeground(Color.white);
+        currentPagePanel.setMinimumSize(new Dimension(14, 24));
+        currentPagePanel.setPreferredSize(new Dimension(14, 24));
+        currentPagePanel.setLayout(new BorderLayout());
+        currentPageLabel.setFont(new java.awt.Font("Dialog", 0, 16));
+        currentPageLabel.setForeground(Color.white);
+        currentPageLabel.setText("RESOURCES");
+        
         newResB.setIcon(
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/addresource.png")));
         newResB.setEnabled(true);
@@ -161,13 +178,19 @@ public class ResourcesPanel extends JPanel {
     });
     ppRefresh.setIcon(new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/refreshres.png")));
 
+    currentPagePanel.add(currentPageLabel, BorderLayout.WEST);
+    
     toolBar.add(newResB, null);
-        toolBar.add(removeResB, null);
-        toolBar.addSeparator();
-        toolBar.add(refreshB, null);
-        this.add(scrollPane, BorderLayout.CENTER);
-        scrollPane.getViewport().add(resourcesTable, null);
-        this.add(toolBar, BorderLayout.NORTH);
+    toolBar.add(removeResB, null);
+    toolBar.addSeparator();
+    toolBar.add(refreshB, null);
+    
+    titleAndToolBar.add(currentPagePanel, BorderLayout.NORTH);
+    titleAndToolBar.add(toolBar, BorderLayout.SOUTH);
+    
+    this.add(scrollPane, BorderLayout.CENTER);
+    scrollPane.getViewport().add(resourcesTable, null);
+    this.add(titleAndToolBar, BorderLayout.NORTH);
     resPPMenu.add(ppRun);
     resPPMenu.addSeparator();
     resPPMenu.add(ppNewRes);
