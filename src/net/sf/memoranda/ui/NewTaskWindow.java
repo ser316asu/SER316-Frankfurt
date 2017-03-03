@@ -26,8 +26,7 @@ import java.util.Date;
 */
 public class NewTaskWindow extends JDialog implements ActionListener {
 	
-	//private enum TaskState{ADD, IN_PROG, END_ADD, FINAL_RESULTS};
-    public boolean CANCELLED = true;
+	public boolean CANCELLED = true;
 	
 	private int WIDTH;
 	private int HEIGHT;
@@ -54,7 +53,6 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	
 	private JTextArea taskDesc;
 	
-	// Results (These made visible in STATE 3)
 	private JTextField actualLoc;
 	private JTextField totalHours; 
 	private JTextField actualNumFiles;
@@ -300,7 +298,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		if(jTextFieldName.getText() == null || jTextFieldName.getText().equals("Name of Task") 
 				|| jTextFieldName.getText().equals("startDate is invalid") || jTextFieldName.getText().equals("")){
 			System.out.println("Task Name is invalid");
-			jTextFieldName.setText("startDate is invalid");
+			jTextFieldName.setText("Task Name is invalid");
 			statusLabel.setText("Invalid Entry: Please fix marked fields");
 			jTextFieldName.setBackground(Color.red);
 			isValid = false;
@@ -323,7 +321,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 
 		}
 		// CHECK END DATE
-		// TODO: CHECK TO MAKE SURE END-DATE >= START-DATE. Use compareTo()
+		// CHECK TO MAKE SURE END-DATE >= START-DATE. Use compareTo()
 		if(endDate.getValue() == null){
 			System.out.println("endDate is invalid");
 			endDate.setText("RE-ENTER! (dd/mm/yyyy)");

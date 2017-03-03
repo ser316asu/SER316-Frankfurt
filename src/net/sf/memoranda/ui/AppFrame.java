@@ -94,6 +94,14 @@ public class AppFrame extends JFrame
     public Action newTaskAction = new AbstractAction("New Task") {
         public void actionPerformed(ActionEvent e) {
         	NewTaskWindow newTask = new NewTaskWindow(App.getFrame(),"Create A New Task");
+        	
+            Dimension frmSize = App.getFrame().getSize();
+            Point loc = App.getFrame().getLocation();
+            newTask.setLocation((frmSize.width / 4), (frmSize.height / 4));
+            newTask.setVisible(true);
+            
+        	System.out.println("HERE");
+        	//NewTaskWindow newTask = new NewTaskWindow();
         }
     };
 
