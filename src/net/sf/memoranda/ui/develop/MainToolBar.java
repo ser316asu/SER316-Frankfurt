@@ -15,6 +15,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -229,22 +231,22 @@ public class MainToolBar extends JLabel implements Styling{
 	 */
 	private void addRollOverEffects() {
 		this.tasksB.setRolloverEnabled(true);
-		this.tasksB.setRolloverIcon(new ImageIcon("../../../../../Assets/ui/NewTaskButton_hover.png"));
+		this.tasksB.setRolloverIcon(LoadAssets.TOOLBAR_TASK_HOVER_BUTTON_IMAGE);
 		
 		this.calendarB.setRolloverEnabled(true);
-		this.calendarB.setRolloverIcon(new ImageIcon("../../../../../Assets/ui/calendarIconWhite_hover.png"));
+		this.calendarB.setRolloverIcon(LoadAssets.TOOLBAR_BELL_HOVER_BUTTON_IMAGE);
 		
 		this.homeB.setRolloverEnabled(true);
-		this.homeB.setRolloverIcon(new ImageIcon("../../../../../Assets/ui/HomeButton_hover.png"));
+		this.homeB.setRolloverIcon(LoadAssets.TOOLBAR_HOME_HOVER_BUTTON_IMAGE);
 		
 		this.notifcationB.setRolloverEnabled(true);
-		this.notifcationB.setRolloverIcon(new ImageIcon("../../../../../Assets/ui/bellnotification_hover.png"));
+		this.notifcationB.setRolloverIcon(LoadAssets.TOOLBAR_BELL_HOVER_BUTTON_IMAGE);
 		
 		this.filesB.setRolloverEnabled(true);
-		this.filesB.setRolloverIcon(new ImageIcon("../../../../../Assets/ui/FileIcon_hover.png"));
+		this.filesB.setRolloverIcon(LoadAssets.TOOLBAR_FILE_HOVER_BUTTON_IMAGE);
 		
 		this.notesB.setRolloverEnabled(true);
-		this.notesB.setRolloverIcon(new ImageIcon("../../../../../Assets/ui/notesIcon_hover.png"));
+		this.notesB.setRolloverIcon(LoadAssets.TOOLBAR_CALENDAR_HOVER_BUTTON_IMAGE);
 	}
 
 	/**
