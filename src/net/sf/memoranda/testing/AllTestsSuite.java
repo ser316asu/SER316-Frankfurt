@@ -7,7 +7,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({TaskCardTest.class, JNCalendarPanelTest.class})
+@SuiteClasses({JNCalendarPanelTest.class})
 public class AllTestsSuite {
 
 	@BeforeClass

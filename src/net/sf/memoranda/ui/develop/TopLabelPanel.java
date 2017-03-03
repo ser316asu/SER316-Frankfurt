@@ -39,24 +39,6 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
     
     /** The height ratio. */
     private final double WIDTH_RATIO = .5,HEIGHT_RATIO = 1.0;
-
-    /**
-     * Instantiates a new top label panel.
-     *
-     * @param task the task
-     * @param location the location
-     */
-    public TopLabelPanel(TaskCard task,int location){
-    	this.task = null;
-    	this.location = location;
-    	this.labels = new JLabel[LABEL_COUNT*2];
-    	layout = new GridLayout(LABEL_COUNT,2);
-    	createLabels();
-    	this.setLayout(layout);
-    	alignLabels();
-    	addLabels();
-        style();
-    }
     
     /**
      * Instantiates a new top label panel.

@@ -5,7 +5,6 @@ import javax.swing.border.Border;
 import javax.swing.text.DateFormatter;
 
 import net.sf.memoranda.Task;
-import net.sf.memoranda.TaskCard;
 import net.sf.memoranda.util.Local;
 
 import java.awt.*;

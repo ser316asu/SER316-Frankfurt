@@ -18,8 +18,6 @@ public class Main{
 	/** The d. */
 	public static Develop d;
 	
-	/** The task. */
-	public static TaskCard task;
     //public static Hashtable<String,TaskCard> tasks;
    
     /**

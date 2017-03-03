@@ -94,9 +94,6 @@ public class HomePanel extends JLabel implements Styling {
 	/** The low P. */
 	private LowerHomePanel lowP;
     
-    /** The tasks. */
-    private Hashtable<String,TaskCard> tasks;
-    
     /** The assets. */
     @SuppressWarnings("unused")
 	private LoadAssets assets;
