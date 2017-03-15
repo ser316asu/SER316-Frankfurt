@@ -351,15 +351,14 @@ public class EventsPanel extends JPanel {
     	}
     	saveEvents();
     }
-
-    private void saveEvents() {
+    public void saveEvents() {
 	CurrentStorage.get().storeEventsManager();
         eventsTable.refresh();
         EventsScheduler.init();
         parentPanel.getCalendar().jnCalendar.updateUI();
         parentPanel.updateIndicators();
     }
-
+    
     private void updateEvents(EventDialog dlg, int hh, int mm, String text) {
 	int rtype;
         int period;
