@@ -202,7 +202,9 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		
 		notifB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	newEventB_actionPerformed(e);
+            	System.out.println("Before new event action");
+            	setNotifB_actionPerformed(e);
+            	System.out.println("After new event action");
             }
         });
 
@@ -441,89 +443,29 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		
 	}
 	
-    void newEventB_actionPerformed(ActionEvent e) {
-        Calendar cdate = CurrentDate.get().getCalendar();
-        // round down to hour
-        cdate.set(Calendar.MINUTE,0);  
-        Util.debug("Default time is " + cdate);
-        
-    	newEventB_actionPerformed(e, null, cdate.getTime(), cdate.getTime());
-    }
-    
-    void newEventB_actionPerformed(ActionEvent e, String tasktext, Date startDate, Date endDate) {
-    	EventDialog dlg = new EventDialog(App.getFrame(), Local.getString("New event"));
-    	Dimension frmSize = App.getFrame().getSize();
-    	Point loc = App.getFrame().getLocation();
-    	if (tasktext != null) {
-    		dlg.textField.setText(tasktext);
-    	}
-		dlg.startDate.getModel().setValue(startDate);
-		dlg.endDate.getModel().setValue(endDate);
-		dlg.timeSpin.getModel().setValue(startDate);
-
-    	dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
-    	dlg.setEventDate(startDate);
-		dlg.setVisible(true);
-    	if (dlg.CANCELLED)
-    		return;
-    	Calendar calendar = new GregorianCalendar(Local.getCurrentLocale()); //Fix deprecated methods to get hours
-    	//by (jcscoobyrs) 14-Nov-2003 at 10:24:38 AM
-    	calendar.setTime(((Date)dlg.timeSpin.getModel().getValue()));//Fix deprecated methods to get hours
-    	//by (jcscoobyrs) 14-Nov-2003 at 10:24:38 AM
-    	int hh = calendar.get(Calendar.HOUR_OF_DAY);//Fix deprecated methods to get hours
-    	//by (jcscoobyrs) 14-Nov-2003 at 10:24:38 AM
-    	int mm = calendar.get(Calendar.MINUTE);//Fix deprecated methods to get hours
-    	//by (jcscoobyrs) 14-Nov-2003 at 10:24:38 AM
+    private void setNotifB_actionPerformed(ActionEvent e) {
+    	String Date = this.startDate.getText();
+    	String [] time = Date.split("/");
     	
-    	//int hh = ((Date) dlg.timeSpin.getModel().getValue()).getHours();
-    	//int mm = ((Date) dlg.timeSpin.getModel().getValue()).getMinutes();
-    	String text = dlg.textField.getText();
-		
-		CalendarDate eventCalendarDate = new CalendarDate(dlg.getEventDate());
-		
-    	if (dlg.noRepeatRB.isSelected())
-    		EventsManager.createEvent(eventCalendarDate, hh, mm, text);
-    	else {
-    		updateEvents(dlg,hh,mm,text);
-    	}
-    	saveEvents();
+    	int month = Integer.parseInt(time[0]);
+    	int day = Integer.parseInt(time[1]);
+    	int year = Integer.parseInt(time[2]);
+    	
+    	Date startDate = new Date(year,month,day);
+    	
+    	Date = this.startDate.getText();
+    	time = Date.split("/");
+    	
+    	month = Integer.parseInt(time[0]);
+    	day = Integer.parseInt(time[1]);
+    	year = Integer.parseInt(time[2]);
+    	
+    	Date endDate = new Date(year,month,day);
+    	
+    	System.out.println("sdate " + startDate + "  eDate " + endDate);
+    	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 
+			this.getTaskDesc().getText(), startDate,endDate);
     }
-    
-    private void saveEvents() {
-    	CurrentStorage.get().storeEventsManager();
-    	App.frame.workPanel.dailyItemsPanel.eventsPanel.saveEvents();
-        }
-
-    private void updateEvents(EventDialog dlg, int hh, int mm, String text) {
-    	int rtype;
-            int period;
-            CalendarDate sd = new CalendarDate((Date) dlg.startDate.getModel().getValue());
-            CalendarDate ed = null;
-            if (dlg.enableEndDateCB.isSelected())
-                ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-            if (dlg.dailyRepeatRB.isSelected()) {
-                rtype = EventsManager.REPEAT_DAILY;
-                period = ((Integer) dlg.daySpin.getModel().getValue()).intValue();
-            }
-            else if (dlg.weeklyRepeatRB.isSelected()) {
-                rtype = EventsManager.REPEAT_WEEKLY;
-                period = dlg.weekdaysCB.getSelectedIndex() + 1;
-    	    if (Configuration.get("FIRST_DAY_OF_WEEK").equals("mon")) {
-    		if(period==7) period=1;
-    		else period++;
-    	    }
-            }
-    	else if (dlg.yearlyRepeatRB.isSelected()) {
-    	    rtype = EventsManager.REPEAT_YEARLY;
-    	    period = sd.getCalendar().get(Calendar.DAY_OF_YEAR);
-    	    if((sd.getYear() % 4) == 0 && sd.getCalendar().get(Calendar.DAY_OF_YEAR) > 60) period--;
-    	}
-            else {
-                rtype = EventsManager.REPEAT_MONTHLY;
-                period = ((Integer) dlg.dayOfMonthSpin.getModel().getValue()).intValue();
-            }
-            EventsManager.createRepeatableEvent(rtype, sd, ed, period, hh, mm, text, dlg.workingDaysOnlyCB.isSelected());
-        }
 	
 	/* GETTERS, THEN SETTERS */
 

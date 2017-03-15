@@ -304,7 +304,7 @@ public class EventsPanel extends JPanel {
 	saveEvents();
     }
 
-    void newEventB_actionPerformed(ActionEvent e) {
+    public void newEventB_actionPerformed(ActionEvent e) {
         Calendar cdate = CurrentDate.get().getCalendar();
         // round down to hour
         cdate.set(Calendar.MINUTE,0);  
@@ -352,8 +352,12 @@ public class EventsPanel extends JPanel {
     	saveEvents();
     }
     public void saveEvents() {
-	CurrentStorage.get().storeEventsManager();
+    	System.out.println("event saved");
+    	CurrentStorage.get().storeEventsManager();
         eventsTable.refresh();
+        eventsTable.revalidate();
+        this.revalidate();
+        this.parentPanel.revalidate();
         EventsScheduler.init();
         parentPanel.getCalendar().jnCalendar.updateUI();
         parentPanel.updateIndicators();
