@@ -10,6 +10,8 @@ package net.sf.memoranda.ui;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -17,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 
 import net.sf.memoranda.CurrentProject;
+import net.sf.memoranda.Event;
 import net.sf.memoranda.EventsManager;
 import net.sf.memoranda.Task;
 import net.sf.memoranda.date.CalendarDate;
@@ -59,24 +62,19 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
         
 		// Non-Selected Calendar Cells
 		if (!isSelected) {
-//			CalendarDate projectStartDate = CurrentProject.get().getStartDate();
-//            CalendarDate projectEndDate = CurrentProject.get().getEndDate();
-            //if (!(((date.after(projectStartDate)) && (date.before(projectEndDate))) || (date.equals(projectStartDate)) || (date.equals(projectEndDate)))) {
             	
-            	// Set Foreground color based on work week and weekend days
-            	if (date.getCalendar().get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || date.getCalendar().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-            		label.setForeground(Color.LIGHT_GRAY);
-            	} else {
-            		label.setForeground(Color.DARK_GRAY);
-            	}
-            	label.setBackground(Color.WHITE);
-            	
-            	// today cell foreground and background colors (non-selected)
-                if (date.equals(CalendarDate.today())) {
-                    label.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 128)));
-                }
-				return label;
-			//}
+        	// Set Foreground color based on work week and weekend days
+        	if (date.getCalendar().get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || date.getCalendar().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+        		label.setForeground(Color.LIGHT_GRAY);
+        	} else {
+        		label.setForeground(Color.DARK_GRAY);
+        	}
+        	label.setBackground(Color.WHITE);
+        	
+        	// today cell foreground and background colors (non-selected)
+            if (date.equals(CalendarDate.today())) {
+                label.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 128)));
+            }
         }		
 
 		
@@ -96,41 +94,29 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 		// General Layout Alignment of labels inside cell
 		label.setHorizontalAlignment(CENTER);
 		label.setEnabled(true);
-
-		
-//		// set foreground color
-//		if (date.getCalendar().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-////            label.setForeground(new Color(255, 0, 0));
-//        }
-//		else { 		
-//			label.setForeground(Color.BLACK);
-//		}
-
-//		// set background color
-//		if (currentPanel == null)
-//			label.setBackground(Color.WHITE);
-		
-		// TODO Remove these checks once drastic architecture reform is complete
-//		else if (currentPanel.equals("TASKS") && (task != null) && 
-//			(date.inPeriod(task.getStartDate(), task.getEndDate()))) 
-//				label.setBackground( new Color(230, 255, 230));
-//		
-//		else if(currentPanel.equals("NOTES") && 
-//		CurrentProject.getNoteList().getNoteForDate(date) != null) 
-//					label.setBackground(new Color(255,245,200));
-//		
-//		else if(currentPanel.equals("EVENTS") && 
-//		(!(EventsManager.getEventsForDate(date).isEmpty()))) 
-//					label.setBackground(new Color(255,230,230));
-		
-//		else if(!isSelected)
-//			label.setBackground(Color.WHITE);
 				
-		// Displaying events / tasks
-		if (EventsManager.isNREventsForDate(date)) //will need to change this to isTaskForDate(d) once new task structure is created
+		// Displaying event icon and info on click
+		if (EventsManager.isNREventsForDate(date)) {
+			
 			label.setIcon(eventIcon);
-		else
+			
+			if (isSelected) {
+				Vector eventsOnDate = (Vector) EventsManager.getEventsForDate(date);
+				JLabel nameOfEvents = new JLabel();
+				for (Iterator i = eventsOnDate.iterator(); i.hasNext();) {
+					Event e = (Event) i.next();
+					String eventName = e.getText();
+					String eventTime = e.getTimeString();
+					nameOfEvents.setText( nameOfEvents.getText() + ("<br>" + eventName + " - " + eventTime));
+				}
+				
+				nameOfEvents.setText(nameOfEvents.getText());
+				label.setText("<html>" + date.getDay() + nameOfEvents.getText() + "</html>");
+			}	
+		}
+		else {
 			label.setIcon(null);
+		}
 		
         return label;
     }
