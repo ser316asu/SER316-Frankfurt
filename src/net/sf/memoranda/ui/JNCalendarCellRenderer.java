@@ -9,6 +9,7 @@
 package net.sf.memoranda.ui;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Vector;
@@ -16,6 +17,7 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import net.sf.memoranda.CurrentProject;
@@ -112,6 +114,15 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 				
 				nameOfEvents.setText(nameOfEvents.getText());
 				label.setText("<html>" + date.getDay() + nameOfEvents.getText() + "</html>");
+				String eventsHtmlHead = "<table style=\"width:100%\"><tr><th align=\"left\">Events</th></tr></table>";
+				String eventsHtmlCore = "<table style=\"width:100%\"><tr><th align=\"left\">Name</th><th align=\"left\">Time</th><tr><td>Clean Up</td><td>5 oclock</td></tr><tr><td>Dirty Up</td><td>7 oclock</td></tr><tr><td>7 Up</td><td>9 oclock</td></tr>";
+				String tasksHtml = "<tr><th align=\"left\">Tasks</th></tr><tr><th align=\"left\">Name</th><th align=\"left\">Date Due</th><tr><td>Clean Up</td><td>May 22nd</td></tr><tr><td>Do Chores</td><td>May 23rd</td></tr></table>";
+				String fullHtmlTable = eventsHtmlHead + eventsHtmlCore + tasksHtml;
+				
+				label.setText("<html>" + fullHtmlTable + "</html>");
+				JScrollPane scroller = new JScrollPane(label, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				scroller.setPreferredSize(new Dimension(120,40));
+				return scroller;
 			}	
 		}
 		else {
