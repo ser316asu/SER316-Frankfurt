@@ -102,27 +102,41 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 			
 			label.setIcon(eventIcon);
 			
+			// Html table strings that will be used in creating the HTML table
+			String rowStart = "<tr>";
+			String cellStart = "<td>";
+			String cellEnd = "</td>";
+			String rowEnd = "</tr>";
+			
 			if (isSelected) {
 				Vector eventsOnDate = (Vector) EventsManager.getEventsForDate(date);
-				JLabel nameOfEvents = new JLabel();
+				String events = "";
+				
+				/** Iterate through every event on the clicked date
+				 * and format the events using the html "building blocks" defined above
+				 */
 				for (Iterator i = eventsOnDate.iterator(); i.hasNext();) {
 					Event e = (Event) i.next();
 					String eventName = e.getText();
 					String eventTime = e.getTimeString();
-					nameOfEvents.setText( nameOfEvents.getText() + ("<br>" + eventName + " - " + eventTime));
+					events += rowStart + cellStart + eventName + cellEnd + cellStart + eventTime + cellEnd + rowEnd;
 				}
 				
-				nameOfEvents.setText(nameOfEvents.getText());
-				label.setText("<html>" + date.getDay() + nameOfEvents.getText() + "</html>");
-				String eventsHtmlHead = "<table style=\"width:100%\"><tr><th align=\"left\">Events</th></tr></table>";
-				String eventsHtmlCore = "<table style=\"width:100%\"><tr><th align=\"left\">Name</th><th align=\"left\">Time</th><tr><td>Clean Up</td><td>5 oclock</td></tr><tr><td>Dirty Up</td><td>7 oclock</td></tr><tr><td>7 Up</td><td>9 oclock</td></tr>";
-				String tasksHtml = "<tr><th align=\"left\">Tasks</th></tr><tr><th align=\"left\">Name</th><th align=\"left\">Date Due</th><tr><td>Clean Up</td><td>May 22nd</td></tr><tr><td>Do Chores</td><td>May 23rd</td></tr></table>";
-				String fullHtmlTable = eventsHtmlHead + eventsHtmlCore + tasksHtml;
+				// Top of the Events Table Html 
+				String eventsHtmlHead = "<table style=\"width:100%\"><tr><th align=\"left\">Events</th></tr></table><table style=\"width:100%\"><tr><th align=\"left\">Name</th><th align=\"left\">Time</th>";
+				
+				// Top of Tasks Table Html
+				String tasksHtmlhead = "<tr><th align=\"left\">Tasks</th></tr><tr><th align=\"left\">Name</th><th align=\"left\">Date Due</th>";
+				
+				// Full html table that will be set as the calendar cell's text
+				String fullHtmlTable = eventsHtmlHead + events + "</table>";
 				
 				label.setText("<html>" + fullHtmlTable + "</html>");
-				JScrollPane scroller = new JScrollPane(label, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+				
+				// Creates and returns JScrollPane (incase of a large amount of events / tasks on the clicked date.
+				JScrollPane scroller = new JScrollPane(label, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED); // TODO get scrollpane to scroll
 				scroller.setPreferredSize(new Dimension(120,40));
-				return scroller;
+				return scroller; 
 			}	
 		}
 		else {
