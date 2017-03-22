@@ -111,6 +111,7 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 			if (isSelected) {
 				Vector eventsOnDate = (Vector) EventsManager.getEventsForDate(date);
 				String events = "";
+				String tasks = "";
 				
 				/** Iterate through every event on the clicked date
 				 * and format the events using the html "building blocks" defined above
@@ -122,6 +123,19 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 					events += rowStart + cellStart + eventName + cellEnd + cellStart + eventTime + cellEnd + rowEnd;
 				}
 				
+				for(Object task : CurrentProject.getTaskList().getTopLevelTasks())
+			    {
+			    	Task tsk = (Task)task;
+			    	
+			    	String taskName = tsk.getText();
+			    	
+			    	String taskTime = Integer.toString(tsk.getActualTime());
+			    	
+			    	tasks += rowStart + cellStart + taskName + cellEnd + cellStart + taskTime + cellEnd + rowEnd;
+			    	
+			    	
+			    }
+				
 				// Top of the Events Table Html 
 				String eventsHtmlHead = "<table style=\"width:100%\"><tr><th align=\"left\">Events</th></tr></table><table style=\"width:100%\"><tr><th align=\"left\">Name</th><th align=\"left\">Time</th>";
 				
@@ -129,7 +143,7 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 				String tasksHtmlhead = "<tr><th align=\"left\">Tasks</th></tr><tr><th align=\"left\">Name</th><th align=\"left\">Date Due</th>";
 				
 				// Full html table that will be set as the calendar cell's text
-				String fullHtmlTable = eventsHtmlHead + events + "</table>";
+				String fullHtmlTable = eventsHtmlHead + events + tasksHtmlhead + tasks + "</table>";
 				
 				label.setText("<html>" + fullHtmlTable + "</html>");
 				

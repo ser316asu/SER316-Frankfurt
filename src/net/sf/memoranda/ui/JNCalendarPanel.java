@@ -329,10 +329,17 @@ public class JNCalendarPanel extends JPanel {
     jnCalendar.getTableHeader().setPreferredSize(new Dimension(900, 80));
     jnCalendarPanel.add(jnCalendar.getTableHeader(), BorderLayout.NORTH);
     jnCalendarPanel.add(jnCalendar, BorderLayout.CENTER);
+    
+    /*for(Object task : CurrentProject.getTaskList().getTopLevelTasks())
+    {
+    	jnCalendar.getRenderer().setTask((Task) task);
+    }*/
+    
     jnCalendar.addSelectionListener(new ActionListener()  {
       public void actionPerformed(ActionEvent e) {
         setCurrentDateDay(jnCalendar.get(), jnCalendar.get().getDay());
       }
+      
     });
     /*CurrentDate.addChangeListener(new ActionListener()  {
       public void actionPerformed(ActionEvent e) {

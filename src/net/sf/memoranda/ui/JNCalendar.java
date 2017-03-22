@@ -7,15 +7,18 @@
  */
 package net.sf.memoranda.ui;
 
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Calendar;
 import java.util.Vector;
 
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.LabelUI;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -142,12 +145,18 @@ public class JNCalendar extends JTable {
 		 * CalendarDate(new Integer(d.toString()).intValue(), _date.getMonth(),
 		 * _date.getYear()));
 		 */
-		if (d != null)
+		if (d != null)//{
 			renderer.setDate(
 				new CalendarDate(
 					new Integer(d.toString()).intValue(),
 					_date.getMonth(),
 					_date.getYear()));
+		         //JLabel test = new JLabel("Hello There!");
+		         //renderer.setUI(test);
+		         
+		         //renderer.setText("Hello");
+		//}
+		//Qn. How to display a text on Calendar Cell
 		else
 			renderer.setDate(null);
 		return renderer;
