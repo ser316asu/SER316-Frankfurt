@@ -145,7 +145,7 @@ public class JNCalendar extends JTable {
 		 * CalendarDate(new Integer(d.toString()).intValue(), _date.getMonth(),
 		 * _date.getYear()));
 		 */
-		if (d != null)//{
+		if (d != null) {
 			renderer.setDate(
 				new CalendarDate(
 					new Integer(d.toString()).intValue(),
@@ -155,7 +155,7 @@ public class JNCalendar extends JTable {
 		         //renderer.setUI(test);
 		         
 		         //renderer.setText("Hello");
-		//}
+		}
 		//Qn. How to display a text on Calendar Cell
 		else
 			renderer.setDate(null);
