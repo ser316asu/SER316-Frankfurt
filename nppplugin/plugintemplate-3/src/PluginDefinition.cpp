@@ -134,9 +134,6 @@ void setFilepath()
 		std::cout << "You chose the file \"" << filename << "\"\n";
 		::MessageBoxA(NULL, filename, "Selected Filepath", 0);
 		//int fileLength = strlen(filename);
-
-
-
 	}
 	else
 	{
@@ -165,15 +162,22 @@ void setFilepath()
 }
 
 
-
+/* Is what actually executes the file to be opened via Windows*/
 void openMemoranda()
 {
 
 	//std::string const strlist{MEMORANDA_DIR};
-	::MessageBoxA(NULL, filename, "Selected Filepath", 0);
+	//::MessageBoxA(NULL, filename, "Selected Filepath", 0); // Remove this later after coding/testing.
 
+	std::ifstream pathIsValid(filename);
 
-	ShellExecuteA(NULL, "open", filename, NULL, NULL, SW_SHOWDEFAULT); // This needs <windows.h>
+	if (filename != NULL && pathIsValid) {
+			ShellExecuteA(NULL, "open", filename, NULL, NULL, SW_SHOWDEFAULT); // This needs <windows.h>
+	}
+	else {
+		::MessageBox(NULL, TEXT("Invalid Filepath"), TEXT("Filepath is blank or no longer valid."), MB_OK);
+	}
+
 }
 
 
