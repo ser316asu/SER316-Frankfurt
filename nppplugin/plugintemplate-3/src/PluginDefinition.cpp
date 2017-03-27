@@ -15,6 +15,8 @@
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
+
+
 #include "PluginDefinition.h"
 #include <Shobjidl.h>
 #include "menuCmdID.h"
@@ -49,8 +51,48 @@ NppData nppData;
 void pluginInit(HANDLE /*hModule*/)
 {
 
+	// TO-DO: Add try/catch blocks
+	
+	std::ifstream inFile;
+	std::ofstream outFile;
+	std::string line;
 
+	// Attempt to open existing filepath.txt
+	inFile.open("filename.txt"); 
 
+	// If filepath exists exist - above statement returns false
+
+	::MessageBoxA(NULL, filename, "Selected Filepath", 0);
+
+	if (inFile.is_open()) {
+		getline(inFile, line);
+
+		//line.copy(filename, 260);
+		char *cstr = new char[line.length()+1];
+		
+		strcpy(cstr, line.c_str());
+		
+		filename[0] = *cstr;
+
+		::MessageBoxA(NULL, filename, "Selected Filepath", 0);
+		
+		/*char *path[MAX_PATH] = &line[0u];
+		&filename = path;*/
+	}
+	
+	else {
+
+		outFile.open("filepath.txt"); // This path relative to /Notepad++ main directory
+		//outFile << "This is a test";
+		outFile.close();
+		
+	}
+
+	outFile.open("filepath.txt"); // This path relative to /Notepad++ main directory
+	outFile << "This is a test";
+	outFile.close();
+
+	// Else If fileapth.txt exists
 }
 
 //
@@ -177,7 +219,6 @@ void openMemoranda()
 	else {
 		::MessageBox(NULL, TEXT("Invalid Filepath"), TEXT("Filepath is blank or no longer valid."), MB_OK);
 	}
-
 }
 
 
