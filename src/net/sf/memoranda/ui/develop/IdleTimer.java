@@ -41,7 +41,6 @@ public class IdleTimer implements Runnable{
 	public synchronized void run() {
 		this.startTimer(iTimer);
 		while(!this.stop){
-			System.out.println("time: " + iTimer.time);
 			if(iTimer.time > IDLE_WAIT){
 				Timer tmpTimer = new Timer(WAIT_TO_CLOSE);
 				this.startTimer(tmpTimer);
@@ -53,6 +52,7 @@ public class IdleTimer implements Runnable{
 						JOptionPane.YES_NO_OPTION);
 				switch(result){
 					case JOptionPane.NO_OPTION:
+						tmpTimer.setState(Timer.STOP);
 						close();
 						break;
 					default:
@@ -60,6 +60,11 @@ public class IdleTimer implements Runnable{
 						break;
 				}
 				tmpTimer.setState(Timer.STOP);
+			}
+			try {
+				this.wait(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
 	}
