@@ -92,12 +92,12 @@ public class IdleTimer implements Runnable{
 	public void close(){
 		Util.debug("Closed Timer");
 		ExitConfirmationDialog ecd = new ExitConfirmationDialog(App.getFrame(),"Idle Timer");
+		ecd.setLocationRelativeTo(null);
 		ecd.setVisible(true);
-		ecd.setLocation(App.getFrame().getLocation().x/2, App.getFrame().getLocation().y/2);
 		if(!ecd.CANCELLED){
 			System.out.println("close");
 			this.stop();
-			App.getFrame().doExitWithAsk();
+			App.getFrame().doExitWithoutAsk();
 		}else{
 			this.resetTimer();
 		}
@@ -181,7 +181,7 @@ public class IdleTimer implements Runnable{
 				time = (System.currentTimeMillis() - startTime)/1000;
 				if(time > this.closeTime){
 					setState(Timer.STOP);
-					App.getFrame().doExitWithAsk();
+					App.getFrame().doExitWithoutAsk();
 				}
 			}
 			

@@ -671,7 +671,7 @@ public class AppFrame extends JFrame
                         Point loc = this.getLocation();
                         
                         ExitConfirmationDialog dlg = new ExitConfirmationDialog(this,Local.getString("Exit"));
-                        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+                        dlg.setLocationRelativeTo(null);
                         dlg.setVisible(true);
                         if(dlg.CANCELLED) return;
         }
@@ -686,7 +686,7 @@ public class AppFrame extends JFrame
     }
     
     //File | Exit action performed
-    public void doExitWithAsk() {
+    public void doExitWithoutAsk() {
     	IdleNotifier.getInstance().stop();
         Context.put("FRAME_WIDTH", new Integer(this.getWidth()));
         Context.put("FRAME_HEIGHT", new Integer(this.getHeight()));
