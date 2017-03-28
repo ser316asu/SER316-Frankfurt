@@ -12,6 +12,7 @@ import javax.swing.UIManager;
 
 import net.sf.memoranda.EventsScheduler;
 import net.sf.memoranda.ui.develop.IdleNotifier;
+import net.sf.memoranda.ui.develop.IdleTimer;
 import net.sf.memoranda.util.Configuration;
 
 /**
@@ -137,7 +138,9 @@ public class App {
 		frame.toFront();
 		frame.requestFocus();
 		//start thread for notifier
-		IdleNotifier.getInstance();
+		System.out.println("starting thread");
+		IdleNotifier exe = IdleNotifier.getInstance();
+		exe.execute(new IdleTimer());
 	}
 
 	public static void closeWindow() {

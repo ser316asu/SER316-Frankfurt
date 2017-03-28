@@ -44,6 +44,7 @@ import net.sf.memoranda.ProjectListener;
 import net.sf.memoranda.ResourcesList;
 import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CurrentDate;
+import net.sf.memoranda.ui.develop.IdleNotifier;
 import net.sf.memoranda.ui.htmleditor.HTMLEditor;
 import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.Context;
@@ -674,18 +675,32 @@ public class AppFrame extends JFrame
                         dlg.setVisible(true);
                         if(dlg.CANCELLED) return;
         }
-
+        IdleNotifier.getInstance().stop();
         Context.put("FRAME_WIDTH", new Integer(this.getWidth()));
         Context.put("FRAME_HEIGHT", new Integer(this.getHeight()));
         Context.put("FRAME_XPOS", new Integer(this.getLocation().x));
         Context.put("FRAME_YPOS", new Integer(this.getLocation().y));
         exitNotify();
+        
+        System.exit(0);
+    }
+    
+    //File | Exit action performed
+    public void doExitWithAsk() {
+    	IdleNotifier.getInstance().stop();
+        Context.put("FRAME_WIDTH", new Integer(this.getWidth()));
+        Context.put("FRAME_HEIGHT", new Integer(this.getHeight()));
+        Context.put("FRAME_XPOS", new Integer(this.getLocation().x));
+        Context.put("FRAME_YPOS", new Integer(this.getLocation().y));
+        exitNotify();
+        
         System.exit(0);
     }
 
     public void doMinimize() {
         exitNotify();
         App.closeWindow();
+        doExit();
     }
 
     //Help | About action performed

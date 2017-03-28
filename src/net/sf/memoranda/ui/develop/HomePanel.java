@@ -271,6 +271,7 @@ public class HomePanel extends JLabel implements Styling {
     }
     @Override
     public void paint(Graphics g){
-       super.paint(g);
+    	IdleNotifier.getInstance().resetTimer();
+    	super.paint(g);
    }
 }
