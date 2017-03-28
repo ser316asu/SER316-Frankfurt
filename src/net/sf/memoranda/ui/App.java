@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.UIManager;
 
 import net.sf.memoranda.EventsScheduler;
+import net.sf.memoranda.ui.develop.IdleNotifier;
 import net.sf.memoranda.util.Configuration;
 
 /**
@@ -135,7 +136,8 @@ public class App {
 		frame.setVisible(true);
 		frame.toFront();
 		frame.requestFocus();
-
+		//start thread for notifier
+		IdleNotifier.getInstance();
 	}
 
 	public static void closeWindow() {
