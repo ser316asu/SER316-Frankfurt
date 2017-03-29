@@ -118,8 +118,8 @@ public class IdleTimer implements Runnable{
 	 */
 	private class Timer implements Runnable{
 		
-		/** The Constant PAUSED. */
-		public static final int PAUSED = 2;
+		///** The Constant PAUSED. */
+		//public static final int PAUSED = 2;
 		
 		/** The Constant PLAY. */
 		public static final int PLAY = 0;
