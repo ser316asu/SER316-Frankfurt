@@ -126,7 +126,7 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 				for(Object task : CurrentProject.getTaskList().getTopLevelTasks())
 			    {
 			    	Task tsk = (Task)task;
-			    	
+			    	//tsk.get
 			    	String taskName = tsk.getText();
 			    	
 			    	String taskTime = Integer.toString(tsk.getActualTime());
