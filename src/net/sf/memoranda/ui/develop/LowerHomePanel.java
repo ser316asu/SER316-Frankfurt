@@ -22,14 +22,21 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.OverlayLayout;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.Task;
+
+
+import java.awt.*;
+import java.util.Hashtable;
+import java.util.Observer;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class LowerHomePanel.
  */
-public class LowerHomePanel extends JLabel implements Styling {
+public class LowerHomePanel extends JLabel implements Styling, Observer {
     
 	/** auto generated serialversion UID. */
 	private static final long serialVersionUID = -8015237809090141365L;
@@ -66,6 +73,7 @@ public class LowerHomePanel extends JLabel implements Styling {
     	editComponents();
     	addActionListeners();
     	addComponents();
+    	((java.util.Observable) CurrentProject.getTaskList()).addObserver(this);
     }
     
     /**
@@ -81,6 +89,7 @@ public class LowerHomePanel extends JLabel implements Styling {
     	editComponents();
     	addActionListeners();
     	addComponents();
+    	((java.util.Observable) CurrentProject.getTaskList()).addObserver(this);
     }
 
 
@@ -214,4 +223,11 @@ public class LowerHomePanel extends JLabel implements Styling {
     	
     	super.paint(graph);
     }
+
+
+
+	@Override
+	public void update(java.util.Observable o, Object arg) {
+		updateTaskBoard();		
+	}
 }

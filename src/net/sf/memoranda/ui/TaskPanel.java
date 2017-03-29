@@ -10,6 +10,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -41,7 +43,7 @@ import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Util;
 
 /*$Id: TaskPanel.java,v 1.27 2007/01/17 20:49:12 killerjoe Exp $*/
-public class TaskPanel extends JPanel {
+public class TaskPanel extends JPanel implements Observer {
     BorderLayout borderLayout1 = new BorderLayout();
     JToolBar tasksToolBar = new JToolBar();
     JButton newTaskB = new JButton();
@@ -66,7 +68,8 @@ public class TaskPanel extends JPanel {
 	DailyItemsPanel parentPanel = null;
 
     public TaskPanel(DailyItemsPanel _parentPanel) {
-        try {
+        ((Observable) CurrentProject.getTaskList()).addObserver(this);
+    	try {
             parentPanel = _parentPanel;
             jbInit();
         }
@@ -738,5 +741,12 @@ public class TaskPanel extends JPanel {
   void ppCalcTask_actionPerformed(ActionEvent e) {
       calcTask_actionPerformed(e);
   }
+@Override
+public void update(Observable arg0, Object arg1) {
+	taskTable.tableChanged();
+    parentPanel.updateIndicators();
+    taskTable.updateUI();
+}
 
+  
 }

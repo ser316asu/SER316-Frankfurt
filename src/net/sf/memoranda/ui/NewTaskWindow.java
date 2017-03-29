@@ -4,8 +4,16 @@ import javax.swing.Box.Filler;
 import javax.swing.border.Border;
 import javax.swing.text.DateFormatter;
 
+import net.sf.memoranda.CurrentProject;
+import net.sf.memoranda.EventsManager;
+import net.sf.memoranda.EventsScheduler;
 import net.sf.memoranda.Task;
+import net.sf.memoranda.date.CalendarDate;
+import net.sf.memoranda.date.CurrentDate;
+import net.sf.memoranda.util.Configuration;
+import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
+import net.sf.memoranda.util.Util;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -14,6 +22,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 /** 
@@ -49,6 +58,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	private JFormattedTextField locEst, hoursEst, numFiles; 
 	private JButton finishButton;
 	private JButton startStop; // Hoping to only use one button that changes when pressed
+	private JButton notifB;
 	private JLabel trackedMinutes; // Timer with stored data ---> will need XML 
 	
 	private JTextArea taskDesc;
@@ -81,6 +91,12 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		
 		//this.pack();
 		//this.setVisible(true);
+	}
+	
+	public static void main(String[] args)
+	{
+		NewTaskWindow ntw = new NewTaskWindow(new JFrame(), "Testing");
+		ntw.setVisible(true);
 	}
 	
 	public NewTaskWindow(JFrame parentFrame, String title, Task task){
@@ -141,6 +157,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		taskDesc = new JTextArea("Enter Task Description here...", 10, 120);
 		
 		finishButton = new JButton("Add Task");
+		notifB = new JButton("Add Notifcation");
 		
 		jPanelProgress = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		jLabelProgress = new JLabel();
@@ -183,6 +200,13 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		
 		taskDesc.setBorder(blackBorder);
 		
+		notifB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	System.out.println("Before new event action");
+            	setNotifB_actionPerformed(e);
+            	System.out.println("After new event action");
+            }
+        });
 
 		//###################
 		/* WINDOW SETUP */ 
@@ -252,6 +276,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		topLeftPane.add(endDate);
 		topLeftPane.add(jLabelProgress);
 		topLeftPane.add(jPanelProgress);
+		topLeftPane.add(this.notifB);
 		topLeftPane.setPreferredSize(centerPanelSize);
 	
 		// Top-Right-Center Pane
@@ -417,6 +442,30 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		return isValid; 
 		
 	}
+	
+    private void setNotifB_actionPerformed(ActionEvent e) {
+    	String Date = this.startDate.getText();
+    	String [] time = Date.split("/");
+    	
+    	int month = Integer.parseInt(time[0]);
+    	int day = Integer.parseInt(time[1]);
+    	int year = Integer.parseInt(time[2]);
+    	
+    	Date startDate = new Date(year,month,day);
+    	
+    	Date = this.startDate.getText();
+    	time = Date.split("/");
+    	
+    	month = Integer.parseInt(time[0]);
+    	day = Integer.parseInt(time[1]);
+    	year = Integer.parseInt(time[2]);
+    	
+    	Date endDate = new Date(year,month,day);
+    	
+    	System.out.println("sdate " + startDate + "  eDate " + endDate);
+    	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 
+			this.getTaskDesc().getText(), startDate,endDate);
+    }
 	
 	/* GETTERS, THEN SETTERS */
 
