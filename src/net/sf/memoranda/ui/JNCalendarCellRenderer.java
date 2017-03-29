@@ -122,19 +122,7 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 					String eventTime = e.getTimeString();
 					events += rowStart + cellStart + eventName + cellEnd + cellStart + eventTime + cellEnd + rowEnd;
 				}
-
-				for(Object task : CurrentProject.getTaskList().getTopLevelTasks())
-			    {
-			    	Task tsk = (Task)task;
-			    	//tsk.get
-			    	String taskName = tsk.getText();
-			    	
-			    	String taskTime = Integer.toString(tsk.getActualTime());
-			    	
-			    	tasks += rowStart + cellStart + taskName + cellEnd + cellStart + taskTime + cellEnd + rowEnd;
-			    	
-			    	
-
+				
 //				for(Object task : CurrentProject.getTaskList().getTopLevelTasks())
 //			    {
 //			    	Task tsk = (Task)task;
@@ -162,7 +150,7 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 				
 				// If the currently selected date is newly selected, display event/task window
 				if (!date.equals(lastDateSelected)) {
-					DateInformationWindow dateInfo = new DateInformationWindow(App.getFrame(),date,htmlText);
+					//DateInformationWindow dateInfo = new DateInformationWindow(App.getFrame(),date,htmlText);
 				}
 			}	
 		}
