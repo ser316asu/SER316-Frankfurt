@@ -34,6 +34,13 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
     boolean disabled = false;
     ImageIcon eventIcon = new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/en.png"));
     Task task = null;
+	
+	// Html table strings that will be used in creating the HTML table
+    String tasks = "";
+	String rowStart = "<tr>";
+	String cellStart = "<td>";
+	String cellEnd = "</td>";
+	String rowEnd = "</tr>";
     private static CalendarDate lastDateSelected;
     
     public void setTask(Task newTask) {
@@ -89,11 +96,7 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 				label.setForeground(Color.WHITE);
 			} else { // Regular Cells
 				
-				String tasks = "";
-				String rowStart = "<tr>";
-				String cellStart = "<td>";
-				String cellEnd = "</td>";
-				String rowEnd = "</tr>";
+				
 				
 				for(Object task : CurrentProject.getTaskList().getTopLevelTasks())
 				    {
@@ -118,7 +121,7 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 				
 			}
 			//	label.setBackground(Color.BLACK);
-				//label.setForeground(Color.WHITE);
+		    //  label.setForeground(Color.WHITE);
 			}
 		}
 		
@@ -126,42 +129,13 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 		label.setHorizontalAlignment(CENTER);
 		label.setEnabled(true);
 		
-	/*	if(isSelected){
-			String tasks = "";
-			String rowStart = "<tr>";
-			String cellStart = "<td>";
-			String cellEnd = "</td>";
-			String rowEnd = "</tr>";
-			
-			for(Object task : CurrentProject.getTaskList().getTopLevelTasks())
-			    {
-			    	Task tsk = (Task)task;
-			    	
-			    	if (date.equals(tsk.getStartDate())){
-			    		
-			    	String taskName = tsk.getText();
-			    	
-			    	String taskTime = Integer.toString(tsk.getActualTime());
-			    	
-			    	tasks += rowStart + cellStart + taskName + cellEnd + cellStart + taskTime + cellEnd + rowEnd;
-			    	
-			    	label.setText(label.getText()+tasks);
-			    	
-			    	}
-			    }
-			
-		}*/
 				
 		// Displaying event icon and info on click
 		if (EventsManager.isNREventsForDate(date)) {
 			
 			label.setIcon(eventIcon);
-			
-			// Html table strings that will be used in creating the HTML table
-			String rowStart = "<tr>";
-			String cellStart = "<td>";
-			String cellEnd = "</td>";
-			String rowEnd = "</tr>";
+	
+
 			
 			if (isSelected) {
 				Vector eventsOnDate = (Vector) EventsManager.getEventsForDate(date);
@@ -175,22 +149,10 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 					Event e = (Event) i.next();
 					String eventName = e.getText();
 					String eventTime = e.getTimeString();
-					//events += rowStart + cellStart + eventName + cellEnd + cellStart + eventTime + cellEnd + rowEnd;
+					events += rowStart + cellStart + eventName + cellEnd + cellStart + eventTime + cellEnd + rowEnd;
 				}
 				
-//				for(Object task : CurrentProject.getTaskList().getTopLevelTasks())
-//			    {
-//			    	Task tsk = (Task)task;
-//			    	
-//			    	String taskName = tsk.getText();
-//			    	
-//			    	String taskTime = Integer.toString(tsk.getActualTime());
-//			    	
-//			    	tasks += rowStart + cellStart + taskName + cellEnd + cellStart + taskTime + cellEnd + rowEnd;
-//			    	
-//			    	
-//			    }
-				
+
 				// Top of the Events Table Html 
 				String eventsHtmlHead = "<table style=\"width:100%\"><tr><th align=\"left\">Events</th></tr></table><table style=\"width:100%\"><tr><th align=\"left\">Name</th><th align=\"left\">Time</th>";
 				
