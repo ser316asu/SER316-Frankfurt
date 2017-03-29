@@ -95,36 +95,39 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 				label.setBackground(new Color(36,90,175));
 				label.setForeground(Color.WHITE);
 			} else { // Regular Cells
-				
-				
-				
-				for(Object task : CurrentProject.getTaskList().getTopLevelTasks())
-				    {
-				    	Task tsk = (Task)task;
-				    	
-				    	if (date.equals(tsk.getStartDate())){
-				    		
-				    	String taskName = tsk.getText();
-				    	
-				    	String taskTime = Integer.toString(tsk.getActualTime());
-				    	
-				    	tasks += rowStart + cellStart + taskName + cellEnd + cellStart + taskTime + cellEnd + rowEnd;
-				    	
-				    	label.setText(label.getText()+tasks);
-				    	
-				    	}else{
-
-							label.setBackground(Color.BLACK);
-							label.setForeground(Color.WHITE);
-				    		
-				    }
-				
-			}
-			//	label.setBackground(Color.BLACK);
-		    //  label.setForeground(Color.WHITE);
+			
+				label.setBackground(Color.BLACK);
+		        label.setForeground(Color.WHITE);
 			}
 		}
 		
+		for(Object task : CurrentProject.getTaskList().getTopLevelTasks())
+	    {
+	    	Task tsk = (Task)task;
+             //String taskName = tsk.getText();
+	    	
+	    	 //String taskTime = Integer.toString(tsk.getActualTime());
+	    	
+	         //tasks += rowStart + cellStart + taskName + cellEnd + cellStart + taskTime + cellEnd + rowEnd;
+	    	
+	    	if (date.equals(tsk.getStartDate())){
+	    		
+	    	
+	    	
+	    	label.setBackground(Color.RED);
+	    	//label.setBackground(Color.BLACK);
+			label.setForeground(Color.WHITE);
+	    	//label.setText(label.getText()+tasks);
+	    	
+	    	
+	    	}/*else{
+
+				label.setBackground(Color.BLACK);
+				label.setForeground(Color.WHITE);
+	    		
+	    }*/
+	
+    }
 		// General Layout Alignment of labels inside cell
 		label.setHorizontalAlignment(CENTER);
 		label.setEnabled(true);
