@@ -8,8 +8,11 @@
  * Contact: jdbecke3@asu.edu, atshinn@asu.edu
  **************************************************************/
 package net.sf.memoranda.ui.develop;
-import javax.swing.*;
 // TODO: Auto-generated Javadoc
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 /**
  * The Class MainMenuBar.

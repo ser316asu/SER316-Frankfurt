@@ -8,13 +8,22 @@
  * Contact: jdbecke3@asu.edu, atshinn@asu.edu
  **************************************************************/
 package net.sf.memoranda.ui.develop;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+import javax.swing.OverlayLayout;
 
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.Task;
-
-import java.awt.*;
-import java.util.Hashtable;
 
 // TODO: Auto-generated Javadoc
 /**
