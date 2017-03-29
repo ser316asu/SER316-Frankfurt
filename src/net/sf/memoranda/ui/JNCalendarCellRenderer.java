@@ -158,10 +158,10 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 			label.setIcon(eventIcon);
 			
 			// Html table strings that will be used in creating the HTML table
-			/*String rowStart = "<tr>";
+			String rowStart = "<tr>";
 			String cellStart = "<td>";
 			String cellEnd = "</td>";
-			String rowEnd = "</tr>";*/
+			String rowEnd = "</tr>";
 			
 			if (isSelected) {
 				Vector eventsOnDate = (Vector) EventsManager.getEventsForDate(date);
@@ -205,7 +205,9 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 				
 				// If the currently selected date is newly selected, display event/task window
 				if (!date.equals(lastDateSelected)) {
-					//DateInformationWindow dateInfo = new DateInformationWindow(App.getFrame(),date,htmlText);
+
+					// dateInfo = new DateInfoPopUp(App.getFrame(),date,htmlText);
+
 				}
 			}	
 		}
