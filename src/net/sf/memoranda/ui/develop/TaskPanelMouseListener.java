@@ -18,7 +18,8 @@ package net.sf.memoranda.ui.develop;
 *               the top left panel.
 * 
 **/
-import java.awt.event.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import net.sf.memoranda.Task;
 

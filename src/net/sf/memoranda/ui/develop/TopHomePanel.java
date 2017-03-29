@@ -9,11 +9,14 @@
  **************************************************************/
 package net.sf.memoranda.ui.develop;
 
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Graphics;
 
-import net.sf.memoranda.Task;
+import javax.swing.BoxLayout;
+import javax.swing.JSplitPane;
 
-import java.awt.*; 
+import net.sf.memoranda.Task; 
 
 // TODO: Auto-generated Javadoc
 /**

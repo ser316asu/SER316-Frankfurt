@@ -77,8 +77,8 @@ public class EventDialog extends JDialog implements WindowListener {
     JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
     JButton okB = new JButton();
     JButton cancelB = new JButton();
-    CalendarFrame endCalFrame = new CalendarFrame();
-    CalendarFrame startCalFrame = new CalendarFrame();
+    //CalendarFrame endCalFrame = new CalendarFrame();
+    //CalendarFrame startCalFrame = new CalendarFrame();
     private Date eventDate;
     
     public EventDialog(Frame frame, String title) {
@@ -200,7 +200,7 @@ public class EventDialog extends JDialog implements WindowListener {
                   endDate.getModel().setValue(sd);
                   ed = sd;
                 }
-                startCalFrame.cal.set(new CalendarDate(sd));
+                //startCalFrame.cal.set(new CalendarDate(sd));
                 ignoreStartChanged = false;
             }
         });
@@ -280,7 +280,7 @@ public class EventDialog extends JDialog implements WindowListener {
                     endDate.getModel().setValue(sd);
                     ed = sd;
                 }
-                endCalFrame.cal.set(new CalendarDate(ed));
+                //endCalFrame.cal.set(new CalendarDate(ed));
                 ignoreEndChanged = false;
             }
         });
@@ -390,19 +390,19 @@ public class EventDialog extends JDialog implements WindowListener {
         this.getContentPane().add(bottomPanel, BorderLayout.SOUTH);
         
         // Do final things...
-        startCalFrame.cal.addSelectionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (ignoreStartChanged) return;
-                startDate.getModel().setValue(startCalFrame.cal.get().getCalendar().getTime());
-            }
-        });
-        endCalFrame.cal.addSelectionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (ignoreEndChanged)
-                    return;
-                endDate.getModel().setValue(endCalFrame.cal.get().getCalendar().getTime());
-            }
-        });
+//        startCalFrame.cal.addSelectionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                if (ignoreStartChanged) return;
+//                startDate.getModel().setValue(startCalFrame.cal.get().getCalendar().getTime());
+//            }
+//        });
+//        endCalFrame.cal.addSelectionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                if (ignoreEndChanged)
+//                    return;
+//                endDate.getModel().setValue(endCalFrame.cal.get().getCalendar().getTime());
+//            }
+//        });
         disableElements();
         ((JSpinner.DateEditor) timeSpin.getEditor()).getFormat().applyPattern("HH:mm");
         enableEndDateCB_actionPerformed(null);
@@ -431,8 +431,8 @@ public class EventDialog extends JDialog implements WindowListener {
 		lblSince.setEnabled(true);
 		enableEndDateCB.setEnabled(true);
 		workingDaysOnlyCB.setEnabled(true);
-		startDate.getModel().setValue(
-			startCalFrame.cal.get().getCalendar().getTime());
+		//startDate.getModel().setValue(
+			//startCalFrame.cal.get().getCalendar().getTime());
     }
 
     public void monthlyRepeatRB_actionPerformed(ActionEvent e) {
@@ -443,8 +443,8 @@ public class EventDialog extends JDialog implements WindowListener {
         lblSince.setEnabled(true);
         enableEndDateCB.setEnabled(true);
 		workingDaysOnlyCB.setEnabled(true);
-		startDate.getModel().setValue(
-			startCalFrame.cal.get().getCalendar().getTime());        
+		//startDate.getModel().setValue(
+			//startCalFrame.cal.get().getCalendar().getTime());        
     }
 
     public void dailyRepeatRB_actionPerformed(ActionEvent e) {
@@ -455,8 +455,8 @@ public class EventDialog extends JDialog implements WindowListener {
         lblSince.setEnabled(true);
         enableEndDateCB.setEnabled(true);
 		workingDaysOnlyCB.setEnabled(true);
-		startDate.getModel().setValue(
-			startCalFrame.cal.get().getCalendar().getTime());        
+		//startDate.getModel().setValue(
+			//startCalFrame.cal.get().getCalendar().getTime());        
     }
 
     public void weeklyRepeatRB_actionPerformed(ActionEvent e) {
@@ -466,8 +466,8 @@ public class EventDialog extends JDialog implements WindowListener {
         setStartDateB.setEnabled(true);
         lblSince.setEnabled(true);
         enableEndDateCB.setEnabled(true);
-		startDate.getModel().setValue(
-			startCalFrame.cal.get().getCalendar().getTime());        
+		//startDate.getModel().setValue(
+			//startCalFrame.cal.get().getCalendar().getTime());        
     }
 
     public void noRepeatRB_actionPerformed(ActionEvent e) {
@@ -485,18 +485,18 @@ public class EventDialog extends JDialog implements WindowListener {
 
     void setStartDateB_actionPerformed(ActionEvent e) {
         //startCalFrame.setLocation(setStartDateB.getLocation());
-        startCalFrame.setSize(200, 190);
-        startCalFrame.setTitle(Local.getString("Start date"));
-        this.getLayeredPane().add(startCalFrame);
-        startCalFrame.show();
+//        startCalFrame.setSize(200, 190);
+//        startCalFrame.setTitle(Local.getString("Start date"));
+//        this.getLayeredPane().add(startCalFrame);
+//        startCalFrame.show();
     }
 
     void setEndDateB_actionPerformed(ActionEvent e) {
         //endCalFrame.setLocation(setEndDateB.getLocation());
-        endCalFrame.setSize(200, 190);
-        endCalFrame.setTitle(Local.getString("End date"));
-        this.getLayeredPane().add(endCalFrame);
-        endCalFrame.show();
+//        endCalFrame.setSize(200, 190);
+//        endCalFrame.setTitle(Local.getString("End date"));
+//        this.getLayeredPane().add(endCalFrame);
+//        endCalFrame.show();
     }
 
     public void enableEndDateCB_actionPerformed(ActionEvent e) {

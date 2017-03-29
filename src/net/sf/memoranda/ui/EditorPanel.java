@@ -55,13 +55,9 @@ public class EditorPanel extends JPanel {
 
 	JButton copyB = new JButton();
 
-	JButton historyBackB = new JButton();
-
 	JToolBar editorToolBar = new JToolBar();
 
 	JButton pasteB = new JButton();
-
-	JButton historyForwardB = new JButton();
 
 	JButton insDateB = new JButton();
 
@@ -214,26 +210,6 @@ public class EditorPanel extends JPanel {
 		copyB.setFocusable(false);
 		copyB.setText("");
 
-		historyBackB.setAction(History.historyBackAction);
-		historyBackB.setMaximumSize(new Dimension(24, 24));
-		historyBackB.setMinimumSize(new Dimension(24, 24));
-		historyBackB.setPreferredSize(new Dimension(24, 24));
-		historyBackB.setRequestFocusEnabled(false);
-		historyBackB.setToolTipText(Local.getString("History back"));
-		historyBackB.setBorderPainted(false);
-		historyBackB.setFocusable(false);
-		historyBackB.setText("");
-
-		historyForwardB.setAction(History.historyForwardAction);
-		historyForwardB.setBorderPainted(false);
-		historyForwardB.setFocusable(false);
-		historyForwardB.setPreferredSize(new Dimension(24, 24));
-		historyForwardB.setRequestFocusEnabled(false);
-		historyForwardB.setToolTipText(Local.getString("History forward"));
-		historyForwardB.setMinimumSize(new Dimension(24, 24));
-		historyForwardB.setMaximumSize(new Dimension(24, 24));
-		historyForwardB.setText("");
-
 		pasteB.setAction(editor.pasteAction);
 		pasteB.setMaximumSize(new Dimension(24, 24));
 		pasteB.setMinimumSize(new Dimension(24, 24));
@@ -314,8 +290,6 @@ public class EditorPanel extends JPanel {
 		this.add(jPanel1, BorderLayout.CENTER);
 		editorToolBar.add(newB, null);
 		editorToolBar.addSeparator(new Dimension(8, 24));
-		editorToolBar.add(historyBackB, null);
-		editorToolBar.add(historyForwardB, null);
 		editorToolBar.addSeparator(new Dimension(8, 24));
 		editorToolBar.add(undoB, null);
 		editorToolBar.add(redoB, null);

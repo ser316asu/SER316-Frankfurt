@@ -42,6 +42,7 @@ import net.sf.memoranda.NoteList;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
 import net.sf.memoranda.ResourcesList;
+import net.sf.memoranda.Task;
 import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.ui.develop.IdleNotifier;
@@ -95,15 +96,21 @@ public class AppFrame extends JFrame
     
     public Action newTaskAction = new AbstractAction("New Task") {
         public void actionPerformed(ActionEvent e) {
-        	NewTaskWindow newTask = new NewTaskWindow(App.getFrame(),"Create A New Task");
+        	NewTaskWindow ntw = new NewTaskWindow(App.getFrame(),"Create A New Task");
         	
             Dimension frmSize = App.getFrame().getSize();
             Point loc = App.getFrame().getLocation();
-            newTask.setLocation((frmSize.width / 4), (frmSize.height / 4));
-            newTask.setVisible(true);
+            ntw.setLocation((frmSize.width / 4), (frmSize.height / 4));
+            ntw.setVisible(true);
             
-        	System.out.println("HERE");
-        	//NewTaskWindow newTask = new NewTaskWindow();
+            long effort = Util.getMillisFromHours(ntw.progress.getValue().toString());
+    		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, ntw.todoField.getText(), ntw.priorityCB.getSelectedIndex(),effort, ntw.descriptionField.getText(),parentTaskId);
+    		Task newTask = CurrentProject.getTaskList().createTask(ntw.getStartDate().getText(), ntw.getEndDate().getText(), ntw.getjTextFieldName().getText(), 
+    				ntw.priorityCB.getSelectedIndex(),effort, ntw.getTaskDesc().getText(),null, ntw.getHoursEst().getText(),
+    				ntw.getLocEst().getText(), ntw.getNumFiles().getText());
+//    		CurrentProject.getTaskList().adjustParentTasks(newTask);
+    		newTask.setProgress(((Integer)ntw.progress.getValue()).intValue());
+            CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
         }
     };
 
