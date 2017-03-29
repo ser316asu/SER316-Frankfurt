@@ -8,16 +8,19 @@
  * Contact: jdbecke3@asu.edu, atshinn@asu.edu
  **************************************************************/
 package net.sf.memoranda.ui.develop;
+import java.awt.Component;
+import java.awt.Dimension;
+
 /**
 
 swhacks.org
 Joshua Becker
 **/
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import net.sf.memoranda.Task;
-
-import java.awt.*;
 
 // TODO: Auto-generated Javadoc
 /**

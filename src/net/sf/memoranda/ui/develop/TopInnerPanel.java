@@ -8,7 +8,8 @@
  * Contact: jdbecke3@asu.edu, atshinn@asu.edu
  **************************************************************/
 package net.sf.memoranda.ui.develop;
-import javax.swing.*;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 // TODO: Auto-generated Javadoc
 /**
  * The Class TopInnerPanel.
