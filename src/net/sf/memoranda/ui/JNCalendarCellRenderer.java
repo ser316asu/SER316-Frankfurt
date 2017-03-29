@@ -138,7 +138,6 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 			
 			label.setIcon(eventIcon);
 	
-
 			
 			if (isSelected) {
 				Vector eventsOnDate = (Vector) EventsManager.getEventsForDate(date);
