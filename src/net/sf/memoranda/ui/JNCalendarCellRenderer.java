@@ -34,6 +34,7 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
     boolean disabled = false;
     ImageIcon eventIcon = new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/en.png"));
     Task task = null;
+    private static CalendarDate lastDateSelected;
     
     public void setTask(Task newTask) {
         task = newTask;
@@ -80,7 +81,7 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
         }		
 
 		
-		// Selected Cells
+		// Coloring for selected cells
 		if (isSelected) {
 			// Today Cells
 			if (date.equals(CalendarDate.today())) {
@@ -90,7 +91,6 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 				label.setBackground(Color.BLACK);
 				label.setForeground(Color.WHITE);
 			}
-			
 		}
 		
 		// General Layout Alignment of labels inside cell
@@ -143,18 +143,23 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 				String tasksHtmlhead = "<tr><th align=\"left\">Tasks</th></tr><tr><th align=\"left\">Name</th><th align=\"left\">Date Due</th>";
 				
 				// Full html table that will be set as the calendar cell's text
-				String fullHtmlTable = eventsHtmlHead + events + "</table>";
+				String fullHtmlTable = "<html>" + eventsHtmlHead + events + "</table></html>";
 				
-				label.setText("<html>" + fullHtmlTable + "</html>");
+				JLabel htmlText = new JLabel();
+				htmlText.setText(fullHtmlTable);
 				
-				// Creates and returns JScrollPane (incase of a large amount of events / tasks on the clicked date.
-				JScrollPane scroller = new JScrollPane(label, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED); // TODO get scrollpane to scroll
-				scroller.setPreferredSize(new Dimension(120,40));
-				return scroller; 
+				// If the currently selected date is newly selected, display event/task window
+				if (!date.equals(lastDateSelected)) {
+					DateInformationWindow dateInfo = new DateInformationWindow(App.getFrame(),date,htmlText);
+				}
 			}	
 		}
 		else {
 			label.setIcon(null);
+		}
+		
+		if (isSelected) {
+			lastDateSelected = date;
 		}
 		
         return label;
