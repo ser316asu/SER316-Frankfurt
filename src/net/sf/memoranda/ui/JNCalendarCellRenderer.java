@@ -150,7 +150,7 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 				
 				// If the currently selected date is newly selected, display event/task window
 				if (!date.equals(lastDateSelected)) {
-					DateInformationWindow dateInfo = new DateInformationWindow(App.getFrame(),date,htmlText);
+					DateInfoPopUp dateInfo = new DateInfoPopUp(App.getFrame(),date,htmlText);
 				}
 			}	
 		}
