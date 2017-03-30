@@ -33,7 +33,7 @@
 OPENFILENAMEA ofn;
 std::string filename;
 LPSTR cString = strdup(filename.c_str());
-
+bool autorun = true;
 
 //char filename[MAX_PATH];
 //
@@ -58,6 +58,7 @@ void pluginInit(HANDLE /*hModule*/)
 	std::ifstream inFile;
 	std::ofstream outFile;
 	std::string line;
+	std::string autoStartNum;
 
 	// Attempt to open existing filepath.txt
 	inFile.open("C:\\Program Files (x86)\\notepad++\\filepath.txt"); 
@@ -68,10 +69,25 @@ void pluginInit(HANDLE /*hModule*/)
 
 	if (inFile.is_open()) {
 		getline(inFile, line);
-
 		//::MessageBoxA(NULL, line.c_str(), "Selected Filepath", 0);
 		filename = line.c_str();
-		openMemoranda();
+
+		getline(inFile, autoStartNum);
+		if(!autoStartNum.empty()){
+			if (autoStartNum == "0") {
+				autorun = false;
+			}
+			else if (autoStartNum == "1") {
+				autorun = true;
+			}
+			else {
+				::MessageBox(NULL, TEXT("Invalid Auto-run value"), TEXT("Error reading auto-run value"), MB_OK);
+			}
+		}
+
+		if (autorun == true) {
+			openMemoranda();
+		}
 		inFile.close();
 	}
 	// Path does not exist 
@@ -108,8 +124,34 @@ void pluginCleanUp()
 		//::MessageBoxA(NULL, cString, "Selected Filepath", 0);
 		filename = cString;
 		outFile.write(filename.c_str(), strlen(filename.c_str()));
+		outFile.write("\n", sizeof(char));
+		if (autorun == true) {
+			outFile.write("1", sizeof(char));
+		}
+		else {
+			outFile.write("0", sizeof(char));
+		}
+		outFile << std::endl;
 		outFile.close();
 	}
+
+	// This in the instance that the filepath was not chosen THIS instance. Have to use a different fileWrite. This can be trimmed majorly and combined with code above.
+	else {
+		remove("C:\\Program Files (x86)\\notepad++\\filepath.txt");
+		outFile.open("C:\\Program Files (x86)\\notepad++\\filepath.txt");
+		//::MessageBoxA(NULL, filename.c_str(), "CLOSING", 0);
+		outFile.write(filename.c_str(), strlen(filename.c_str()));
+		outFile.write("\n", sizeof(char));
+		if (autorun == true) {
+			outFile.write("1", sizeof(char));
+		}
+		else {
+			outFile.write("0", sizeof(char));
+		}
+		outFile << std::endl;
+		outFile.close();
+	}
+
 }
 
 //
@@ -130,7 +172,7 @@ void commandMenuInit()
     //            );
     setCommand(0, TEXT("Set Filepath"), setFilepath, NULL, false);
     setCommand(1, TEXT("Launch Memoranda"), openMemoranda, NULL, false);
-	setCommand(2, TEXT("Auto-Start Memoranda"), openMemoranda, NULL, false);
+	setCommand(2, TEXT("Auto-Start Memoranda"), flipAutoRun, NULL, false);
 }
 
 //
@@ -232,4 +274,15 @@ void openMemoranda()
 	else {
 		::MessageBox(NULL, TEXT("Invalid Filepath"), TEXT("Filepath is blank or no longer valid."), MB_OK);
 	}
+}
+
+void flipAutoRun() {
+
+	autorun = !autorun;
+
+	::MessageBoxA(NULL, BoolToString(autorun), "Auto-run set to:", 0);
+}
+
+inline const char * const BoolToString(bool b){
+	return b ? "Autorun: True" : "Autorun: false";
 }
