@@ -30,11 +30,12 @@
 #include <string>
 #include <tchar.h>
 
-
-char* MEMORANDA_DIR = NULL;
 OPENFILENAMEA ofn;
-char filename[MAX_PATH];
+std::string filename;
+LPSTR cString = strdup(filename.c_str());
 
+
+//char filename[MAX_PATH];
 //
 // The plugin data that Notepad++ needs
 //
@@ -51,45 +52,40 @@ NppData nppData;
 void pluginInit(HANDLE /*hModule*/)
 {
 
-	// TO-DO: Add try/catch blocks
+	// Where the application checks to see if a filepath.txt exists and has content.
+	// If it does, it reads it. Otherwise it creates a blank one. 
 	
 	std::ifstream inFile;
 	std::ofstream outFile;
 	std::string line;
 
 	// Attempt to open existing filepath.txt
-	inFile.open("filename.txt"); 
+	inFile.open("C:\\Program Files (x86)\\notepad++\\filepath.txt"); 
 
 	// If filepath exists exist - above statement returns false
 
-	::MessageBoxA(NULL, filename, "Selected Filepath", 0);
+	//::MessageBoxA(NULL, filename.c_str(), "Selected Filepath", 0);
 
 	if (inFile.is_open()) {
 		getline(inFile, line);
 
-		//line.copy(filename, 260);
-		char *cstr = new char[line.length()+1];
-		
-		strcpy(cstr, line.c_str());
-		
-		filename[0] = *cstr;
+		//::MessageBoxA(NULL, line.c_str(), "Selected Filepath", 0);
+		filename = line.c_str();
 
-		::MessageBoxA(NULL, filename, "Selected Filepath", 0);
-		
+		//filename[0] = *cstr;
+		//::MessageBoxA(NULL, filename.c_str(), "Selected Filepath", 0);
 		/*char *path[MAX_PATH] = &line[0u];
 		&filename = path;*/
+		inFile.close();
 	}
-	
+	// Path does not exist 
 	else {
 
-		outFile.open("filepath.txt"); // This path relative to /Notepad++ main directory
-		//outFile << "This is a test";
+		outFile.open("C:\\Program Files (x86)\\notepad++\\filepath.txt");  // This path ~~relative~~ ABSOLUTE to /Notepad++ main directory
 		outFile.close();
-		
 	}
-
-	outFile.open("filepath.txt"); // This path relative to /Notepad++ main directory
-	outFile << "This is a test";
+	//outFile.open("filepath.txt"); // This path relative to /Notepad++ main directory
+	//outFile << "This is a test";
 	outFile.close();
 
 	// Else If fileapth.txt exists
@@ -100,6 +96,30 @@ void pluginInit(HANDLE /*hModule*/)
 //
 void pluginCleanUp()
 {
+	/*Here I remove the original filepath.txt file 
+	and make a new filepath.txt in the root directory of npp++.
+	This done mainly to ensure no read/write errors with lingering empty spaces and terminators, etc.
+	*/
+
+	std::ifstream inFile;
+	std::ofstream outFile;
+	std::string line;
+
+	// Save whatever file-path was made to memoranda. 
+	if (!(cString == NULL) && !(cString[0] == 0)) {
+		remove("C:\\Program Files (x86)\\notepad++\\filepath.txt");
+		outFile.open("C:\\Program Files (x86)\\notepad++\\filepath.txt");
+		//::MessageBoxA(NULL, cString, "Selected Filepath", 0);
+		//outFile << cString;
+		filename = cString;
+		outFile.write(filename.c_str(), strlen(filename.c_str()));
+		outFile.close();
+
+		//filename[0] = *cstr;
+		//::MessageBoxA(NULL, filename.c_str(), "Selected Filepath", 0);
+		/*char *path[MAX_PATH] = &line[0u];
+		&filename = path;*/
+	}
 }
 
 //
@@ -155,26 +175,25 @@ bool setCommand(size_t index, TCHAR *cmdName, PFUNCPLUGINCMD pFunc, ShortcutKey 
 //----------------------------------------------//
 void setFilepath()
 {
-	::MessageBox(NULL, TEXT("Please Enter the Filepath to Memoranda"), TEXT("Memoranda Filepath"), MB_OK);
-	
-
+	//::MessageBox(NULL, TEXT("Please Enter the Filepath to Memoranda"), TEXT("Memoranda Filepath"), MB_OK);
 
 	ZeroMemory(&filename, sizeof(filename));
 	ZeroMemory(&ofn, sizeof(ofn));
 	ofn.lStructSize = sizeof(ofn);
 	ofn.hwndOwner = NULL;  // If you have a window to center over, put its HANDLE here
 	ofn.lpstrFilter = "filename Files\0*.txt\0Any File\0*.*\0";
-	ofn.lpstrFile = filename;
+	ofn.lpstrFile = cString;
 	ofn.nMaxFile = MAX_PATH;
 	ofn.lpstrTitle = "Select a File!";
 	ofn.Flags = OFN_DONTADDTORECENT | OFN_FILEMUSTEXIST;
 
+	filename = cString;
 
 	if (GetOpenFileNameA(&ofn))
 	{
 
-		std::cout << "You chose the file \"" << filename << "\"\n";
-		::MessageBoxA(NULL, filename, "Selected Filepath", 0);
+		//std::cout << "You chose the file \"" << filename << "\"\n";
+		::MessageBoxA(NULL, cString, "Selected Filepath", 0);
 		//int fileLength = strlen(filename);
 	}
 	else
@@ -203,36 +222,29 @@ void setFilepath()
 	}
 }
 
-
 /* Is what actually executes the file to be opened via Windows*/
 void openMemoranda()
 {
 
 	//std::string const strlist{MEMORANDA_DIR};
-	//::MessageBoxA(NULL, filename, "Selected Filepath", 0); // Remove this later after coding/testing.
+	//::MessageBoxA(NULL, filename.c_str(), "Selected Filepath", 0); // Remove this later after coding/testing.
+	
+	//std::ifstream pathIsValid(filename);
+	//cString = strdup(filename.c_str());
+	//::MessageBoxA(NULL, filename.c_str() , "filename VALUE", 0);
+	//::MessageBoxA(NULL, cString, "cSTRING VALUE", 0);
 
-	std::ifstream pathIsValid(filename);
 
-	if (filename != NULL && pathIsValid) {
-			ShellExecuteA(NULL, "open", filename, NULL, NULL, SW_SHOWDEFAULT); // This needs <windows.h>
+	if (!filename.empty()) { //&& pathIsValid
+		ShellExecuteA(NULL, "open", filename.c_str(), NULL, NULL, SW_SHOWDEFAULT); // This needs <windows.h>
+		//::MessageBoxA(NULL, filename.c_str(), "INSIDE IF FOR filename", 0);
+
+	}
+	else if (filename.empty()) {
+		ShellExecuteA(NULL, "open", cString, NULL, NULL, SW_SHOWDEFAULT); // This needs <windows.h>
+		//::MessageBoxA(NULL, cString, "INSIDE IF FOR cString", 0);
 	}
 	else {
 		::MessageBox(NULL, TEXT("Invalid Filepath"), TEXT("Filepath is blank or no longer valid."), MB_OK);
 	}
 }
-
-
-/*	::MessageBox(NULL, TEXT("Please Enter the Filepath to Memoranda"), TEXT("Memoranda Filepath"), MB_OK);
-    // Open a new document
-    ::SendMessage(nppData._nppHandle, NPPM_MENUCOMMAND, 0, IDM_FILE_NEW);
-
-    // Get the current scintilla
-    int which = -1;
-    ::SendMessage(nppData._nppHandle, NPPM_GETCURRENTSCINTILLA, 0, (LPARAM)&which);
-    if (which == -1)
-        return;
-    HWND curScintilla = (which == 0)?nppData._scintillaMainHandle:nppData._scintillaSecondHandle;
-
-    // Say hello now :
-    // Scintilla control has no Unicode mode, so we use (char *) here
-	::SendMessage(curScintilla, SCI_SETTEXT, 0, (LPARAM)"Hello, Notepad++!");*/
