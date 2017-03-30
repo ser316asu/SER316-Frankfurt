@@ -71,11 +71,7 @@ void pluginInit(HANDLE /*hModule*/)
 
 		//::MessageBoxA(NULL, line.c_str(), "Selected Filepath", 0);
 		filename = line.c_str();
-
-		//filename[0] = *cstr;
-		//::MessageBoxA(NULL, filename.c_str(), "Selected Filepath", 0);
-		/*char *path[MAX_PATH] = &line[0u];
-		&filename = path;*/
+		openMemoranda();
 		inFile.close();
 	}
 	// Path does not exist 
@@ -83,12 +79,12 @@ void pluginInit(HANDLE /*hModule*/)
 
 		outFile.open("C:\\Program Files (x86)\\notepad++\\filepath.txt");  // This path ~~relative~~ ABSOLUTE to /Notepad++ main directory
 		outFile.close();
+		//::MessageBox(NULL, TEXT("No filepath set for Memoranda"), TEXT("Filepath is blank or no longer valid."), MB_OK);		
+		//setFilepath();
 	}
 	//outFile.open("filepath.txt"); // This path relative to /Notepad++ main directory
 	//outFile << "This is a test";
-	outFile.close();
 
-	// Else If fileapth.txt exists
 }
 
 //
@@ -110,15 +106,9 @@ void pluginCleanUp()
 		remove("C:\\Program Files (x86)\\notepad++\\filepath.txt");
 		outFile.open("C:\\Program Files (x86)\\notepad++\\filepath.txt");
 		//::MessageBoxA(NULL, cString, "Selected Filepath", 0);
-		//outFile << cString;
 		filename = cString;
 		outFile.write(filename.c_str(), strlen(filename.c_str()));
 		outFile.close();
-
-		//filename[0] = *cstr;
-		//::MessageBoxA(NULL, filename.c_str(), "Selected Filepath", 0);
-		/*char *path[MAX_PATH] = &line[0u];
-		&filename = path;*/
 	}
 }
 
@@ -140,6 +130,7 @@ void commandMenuInit()
     //            );
     setCommand(0, TEXT("Set Filepath"), setFilepath, NULL, false);
     setCommand(1, TEXT("Launch Memoranda"), openMemoranda, NULL, false);
+	setCommand(2, TEXT("Auto-Start Memoranda"), openMemoranda, NULL, false);
 }
 
 //
@@ -184,7 +175,7 @@ void setFilepath()
 	ofn.lpstrFilter = "filename Files\0*.txt\0Any File\0*.*\0";
 	ofn.lpstrFile = cString;
 	ofn.nMaxFile = MAX_PATH;
-	ofn.lpstrTitle = "Select a File!";
+	ofn.lpstrTitle = "Choose Memoranda executable/jar file";
 	ofn.Flags = OFN_DONTADDTORECENT | OFN_FILEMUSTEXIST;
 
 	filename = cString;
@@ -225,22 +216,16 @@ void setFilepath()
 /* Is what actually executes the file to be opened via Windows*/
 void openMemoranda()
 {
-
-	//std::string const strlist{MEMORANDA_DIR};
-	//::MessageBoxA(NULL, filename.c_str(), "Selected Filepath", 0); // Remove this later after coding/testing.
-	
-	//std::ifstream pathIsValid(filename);
-	//cString = strdup(filename.c_str());
+	// ##### TEST OUTPUT ####
 	//::MessageBoxA(NULL, filename.c_str() , "filename VALUE", 0);
 	//::MessageBoxA(NULL, cString, "cSTRING VALUE", 0);
-
 
 	if (!filename.empty()) { //&& pathIsValid
 		ShellExecuteA(NULL, "open", filename.c_str(), NULL, NULL, SW_SHOWDEFAULT); // This needs <windows.h>
 		//::MessageBoxA(NULL, filename.c_str(), "INSIDE IF FOR filename", 0);
 
 	}
-	else if (filename.empty()) {
+	else if (!(cString == NULL) && !(cString[0] == 0)) {
 		ShellExecuteA(NULL, "open", cString, NULL, NULL, SW_SHOWDEFAULT); // This needs <windows.h>
 		//::MessageBoxA(NULL, cString, "INSIDE IF FOR cString", 0);
 	}
