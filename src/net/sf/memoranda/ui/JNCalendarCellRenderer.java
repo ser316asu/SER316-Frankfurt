@@ -144,11 +144,8 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
     		    		
     		    }
 	    	
-	    	
 	    	}
-	    	
-	    	
-    }
+	     }
 		// General Layout Alignment of labels inside cell
 		label.setHorizontalAlignment(CENTER);
 		label.setEnabled(true);
