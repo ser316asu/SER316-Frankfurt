@@ -127,7 +127,7 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 		    	}
                     else if(tsk.getPriority()== 2){
 	    			
-	    			label.setBackground(Color.BLUE);
+	    			label.setBackground(Color.CYAN);
 					label.setForeground(Color.BLACK);
 		    		
 		    	}
