@@ -113,20 +113,41 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 	    	if (date.equals(tsk.getStartDate())){
 	    		
 	    	
+	    		if (tsk.getPriority()==0){
+		    		
+		    		label.setBackground(Color.GREEN);
+					label.setForeground(Color.BLACK);
+		    		
+		    	} 
+	    		else if(tsk.getPriority()==1){
+	    			
+	    			label.setBackground(Color.YELLOW);
+					label.setForeground(Color.BLACK);
+		    		
+		    	}
+                    else if(tsk.getPriority()== 2){
+	    			
+	    			label.setBackground(Color.BLUE);
+					label.setForeground(Color.BLACK);
+		    		
+		    	}
+                    else if(tsk.getPriority()== 3){
+    	    			
+    	    			label.setBackground(Color.PINK);
+    					label.setForeground(Color.BLACK);
+    		    		
+    		    }
+                    else if(tsk.getPriority()== 4){
+    	    			
+    	    			label.setBackground(Color.RED);
+    					label.setForeground(Color.BLACK);
+    		    		
+    		    }
 	    	
-	    	label.setBackground(Color.RED);
-	    	//label.setBackground(Color.BLACK);
-			label.setForeground(Color.WHITE);
-	    	//label.setText(label.getText()+tasks);
+	    	
+	    	}
 	    	
 	    	
-	    	}/*else{
-
-				label.setBackground(Color.BLACK);
-				label.setForeground(Color.WHITE);
-	    		
-	    }*/
-	
     }
 		// General Layout Alignment of labels inside cell
 		label.setHorizontalAlignment(CENTER);
