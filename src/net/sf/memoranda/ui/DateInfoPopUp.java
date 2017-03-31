@@ -57,7 +57,6 @@ public class DateInfoPopUp extends JDialog {
   }   
    
   private void addComponents(){
-	mainPanel.add(new JLabel("heloo"));
     mainPanel.add(scroller);
     this.add(mainPanel); 
   } 
