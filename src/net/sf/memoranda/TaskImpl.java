@@ -46,7 +46,7 @@ public class TaskImpl  extends Observable implements Task, Comparable {
     }
 
     public CalendarDate getStartDate() {
-        return new CalendarDate(_element.getAttribute("startDate").getValue());
+        return new CalendarDate((_element.getAttribute("startDate").getValue()));
     }
 
     public void setStartDate(CalendarDate date) {

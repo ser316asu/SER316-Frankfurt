@@ -329,10 +329,17 @@ public class JNCalendarPanel extends JPanel {
     jnCalendar.getTableHeader().setPreferredSize(new Dimension(900, 80));
     jnCalendarPanel.add(jnCalendar.getTableHeader(), BorderLayout.NORTH);
     jnCalendarPanel.add(jnCalendar, BorderLayout.CENTER);
+    
+    /*for(Object task : CurrentProject.getTaskList().getTopLevelTasks())
+    {
+    	jnCalendar.getRenderer().setTask((Task) task);
+    }*/
+    
     jnCalendar.addSelectionListener(new ActionListener()  {
       public void actionPerformed(ActionEvent e) {
         setCurrentDateDay(jnCalendar.get(), jnCalendar.get().getDay());
       }
+      
     });
     /*CurrentDate.addChangeListener(new ActionListener()  {
       public void actionPerformed(ActionEvent e) {
@@ -472,7 +479,9 @@ public class JNCalendarPanel extends JPanel {
 			ed = null;*/
     long effort = Util.getMillisFromHours(dlg.getActualLoc().getText());
 	//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
-	Task newTask = CurrentProject.getTaskList().createTask(dlg.getStartDate().getText(), dlg.getEndDate().getText(), dlg.getName(), 
+	Task newTask = CurrentProject.getTaskList().createTask(dlg.getStartDate(),
+			dlg.getEndDate(),
+			dlg.getName(), 
 			dlg.priorityCB.getSelectedIndex(),effort, dlg.getTaskDesc().getText(),null, dlg.getHoursEst().getText(),
 			dlg.getLocEst().getText(), dlg.getNumFiles().getText());
 //	CurrentProject.getTaskList().adjustParentTasks(newTask);
