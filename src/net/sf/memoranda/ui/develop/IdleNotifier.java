@@ -59,6 +59,7 @@ public class IdleNotifier{
 	 * Reset timer.
 	 */
 	public void resetTimer() {
-		this.task.resetTimer();
+		if(this.task != null)
+			this.task.resetTimer();
 	}
 }

@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Iterator;
@@ -59,13 +60,18 @@ public class Util {
     }
 
     public static int[] parseDateStamp(String s) {
-        s = s.trim();
-        int i1 = s.indexOf("/");
-        int i2 = s.indexOf("/", i1 + 1);
+    	Date dates = new Date(s);
+    	Calendar cal = Calendar.getInstance();
+    	cal.setTime(dates);
+    	Util.debug("parsing " + s);
+        s = dates.toString().trim();
+        int i1 = s.indexOf(" ");
+        int i2 = s.indexOf(" ", i1 + 1);
         int[] date = new int[3];
-        date[0] = new Integer(s.substring(0, i1)).intValue();
-        date[1] = new Integer(s.substring(i1 + 1, i2)).intValue();
-        date[2] = new Integer(s.substring(i2 + 1)).intValue();
+        date[0] = cal.get(Calendar.MONTH) +1;
+        date[1] = cal.get(Calendar.DATE);
+        date[2] = cal.get(Calendar.YEAR);
+        System.out.println("afterparese: " +  date[0] + date[1] +  date[2]);
         return date;
         /*DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, currentLocale);
         Date d = null;

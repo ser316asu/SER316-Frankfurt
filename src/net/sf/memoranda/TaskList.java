@@ -8,6 +8,7 @@
  */
 package net.sf.memoranda;
 import java.util.Collection;
+import java.util.Date;
 
 import net.sf.memoranda.date.CalendarDate;
 /**
@@ -20,7 +21,7 @@ public interface TaskList {
     Task getTask(String id);
 
     //Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId);
-    public Task createTask(String startDate, String endDate, String text, int priority,
+    public Task createTask(Date startDate, Date endDate, String text, int priority,
     		long effort, String description, String parentTaskId,String estimatedTime, String estimatedLOCPH,
     		String numOfFiles);
 

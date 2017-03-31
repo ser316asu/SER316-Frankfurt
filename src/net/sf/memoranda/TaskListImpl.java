@@ -9,6 +9,7 @@
 package net.sf.memoranda;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Observable;
@@ -111,7 +112,7 @@ public class TaskListImpl extends Observable implements TaskList {
     //		newTask = CurrentProject.getTaskList().createTask(dlg.getStartDate().getText(), dlg.getEndDate().getText(), dlg.getName(), 
 	//                                                        dlg.priorityCB.getSelectedIndex(),effort, dlg.getTaskDesc().getText(),null, dlg.getHoursEst().getText(),
 	//      												  dlg.getLocEst(), dlg.getNumFiles().getText());
-    public Task createTask(String startDate, String endDate, String text, int priority,
+    public Task createTask(Date startDate, Date endDate, String text, int priority,
     		long effort, String description, String parentTaskId,String estimatedTime, String estimatedLOCPH,
     		String numOfFiles) {
         Element el = new Element("task");

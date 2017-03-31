@@ -445,9 +445,9 @@ public class TaskPanel extends JPanel implements Observer {
         ntw.setVisible(true);
         if (ntw.CANCELLED)
             return;
-        CalendarDate sd = new CalendarDate(ntw.getStartDate().getText());
+        CalendarDate sd = new CalendarDate(ntw.getStartDate());
 //        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-         CalendarDate ed = new CalendarDate(ntw.getEndDate().getText());
+         CalendarDate ed = new CalendarDate(ntw.getEndDate());
  		/*if(ntw.getEndDate().isSelected())
  			ed = new CalendarDate((ntw.getEndDate().getText()));
  		else
@@ -490,7 +490,9 @@ public class TaskPanel extends JPanel implements Observer {
  			ed = null;*/
         long effort = Util.getMillisFromHours(dlg.progress.getValue().toString());
 		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
-		Task newTask = CurrentProject.getTaskList().createTask(dlg.getStartDate().getText(), dlg.getEndDate().getText(), dlg.getjTextFieldName().getText(), 
+		Task newTask = CurrentProject.getTaskList().createTask(dlg.getStartDate(),
+				dlg.getEndDate(),
+				dlg.getjTextFieldName().getText(), 
 				dlg.priorityCB.getSelectedIndex(),effort, dlg.getTaskDesc().getText(),null, dlg.getHoursEst().getText(),
 				dlg.getLocEst().getText(), dlg.getNumFiles().getText());
 //		CurrentProject.getTaskList().adjustParentTasks(newTask);

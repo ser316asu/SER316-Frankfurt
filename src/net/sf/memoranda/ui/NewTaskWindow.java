@@ -4,6 +4,7 @@ import javax.swing.Box.Filler;
 import javax.swing.border.Border;
 import javax.swing.text.DateFormatter;
 
+import javafx.scene.control.DatePicker;
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.EventsManager;
 import net.sf.memoranda.EventsScheduler;
@@ -34,7 +35,6 @@ import java.util.GregorianCalendar;
 * 2. Add input-validation 
 */
 public class NewTaskWindow extends JDialog implements ActionListener {
-	
 	public boolean CANCELLED = true;
 	
 	private int WIDTH;
@@ -49,7 +49,10 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	private JPanel centerPane, bottomCenterPane, topCenterPane, topRightPane, topLeftPane;
 
 	private Calendar today;
-	private JFormattedTextField startDate, endDate;
+	private JSpinner startDate_Sp;
+	private JSpinner endDate_Sp;
+	private CalendarFrame startDate_CF;
+	private CalendarFrame endDate_CF;
 	private JTextField jTextFieldName; // String
 	private JLabel currentState, nameLabel, startDateLabel, endDateLabel, locEstLabel, hoursEstLabel, numFilesLabel, statusLabel;
 
@@ -81,7 +84,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	public NewTaskWindow(JFrame parentFrame, String title){
 		super(parentFrame,title, true);
 		WIDTH = 690;//(int)screenSize.getWidth()/2; // Casting as int
-		HEIGHT = 450; //(int)screenSize.getHeight()/2;
+		HEIGHT = 500; //(int)screenSize.getHeight()/2;
 		// Upper-right Quadrant
 		// TODO Consider adding JLabel here to clarify what button does
 		//startStop = new JButton("START"); // Have states. OnClick, startStop.setText("STOP")
@@ -134,20 +137,23 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		topCenterPane = new JPanel(new BorderLayout());
 		topRightPane = new JPanel(new FlowLayout());
 		bottomCenterPane = new JPanel(new BorderLayout());
-		topLeftPane = new JPanel(new FlowLayout());
+		topLeftPane = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		centerPane = new JPanel();
 		
 		numFiles = new JFormattedTextField(integerFieldFormatter);
 		locEst = new JFormattedTextField(integerFieldFormatter);
 		hoursEst = new JFormattedTextField(integerFieldFormatter);
 		
-		endDate = new JFormattedTextField(newDateFormat);
-		startDate = new JFormattedTextField(newDateFormat); // Setting Date formatted textfield
+		endDate_CF = new CalendarFrame();
+		startDate_CF = new CalendarFrame(); // Setting Date formatted textfield
+		startDate_Sp = new JSpinner(new SpinnerDateModel(new Date(),null,null,Calendar.DAY_OF_WEEK));
+		endDate_Sp = new JSpinner(new SpinnerDateModel(new Date(),null,null,Calendar.DAY_OF_WEEK));
+		
 		
 		nameLabel = new JLabel("Name");
 		locEstLabel = new JLabel("Estimated LOC");
-		startDateLabel = new JLabel("Start Date (MM/DD/YYYY)");
-		endDateLabel = new JLabel("Due Date");
+		startDateLabel = new JLabel("\t\tStart Date (MM/DD/YYYY)\t\t");
+		endDateLabel = new JLabel("End Date");
 		hoursEstLabel = new JLabel("Estimated Hours");
 		trackedMinutes = new JLabel("0");
 		statusLabel = new JLabel("Please fill out all fields for your new task");
@@ -165,29 +171,36 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		
 		priorityCB = new JComboBox<String>(priority);
 		
+		setLabelSize(this.nameLabel);
+		setLabelSize(this.locEstLabel);
+		setLabelSize(this.startDateLabel);
+	    setLabelSize(this.endDateLabel);
+	    setLabelSize(this.hoursEstLabel);
+	    setLabelSize(this.numFilesLabel);
+	    setLabelSize(this.jLabelProgress);
 
 	}
+	private void setLabelSize(JLabel label) {
+		Dimension size = new Dimension(this.WIDTH/2-150, 20);
+		label.setPreferredSize(size);
+		label.setMinimumSize(size);
+		label.setMaximumSize(size);
+		label.setAlignmentX(Component.CENTER_ALIGNMENT);
+		label.setHorizontalTextPosition(JLabel.CENTER);
+	}
+
 	private void editComponents(){
 		Border blackBorder = BorderFactory.createLineBorder(Color.black);
 		
 		/* COMPONENTS */
 		//Upper-left Quadrant
-
-		startDate.setColumns(28); // Setting width of text-field
 		today = Calendar.getInstance(); // default constructor for Date class is current-date. This passed to DateFormat instance.
 		today.set(Calendar.HOUR_OF_DAY, 0);
 		today.set(Calendar.MINUTE, 0);
 		today.set(Calendar.SECOND, 0);
 		today.set(Calendar.MILLISECOND, 0);
 		
-		startDate.setValue(today.getTime()); // Set default Date object to today 
-		//startDate.setText(newDateFormat.format(today)); // set String text to today's date
-		startDate.setMaximumSize(new Dimension(100, 1));
 		
-
-		endDate.setColumns(28);
-		endDate.setText("MM/DD/YYYY");
-
 		locEst.setColumns(28);
 		locEst.setText("LOC Estimate");
 		
@@ -271,9 +284,9 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		topLeftPane.add(nameLabel);
 		topLeftPane.add(jTextFieldName); // Component, row, column
 		topLeftPane.add(startDateLabel);
-		topLeftPane.add(startDate);
+		topLeftPane.add(startDate_Sp);
 		topLeftPane.add(endDateLabel);
-		topLeftPane.add(endDate);
+		topLeftPane.add(endDate_Sp);
 		topLeftPane.add(jLabelProgress);
 		topLeftPane.add(jPanelProgress);
 		topLeftPane.add(this.notifB);
@@ -329,7 +342,9 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 			statusLabel.setBackground(Color.GREEN);
 			statusLabel.setForeground(Color.WHITE);
 			
-			System.out.println("Testing Finalization block");
+			Util.debug("Testing Finalization Task Created");
+			Util.debug("StartDate: " + this.getStartDate());
+			Util.debug("EndDate: " + this.getEndDate());
 			CANCELLED = false;
 			this.dispose();
 		}
@@ -343,8 +358,8 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	public boolean validateInput(){
 		
 		boolean isValid = true; // If checks below pass, isValid remains true. 
-		Date startDateObj = (Date) startDate.getValue(); // Casting as Date instead of SimpleDateFormat for conditional.
-		Date endDateObj = (Date) endDate.getValue();
+		//Date startDateObj = ; // Casting as Date instead of SimpleDateFormat for conditional.
+		//Date endDateObj = (Date) endDate.getValue();
 
 		//TODO: Check if Duplicate task exists
 		// CHECK TASK NAME
@@ -362,7 +377,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		}
 		
 		// CHECK START DATE
-		if(startDate.getValue() == null){
+		/*if(startDate.getValue() == null){
 			System.out.println("startDate is invalid");
 			startDate.setText("RE-ENTER! (dd/mm/yyyy)");
 			statusLabel.setText("Invalid Entry: Please fix marked fields");
@@ -389,7 +404,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		}
 		else if(endDate.getValue() != null){
 			endDate.setBackground(Color.WHITE);
-		}		
+		}	*/	
 		
 		// CHECK LOC ESTIMATE
 		if(locEst.getValue() == null){
@@ -444,17 +459,17 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	}
 	
     private void setNotifB_actionPerformed(ActionEvent e) {
-    	String Date = this.startDate.getText();
-    	String [] time = Date.split("/");
-    	
+    	//String Date = this.startDate.getText();
+    	//String [] time = Date.split("/");
+    	/*
     	int month = Integer.parseInt(time[0]);
     	int day = Integer.parseInt(time[1]);
     	int year = Integer.parseInt(time[2]);
     	
     	Date startDate = new Date(year,month,day);
     	
-    	Date = this.startDate.getText();
-    	time = Date.split("/");
+    	//Date = this.startDate.getText();
+    	//time = Date.split("/");
     	
     	month = Integer.parseInt(time[0]);
     	day = Integer.parseInt(time[1]);
@@ -464,7 +479,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
     	
     	System.out.println("sdate " + startDate + "  eDate " + endDate);
     	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 
-			this.getTaskDesc().getText(), startDate,endDate);
+			this.getTaskDesc().getText(), startDate,endDate);*/
     }
 	
 	/* GETTERS, THEN SETTERS */
@@ -509,12 +524,12 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		return jTextFieldName;
 	}
 
-	public JTextField getStartDate() {
-		return startDate;
+	public Date getStartDate() {
+		return (Date) startDate_Sp.getValue();
 	}
 
-	public JFormattedTextField getEndDate() {
-		return endDate;
+	public Date getEndDate() {
+		return (Date) endDate_Sp.getValue();
 	}
 
 	public JLabel getCurrentState() {
@@ -629,12 +644,12 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		this.jTextFieldName = jTextFieldName;
 	}
 
-	public void setStartDate(JFormattedTextField startDate) {
-		this.startDate = startDate;
+	public void setStartDate(Date startDate) {
+		this.startDate_Sp.setModel(new SpinnerDateModel(startDate, null, null, Calendar.DAY_OF_WEEK));
 	}
 
-	public void setEndDate(JFormattedTextField endDate) {
-		this.endDate = endDate;
+	public void setEndDate(Date endDate) {
+		this.endDate_Sp.setModel(new SpinnerDateModel(endDate, null, null, Calendar.DAY_OF_WEEK));;
 	}
 
 	public void setCurrentState(JLabel currentState) {
