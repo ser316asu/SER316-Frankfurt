@@ -73,7 +73,7 @@ public class IdleTimer implements Runnable{
 	 * Reset timer.
 	 */
 	public void resetTimer(){
-		//Util.debug("Reset Timer");
+		Util.debug("Reset Timer");
 		iTimer.resetTimer();
 	}
 	
@@ -178,7 +178,7 @@ public class IdleTimer implements Runnable{
 		public void run() {
 			this.startTime = System.currentTimeMillis();
 			while(this.state == Timer.PLAY){
-				time = ((System.currentTimeMillis() - startTime)/1000)/60;
+				time = (System.currentTimeMillis() - startTime)/1000;
 				if(time > this.closeTime){
 					setState(Timer.STOP);
 					App.getFrame().doExitWithoutAsk();

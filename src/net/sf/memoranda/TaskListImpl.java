@@ -9,10 +9,8 @@
 package net.sf.memoranda;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.Observable;
 import java.util.Vector;
 
 import net.sf.memoranda.date.CalendarDate;
@@ -32,12 +30,11 @@ import nu.xom.Nodes;
  * 
  */
 /*$Id: TaskListImpl.java,v 1.14 2006/07/03 11:59:19 alexeya Exp $*/
-public class TaskListImpl extends Observable implements TaskList {
+public class TaskListImpl implements TaskList {
 
     private Project _project = null;
     private Document _doc = null;
     private Element _root = null;
-    private int change;
 	
 	/*
 	 * Hastable of "task" XOM elements for quick searching them by ID's
@@ -53,14 +50,12 @@ public class TaskListImpl extends Observable implements TaskList {
         _root = _doc.getRootElement();
         _project = prj;
 		buildElements(_root);
-		change = 0;
     }
     
     public TaskListImpl(Project prj) {            
             _root = new Element("tasklist");
             _doc = new Document(_root);
             _project = prj;
-            change = 0;
     }
     
 	public Project getProject() {
@@ -112,7 +107,7 @@ public class TaskListImpl extends Observable implements TaskList {
     //		newTask = CurrentProject.getTaskList().createTask(dlg.getStartDate().getText(), dlg.getEndDate().getText(), dlg.getName(), 
 	//                                                        dlg.priorityCB.getSelectedIndex(),effort, dlg.getTaskDesc().getText(),null, dlg.getHoursEst().getText(),
 	//      												  dlg.getLocEst(), dlg.getNumFiles().getText());
-    public Task createTask(Date startDate, Date endDate, String text, int priority,
+    public Task createTask(String startDate, String endDate, String text, int priority,
     		long effort, String description, String parentTaskId,String estimatedTime, String estimatedLOCPH,
     		String numOfFiles) {
         Element el = new Element("task");
@@ -149,8 +144,7 @@ public class TaskListImpl extends Observable implements TaskList {
         Util.debug("Created task with parent " + parentTaskId);
         
         Task task = new TaskImpl(el, this);
-        
-        change();
+        LowerHomePanel.updateTaskBoard();
         
         return task;
     }
@@ -328,13 +322,8 @@ public class TaskListImpl extends Observable implements TaskList {
             return res;
         }
     }    
-    
-    public void change(){
-    	change = ~change;
-    	setChanged();
-    	notifyObservers(this);
-    }
-    /* * private methods below this line
+    /*
+     * private methods below this line
      */
     private Element getTaskElement(String id) {
                
@@ -389,7 +378,6 @@ public class TaskListImpl extends Observable implements TaskList {
     	}
     }
 
-    
     /*
      * deprecated methods below
      * 
