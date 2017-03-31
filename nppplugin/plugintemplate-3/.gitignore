@@ -1,9 +1,11 @@
 *.sdf
+
 *.sln
+
 *.suo
-bin/
-bin64/
-vs.proj/Debug
+bin
+/
+bin64
 vs.proj/Release
 vs.proj/x64
 vs.proj/NppPluginTemplate.opensdf
