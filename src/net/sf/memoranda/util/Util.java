@@ -63,7 +63,7 @@ public class Util {
     	Date dates = new Date(s);
     	Calendar cal = Calendar.getInstance();
     	cal.setTime(dates);
-    	Util.debug("parsing " + s);
+    	//Util.debug("parsing " + s);
         s = dates.toString().trim();
         int i1 = s.indexOf(" ");
         int i2 = s.indexOf(" ", i1 + 1);
@@ -71,7 +71,7 @@ public class Util {
         date[0] = cal.get(Calendar.MONTH) +1;
         date[1] = cal.get(Calendar.DATE);
         date[2] = cal.get(Calendar.YEAR);
-        System.out.println("afterparese: " +  date[0] + date[1] +  date[2]);
+        //System.out.println("afterparese: " +  date[0] + date[1] +  date[2]);
         return date;
         /*DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, currentLocale);
         Date d = null;

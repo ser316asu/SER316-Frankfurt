@@ -22,8 +22,6 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.OverlayLayout;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.Task;
 

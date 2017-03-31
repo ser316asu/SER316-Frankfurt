@@ -4,7 +4,6 @@ import javax.swing.Box.Filler;
 import javax.swing.border.Border;
 import javax.swing.text.DateFormatter;
 
-import javafx.scene.control.DatePicker;
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.EventsManager;
 import net.sf.memoranda.EventsScheduler;
