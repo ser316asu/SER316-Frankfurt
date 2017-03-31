@@ -4,14 +4,20 @@ import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 
+import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.EventsScheduler;
+import net.sf.memoranda.Task;
+import net.sf.memoranda.ui.develop.IdleNotifier;
+import net.sf.memoranda.ui.develop.IdleTimer;
 import net.sf.memoranda.util.Configuration;
+import net.sf.memoranda.util.Util;
 
 /**
  * 
@@ -132,10 +138,27 @@ public class App {
 		/* Added By Jeremy Whitlock (jcscoobyrs) 07-Nov-2003 at 15:54:24 */
 
 		// Not needed ???
+		checkForDeadlines();
 		frame.setVisible(true);
 		frame.toFront();
 		frame.requestFocus();
+		//start thread for notifier
+		IdleNotifier exe = IdleNotifier.getInstance();
+		exe.execute(new IdleTimer());
+	}
 
+	private void checkForDeadlines() {
+		Date currentDate = new Date();
+		
+		for(Object taskO : CurrentProject.getTaskList().getTopLevelTasks()){
+			Task task= (Task) taskO;
+			// conversion (1000sec*60min*60hours*24day*2) two days.
+			System.out.println("End TIme:" + (task.getEndDate().getDate().getTime()/(1000*60*60*24) - (currentDate.getTime()/(1000*60*60*24))));
+			if((task.getEndDate().getDate().getTime()/(1000*60*60*24)) <= currentDate.getTime()/(1000*60*60*24)){
+				System.out.println("notify");
+			}
+		}
+		
 	}
 
 	public static void closeWindow() {

@@ -147,6 +147,8 @@ public class TimerPanel extends JLabel implements Styling{
 		this.add(time,BorderLayout.CENTER);
 		this.add(buttonPanel,BorderLayout.SOUTH);
 	}
+	
+
 
 	/* (non-Javadoc)
 	 * @see net.sf.memoranda.ui.DevelopHomePage.Styling#style()

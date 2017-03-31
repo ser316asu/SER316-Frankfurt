@@ -20,6 +20,7 @@ import net.sf.memoranda.ui.ResourcesPanel;
 import net.sf.memoranda.util.Context;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -268,5 +269,9 @@ public class HomePanel extends JLabel implements Styling {
 				break;	
     	}
     }
-   
+    @Override
+    public void paint(Graphics g){
+    	IdleNotifier.getInstance().resetTimer();
+    	super.paint(g);
+   }
 }
