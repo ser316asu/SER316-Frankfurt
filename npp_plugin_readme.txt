@@ -12,4 +12,9 @@ If Notepad++ is open, close and re-open. Navigate to the Plugins menu-bar at the
 - SER316-Frankfurt team from Spring 2017, ASU Polytechnic. 
 
 
-NOTES: This application can be used to open any file upon start-up, not just Memoranda. 
+NOTES: 
+
+
+- CURRENTLY ONLY SUPPORTS WINDOWS OPERATING SYSTEMS.
+
+- This application can be used to open any file upon start-up, not just Memoranda. 
