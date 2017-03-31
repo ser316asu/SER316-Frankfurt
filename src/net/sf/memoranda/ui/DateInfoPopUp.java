@@ -37,7 +37,7 @@ public class DateInfoPopUp extends JDialog {
     createComponents(tableInformation); 
     editComponents(); 
     addComponents(); 
-    this.setVisible(true); 
+    this.setVisible(true);
   } 
  
   private void createComponents(JLabel tableInfo) { 
@@ -56,8 +56,9 @@ public class DateInfoPopUp extends JDialog {
     setDefaultCloseOperation(DISPOSE_ON_CLOSE); 
   }   
    
-  private void addComponents(){ 
-    mainPanel.add(scroller); 
+  private void addComponents(){
+	mainPanel.add(new JLabel("heloo"));
+    mainPanel.add(scroller);
     this.add(mainPanel); 
   } 
 } 

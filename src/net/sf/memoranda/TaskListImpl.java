@@ -11,6 +11,7 @@ package net.sf.memoranda;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Observable;
 import java.util.Vector;
 
 import net.sf.memoranda.date.CalendarDate;
@@ -30,7 +31,7 @@ import nu.xom.Nodes;
  * 
  */
 /*$Id: TaskListImpl.java,v 1.14 2006/07/03 11:59:19 alexeya Exp $*/
-public class TaskListImpl implements TaskList {
+public class TaskListImpl implements TaskList{
 
     private Project _project = null;
     private Document _doc = null;
@@ -377,6 +378,12 @@ public class TaskListImpl implements TaskList {
     		return false;
     	}
     }
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
+	}
 
     /*
      * deprecated methods below

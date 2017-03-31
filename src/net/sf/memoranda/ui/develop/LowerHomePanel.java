@@ -87,7 +87,7 @@ public class LowerHomePanel extends JLabel implements Styling, Observer {
     	editComponents();
     	addActionListeners();
     	addComponents();
-    	((java.util.Observable) CurrentProject.getTaskList()).addObserver(this);
+    	//((java.util.Observable) CurrentProject.getTaskList()).addObserver(this);
     }
 
 

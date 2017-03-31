@@ -68,7 +68,7 @@ public class TaskPanel extends JPanel implements Observer {
 	DailyItemsPanel parentPanel = null;
 
     public TaskPanel(DailyItemsPanel _parentPanel) {
-        ((Observable) CurrentProject.getTaskList()).addObserver(this);
+        //((Observable) CurrentProject.getTaskList()).addObserver(this);
     	try {
             parentPanel = _parentPanel;
             jbInit();
@@ -445,9 +445,9 @@ public class TaskPanel extends JPanel implements Observer {
         ntw.setVisible(true);
         if (ntw.CANCELLED)
             return;
-        CalendarDate sd = new CalendarDate(ntw.getStartDate());
+        CalendarDate sd = new CalendarDate(ntw.getStartDate().getText());
 //        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-         CalendarDate ed = new CalendarDate(ntw.getEndDate());
+         CalendarDate ed = new CalendarDate(ntw.getEndDate().getText());
  		/*if(ntw.getEndDate().isSelected())
  			ed = new CalendarDate((ntw.getEndDate().getText()));
  		else
@@ -490,8 +490,8 @@ public class TaskPanel extends JPanel implements Observer {
  			ed = null;*/
         long effort = Util.getMillisFromHours(dlg.progress.getValue().toString());
 		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
-		Task newTask = CurrentProject.getTaskList().createTask(dlg.getStartDate(),
-				dlg.getEndDate(),
+		Task newTask = CurrentProject.getTaskList().createTask(dlg.getStartDate().getText(),
+				dlg.getEndDate().getText(),
 				dlg.getjTextFieldName().getText(), 
 				dlg.priorityCB.getSelectedIndex(),effort, dlg.getTaskDesc().getText(),null, dlg.getHoursEst().getText(),
 				dlg.getLocEst().getText(), dlg.getNumFiles().getText());

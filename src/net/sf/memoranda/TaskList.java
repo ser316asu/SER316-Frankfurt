@@ -8,13 +8,14 @@
  */
 package net.sf.memoranda;
 import java.util.Collection;
+import java.util.Observer;
 
 import net.sf.memoranda.date.CalendarDate;
 /**
  * 
  */
 /*$Id: TaskList.java,v 1.8 2005/12/01 08:12:26 alexeya Exp $*/
-public interface TaskList {
+public interface TaskList extends Observer{
 
 	Project getProject();
     Task getTask(String id);

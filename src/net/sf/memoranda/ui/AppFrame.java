@@ -105,8 +105,8 @@ public class AppFrame extends JFrame
             
             long effort = Util.getMillisFromHours(ntw.progress.getValue().toString());
     		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, ntw.todoField.getText(), ntw.priorityCB.getSelectedIndex(),effort, ntw.descriptionField.getText(),parentTaskId);
-    		Task newTask = CurrentProject.getTaskList().createTask(ntw.getStartDate(),
-    				ntw.getEndDate(), ntw.getjTextFieldName().getText() + "", 
+    		Task newTask = CurrentProject.getTaskList().createTask(ntw.getStartDate().getText(),
+    				ntw.getEndDate().getText(), ntw.getjTextFieldName().getText() + "", 
     				ntw.priorityCB.getSelectedIndex(),effort, ntw.getTaskDesc().getText(),null, ntw.getHoursEst().getText(),
     				ntw.getLocEst().getText(), ntw.getNumFiles().getText());
 //    		CurrentProject.getTaskList().adjustParentTasks(newTask);

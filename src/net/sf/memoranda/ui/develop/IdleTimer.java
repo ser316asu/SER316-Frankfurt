@@ -73,7 +73,7 @@ public class IdleTimer implements Runnable{
 	 * Reset timer.
 	 */
 	public void resetTimer(){
-		Util.debug("Reset Timer");
+		//Util.debug("Reset Timer");
 		iTimer.resetTimer();
 	}
 	

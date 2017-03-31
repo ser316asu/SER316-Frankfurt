@@ -479,8 +479,8 @@ public class JNCalendarPanel extends JPanel {
 			ed = null;*/
     long effort = Util.getMillisFromHours(dlg.getActualLoc().getText());
 	//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
-	Task newTask = CurrentProject.getTaskList().createTask(dlg.getStartDate(),
-			dlg.getEndDate(),
+	Task newTask = CurrentProject.getTaskList().createTask(dlg.getStartDate().getText(),
+			dlg.getEndDate().getText(),
 			dlg.getName(), 
 			dlg.priorityCB.getSelectedIndex(),effort, dlg.getTaskDesc().getText(),null, dlg.getHoursEst().getText(),
 			dlg.getLocEst().getText(), dlg.getNumFiles().getText());
