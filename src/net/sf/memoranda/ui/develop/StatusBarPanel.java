@@ -8,13 +8,18 @@
  * Contact: jdbecke3@asu.edu, atshinn@asu.edu
  **************************************************************/
 package net.sf.memoranda.ui.develop;
-import javax.swing.*;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.util.Observable;
+import java.util.Observer;
 
-import net.sf.memoranda.CurrentProject;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JProgressBar;
+
 import net.sf.memoranda.Task;
-
-import java.awt.*;
-import java.util.*;
 
 // TODO: Auto-generated Javadoc
 /**

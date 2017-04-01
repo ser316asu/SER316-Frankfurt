@@ -10,6 +10,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -41,11 +43,9 @@ import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Util;
 
 /*$Id: TaskPanel.java,v 1.27 2007/01/17 20:49:12 killerjoe Exp $*/
-public class TaskPanel extends JPanel {
+public class TaskPanel extends JPanel implements Observer {
     BorderLayout borderLayout1 = new BorderLayout();
-    JButton historyBackB = new JButton();
     JToolBar tasksToolBar = new JToolBar();
-    JButton historyForwardB = new JButton();
     JButton newTaskB = new JButton();
     JButton subTaskB = new JButton();
     JButton editTaskB = new JButton();
@@ -68,7 +68,8 @@ public class TaskPanel extends JPanel {
 	DailyItemsPanel parentPanel = null;
 
     public TaskPanel(DailyItemsPanel _parentPanel) {
-        try {
+        //((Observable) CurrentProject.getTaskList()).addObserver(this);
+    	try {
             parentPanel = _parentPanel;
             jbInit();
         }
@@ -78,26 +79,6 @@ public class TaskPanel extends JPanel {
     }
     void jbInit() throws Exception {
         tasksToolBar.setFloatable(false);
-
-        historyBackB.setAction(History.historyBackAction);
-        historyBackB.setFocusable(false);
-        historyBackB.setBorderPainted(false);
-        historyBackB.setToolTipText(Local.getString("History back"));
-        historyBackB.setRequestFocusEnabled(false);
-        historyBackB.setPreferredSize(new Dimension(24, 24));
-        historyBackB.setMinimumSize(new Dimension(24, 24));
-        historyBackB.setMaximumSize(new Dimension(24, 24));
-        historyBackB.setText("");
-
-        historyForwardB.setAction(History.historyForwardAction);
-        historyForwardB.setBorderPainted(false);
-        historyForwardB.setFocusable(false);
-        historyForwardB.setPreferredSize(new Dimension(24, 24));
-        historyForwardB.setRequestFocusEnabled(false);
-        historyForwardB.setToolTipText(Local.getString("History forward"));
-        historyForwardB.setMinimumSize(new Dimension(24, 24));
-        historyForwardB.setMaximumSize(new Dimension(24, 24));
-        historyForwardB.setText("");
 
         newTaskB.setIcon(
             new ImageIcon(net.sf.memoranda.ui.AppFrame.class.getResource("resources/icons/todo_new.png")));
@@ -312,8 +293,6 @@ public class TaskPanel extends JPanel {
 
     scrollPane.getViewport().add(taskTable, null);
         this.add(scrollPane, BorderLayout.CENTER);
-        tasksToolBar.add(historyBackB, null);
-        tasksToolBar.add(historyForwardB, null);
         tasksToolBar.addSeparator(new Dimension(8, 24));
 
         tasksToolBar.add(newTaskB, null);
@@ -511,7 +490,9 @@ public class TaskPanel extends JPanel {
  			ed = null;*/
         long effort = Util.getMillisFromHours(dlg.progress.getValue().toString());
 		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
-		Task newTask = CurrentProject.getTaskList().createTask(dlg.getStartDate().getText(), dlg.getEndDate().getText(), dlg.getjTextFieldName().getText(), 
+		Task newTask = CurrentProject.getTaskList().createTask(dlg.getStartDate().getText(),
+				dlg.getEndDate().getText(),
+				dlg.getjTextFieldName().getText(), 
 				dlg.priorityCB.getSelectedIndex(),effort, dlg.getTaskDesc().getText(),null, dlg.getHoursEst().getText(),
 				dlg.getLocEst().getText(), dlg.getNumFiles().getText());
 //		CurrentProject.getTaskList().adjustParentTasks(newTask);
@@ -762,5 +743,12 @@ public class TaskPanel extends JPanel {
   void ppCalcTask_actionPerformed(ActionEvent e) {
       calcTask_actionPerformed(e);
   }
+@Override
+public void update(Observable arg0, Object arg1) {
+	taskTable.tableChanged();
+    parentPanel.updateIndicators();
+    taskTable.updateUI();
+}
 
+  
 }

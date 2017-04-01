@@ -4,6 +4,7 @@ import java.awt.AWTEvent;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,8 +42,10 @@ import net.sf.memoranda.NoteList;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.ProjectListener;
 import net.sf.memoranda.ResourcesList;
+import net.sf.memoranda.Task;
 import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CurrentDate;
+import net.sf.memoranda.ui.develop.IdleNotifier;
 import net.sf.memoranda.ui.htmleditor.HTMLEditor;
 import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.Context;
@@ -93,15 +96,22 @@ public class AppFrame extends JFrame
     
     public Action newTaskAction = new AbstractAction("New Task") {
         public void actionPerformed(ActionEvent e) {
-        	NewTaskWindow newTask = new NewTaskWindow(App.getFrame(),"Create A New Task");
+        	NewTaskWindow ntw = new NewTaskWindow(App.getFrame(),"Create A New Task");
         	
             Dimension frmSize = App.getFrame().getSize();
             Point loc = App.getFrame().getLocation();
-            newTask.setLocation((frmSize.width / 4), (frmSize.height / 4));
-            newTask.setVisible(true);
+            ntw.setLocation((frmSize.width / 4), (frmSize.height / 4));
+            ntw.setVisible(true);
             
-        	System.out.println("HERE");
-        	//NewTaskWindow newTask = new NewTaskWindow();
+            long effort = Util.getMillisFromHours(ntw.progress.getValue().toString());
+    		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, ntw.todoField.getText(), ntw.priorityCB.getSelectedIndex(),effort, ntw.descriptionField.getText(),parentTaskId);
+    		Task newTask = CurrentProject.getTaskList().createTask(ntw.getStartDate().getText(),
+    				ntw.getEndDate().getText(), ntw.getjTextFieldName().getText() + "", 
+    				ntw.priorityCB.getSelectedIndex(),effort, ntw.getTaskDesc().getText(),null, ntw.getHoursEst().getText(),
+    				ntw.getLocEst().getText(), ntw.getNumFiles().getText());
+//    		CurrentProject.getTaskList().adjustParentTasks(newTask);
+    		newTask.setProgress(((Integer)ntw.progress.getValue()).intValue());
+            CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
         }
     };
 
@@ -669,22 +679,35 @@ public class AppFrame extends JFrame
                         Point loc = this.getLocation();
                         
                         ExitConfirmationDialog dlg = new ExitConfirmationDialog(this,Local.getString("Exit"));
-                        dlg.setLocation((frmSize.width - dlg.getSize().width) / 2 + loc.x, (frmSize.height - dlg.getSize().height) / 2 + loc.y);
+                        dlg.setLocationRelativeTo(null);
                         dlg.setVisible(true);
                         if(dlg.CANCELLED) return;
         }
-
+        IdleNotifier.getInstance().stop();
         Context.put("FRAME_WIDTH", new Integer(this.getWidth()));
         Context.put("FRAME_HEIGHT", new Integer(this.getHeight()));
         Context.put("FRAME_XPOS", new Integer(this.getLocation().x));
         Context.put("FRAME_YPOS", new Integer(this.getLocation().y));
         exitNotify();
+        
+        System.exit(0);
+    }
+    
+    //File | Exit action performed
+    public void doExitWithoutAsk() {
+    	IdleNotifier.getInstance().stop();
+        Context.put("FRAME_WIDTH", new Integer(this.getWidth()));
+        Context.put("FRAME_HEIGHT", new Integer(this.getHeight()));
+        Context.put("FRAME_XPOS", new Integer(this.getLocation().x));
+        Context.put("FRAME_YPOS", new Integer(this.getLocation().y));
+        exitNotify();
+        
         System.exit(0);
     }
 
     public void doMinimize() {
         exitNotify();
-        App.closeWindow();
+        doExit();
     }
 
     //Help | About action performed
@@ -1121,5 +1144,4 @@ public class AppFrame extends JFrame
                     exc.printStackTrace();
             }
         }
-
 }

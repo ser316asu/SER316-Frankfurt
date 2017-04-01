@@ -8,13 +8,16 @@
  * Contact: jdbecke3@asu.edu, atshinn@asu.edu
  **************************************************************/
 package net.sf.memoranda.ui.develop;
-import javax.swing.*;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.JLabel;
 
 import net.sf.memoranda.Task;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -112,7 +115,7 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
             labels[i].setFont(Styling.TERMINAL_FONT);
             labels[i].setForeground(Styling.LABEL_PANEL_TEXT_COLOR);
         }
-        this.setMinimumSize(new Dimension(400,100));
+        this.setMinimumSize(new Dimension(500,100));
         this.setMaximumSize(new Dimension(
         		Styling.SCREEN_WIDTH/2-50,Styling.SCREEN_HEIGHT-400));
         this.setPreferredSize(new Dimension(

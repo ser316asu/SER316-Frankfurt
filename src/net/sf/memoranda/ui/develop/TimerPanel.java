@@ -8,13 +8,18 @@
  * Contact: jdbecke3@asu.edu, atshinn@asu.edu
  **************************************************************/
 package net.sf.memoranda.ui.develop;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import net.sf.memoranda.Task;
-
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -142,6 +147,8 @@ public class TimerPanel extends JLabel implements Styling{
 		this.add(time,BorderLayout.CENTER);
 		this.add(buttonPanel,BorderLayout.SOUTH);
 	}
+	
+
 
 	/* (non-Javadoc)
 	 * @see net.sf.memoranda.ui.DevelopHomePage.Styling#style()
