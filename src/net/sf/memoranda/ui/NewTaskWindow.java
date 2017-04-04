@@ -51,11 +51,11 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	private Calendar today;
 	private JFormattedTextField startDate, endDate;
 	private JTextField jTextFieldName; // String
-	private JLabel currentState, nameLabel, startDateLabel, endDateLabel, locEstLabel, hoursEstLabel, numFilesLabel, statusLabel;
+	private JLabel currentState, nameLabel, startDateLabel, endDateLabel, locEstLabel, locActLabel, hoursEstLabel, numFilesLabel, statusLabel;
 
 	
 	// Code Info
-	private JFormattedTextField locEst, hoursEst, numFiles; 
+	private JFormattedTextField locEst, locAct, hoursEst, numFiles; 
 	private JButton finishButton;
 	private JButton startStop; // Hoping to only use one button that changes when pressed
 	private JButton notifB;
@@ -139,6 +139,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		
 		numFiles = new JFormattedTextField(integerFieldFormatter);
 		locEst = new JFormattedTextField(integerFieldFormatter);
+		locAct = new JFormattedTextField(integerFieldFormatter);
 		hoursEst = new JFormattedTextField(integerFieldFormatter);
 		
 		endDate = new JFormattedTextField(newDateFormat);
@@ -146,6 +147,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		
 		nameLabel = new JLabel("Name");
 		locEstLabel = new JLabel("Estimated LOC");
+		locActLabel = new JLabel("Actual LOC");
 		startDateLabel = new JLabel("Start Date (MM/DD/YYYY)");
 		endDateLabel = new JLabel("Due Date");
 		hoursEstLabel = new JLabel("Estimated Hours");
@@ -189,8 +191,10 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		endDate.setText("MM/DD/YYYY");
 
 		locEst.setColumns(28);
-		locEst.setText("LOC Estimate");
+		locEst.setText("0");
 		
+		locAct.setColumns(28);
+		locAct.setText("Actual LOC");
 
 		hoursEst.setColumns(28);
 		hoursEst.setText("Hours Estimate");
@@ -282,6 +286,8 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		// Top-Right-Center Pane
 		topRightPane.add(locEstLabel);
 		topRightPane.add(locEst);
+		topRightPane.add(locActLabel);
+		topRightPane.add(locAct);
 		topRightPane.add(hoursEstLabel);
 		topRightPane.add(hoursEst);
 		topRightPane.add(numFilesLabel);
@@ -552,6 +558,10 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	public JTextField getLocEst() {
 		return locEst;
 	}
+	
+	public JTextField getLocAct() {
+		return locAct;
+	}
 
 	public JTextField getHoursEst() {
 		return hoursEst;
@@ -697,8 +707,8 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		this.taskDesc = taskDesc;
 	}
 
-	public void setActualLoc(JTextField actualLoc) {
-		this.actualLoc = actualLoc;
+	public void setActualLoc(JFormattedTextField actualLoc) {
+		this.locAct = actualLoc;
 	}
 
 	public void setTotalHours(JTextField totalHours) {
