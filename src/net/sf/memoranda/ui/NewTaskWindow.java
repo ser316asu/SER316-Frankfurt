@@ -116,15 +116,15 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	}
 
 	private void addTaskElements(Task task) {
-		/*this.actualLoc.setText(task.getActualLOC() + "");
-		this.actualNumFiles.setText(task.getNumOfFiles() + "");
+		//this.actualLoc.setText(task.getActualLOC() + ""); // Throws Null Pointer Exception
+		//this.actualNumFiles.setText(task.getNumOfFiles() + ""); // Throws Null Pointer Exception
 		this.endDate.setText(task.getEndDate().toString());
 		this.startDate.setText(task.getStartDate().toString());
 		this.progress.setValue(task.getProgress());
 		this.jTextFieldName.setText(task.getText());
 		this.priorityCB.setSelectedItem(task.getPriority());
 		this.locEst.setText(task.getEstLOC() + "");
-		this.taskDesc.setText(task.getDescription());*/
+		this.taskDesc.setText(task.getDescription());
 	}
 
 	private void createComponents() {
