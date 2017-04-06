@@ -110,7 +110,7 @@ public class TaskListImpl implements TaskList{
 	//      												  dlg.getLocEst(), dlg.getNumFiles().getText());
     public Task createTask(String startDate, String endDate, String text, int priority,
     		long effort, String description, String parentTaskId,String estimatedTime, String estimatedLOCPH,
-    		String numOfFiles) {
+    		String estNumFiles, String actualLOC, String actualTime, String actNumFiles) {
         Element el = new Element("task");
         el.addAttribute(new Attribute("startDate", startDate.toString()));
         el.addAttribute(new Attribute("endDate", endDate != null? endDate.toString():""));
@@ -120,10 +120,12 @@ public class TaskListImpl implements TaskList{
         el.addAttribute(new Attribute("effort", String.valueOf(effort)));
         el.addAttribute(new Attribute("priority", String.valueOf(priority)));
         el.addAttribute(new Attribute("estimatedLOCPH", String.valueOf(estimatedLOCPH)));
+        el.addAttribute(new Attribute("actualLOC", String.valueOf(actualLOC)));
         el.addAttribute(new Attribute("estimatedTime", String.valueOf(estimatedTime)));
-        el.addAttribute(new Attribute("numberOfFiles", String.valueOf(numOfFiles)));
-        el.addAttribute(new Attribute("actualLOC", "0"));
-        el.addAttribute(new Attribute("actualTime", "0"));
+        el.addAttribute(new Attribute("actualTime", String.valueOf(actualTime)));
+        el.addAttribute(new Attribute("estNumberOfFiles", String.valueOf(estNumFiles)));
+        el.addAttribute(new Attribute("actNumberOfFiles", String.valueOf(actNumFiles)));
+
         
         Element txt = new Element("text");
         txt.appendChild(text);
