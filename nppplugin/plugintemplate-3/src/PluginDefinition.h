@@ -74,5 +74,6 @@ bool setCommand(size_t index, TCHAR *cmdName, PFUNCPLUGINCMD pFunc, ShortcutKey 
 void setFilepath();
 void openMemoranda();
 void flipAutoRun();
+bool writeToFile();
 inline const char * const BoolToString(bool b);
 #endif //PLUGINDEFINITION_H
