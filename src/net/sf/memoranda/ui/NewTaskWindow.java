@@ -345,7 +345,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		/* instantiate new TaskCard from this and pass it into a collection
 		*/
 		// CHECK IF INPUT IS VALID
-		if(/**validateInput() ||**/ isAnEditWindow){ 
+		if(/**validateInput() ||**/ true){ 
 			
 			finishButton.setVisible(false);
 			// TODO - Create new taskcard here
