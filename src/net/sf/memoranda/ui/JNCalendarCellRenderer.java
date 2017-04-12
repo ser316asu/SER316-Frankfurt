@@ -158,6 +158,9 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 	    		if (date.equals(tsk.getStartDate())){
 	    			
 	    			TaskWindow taskWindow = new TaskWindow();
+	    			JLabel taskDescription = new JLabel(tsk.getText());
+	    			taskWindow.add(taskDescription);
+	    			
 	    		}
 	    		
 	    		
