@@ -7,6 +7,7 @@
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
 package net.sf.memoranda.ui;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -19,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.Event;
@@ -159,7 +161,7 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 	    		if (date.equals(tsk.getStartDate())){
 	    			
 	    			TaskWindow taskWindow = new TaskWindow();
-	    			JLabel taskDescription = new JLabel(tsk.getText());
+	    			JLabel taskDescription = new JLabel(tsk.getText(), SwingConstants.CENTER);
 	    			taskWindow.add(taskDescription);
 	    			
 	    		}
