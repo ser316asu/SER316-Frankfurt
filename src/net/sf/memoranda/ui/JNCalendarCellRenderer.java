@@ -151,6 +151,7 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 		
 		
 		
+		TaskWindow taskWindow;
 		
 		for(Object task : CurrentProject.getTaskList().getTopLevelTasks())
 	    {
@@ -160,7 +161,8 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 	    		
 	    		if (date.equals(tsk.getStartDate())){
 	    			
-	    			TaskWindow taskWindow = new TaskWindow();
+	    			taskWindow = TaskWindow.get();
+	    			
 	    			JLabel taskDescription = new JLabel(tsk.getText(), SwingConstants.CENTER);
 	    			taskWindow.add(taskDescription);
 	    			
