@@ -102,13 +102,13 @@ public class AppFrame extends JFrame
             Point loc = App.getFrame().getLocation();
             ntw.setLocation((frmSize.width / 4), (frmSize.height / 4));
             ntw.setVisible(true);
-            
+
             long effort = Util.getMillisFromHours(ntw.progress.getValue().toString());
     		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, ntw.todoField.getText(), ntw.priorityCB.getSelectedIndex(),effort, ntw.descriptionField.getText(),parentTaskId);
     		Task newTask = CurrentProject.getTaskList().createTask(ntw.getStartDate().getText(),
     				ntw.getEndDate().getText(), ntw.getjTextFieldName().getText() + "", 
     				ntw.priorityCB.getSelectedIndex(),effort, ntw.getTaskDesc().getText(),null, ntw.getHoursEst().getText(),
-    				ntw.getLocEst().getText(), ntw.getNumFiles().getText());
+    				ntw.getLocEst().getText(), ntw.getNumFiles().getText(), ntw.getActualLoc().getText(), ntw.getHoursAct().getText(), ntw.getActualNumFiles().getText());
 //    		CurrentProject.getTaskList().adjustParentTasks(newTask);
     		newTask.setProgress(((Integer)ntw.progress.getValue()).intValue());
             CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());

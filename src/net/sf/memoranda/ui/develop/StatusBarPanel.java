@@ -257,7 +257,7 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 		
 		progressLoc.setMaximum(this.task.getEstLOC());
 		progressDays.setMaximum(this.task.getTaskTotalTime());
-		progressTime.setMaximum(task.getHoursEst());
+		progressTime.setMaximum((int)task.getHoursEst());
 		
 		progressTime.setValue(task.getActualTime());
 		progressDays.setValue(task.getTaskTotalTime() - task.getDaysLeft());
