@@ -155,6 +155,7 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 	    	Task tsk = (Task)task;
 	    	
 	    	if (isSelected){
+	    		
 	    		if (date.equals(tsk.getStartDate())){
 	    			
 	    			TaskWindow taskWindow = new TaskWindow();
@@ -167,9 +168,7 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 	    	}
            
 	     }
-		
-		
-		
+			
 		// General Layout Alignment of labels inside cell
 		label.setHorizontalAlignment(CENTER);
 		label.setEnabled(true);
