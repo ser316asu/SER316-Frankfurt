@@ -30,7 +30,7 @@
 #include <exception>
 
 OPENFILENAMEA ofn;
-std::string filename(128, ' '); // Max File-Path// "                                                                                                                                                                       ";
+std::string filename(128, ' '); // Set max file-path
 LPSTR cString = strdup(filename.c_str());
 bool autorun = true;
  
