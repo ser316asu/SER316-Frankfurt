@@ -23,8 +23,8 @@ public interface TaskList extends Observer{
     //Task createTask(CalendarDate startDate, CalendarDate endDate, String text, int priority, long effort, String description, String parentTaskId);
     public Task createTask(String startDate, String endDate, String text, int priority,
     		long effort, String description, String parentTaskId,String estimatedTime, String estimatedLOCPH,
-    		String numOfFiles);
-
+    		String estNumOfFiles, String actualLOC, String actualTime, String actNumFiles);
+    
     void removeTask(Task task);
 
     public boolean hasSubTasks(String id);

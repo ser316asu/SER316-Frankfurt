@@ -483,13 +483,12 @@ public class JNCalendarPanel extends JPanel {
 			dlg.getEndDate().getText(),
 			dlg.getName(), 
 			dlg.priorityCB.getSelectedIndex(),effort, dlg.getTaskDesc().getText(),null, dlg.getHoursEst().getText(),
-			dlg.getLocEst().getText(), dlg.getNumFiles().getText());
+			dlg.getLocEst().getText(), dlg.getNumFiles().getText(), dlg.getActualLoc().getText(), dlg.getHoursAct().getText(), dlg.getActualNumFiles().getText());
 //	CurrentProject.getTaskList().adjustParentTasks(newTask);
 	newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
     CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
     //taskTable.updateUI();
   }
-
   
 
 
