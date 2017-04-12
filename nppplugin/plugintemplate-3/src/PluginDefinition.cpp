@@ -30,10 +30,10 @@
 #include <exception>
 
 OPENFILENAMEA ofn;
-std::string filename = "";
+std::string filename(128, ' '); // Max File-Path// "                                                                                                                                                                       ";
 LPSTR cString = strdup(filename.c_str());
 bool autorun = true;
-
+ 
 //char filename[MAX_PATH];
 //
 // The plugin data that Notepad++ needs
@@ -53,7 +53,6 @@ void pluginInit(HANDLE /*hModule*/)
 
 	// Where the application checks to see if a filepath.txt exists and has content.
 	// If it does, it reads it. Otherwise it creates a blank one. 
-	
 	std::ifstream inFile;
 	std::ofstream outFile;
 	std::string line;
@@ -119,7 +118,7 @@ void pluginCleanUp()
 	*/
 
 	// Save whatever file-path was made to memoranda. 
-	if (!(cString == NULL) && !(cString[0] == 0)) {
+	if (!(cString == NULL) && !(cString[0] == ' ')) {
 		filename = cString;
 		writeToFile();
 
@@ -194,7 +193,7 @@ void setFilepath()
 	ofn.lpstrTitle = "Choose Memoranda executable/jar file";
 	ofn.Flags = OFN_DONTADDTORECENT | OFN_FILEMUSTEXIST;
 
-	filename = cString;
+	//filename = cString;
 
 	if (GetOpenFileNameA(&ofn))
 	{
@@ -234,10 +233,10 @@ void openMemoranda()
 	//::MessageBoxA(NULL, cString, "cSTRING VALUE", 0);
 
 	if (!filename.empty()) { 
-		ShellExecuteA(NULL, "open", filename.c_str(), NULL, NULL, SW_SHOWDEFAULT); // This needs <windows.h>
+		ShellExecuteA(NULL, "open", filename.c_str(), NULL, NULL, SW_SHOWNOACTIVATE); // This needs <windows.h>
 	}
 	else if (!(cString == NULL) && !(cString[0] == 0)) {
-		ShellExecuteA(NULL, "open", cString, NULL, NULL, SW_SHOWDEFAULT); // This needs <windows.h> in order to run
+		ShellExecuteA(NULL, "open", cString, NULL, NULL, SW_SHOWNOACTIVATE); // This needs <windows.h> in order to run
 	}
 	else {
 		::MessageBox(NULL, TEXT("Invalid Filepath"), TEXT("Filepath is blank or no longer valid."), MB_OK);
