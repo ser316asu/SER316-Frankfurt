@@ -36,6 +36,7 @@ import java.util.GregorianCalendar;
 public class NewTaskWindow extends JDialog implements ActionListener {
 	
 	public boolean CANCELLED = true;
+	private boolean isAnEditWindow = false;
 	
 	private int WIDTH;
 	private int HEIGHT;
@@ -51,11 +52,11 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	private Calendar today;
 	private JFormattedTextField startDate, endDate;
 	private JTextField jTextFieldName; // String
-	private JLabel currentState, nameLabel, startDateLabel, endDateLabel, locEstLabel, hoursEstLabel, numFilesLabel, statusLabel;
+	private JLabel currentState, nameLabel, startDateLabel, endDateLabel, locEstLabel, locActLabel, hoursEstLabel, hoursActLabel, estNumFilesLabel, actNumFilesLabel, statusLabel;
 
 	
 	// Code Info
-	private JFormattedTextField locEst, hoursEst, numFiles; 
+	private JFormattedTextField locEst, locAct, hoursEst, hoursAct, estNumFiles, actNumFiles; 
 	private JButton finishButton;
 	private JButton startStop; // Hoping to only use one button that changes when pressed
 	private JButton notifB;
@@ -65,7 +66,6 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	
 	private JTextField actualLoc;
 	private JTextField totalHours; 
-	private JTextField actualNumFiles;
 	
     String[] priority = {Local.getString("Lowest"), Local.getString("Low"),
             Local.getString("Normal"), Local.getString("High"),
@@ -106,6 +106,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		// Upper-right Quadrant
 		// TODO Consider adding JLabel here to clarify what button does
 		//startStop = new JButton("START"); // Have states. OnClick, startStop.setText("STOP")
+		isAnEditWindow = true;
 		createComponents();
 		editComponents();
 		addTaskElements(task);
@@ -116,15 +117,28 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	}
 
 	private void addTaskElements(Task task) {
-		/*this.actualLoc.setText(task.getActualLOC() + "");
-		this.actualNumFiles.setText(task.getNumOfFiles() + "");
-		this.endDate.setText(task.getEndDate().toString());
-		this.startDate.setText(task.getStartDate().toString());
+		
+		// formatting dates from Day/Month/Year to Month/Day/Year
+		String startDateString = task.getStartDate().toString();
+        String[] startDateArray = startDateString.split("/");
+        startDateString = String.join("/", startDateArray[1], startDateArray[0], startDateArray[2]);
+        
+        String endDateString = task.getEndDate().toString();
+        String[] endDateArray = endDateString.split("/");
+        endDateString = String.join("/", endDateArray[1], endDateArray[0], endDateArray[2]);
+		
+		this.locAct.setText(task.getActualLOC() + "");
+		this.locEst.setText(task.getEstLOC() + "");
+		this.estNumFiles.setText(task.getEstNumOfFiles() + "");
+		this.actNumFiles.setText(task.getActNumOfFiles() + "");
+		this.hoursAct.setText(task.getHoursAct() + "");
+		this.hoursEst.setText(task.getHoursEst() + "");
+		this.endDate.setText(endDateString);
+		this.startDate.setText(startDateString);
 		this.progress.setValue(task.getProgress());
 		this.jTextFieldName.setText(task.getText());
-		this.priorityCB.setSelectedItem(task.getPriority());
-		this.locEst.setText(task.getEstLOC() + "");
-		this.taskDesc.setText(task.getDescription());*/
+		this.priorityCB.setSelectedItem(priority[task.getPriority()]);
+		this.taskDesc.setText(task.getDescription());
 	}
 
 	private void createComponents() {
@@ -137,26 +151,32 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		topLeftPane = new JPanel(new FlowLayout());
 		centerPane = new JPanel();
 		
-		numFiles = new JFormattedTextField(integerFieldFormatter);
+		estNumFiles = new JFormattedTextField(integerFieldFormatter);
+		actNumFiles = new JFormattedTextField(integerFieldFormatter);
 		locEst = new JFormattedTextField(integerFieldFormatter);
+		locAct = new JFormattedTextField(integerFieldFormatter);
 		hoursEst = new JFormattedTextField(integerFieldFormatter);
+		hoursAct = new JFormattedTextField(integerFieldFormatter);
 		
 		endDate = new JFormattedTextField(newDateFormat);
 		startDate = new JFormattedTextField(newDateFormat); // Setting Date formatted textfield
 		
 		nameLabel = new JLabel("Name");
 		locEstLabel = new JLabel("Estimated LOC");
+		locActLabel = new JLabel("Actual LOC");
 		startDateLabel = new JLabel("Start Date (MM/DD/YYYY)");
 		endDateLabel = new JLabel("Due Date");
 		hoursEstLabel = new JLabel("Estimated Hours");
+		hoursActLabel = new JLabel("Actual Hours");
 		trackedMinutes = new JLabel("0");
 		statusLabel = new JLabel("Please fill out all fields for your new task");
-		numFilesLabel = new JLabel("Estimated # of Files");
+		estNumFilesLabel = new JLabel("Estimated # of Files");
+		actNumFilesLabel = new JLabel("Actual # of Files");
 		
 		jTextFieldName = new JTextField("Name of Task",28);
 		taskDesc = new JTextArea("Enter Task Description here...", 10, 120);
 		
-		finishButton = new JButton("Add Task");
+		finishButton = new JButton("Save Task");
 		notifB = new JButton("Add Notifcation");
 		
 		jPanelProgress = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -188,15 +208,23 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		endDate.setColumns(28);
 		endDate.setText("MM/DD/YYYY");
 
-		locEst.setColumns(28);
-		locEst.setText("LOC Estimate");
+		locEst.setColumns(14);
+		locEst.setText("0");
 		
+		locAct.setColumns(14);
+		locAct.setText("Actual LOC");
 
-		hoursEst.setColumns(28);
+		hoursEst.setColumns(14);
 		hoursEst.setText("Hours Estimate");
 		
-		numFiles.setColumns(28);
-		numFiles.setText("Number of Files/Classes");
+		hoursAct.setColumns(14);
+		hoursAct.setText("Hours Actual");
+		
+		estNumFiles.setColumns(14);
+		estNumFiles.setText("Estimated # Files");
+		
+		actNumFiles.setColumns(14);
+		actNumFiles.setText("Actual # Files");
 		
 		taskDesc.setBorder(blackBorder);
 		
@@ -282,10 +310,16 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		// Top-Right-Center Pane
 		topRightPane.add(locEstLabel);
 		topRightPane.add(locEst);
+		topRightPane.add(locActLabel);
+		topRightPane.add(locAct);
 		topRightPane.add(hoursEstLabel);
 		topRightPane.add(hoursEst);
-		topRightPane.add(numFilesLabel);
-		topRightPane.add(numFiles);
+		topRightPane.add(hoursActLabel);
+		topRightPane.add(hoursAct);
+		topRightPane.add(estNumFilesLabel);
+		topRightPane.add(estNumFiles);
+		topRightPane.add(actNumFilesLabel);
+		topRightPane.add(actNumFiles);
 		topRightPane.add(new JLabel("Priority:"));
 		topRightPane.add(priorityCB);
 		topRightPane.setPreferredSize(centerPanelSize);
@@ -300,10 +334,6 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		statusLabel.setOpaque(true);
 		bottomCenterPane.add(finishButton, BorderLayout.SOUTH);
 		
-
-		
-		/* EVENT LISTENERS */
-		
 		centerPane.add(topCenterPane,BorderLayout.NORTH);
 		centerPane.add(bottomCenterPane, BorderLayout.CENTER);
 	}
@@ -315,7 +345,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		/* instantiate new TaskCard from this and pass it into a collection
 		*/
 		// CHECK IF INPUT IS VALID
-		if(validateInput()){ 
+		if(/**validateInput() ||**/ true){ 
 			
 			finishButton.setVisible(false);
 			// TODO - Create new taskcard here
@@ -364,7 +394,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		// CHECK START DATE
 		if(startDate.getValue() == null){
 			System.out.println("startDate is invalid");
-			startDate.setText("RE-ENTER! (dd/mm/yyyy)");
+			startDate.setText("RE-ENTER! (mm/dd/yyyy)");
 			statusLabel.setText("Invalid Entry: Please fix marked fields");
 			startDate.setBackground(Color.red);
 			isValid = false;
@@ -377,7 +407,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		// CHECK TO MAKE SURE END-DATE >= START-DATE. Use compareTo()
 		if(endDate.getValue() == null){
 			System.out.println("endDate is invalid");
-			endDate.setText("RE-ENTER! (dd/mm/yyyy)");
+			endDate.setText("RE-ENTER! (mm/dd/yyyy)");
 			statusLabel.setText("Invalid Entry: Please fix marked fields");
 			endDate.setBackground(Color.red);
 			isValid = false;
@@ -417,15 +447,15 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		
 		//TODO
 		// CHECK NUMFILES ESTIMATE
-		if(numFiles.getValue() == null){
+		if(estNumFiles.getValue() == null){
 			System.out.println("# of Files is invalid");
-			numFiles.setText("Re-Enter Estimated # of Files");
+			estNumFiles.setText("Re-Enter Estimated # of Files");
 			statusLabel.setText("Invalid Entry: Please fix marked fields");
-			numFiles.setBackground(Color.red);
+			estNumFiles.setBackground(Color.red);
 			isValid = false;
 		}
-		else if(numFiles.getValue() != null){
-			numFiles.setBackground(Color.WHITE);
+		else if(estNumFiles.getValue() != null){
+			estNumFiles.setBackground(Color.WHITE);
 		}
 	
 		// CHECK TASK DESCRIPTION
@@ -540,9 +570,13 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	public JLabel getHoursEstLabel() {
 		return hoursEstLabel;
 	}
+	
+	public JLabel getHoursActLabel() {
+		return hoursActLabel;
+	}
 
 	public JLabel getNumFilesLabel() {
-		return numFilesLabel;
+		return estNumFilesLabel;
 	}
 
 	public JLabel getStatusLabel() {
@@ -552,13 +586,17 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	public JTextField getLocEst() {
 		return locEst;
 	}
+	
+	public JTextField getLocAct() {
+		return locAct;
+	}
 
 	public JTextField getHoursEst() {
 		return hoursEst;
 	}
 
 	public JTextField getNumFiles() {
-		return numFiles;
+		return estNumFiles;
 	}
 
 	public JButton getFinishButton() {
@@ -584,9 +622,13 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	public JTextField getTotalHours() {
 		return totalHours;
 	}
+	
+	public JTextField getHoursAct() {
+		return hoursAct;
+	}
 
 	public JTextField getActualNumFiles() {
-		return actualNumFiles;
+		return actNumFiles;
 	}
 
 	public void setWIDTH(int wIDTH) {
@@ -662,7 +704,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	}
 
 	public void setNumFilesLabel(JLabel numFilesLabel) {
-		this.numFilesLabel = numFilesLabel;
+		this.estNumFilesLabel = numFilesLabel;
 	}
 
 	public void setStatusLabel(JLabel statusLabel) {
@@ -678,7 +720,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	}
 
 	public void setNumFiles(JFormattedTextField numFiles) {
-		this.numFiles = numFiles;
+		this.estNumFiles = numFiles;
 	}
 
 	public void setFinishButton(JButton finishButton) {
@@ -697,15 +739,16 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		this.taskDesc = taskDesc;
 	}
 
-	public void setActualLoc(JTextField actualLoc) {
-		this.actualLoc = actualLoc;
+	public void setActualLoc(JFormattedTextField actualLoc) {
+		this.locAct = actualLoc;
 	}
 
 	public void setTotalHours(JTextField totalHours) {
 		this.totalHours = totalHours;
 	}
 
-	public void setActualNumFiles(JTextField actualNumFiles) {
-		this.actualNumFiles = actualNumFiles;
+	public void setActualNumFiles(JFormattedTextField actualNumFiles) {
+		this.actNumFiles = actualNumFiles;
 	}
+	
 }

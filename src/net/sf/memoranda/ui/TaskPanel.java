@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
@@ -41,7 +42,7 @@ import net.sf.memoranda.util.Context;
 import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Util;
-
+  
 /*$Id: TaskPanel.java,v 1.27 2007/01/17 20:49:12 killerjoe Exp $*/
 public class TaskPanel extends JPanel implements Observer {
     BorderLayout borderLayout1 = new BorderLayout();
@@ -66,6 +67,8 @@ public class TaskPanel extends JPanel implements Observer {
 	JMenuItem ppAddSubTask = new JMenuItem();
 	JMenuItem ppCalcTask = new JMenuItem();
 	DailyItemsPanel parentPanel = null;
+	
+	SimpleDateFormat dateFormatter = new SimpleDateFormat("MM-dd-yyyy");
 
     public TaskPanel(DailyItemsPanel _parentPanel) {
         //((Observable) CurrentProject.getTaskList()).addObserver(this);
@@ -445,9 +448,23 @@ public class TaskPanel extends JPanel implements Observer {
         ntw.setVisible(true);
         if (ntw.CANCELLED)
             return;
-        CalendarDate sd = new CalendarDate(ntw.getStartDate().getText());
+        
+        String startDateString = ntw.getStartDate().getText();
+        String[] startDateArray = startDateString.split("/");
+        Date startDate = new Date(Integer.parseInt(startDateArray[2]) - 1900, Integer.parseInt(startDateArray[0]), Integer.parseInt(startDateArray[1]));
+
+        String endDateString = ntw.getEndDate().getText();
+        String[] endDateArray = endDateString.split("/");
+        Date endDate = new Date(Integer.parseInt(endDateArray[2]) - 1900, Integer.parseInt(endDateArray[0]), Integer.parseInt(endDateArray[1]));
+
+        System.out.println("Start Date Year: " + startDateArray[2]);
+        System.out.println("End Date Year: " + endDateArray[2]);
+        System.out.println("start Date: " + startDate.toString());
+        System.out.println("end Date: " + endDate.toString());
+        
+        CalendarDate sd = new CalendarDate(startDate);
 //        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-         CalendarDate ed = new CalendarDate(ntw.getEndDate().getText());
+         CalendarDate ed = new CalendarDate(endDate);
  		/*if(ntw.getEndDate().isSelected())
  			ed = new CalendarDate((ntw.getEndDate().getText()));
  		else
@@ -457,9 +474,14 @@ public class TaskPanel extends JPanel implements Observer {
         t.setText(ntw.getjTextFieldName().getText());
         t.setDescription(ntw.getTaskDesc().getText());
         t.setPriority(ntw.priorityCB.getSelectedIndex());
-        t.setEffort(Util.getMillisFromHours(ntw.getTotalHours().getText()));
+        //t.setEffort(Util.getMillisFromHours(ntw.getTotalHours().getText()));
         t.setProgress(((Integer)ntw.progress.getValue()).intValue());
-        t.setActualLOC(Integer.parseInt(ntw.getActualLoc().getText()));
+        t.setEstLOC(Integer.parseInt(ntw.getLocEst().getText()));
+        t.setActLOC(Integer.parseInt(ntw.getLocAct().getText()));
+        t.setEstNumOfFiles(Integer.parseInt(ntw.getNumFiles().getText()));
+        t.setActNumOfFiles(Integer.parseInt(ntw.getActualNumFiles().getText()));
+        t.setHoursEst(Double.parseDouble(ntw.getHoursEst().getText()));
+        t.setHoursAct(Double.parseDouble(ntw.getHoursAct().getText()));
         
         
 //		CurrentProject.getTaskList().adjustParentTasks(t);
@@ -494,7 +516,12 @@ public class TaskPanel extends JPanel implements Observer {
 				dlg.getEndDate().getText(),
 				dlg.getjTextFieldName().getText(), 
 				dlg.priorityCB.getSelectedIndex(),effort, dlg.getTaskDesc().getText(),null, dlg.getHoursEst().getText(),
-				dlg.getLocEst().getText(), dlg.getNumFiles().getText());
+				dlg.getLocEst().getText(), 
+				dlg.getNumFiles().getText(), 
+				dlg.getLocAct().getText(), 
+				dlg.getHoursAct().getText(), 
+				dlg.getActualNumFiles().getText());
+		//actual - lines, time, files
 //		CurrentProject.getTaskList().adjustParentTasks(newTask);
 		newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
         CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
