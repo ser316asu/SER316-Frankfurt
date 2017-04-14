@@ -212,6 +212,12 @@ public class DailyItemsPanel extends JPanel {
 
         mainPanel.add(editorsPanel, BorderLayout.CENTER);
         
+        //Styling by Joshua Becker Added
+        this.tasksPanel.scrollPane.getViewport().setBackground(Color.green);
+        //end styling
+        
+        
+        
         editorsPanel.add(agendaPanel, "AGENDA");
         editorsPanel.add(eventsPanel, "EVENTS");
         editorsPanel.add(tasksPanel, "TASKS");

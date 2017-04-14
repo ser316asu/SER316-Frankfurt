@@ -36,6 +36,7 @@ import java.util.Iterator;
 import java.util.Hashtable;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -53,6 +54,7 @@ import net.sf.memoranda.*;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.date.DateListener;
+import net.sf.memoranda.ui.develop.Styling;
 import net.sf.memoranda.ui.treetable.*;
 
 /**
@@ -141,6 +143,15 @@ public class TaskTable extends JTable {
 			
 		// Install the tree editor renderer and editor.
 		renderer = new TaskTreeTableCellRenderer(this);
+		renderer.setOpaque(true);
+		//renderer.setBackground(new Color(0, 0, 0, 255));
+		//renderer.table.setBorder(BorderFactory.createLineBorder(Color.cyan));
+		renderer.table.setGridColor(Color.BLACK);
+		renderer.progressLabel.setFont(Styling.TASK_PANEL_FONT);
+		renderer.table.tree.setBorder(BorderFactory.createLineBorder(Color.green));
+		renderer.table.setBackground(Color.gray);
+		//renderer.table.setOpaque(true);
+		//renderer.table.setBackground(Color.gray);
 		
 		
 		tree.setCellRenderer(renderer);
@@ -170,6 +181,7 @@ public class TaskTable extends JTable {
 			setRowHeight(18);
 		//}
 		initColumnWidths();
+		tree.setFont(Styling.TASK_PANEL_FONT);
 		
 		// do not allow moving columns
 		getTableHeader().setReorderingAllowed(false);
@@ -185,16 +197,16 @@ public class TaskTable extends JTable {
                 column.setPreferredWidth(32767);
             }
 	    else if( i == 6 ){
-		    column.setPreferredWidth(100);
-		    column.setMinWidth(100);
+		    column.setPreferredWidth(Styling.SCREEN_WIDTH/6);
+		    column.setMinWidth(200);
 	    }
             else {
-                column.setMinWidth(67); // 65);
-                column.setPreferredWidth(67); //65);
+            	column.setPreferredWidth(Styling.SCREEN_WIDTH/6+30); //65);
+                column.setMinWidth(200); // 65);
+                
             }
         }
     }
-    
     public void tableChanged() {
 		model.fireUpdateCache();
 		model.fireTreeStructureChanged();

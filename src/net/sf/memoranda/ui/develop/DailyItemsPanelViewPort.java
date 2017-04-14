@@ -23,7 +23,7 @@ public class DailyItemsPanelViewPort extends JViewport{
 				image = LoadAssets.HOMEPAGE_BACKGROUND.getImage();
 				break;
 			case TASK_VIEW:
-				image = LoadAssets.DARKGREEN_BACKGROUND.getImage();
+				image = LoadAssets.HOMEPAGE_BACKGROUND.getImage();
 				break;
 			case RESOURCE_VIEW:
 				image = LoadAssets.HOMEPAGE_BACKGROUND.getImage();

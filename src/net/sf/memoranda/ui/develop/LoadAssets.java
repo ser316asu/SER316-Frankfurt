@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
 /**
  * The Class LoadAssets.
  */
-class LoadAssets {
+public class LoadAssets {
     
     /** The task panel image. */
     public static ImageIcon TASK_PANEL_IMAGE = loadImage("Assets/ui/frameNotSelected.png",
