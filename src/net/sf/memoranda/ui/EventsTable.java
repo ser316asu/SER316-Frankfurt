@@ -89,10 +89,10 @@ public class EventsTable extends JTable {
                     
                   }
                 }
-                //comp.setBackground(Color.black);
-                //comp.setForeground(Color.WHITE);
-                //comp.setFont(Styling.TASK_PANEL_FONT);
-                //comp.getFont().deriveFont(Font.BOLD);
+                comp.setBackground(Color.black);
+                comp.setForeground(Color.WHITE);
+                comp.setFont(Styling.TASK_PANEL_FONT);
+                comp.getFont().deriveFont(Font.BOLD);
                 return comp;
             }
         };
