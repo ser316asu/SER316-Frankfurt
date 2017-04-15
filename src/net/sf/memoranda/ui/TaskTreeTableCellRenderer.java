@@ -81,7 +81,8 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
             return empty_panel;
         if (!(value instanceof Task))
             return empty_panel;
-        Task t = (Task) value; 
+        Task t = (Task) value;
+        setForeground(Color.white);
         setText(t.getText());
         setToolTipText(t.getDescription());
         setIcon(getStatusIcon(t));
@@ -112,10 +113,11 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
         label.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED,Color.gray, Color.WHITE));
         label.setFont(Styling.TASK_PANEL_FONT);
         label.setForeground(Color.WHITE);
-        Dimension size = new Dimension(label.getWidth()+100,label.getHeight());
+        Dimension size = new Dimension(label.getWidth()+100,label.getHeight()+10);
         label.setPreferredSize(size);
         label.setMaximumSize(size);
         label.setMinimumSize(size);
+        
         //label.setIcon(LoadAssets.TERMINAL_IMAGE);
         if (value == null) {
             label.setText("");
@@ -197,11 +199,7 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
     }
 
     private void applyFont(Task t, JComponent c) {
-        if ((t.getStatus(CurrentDate.get()) == Task.ACTIVE)
-                || (t.getStatus(CurrentDate.get()) == Task.DEADLINE))
-            c.setFont(c.getFont().deriveFont(Font.BOLD));
-        else
-            c.setFont(c.getFont().deriveFont(Font.PLAIN));
+        c.setFont(c.getFont().deriveFont(Font.BOLD));
     }
 
     /**

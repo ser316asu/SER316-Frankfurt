@@ -46,6 +46,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.LookAndFeel;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
+import javax.swing.border.BevelBorder;
 import javax.swing.event.*;
 import javax.swing.table.*;
 import javax.swing.tree.*;
@@ -148,8 +149,8 @@ public class TaskTable extends JTable {
 		//renderer.table.setBorder(BorderFactory.createLineBorder(Color.cyan));
 		renderer.table.setGridColor(Color.BLACK);
 		renderer.progressLabel.setFont(Styling.TASK_PANEL_FONT);
-		renderer.table.tree.setBorder(BorderFactory.createLineBorder(Color.green));
-		renderer.table.setBackground(Color.gray);
+		
+		renderer.table.setBackground(Color.black);
 		//renderer.table.setOpaque(true);
 		//renderer.table.setBackground(Color.gray);
 		

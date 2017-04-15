@@ -8,6 +8,7 @@
  */
 package net.sf.memoranda.ui;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.util.Date;
@@ -22,6 +23,7 @@ import net.sf.memoranda.EventsManager;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.date.DateListener;
+import net.sf.memoranda.ui.develop.Styling;
 import net.sf.memoranda.util.Local;
 /**
  *
@@ -51,8 +53,8 @@ public class EventsTable extends JTable {
 
     public void initTable(CalendarDate d) {
         events = (Vector)EventsManager.getEventsForDate(d);
-        getColumnModel().getColumn(0).setPreferredWidth(60);
-        getColumnModel().getColumn(0).setMaxWidth(60);
+        getColumnModel().getColumn(0).setPreferredWidth(100);
+        getColumnModel().getColumn(0).setMaxWidth(100);
 	clearSelection();
         updateUI();
     }
@@ -84,9 +86,13 @@ public class EventsTable extends JTable {
                   if (ev.getTime().after(new Date())) {
                     comp.setForeground(java.awt.Color.black);
                     //comp.setFont(new java.awt.Font("Dialog", 1, 12));
-                    comp.setFont(comp.getFont().deriveFont(Font.BOLD));
+                    
                   }
                 }
+                comp.setBackground(Color.black);
+                comp.setForeground(Color.WHITE);
+                comp.setFont(Styling.TASK_PANEL_FONT);
+                comp.getFont().deriveFont(Font.BOLD);
                 return comp;
             }
         };

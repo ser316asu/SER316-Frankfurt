@@ -20,10 +20,10 @@ public class DailyItemsPanelViewPort extends JViewport{
 	public DailyItemsPanelViewPort(int panelType){
 		switch(panelType){
 			case EVENT_VIEW:
-				image = LoadAssets.HOMEPAGE_BACKGROUND.getImage();
+				image = LoadAssets.TERMINAL_IMAGE.getImage();
 				break;
 			case TASK_VIEW:
-				image = LoadAssets.HOMEPAGE_BACKGROUND.getImage();
+				image = LoadAssets.TERMINAL_IMAGE.getImage();
 				break;
 			case RESOURCE_VIEW:
 				image = LoadAssets.HOMEPAGE_BACKGROUND.getImage();

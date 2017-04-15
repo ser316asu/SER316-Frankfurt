@@ -43,7 +43,7 @@ public class LoadAssets {
     		Styling.SCREEN_WIDTH,Styling.SCREEN_HEIGHT);
     
     /** The terminal image. */
-    public static Icon TERMINAL_IMAGE = loadImage("Assets/ui/terminalBackground.png",
+    public static ImageIcon TERMINAL_IMAGE = loadImage("Assets/ui/terminalBackground.png",
     		Styling.SCREEN_WIDTH, Styling.SCREEN_HEIGHT);
     
     /** The toolbar calendar button image. */
