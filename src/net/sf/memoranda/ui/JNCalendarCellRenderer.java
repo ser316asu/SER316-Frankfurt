@@ -161,7 +161,7 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 	    			taskWindow = TaskWindow.get();
 	    			JLabel taskDescription = new JLabel(tsk.getText());
 	    			taskWindow.add(taskDescription);
-	    			
+	    			setEnabled(true);
 	    		}
 	    		
 	    		
