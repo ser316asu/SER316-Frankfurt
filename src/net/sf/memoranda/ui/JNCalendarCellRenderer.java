@@ -164,10 +164,13 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 	    			taskWindow = TaskWindow.get();
 	    			
 	    			JLabel taskDescription = new JLabel(tsk.getText(), SwingConstants.CENTER);
+	    			taskDescription.setFont (taskDescription.getFont ().deriveFont (30.0f));
 	    			taskWindow.add(taskDescription);
+	    			taskWindow.getContentPane().setBackground(Color.CYAN);
 	    			
 	    		}
 	    		
+	    		setEnabled(true);
 	    		
 	    	}
            
