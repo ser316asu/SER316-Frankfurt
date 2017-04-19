@@ -1,5 +1,6 @@
 package net.sf.memoranda.ui;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.io.File;
@@ -20,6 +21,7 @@ import net.sf.memoranda.ProjectListener;
 import net.sf.memoranda.Resource;
 import net.sf.memoranda.ResourcesList;
 import net.sf.memoranda.TaskList;
+import net.sf.memoranda.ui.develop.Styling;
 import net.sf.memoranda.ui.table.TableSorter;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.MimeType;
@@ -51,6 +53,10 @@ public class ResourcesTable extends JTable {
                  tableChanged();
             }
         });
+        this.setBackground(Color.black);
+        this.setForeground(Color.WHITE);
+        this.setFont(Styling.TASK_PANEL_FONT);
+        this.getFont().deriveFont(Font.BOLD);
     }
 
     void initColumsWidth() {

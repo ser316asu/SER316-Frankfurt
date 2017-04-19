@@ -1,7 +1,9 @@
 package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -30,6 +32,7 @@ import net.sf.memoranda.History;
 import net.sf.memoranda.Note;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.CurrentNote;
+import net.sf.memoranda.ui.develop.Styling;
 import net.sf.memoranda.ui.htmleditor.HTMLEditor;
 import net.sf.memoranda.util.Util;
 import net.sf.memoranda.util.Context;
@@ -307,6 +310,13 @@ public class EditorPanel extends JPanel {
 		editorToolBar.add(previewB, null);
 		// editorToolBar.add(printB, null);
 		jPanel1.add(editorToolBar, BorderLayout.NORTH);
+		
+		//Styling
+		
+		editor.editor.setForeground(Color.black);
+		editor.editor.setFont(Styling.TERMINAL_FONT);
+		editor.editor.getFont().deriveFont(Font.BOLD);
+		
 		jPanel1.add(editor, BorderLayout.CENTER);
 		this.add(titleBar, BorderLayout.NORTH);
 		titleBar.add(titleLabel, null);
