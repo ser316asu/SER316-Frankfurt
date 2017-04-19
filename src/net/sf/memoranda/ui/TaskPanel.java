@@ -92,7 +92,8 @@ public class TaskPanel extends JPanel implements Observer {
         //((Observable) CurrentProject.getTaskList()).addObserver(this);
     	try {
             parentPanel = _parentPanel;
-            jbInit();
+            //System.out.println("\n\n\n DEBUG LINE");
+            //jbInit();
         }
         catch (Exception ex) {
             ex.printStackTrace();
