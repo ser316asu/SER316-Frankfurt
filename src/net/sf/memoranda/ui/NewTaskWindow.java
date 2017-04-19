@@ -134,7 +134,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
         
         
 		this.locAct.setText(task.getActualLOC() + "");
-		//this.locAct.setText(task.getActualLoc() + "");
+		this.locAct.setValue(task.getActLOC());
 		
 		this.locEst.setText(task.getEstLOC() + "");
 		this.locEst.setValue(task.getEstLOC());
@@ -143,7 +143,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		this.estNumFiles.setValue(task.getEstNumOfFiles());
 		
 		this.actNumFiles.setText(task.getActNumOfFiles() + "");
-		//this.actNumFiles.setValue(task.getActNumOfFiles());
+		this.actNumFiles.setValue(task.getActNumOfFiles());
 		
 		this.hoursAct.setText(task.getHoursAct() + "");
 		this.hoursAct.setValue(task.getHoursAct());
@@ -210,7 +210,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		actNumFilesLabel = new JLabel("Actual # of Files");
 		
 		jTextFieldName = new JTextField("Name of Task",28);
-		taskDesc = new JTextArea("Enter Task Description here...", 10, 120);
+		taskDesc = new JTextArea("Enter Task Description here...", 6, 120);
 		
 		finishButton = new JButton("Save Task");
 		notifB = new JButton("Add Notifcation");
@@ -244,22 +244,22 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		endDate.setColumns(28);
 		endDate.setText("MM/DD/YYYY");
 
-		locEst.setColumns(14);
+		locEst.setColumns(28);
 		locEst.setText("Estimated LOC");
 		
-		locAct.setColumns(14);
+		locAct.setColumns(28);
 		locAct.setText("0");
 
-		hoursEst.setColumns(14);
+		hoursEst.setColumns(28);
 		hoursEst.setText("Hours Estimate");
 		
-		hoursAct.setColumns(14);
+		hoursAct.setColumns(28);
 		hoursAct.setText("0");
 		
-		estNumFiles.setColumns(14);
+		estNumFiles.setColumns(28);
 		estNumFiles.setText("Estimated # Files");
 		
-		actNumFiles.setColumns(14);
+		actNumFiles.setColumns(28);
 		actNumFiles.setText("0");
 		
 		taskDesc.setBorder(blackBorder);
@@ -318,7 +318,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	}
 	
 	private void addComponents(){
-		Dimension centerPanelSize = new Dimension(335, 200);
+		Dimension centerPanelSize = new Dimension(335, 270);
 		
 		// Change these to regular boxes so color can be applied. These for filler spaces. Currently unused
 		//Filler boxLeft = new Box.Filler(minSize, prefSize, maxSize);
@@ -341,23 +341,23 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		topLeftPane.add(jLabelProgress);
 		topLeftPane.add(jPanelProgress);
 		topLeftPane.add(this.notifB);
+		topLeftPane.add(new JLabel("Priority:"));
+		topLeftPane.add(priorityCB);
+		topLeftPane.add(locEstLabel);
+		topLeftPane.add(locEst);
 		topLeftPane.setPreferredSize(centerPanelSize);
-	
 		// Top-Right-Center Pane
-		topRightPane.add(locEstLabel);
-		topRightPane.add(locEst);
-		topRightPane.add(locActLabel);
-		topRightPane.add(locAct);
 		topRightPane.add(hoursEstLabel);
 		topRightPane.add(hoursEst);
-		topRightPane.add(hoursActLabel);
-		topRightPane.add(hoursAct);
 		topRightPane.add(estNumFilesLabel);
 		topRightPane.add(estNumFiles);
+		topRightPane.add(locActLabel);
+		topRightPane.add(locAct);
+		topRightPane.add(hoursActLabel);
+		topRightPane.add(hoursAct);
 		topRightPane.add(actNumFilesLabel);
 		topRightPane.add(actNumFiles);
-		topRightPane.add(new JLabel("Priority:"));
-		topRightPane.add(priorityCB);
+
 		topRightPane.setPreferredSize(centerPanelSize);
 		
 		topCenterPane.add(topLeftPane, BorderLayout.WEST);
@@ -368,8 +368,8 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		statusLabel.setHorizontalAlignment(JLabel.CENTER);
 		statusLabel.setBackground(Color.lightGray);
 		statusLabel.setOpaque(true);
-		bottomCenterPane.add(finishButton, BorderLayout.SOUTH);
 		
+		bottomCenterPane.add(finishButton, BorderLayout.SOUTH);
 		centerPane.add(topCenterPane,BorderLayout.NORTH);
 		centerPane.add(bottomCenterPane, BorderLayout.CENTER);
 	}
@@ -469,8 +469,20 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 			locEst.setBackground(Color.WHITE);
 		}	
 		
+		if(locAct.getValue() == null || locAct.getText() == null){
+			System.out.println("LOC Act is invalid");
+			locAct.setText("Re-enter Lines of Code Estimate!");
+			statusLabel.setText("Invalid Entry: Please fix marked fields");
+			locAct.setBackground(Color.red);
+			isValid = false;
+		}
+		else if(locAct.getValue() != null){
+			locAct.setBackground(Color.WHITE);
+		}
+		
+		
 		// CHECK HOURS ESTIMATE
-		if(hoursEst.getValue() == null || locEst.getText() == null){
+		if(hoursEst.getValue() == null || hoursEst.getText() == null){
 			System.out.println("Hours EST is invalid");
 			hoursEst.setText("Re-Enter Lines of Code Estimate!");
 			statusLabel.setText("Invalid Entry: Please fix marked fields");
@@ -479,7 +491,18 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		}
 		else if(hoursEst.getValue() != null){
 			hoursEst.setBackground(Color.WHITE);
-		}	
+		}
+		
+		if(hoursAct.getValue() == null || hoursAct.getText() == null){
+			System.out.println("Hours Act is invalid");
+			hoursAct.setText("Re-Enter Actual Hours!");
+			statusLabel.setText("Invalid Entry: Please fix marked fields");
+			hoursAct.setBackground(Color.red);
+			isValid = false;
+		}
+		else if(hoursAct.getValue() != null){
+			hoursAct.setBackground(Color.WHITE);
+		}
 		
 		//TODO
 		// CHECK NUMFILES ESTIMATE
@@ -493,7 +516,18 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		else if(estNumFiles.getValue() != null){
 			estNumFiles.setBackground(Color.WHITE);
 		}
-	
+		
+		if(actNumFiles.getValue() == null || actNumFiles.getText() == null){
+			System.out.println("Act Num Files is invalid");
+			actNumFiles.setText("Re-Enter Actual # Files!");
+			statusLabel.setText("Invalid Entry: Please fix marked fields");
+			actNumFiles.setBackground(Color.red);
+			isValid = false;
+		}
+		else if(actNumFiles.getValue() != null){
+			actNumFiles.setBackground(Color.WHITE);
+		}
+		
 		// CHECK TASK DESCRIPTION
 		if(taskDesc.getText() == null || taskDesc.getText().equals("") || taskDesc.getText().equals("Enter Task Description here...") || taskDesc.getText().equals("Task Description is invalid")){
 			System.out.println("Task Description is Invalid");
