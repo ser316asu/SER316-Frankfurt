@@ -106,6 +106,9 @@ public class AppFrame extends JFrame
             Point loc = App.getFrame().getLocation();
             ntw.setLocation((frmSize.width / 4), (frmSize.height / 4));
             ntw.setVisible(true);
+            if (ntw.CANCELLED) {
+                return;
+            }
 
             long effort = Util.getMillisFromHours(ntw.progress.getValue().toString());
     		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, ntw.todoField.getText(), ntw.priorityCB.getSelectedIndex(),effort, ntw.descriptionField.getText(),parentTaskId);

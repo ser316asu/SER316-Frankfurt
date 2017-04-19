@@ -47,6 +47,8 @@ import net.sf.memoranda.util.Util;
 public class TaskPanel extends JPanel implements Observer {
 	
 	private static TaskPanel singletonTaskPanel;
+	private static int numberOfNewTaskPopUps = 1;
+	private static int numberOfEditTaskPopUps = 1;
 	
     static BorderLayout borderLayout1 = new BorderLayout();
     static JToolBar tasksToolBar = new JToolBar();
@@ -444,7 +446,13 @@ public class TaskPanel extends JPanel implements Observer {
         Task t =
             CurrentProject.getTaskList().getTask(
                 taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString());
-        NewTaskWindow ntw = new NewTaskWindow(App.getFrame(), "Edit Task", t);
+        
+        numberOfEditTaskPopUps++;
+        NewTaskWindow ntw = null;
+        
+        if (numberOfEditTaskPopUps % 2 == 0) {
+        	ntw = new NewTaskWindow(App.getFrame(), "Edit Task", t);
+        }
        /* TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("Edit task"));
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
@@ -509,7 +517,14 @@ public class TaskPanel extends JPanel implements Observer {
     }
 
     static void newTaskB_actionPerformed(ActionEvent e) {
-    	NewTaskWindow dlg = new NewTaskWindow(App.getFrame(),"Create a New Task"); // Creates task creation window
+    	NewTaskWindow dlg;
+    	numberOfNewTaskPopUps++;
+    	
+    	if (numberOfNewTaskPopUps % 2 == 0) {
+    		dlg = new NewTaskWindow(App.getFrame(),"Create a New Task"); // Creates task creation window
+    	} else {
+    		return;
+    	}
         
         //XXX String parentTaskId = taskTable.getCurrentRootTask();
         
