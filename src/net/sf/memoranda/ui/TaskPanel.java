@@ -450,21 +450,34 @@ public class TaskPanel extends JPanel implements Observer {
             return;
         
         String startDateString = ntw.getStartDate().getText();
+        System.out.println("Start Date Entered: " + startDateString);
         String[] startDateArray = startDateString.split("/");
-        Date startDate = new Date(Integer.parseInt(startDateArray[2]) - 1900, Integer.parseInt(startDateArray[0]), Integer.parseInt(startDateArray[1]));
+        //Date startDate = new Date(Integer.parseInt(startDateArray[2]), Integer.parseInt(startDateArray[0]), Integer.parseInt(startDateArray[1]));
 
         String endDateString = ntw.getEndDate().getText();
+        System.out.println("End Date Entered: " + endDateString);
         String[] endDateArray = endDateString.split("/");
-        Date endDate = new Date(Integer.parseInt(endDateArray[2]) - 1900, Integer.parseInt(endDateArray[0]), Integer.parseInt(endDateArray[1]));
+        //Date endDate = new Date(Integer.parseInt(endDateArray[2]), Integer.parseInt(endDateArray[0]), Integer.parseInt(endDateArray[1]));
 
         System.out.println("Start Date Year: " + startDateArray[2]);
         System.out.println("End Date Year: " + endDateArray[2]);
-        System.out.println("start Date: " + startDate.toString());
-        System.out.println("end Date: " + endDate.toString());
         
-        CalendarDate sd = new CalendarDate(startDate);
+        System.out.println("start date day: " + Integer.parseInt(startDateArray[2]));
+        System.out.println("start date month: " + Integer.parseInt(startDateArray[0]));
+        System.out.println("start date year: " + Integer.parseInt(startDateArray[1]));
+        
+        System.out.println("end date day: " + Integer.parseInt(endDateArray[2]));
+        System.out.println("end date month: " + Integer.parseInt(endDateArray[0]));
+        System.out.println("end date year: " + Integer.parseInt(endDateArray[1]));
+        
+        CalendarDate sd = new CalendarDate(Integer.parseInt(startDateArray[1]), Integer.parseInt(startDateArray[0]), Integer.parseInt(startDateArray[2]));
+        CalendarDate ed = new CalendarDate(Integer.parseInt(endDateArray[1]), Integer.parseInt(endDateArray[0]), Integer.parseInt(endDateArray[2]));
+        
+        System.out.println("start Date: " + sd.toString());
+        System.out.println("end Date: " + ed.toString());
+        //CalendarDate sd = new CalendarDate(startDate);
 //        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-         CalendarDate ed = new CalendarDate(endDate);
+         //CalendarDate ed = new CalendarDate(endDate);
  		/*if(ntw.getEndDate().isSelected())
  			ed = new CalendarDate((ntw.getEndDate().getText()));
  		else
