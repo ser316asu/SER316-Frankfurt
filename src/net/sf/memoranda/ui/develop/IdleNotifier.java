@@ -59,6 +59,6 @@ public class IdleNotifier{
 	 * Reset timer.
 	 */
 	public void resetTimer() {
-		this.task.resetTimer();
+		IdleNotifier.INSTANCE.task.resetTimer();
 	}
 }
