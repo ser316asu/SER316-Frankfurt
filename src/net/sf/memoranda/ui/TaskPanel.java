@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Observable;
@@ -454,6 +455,7 @@ public class TaskPanel extends JPanel implements Observer {
         if (numberOfEditTaskPopUps % 2 == 0) {
         	ntw = new NewTaskWindow(App.getFrame(), "Edit Task", t);
         }
+
        /* TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("Edit task"));
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
@@ -470,26 +472,39 @@ public class TaskPanel extends JPanel implements Observer {
 		dlg.chkEndDate.setSelected(true);
 		dlg.progress.setValue(new Integer(t.getProgress()));
 	dlg.chkEndDate_actionPerformed(null);*/	
+        System.out.println("\n\n\n\n Start Date Year: ");
+
         ntw.setVisible(true);
+        System.out.println("\n\n\n\n Start Date Year: ");
         if (ntw.CANCELLED)
             return;
-        
+
         String startDateString = ntw.getStartDate().getText();
-        String[] startDateArray = startDateString.split("/");
-        Date startDate = new Date(Integer.parseInt(startDateArray[2]) - 1900, Integer.parseInt(startDateArray[0]), Integer.parseInt(startDateArray[1]));
+        //String[] startDateArray = startDateString.split("/");
+      //  Date startDate = new Date(Integer.parseInt(startDateArray[2]) - 1900, Integer.parseInt(startDateArray[0]), Integer.parseInt(startDateArray[1]));
 
         String endDateString = ntw.getEndDate().getText();
-        String[] endDateArray = endDateString.split("/");
-        Date endDate = new Date(Integer.parseInt(endDateArray[2]) - 1900, Integer.parseInt(endDateArray[0]), Integer.parseInt(endDateArray[1]));
+   //     String[] endDateArray = endDateString.split("/");
+      //  Date endDate = new Date(Integer.parseInt(endDateArray[2]) - 1900, Integer.parseInt(endDateArray[0]), Integer.parseInt(endDateArray[1]));
 
-        System.out.println("Start Date Year: " + startDateArray[2]);
-        System.out.println("End Date Year: " + endDateArray[2]);
-        System.out.println("start Date: " + startDate.toString());
-        System.out.println("end Date: " + endDate.toString());
+        System.out.println("\n\n\n\n Start Date Year: ");
         
-        CalendarDate sd = new CalendarDate(startDate);
+        CalendarDate sd = null;
+        CalendarDate ed = null;
+		try {
+			sd = new CalendarDate(new SimpleDateFormat("MM/dd/yyyy").parse(startDateString));
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		//ed = new CalendarDate(
 //        CalendarDate ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
-         CalendarDate ed = new CalendarDate(endDate);
+		try {
+			ed = new CalendarDate(new SimpleDateFormat("MM/dd/yyyy").parse(endDateString));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
  		/*if(ntw.getEndDate().isSelected())
  			ed = new CalendarDate((ntw.getEndDate().getText()));
  		else
