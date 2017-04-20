@@ -140,7 +140,7 @@ public class TaskPanel extends JLabel implements Styling
            footer_L.setMaximumSize(this.dimension);
            
            schStat_L.setText(this.task.getProgress() + "");
-           startDate_L.setText(this.task.getEndDate().toString());
+           startDate_L.setText(this.task.getStartDate().getShortDateString());
            
     }
     

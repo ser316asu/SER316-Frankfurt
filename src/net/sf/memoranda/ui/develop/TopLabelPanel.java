@@ -168,8 +168,8 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
             labels[1].setText(task.getPriorityString()+"");
             labels[3].setText(task.getActualLOC() + "");
             labels[5].setText(task.getHoursEst()+ "");
-            labels[7].setText(task.getStartDate()+ "");
-            labels[9].setText(task.getEndDate()+ "");
+            labels[7].setText(task.getStartDate().getShortDateString());
+            labels[9].setText(task.getEndDate().getShortDateString());
         }
         //this.addLabels();
         //style();
