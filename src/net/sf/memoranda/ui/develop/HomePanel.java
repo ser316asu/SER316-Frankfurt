@@ -90,10 +90,10 @@ public class HomePanel extends JLabel implements Styling {
 	private static final long serialVersionUID = 4595243106140665520L;
 
 	/** The top P. */
-	private TopHomePanel topP;
+	private static final TopHomePanel TOP_PANEL = new TopHomePanel();
 	
 	/** The low P. */
-	private LowerHomePanel lowP;
+	private static final LowerHomePanel LOWER_PANEL = new LowerHomePanel(TOP_PANEL);
     
     /** The assets. */
     @SuppressWarnings("unused")
@@ -121,9 +121,7 @@ public class HomePanel extends JLabel implements Styling {
      * Creates the components.
      */
     public void createComponents() {
-    	topP = new TopHomePanel();
-    	lowP = new LowerHomePanel(this.topP);
-        this.toolbar = new MainToolBar(lowP);
+        this.toolbar = new MainToolBar(LOWER_PANEL);
     }
     
     /**
@@ -169,8 +167,8 @@ public class HomePanel extends JLabel implements Styling {
      * Adds the components.
      */
     public void addComponents() {
-    	HOME_SPLITPANE.setTopComponent(this.topP);
-    	HOME_SPLITPANE.setBottomComponent(this.lowP);
+    	HOME_SPLITPANE.setTopComponent(TOP_PANEL);
+    	HOME_SPLITPANE.setBottomComponent(LOWER_PANEL);
     	
     	CONTENT_PANEL.add(HomePanel.HOME_SPLITPANE, "HOME");
     	CONTENT_PANEL.add(HomePanel.CALENDAR_JNPANEL, "CALENDAR");
@@ -230,6 +228,7 @@ public class HomePanel extends JLabel implements Styling {
     public static void setActivePanel(int activePanel){
     	switch(activePanel){
     		case HomePanel.HOME_PANEL:
+    			TOP_PANEL.movedTo();
     			CONTENT_CARDLAYOUT.show(HomePanel.CONTENT_PANEL, "HOME");
     			Context.put("CURRENT_PANEL", "HOME");
     			break;

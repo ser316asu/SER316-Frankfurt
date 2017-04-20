@@ -18,6 +18,7 @@ import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.ui.develop.StatusBarPanel;
 import net.sf.memoranda.ui.develop.TopLabelPanel;
+import net.sf.memoranda.util.Util;
 import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Elements;
@@ -528,6 +529,7 @@ public class TaskImpl  extends Observable implements Task, Comparable {
 	@Override
 	public String getPriorityString() {
 		String str = "Normal";
+		Util.debug("Priority: " + this.getPriority());
 		switch(this.getPriority()){
 			case 0:
 				str = "Lowest";

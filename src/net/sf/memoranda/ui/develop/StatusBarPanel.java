@@ -272,4 +272,12 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 
 		this.revalidate();
 	}
+	
+	public void updateTask(){
+		this.editComponents();
+	}
+	
+	public Task getCurrentTask(){
+		return this.task;
+	}
 }
