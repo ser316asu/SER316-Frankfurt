@@ -107,8 +107,8 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 
 		open = new JButton();
 		
-		dayStatus = new JLabel("Total Progress");
-		locStatus = new JLabel("Progress in LOC");
+		dayStatus = new JLabel("Progress in LOC");
+		locStatus = new JLabel("Total Progress");
 		timeStatus = new JLabel("Progress in Hours");
 		
 		progressTime = ProgressCircleUI.makeUI(Styling.PROGRESSBAR_HOURS_COLOR);
