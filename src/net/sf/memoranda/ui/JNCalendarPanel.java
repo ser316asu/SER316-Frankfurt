@@ -477,17 +477,22 @@ public class JNCalendarPanel extends JPanel {
 			ed = new CalendarDate((Date) dlg.endDate.getModel().getValue());
 		else
 			ed = null;*/
-    long effort = Util.getMillisFromHours(dlg.getActualLoc().getText());
+    long effort = Util.getMillisFromHours(dlg.progress.getValue().toString());
 	//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, dlg.todoField.getText(), dlg.priorityCB.getSelectedIndex(),effort, dlg.descriptionField.getText(),parentTaskId);
 	Task newTask = CurrentProject.getTaskList().createTask(dlg.getStartDate().getText(),
 			dlg.getEndDate().getText(),
-			dlg.getName(), 
+			dlg.getjTextFieldName().getText(), 
 			dlg.priorityCB.getSelectedIndex(),effort, dlg.getTaskDesc().getText(),null, dlg.getHoursEst().getText(),
-			dlg.getLocEst().getText(), dlg.getNumFiles().getText(), dlg.getActualLoc().getText(), dlg.getHoursAct().getText(), dlg.getActualNumFiles().getText());
+			dlg.getLocEst().getText(), 
+			dlg.getNumFiles().getText(), 
+			dlg.getLocAct().getText(), 
+			dlg.getHoursAct().getText(), 
+			dlg.getActualNumFiles().getText());
 //	CurrentProject.getTaskList().adjustParentTasks(newTask);
 	newTask.setProgress(((Integer)dlg.progress.getValue()).intValue());
     CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
-    //taskTable.updateUI();
+    TaskPanel taskPanel = TaskPanel.getInstance(null);
+    taskPanel.update(null,null);
   }
   
 

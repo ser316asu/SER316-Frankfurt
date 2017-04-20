@@ -46,42 +46,61 @@ import net.sf.memoranda.util.Util;
   
 /*$Id: TaskPanel.java,v 1.27 2007/01/17 20:49:12 killerjoe Exp $*/
 public class TaskPanel extends JPanel implements Observer {
-    BorderLayout borderLayout1 = new BorderLayout();
-    JToolBar tasksToolBar = new JToolBar();
-    JButton newTaskB = new JButton();
-    JButton subTaskB = new JButton();
-    JButton editTaskB = new JButton();
-    JButton removeTaskB = new JButton();
-    JButton completeTaskB = new JButton();
+	
+	private static TaskPanel singletonTaskPanel;
+	private static int numberOfNewTaskPopUps = 1;
+	private static int numberOfEditTaskPopUps = 1;
+	
+    static BorderLayout borderLayout1 = new BorderLayout();
+    static JToolBar tasksToolBar = new JToolBar();
+    static JButton newTaskB = new JButton();
+    static JButton subTaskB = new JButton();
+    static JButton editTaskB = new JButton();
+    static JButton removeTaskB = new JButton();
+    static JButton completeTaskB = new JButton();
     
-	JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
+    static JCheckBoxMenuItem ppShowActiveOnlyChB = new JCheckBoxMenuItem();
 		
-    JScrollPane scrollPane = new JScrollPane();
-    TaskTable taskTable = new TaskTable();
-	JMenuItem ppEditTask = new JMenuItem();
-	JPopupMenu taskPPMenu = new JPopupMenu();
-	JMenuItem ppRemoveTask = new JMenuItem();
-	JMenuItem ppNewTask = new JMenuItem();
-	JMenuItem ppCompleteTask = new JMenuItem();
+    static JScrollPane scrollPane = new JScrollPane();
+    static TaskTable taskTable = new TaskTable();
+    static JMenuItem ppEditTask = new JMenuItem();
+    static JPopupMenu taskPPMenu = new JPopupMenu();
+    static JMenuItem ppRemoveTask = new JMenuItem();
+    static JMenuItem ppNewTask = new JMenuItem();
+    static JMenuItem ppCompleteTask = new JMenuItem();
 	//JMenuItem ppSubTasks = new JMenuItem();
 	//JMenuItem ppParentTask = new JMenuItem();
-	JMenuItem ppAddSubTask = new JMenuItem();
-	JMenuItem ppCalcTask = new JMenuItem();
-	DailyItemsPanel parentPanel = null;
+    static JMenuItem ppAddSubTask = new JMenuItem();
+    static JMenuItem ppCalcTask = new JMenuItem();
+    static DailyItemsPanel parentPanel = null;
 	
 	SimpleDateFormat dateFormatter = new SimpleDateFormat("MM-dd-yyyy");
+	
+	public synchronized static TaskPanel getInstance(DailyItemsPanel _parentPanel) {
+		  if (singletonTaskPanel == null) {
+			  singletonTaskPanel = new TaskPanel(_parentPanel);
+			  try {
+			     jbInit();
+			   }
+			    catch(Exception ex) {
+			      new ExceptionDialog(ex);
+			   }
+		  }
+		  return singletonTaskPanel;
+	  }
 
-    public TaskPanel(DailyItemsPanel _parentPanel) {
+    private TaskPanel(DailyItemsPanel _parentPanel) {
         //((Observable) CurrentProject.getTaskList()).addObserver(this);
     	try {
             parentPanel = _parentPanel;
-            jbInit();
+            //System.out.println("\n\n\n DEBUG LINE");
+            //jbInit();
         }
         catch (Exception ex) {
             ex.printStackTrace();
         }
     }
-    void jbInit() throws Exception {
+    static void jbInit() throws Exception {
         tasksToolBar.setFloatable(false);
 
         newTaskB.setIcon(
@@ -214,7 +233,7 @@ public class TaskPanel extends JPanel implements Observer {
 		// added by rawsushi
 
 
-        this.setLayout(borderLayout1);
+        singletonTaskPanel.setLayout(borderLayout1);
         scrollPane.getViewport().setBackground(Color.white);
         /*taskTable.setMaximumSize(new Dimension(32767, 32767));
         taskTable.setRowHeight(24);*/
@@ -296,7 +315,7 @@ public class TaskPanel extends JPanel implements Observer {
 	ppCalcTask.setEnabled(false);
 
     scrollPane.getViewport().add(taskTable, null);
-        this.add(scrollPane, BorderLayout.CENTER);
+    	singletonTaskPanel.add(scrollPane, BorderLayout.CENTER);
         tasksToolBar.addSeparator(new Dimension(8, 24));
 
         tasksToolBar.add(newTaskB, null);
@@ -309,9 +328,9 @@ public class TaskPanel extends JPanel implements Observer {
 		//tasksToolBar.add(showActiveOnly, null);
         
 
-        this.add(tasksToolBar, BorderLayout.NORTH);
+        singletonTaskPanel.add(tasksToolBar, BorderLayout.NORTH);
 
-        PopupListener ppListener = new PopupListener();
+        PopupListener ppListener = singletonTaskPanel.new PopupListener();
         scrollPane.addMouseListener(ppListener);
         taskTable.addMouseListener(ppListener);
 
@@ -425,13 +444,18 @@ public class TaskPanel extends JPanel implements Observer {
 
     }
 
-    void editTaskB_actionPerformed(ActionEvent e) {
+    static void editTaskB_actionPerformed(ActionEvent e) {
         Task t =
             CurrentProject.getTaskList().getTask(
                 taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString());
-        System.out.println("\n\n\n\n Start Date Year: ");
+        
+        numberOfEditTaskPopUps++;
+        NewTaskWindow ntw = null;
+        
+        if (numberOfEditTaskPopUps % 2 == 0) {
+        	ntw = new NewTaskWindow(App.getFrame(), "Edit Task", t);
+        }
 
-        NewTaskWindow ntw = new NewTaskWindow(App.getFrame(), "Edit Task", t);
        /* TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("Edit task"));
         Dimension frmSize = App.getFrame().getSize();
         Point loc = App.getFrame().getLocation();
@@ -508,8 +532,15 @@ public class TaskPanel extends JPanel implements Observer {
         //taskTable.updateUI();
     }
 
-    void newTaskB_actionPerformed(ActionEvent e) {
-    	NewTaskWindow dlg = new NewTaskWindow(App.getFrame(),"Create a New Task"); // Creates task creation window
+    static void newTaskB_actionPerformed(ActionEvent e) {
+    	NewTaskWindow dlg;
+    	numberOfNewTaskPopUps++;
+    	
+    	if (numberOfNewTaskPopUps % 2 == 0) {
+    		dlg = new NewTaskWindow(App.getFrame(),"Create a New Task"); // Creates task creation window
+    	} else {
+    		return;
+    	}
         
         //XXX String parentTaskId = taskTable.getCurrentRootTask();
         
@@ -547,7 +578,7 @@ public class TaskPanel extends JPanel implements Observer {
         System.out.println("new Task Create" + CurrentProject.getTaskList());
     }
 
-    void addSubTask_actionPerformed(ActionEvent e) {
+    static void addSubTask_actionPerformed(ActionEvent e) {
         TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("New Task"));
         String parentTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
         
@@ -589,7 +620,7 @@ public class TaskPanel extends JPanel implements Observer {
         //taskTable.updateUI();
     }
 
-    void calcTask_actionPerformed(ActionEvent e) {
+    static void calcTask_actionPerformed(ActionEvent e) {
         TaskCalcDialog dlg = new TaskCalcDialog(App.getFrame());
         dlg.pack();
         Task t = CurrentProject.getTaskList().getTask(taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString());
@@ -636,7 +667,7 @@ public class TaskPanel extends JPanel implements Observer {
         //taskTable.updateUI();
     }
 
-    void listSubTasks_actionPerformed(ActionEvent e) {
+    static void listSubTasks_actionPerformed(ActionEvent e) {
         String parentTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
         
         //XXX taskTable.setCurrentRootTask(parentTaskId); 
@@ -646,7 +677,7 @@ public class TaskPanel extends JPanel implements Observer {
 //        //taskTable.updateUI();
     }
 
-    void parentTask_actionPerformed(ActionEvent e) {
+    static void parentTask_actionPerformed(ActionEvent e) {
 //    	String taskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
 //      
 //    	Task t = CurrentProject.getTaskList().getTask(taskId);
@@ -663,7 +694,7 @@ public class TaskPanel extends JPanel implements Observer {
 //      //taskTable.updateUI();
   }
 
-    void removeTaskB_actionPerformed(ActionEvent e) {
+    static void removeTaskB_actionPerformed(ActionEvent e) {
         String msg;
         String thisTaskId = taskTable.getModel().getValueAt(taskTable.getSelectedRow(), TaskTable.TASK_ID).toString();
         
@@ -706,7 +737,7 @@ public class TaskPanel extends JPanel implements Observer {
 
     }
 
-	void ppCompleteTask_actionPerformed(ActionEvent e) {
+	static void ppCompleteTask_actionPerformed(ActionEvent e) {
 		String msg;
 		Vector tocomplete = new Vector();
 		for (int i = 0; i < taskTable.getSelectedRows().length; i++) {
@@ -727,7 +758,7 @@ public class TaskPanel extends JPanel implements Observer {
 	}
 
 	// toggle "show active only"
-	void toggleShowActiveOnly_actionPerformed(ActionEvent e) {
+	static void toggleShowActiveOnly_actionPerformed(ActionEvent e) {
 		Context.put(
 			"SHOW_ACTIVE_TASKS_ONLY",
 			new Boolean(ppShowActiveOnlyChB.isSelected()));
@@ -761,29 +792,29 @@ public class TaskPanel extends JPanel implements Observer {
 
     }
 
-  void ppEditTask_actionPerformed(ActionEvent e) {
+  static void ppEditTask_actionPerformed(ActionEvent e) {
     editTaskB_actionPerformed(e);
   }
-  void ppRemoveTask_actionPerformed(ActionEvent e) {
+  static void ppRemoveTask_actionPerformed(ActionEvent e) {
     removeTaskB_actionPerformed(e);
   }
-  void ppNewTask_actionPerformed(ActionEvent e) {
+  static void ppNewTask_actionPerformed(ActionEvent e) {
     newTaskB_actionPerformed(e);
   }
 
-  void ppAddSubTask_actionPerformed(ActionEvent e) {
+  static void ppAddSubTask_actionPerformed(ActionEvent e) {
   	addSubTask_actionPerformed(e);
   }
 
-  void ppListSubTasks_actionPerformed(ActionEvent e) {
+  static void ppListSubTasks_actionPerformed(ActionEvent e) {
   	listSubTasks_actionPerformed(e);
   }
 
-  void ppParentTask_actionPerformed(ActionEvent e) {
+  static void ppParentTask_actionPerformed(ActionEvent e) {
   	parentTask_actionPerformed(e);
   }
 
-  void ppCalcTask_actionPerformed(ActionEvent e) {
+  static void ppCalcTask_actionPerformed(ActionEvent e) {
       calcTask_actionPerformed(e);
   }
 @Override
