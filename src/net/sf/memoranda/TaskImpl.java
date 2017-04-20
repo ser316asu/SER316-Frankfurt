@@ -440,22 +440,19 @@ public class TaskImpl  extends Observable implements Task, Comparable {
 	}
 
 	@Override
-	public int getActualTime() {
-		int daValue =  (new Double(this._element.getAttribute("actualTime").getValue())).intValue();
-		System.out.println("actual time: " + daValue);
-		return daValue;
-	}
-
-	@Override
-	public void setActualTime(double time) {
-		this.setAttr("actualTime", time +"");
-		
-	}
-
-	@Override
-	public double getHoursEst() {
-		return (new Double(this._element.getAttribute("estimatedTime").getValue()));
-	}
+    public int getActualTime() {
+        String str = this._element.getAttribute("actualTime").getValue().replaceAll(",", "");
+        int daValue =  (new Double(str)).intValue();
+        return daValue;
+    }    @Override
+    public void setActualTime(double time) {
+        this.setAttr("actualTime", time +"");
+        
+    }    @Override
+    public double getHoursEst() {
+        String str = this._element.getAttribute("estimatedTime").getValue().replaceAll(",", "");
+        return (new Double(str));
+    }
 
 	@Override
 	public void setHoursEst(double hrs) {
@@ -526,6 +523,32 @@ public class TaskImpl  extends Observable implements Task, Comparable {
 	@Override
 	public void setActLOC(int loc) {
 		this.setAttr("actualLOC", loc + "");
+	}
+
+	@Override
+	public String getPriorityString() {
+		String str = "Normal";
+		switch(this.getPriority()){
+			case 0:
+				str = "Lowest";
+				break;
+			case 1:
+				str = "Low";
+				break;
+			case 2:
+				str = "Normal";
+				break;
+			case 3:
+				str = "High";
+				break;
+			case 4:
+				str = "Highest";
+				break;
+			default:
+				str = "Unknown";
+				break;
+		}
+		return str;
 	}
 	
 }

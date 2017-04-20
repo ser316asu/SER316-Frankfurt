@@ -44,7 +44,7 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 	private JLabel timeStatus,locStatus,dayStatus;
 	
 	/** The progress days. */
-	private JProgressBar progressTime,progressLoc,progressDays;
+	private JProgressBar progressTime,progressLoc,progressOverall;
 	
 	/** The open. */
 	private JButton open;
@@ -94,12 +94,12 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 	 */
 	public void buildComponents(){
 		progressTime = new JProgressBar(0,100);
-		progressDays = new JProgressBar(0,100);
+		progressOverall = new JProgressBar(0,100);
 		progressLoc = new JProgressBar(0,100);
 		
 		progressTime.setUI(new ProgressCircleUI());
 		progressLoc.setUI(new ProgressCircleUI());
-		progressDays.setUI(new ProgressCircleUI());
+		progressOverall.setUI(new ProgressCircleUI());
 	
 		//progressTime.setUI(new ProgressCircleUI());
 		circlesPanel = new JLabel();
@@ -107,13 +107,13 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 
 		open = new JButton();
 		
-		dayStatus = new JLabel("Progress in Days");
+		dayStatus = new JLabel("Total Progress");
 		locStatus = new JLabel("Progress in LOC");
 		timeStatus = new JLabel("Progress in Hours");
 		
 		progressTime = ProgressCircleUI.makeUI(Styling.PROGRESSBAR_HOURS_COLOR);
 		progressLoc = ProgressCircleUI.makeUI(Styling.PROGRESSBAR_LOC_COLOR);
-		progressDays = ProgressCircleUI.makeUI(Styling.PROGRESSBAR_DAYS_COLOR);
+		progressOverall = ProgressCircleUI.makeUI(Styling.PROGRESSBAR_DAYS_COLOR);
 
 		progressPanel = new JLabel();
 
@@ -129,11 +129,11 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 
 		//progressDimension = new Dimension(160,(int)((parent.getDimension().getHeight() / 6) - 5));
 		progressTime.setValue(0);
-		progressDays.setValue(0);
+		progressOverall.setValue(0);
 		progressLoc.setValue(0);
 		
 		progressTime.setStringPainted(true);
-		progressDays.setStringPainted(true);
+		progressOverall.setStringPainted(true);
 		progressLoc.setStringPainted(true);
 
 		open.setText("Open Task File");
@@ -164,7 +164,7 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 		this.circlesPanel.add(progressTime);
 
 		//progressPanel.add(timeStatus);
-		this.circlesPanel.add(progressDays);
+		this.circlesPanel.add(progressOverall);
 
 		//progressPanel.add(locStatus);
 		this.circlesPanel.add(progressLoc);
@@ -197,9 +197,9 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 		//this.circlesPanel.setBorder(BorderFactory.createLineBorder(Color.green));
 		//this.setBorder(BorderFactory.createLineBorder(Styling.BORDER_COLOR));
 
-		//progressDays.setBackground(Styling.TASK_PANEL_TEXT_COLOR);
-		//progressDays.setForeground(Styling.TASK_PANEL_COLOR);
-		progressDays.setFont(Styling.TERMINAL_FONT);
+		//progressOverall.setBackground(Styling.TASK_PANEL_TEXT_COLOR);
+		//progressOverall.setForeground(Styling.TASK_PANEL_COLOR);
+		progressOverall.setFont(Styling.TERMINAL_FONT);
 
 		//progressLoc.setBackground(Styling.TASK_PANEL_TEXT_COLOR);
 		//progressLoc.setForeground(Styling.TASK_PANEL_COLOR);
@@ -256,15 +256,15 @@ public class StatusBarPanel extends JLabel implements Styling, Observer{
 		this.task = (Task) taskCard;
 		
 		progressLoc.setMaximum(this.task.getEstLOC());
-		progressDays.setMaximum(this.task.getTaskTotalTime());
+		progressOverall.setMaximum(100);
 		progressTime.setMaximum((int)task.getHoursEst());
 		
 		progressTime.setValue(task.getActualTime());
-		progressDays.setValue(task.getTaskTotalTime() - task.getDaysLeft());
+		progressOverall.setValue(task.getProgress());
 		progressLoc.setValue(task.getActualLOC());
 		
 		progressTime.setStringPainted(true);
-		progressDays.setStringPainted(true);
+		progressOverall.setStringPainted(true);
 		progressLoc.setStringPainted(true);
 
 		//this.setLayout(border);

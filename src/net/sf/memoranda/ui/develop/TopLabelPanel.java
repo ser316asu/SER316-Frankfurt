@@ -75,7 +75,7 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
         	labels[8] = new JLabel(" Actual Time(hrs): ");
         	labels[9] = new JLabel("");
       	}else if(location == TopHomePanel.RIGHT_LABEL_PANEL){
-    		labels[0] = new JLabel(" Schedule Status: ");
+    		labels[0] = new JLabel(" Priority: ");
             labels[1] = new JLabel(" ");
         	labels[2] = new JLabel(" Actual LOC/h: ");
             labels[3] = new JLabel("");
@@ -136,7 +136,7 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
             labels[7].setText(task.getHoursEst()+ "");
             labels[9].setText(task.getActualTime()+ "");
         }else if(location == TopHomePanel.RIGHT_LABEL_PANEL){
-            labels[1].setText(task.getDaysLeft()+"");
+            labels[1].setText(task.getPriorityString()+"");
             labels[3].setText(task.getActualLOC() + "");
             labels[5].setText(task.getHoursEst()+ "");
             labels[7].setText(task.getStartDate()+ "");

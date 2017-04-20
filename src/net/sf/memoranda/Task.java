@@ -122,5 +122,6 @@ public interface Task{
 	void setValue(Task task);
 	
     nu.xom.Element getContent();
+	String getPriorityString();
 
 }
