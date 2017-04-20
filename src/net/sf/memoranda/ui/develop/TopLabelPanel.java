@@ -75,7 +75,7 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
         	labels[8] = new JLabel(" Actual Time(hrs): ");
         	labels[9] = new JLabel("");
       	}else if(location == TopHomePanel.RIGHT_LABEL_PANEL){
-    		labels[0] = new JLabel(" Schedule Status: ");
+    		labels[0] = new JLabel(" Priority: ");
             labels[1] = new JLabel(" ");
         	labels[2] = new JLabel(" Actual LOC/h: ");
             labels[3] = new JLabel("");
@@ -85,6 +85,35 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
             labels[7] = new JLabel("");
         	labels[8] = new JLabel(" End Date: ");
         	labels[9] = new JLabel("");
+        }
+    }
+    
+    /**
+     * Creates the labels.
+     */
+    public void DefualtLabels(){
+    	if(location == TopHomePanel.LEFT_LABEL_PANEL){
+    		labels[0].setText(" Task Name ");
+            labels[1].setText("");
+        	labels[2].setText(" Estimated LOC: ");
+            labels[3].setText("");
+        	labels[4].setText(" Actual LOC: ");
+            labels[5].setText("");
+        	labels[6].setText(" Estimated Time(hrs): ");
+            labels[7].setText("");
+        	labels[8].setText(" Actual Time(hrs): ");
+        	labels[9].setText("");
+      	}else if(location == TopHomePanel.RIGHT_LABEL_PANEL){
+    		labels[0].setText(" Priority: ");
+            labels[1].setText(" ");
+        	labels[2].setText(" Actual LOC/h: ");
+            labels[3].setText("");
+        	labels[4].setText(" Estimated LOC/h: ");
+            labels[5].setText("");
+        	labels[6].setText(" Start Date: ");
+            labels[7].setText("");
+        	labels[8].setText(" End Date: ");
+        	labels[9].setText("");
         }
     }
 
@@ -136,7 +165,7 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
             labels[7].setText(task.getHoursEst()+ "");
             labels[9].setText(task.getActualTime()+ "");
         }else if(location == TopHomePanel.RIGHT_LABEL_PANEL){
-            labels[1].setText(task.getDaysLeft()+"");
+            labels[1].setText(task.getPriorityString()+"");
             labels[3].setText(task.getActualLOC() + "");
             labels[5].setText(task.getHoursEst()+ "");
             labels[7].setText(task.getStartDate()+ "");
@@ -145,5 +174,12 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
         //this.addLabels();
         //style();
         this.revalidate();
+    }
+    
+	public void updateTask(){
+		this.DefualtLabels();
+	}
+    public Task getCurrentTask(){
+    	return this.task;
     }
 }

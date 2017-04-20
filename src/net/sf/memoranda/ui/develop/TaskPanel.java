@@ -164,10 +164,10 @@ public class TaskPanel extends JLabel implements Styling
            addSpacing(header_L);
            //addSpacing(header_L);
            addSpacing(footer_L);
-           labelSched.setText("Schedule State");
-           footer_L.add(labelSched);
-           footer_L.add(schStat_L);
-           addSpacing(footer_L);
+           //labelSched.setText("Schedule State");
+           //footer_L.add(labelSched);
+           //footer_L.add(schStat_L);
+           //addSpacing(footer_L);
            labelStart.setText("Start Date");
            footer_L.add(labelStart);
            footer_L.add(startDate_L);

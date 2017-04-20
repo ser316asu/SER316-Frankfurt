@@ -13,6 +13,7 @@ package net.sf.memoranda.ui.develop;
 import javax.swing.JOptionPane;
 
 import net.sf.memoranda.ui.App;
+import net.sf.memoranda.ui.AppFrame;
 import net.sf.memoranda.ui.ExitConfirmationDialog;
 import net.sf.memoranda.util.Util;
 
@@ -60,6 +61,16 @@ public class IdleTimer implements Runnable{
 						break;
 				}
 				tmpTimer.setState(Timer.STOP);
+			}
+			if(App.getFrame().getFocusOwner() == null){
+				if(!(iTimer.getState() == Timer.PLAY)){
+					iTimer.setState(Timer.PLAY);
+				}
+				
+			}else{
+				iTimer.setState(Timer.PAUSE);
+				if(!(iTimer.getState() == Timer.PAUSE) || !(iTimer.getState() == Timer.STOP))
+				resetTimer();
 			}
 			try {
 				this.wait(1000);
@@ -127,6 +138,8 @@ public class IdleTimer implements Runnable{
 		/** The Constant STOP. */
 		public static final int STOP = 1;
 		
+		public static final int PAUSE = 2;
+		
 		/** The time. */
 		private double time;
 		
@@ -171,20 +184,28 @@ public class IdleTimer implements Runnable{
 			this.state = state;
 		}
 		
+		public int getState(){
+			return state;
+		}
+		
 		/* (non-Javadoc)
 		 * @see java.lang.Runnable#run()
 		 */
 		@Override
 		public void run() {
 			this.startTime = System.currentTimeMillis();
-			while(this.state == Timer.PLAY){
+			while(this.state == Timer.PLAY || this.state == Timer.PAUSE){
 				time = (System.currentTimeMillis() - startTime)/1000;
-				if(time > this.closeTime){
+				if(time/60 > this.closeTime){
 					setState(Timer.STOP);
 					App.getFrame().doExitWithoutAsk();
 				}
+				if(this.state == Timer.PAUSE){
+					while(this.state == Timer.PAUSE){
+						getState();
+					}
+				}
 			}
-			
 		}
 	}
 }

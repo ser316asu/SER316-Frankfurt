@@ -182,4 +182,11 @@ public class TopHomePanel extends JSplitPane implements Styling{
     	
     	super.paint(graph);
     }
+
+	public void movedTo() {
+		timerPanel.setTask(null);
+		this.statusBarTop.updateTask();
+		this.leftLabels.updateTask();
+		this.rightLabels.updateTask();
+	}
 }

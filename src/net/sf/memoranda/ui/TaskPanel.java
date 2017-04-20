@@ -81,7 +81,7 @@ public class TaskPanel extends JPanel implements Observer {
 		  if (singletonTaskPanel == null) {
 			  singletonTaskPanel = new TaskPanel(_parentPanel);
 			  try {
-			     jbInit();
+				  singletonTaskPanel.jbInit();
 			   }
 			    catch(Exception ex) {
 			      new ExceptionDialog(ex);
