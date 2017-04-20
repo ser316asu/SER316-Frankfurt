@@ -30,6 +30,7 @@ import net.sf.memoranda.History;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.date.DateListener;
+import net.sf.memoranda.ui.develop.DailyItemsPanelViewPort;
 import net.sf.memoranda.util.Configuration;
 import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
@@ -60,6 +61,7 @@ public class EventsPanel extends JPanel {
         }
     }
     void jbInit() throws Exception {
+    	scrollPane.setViewport(new DailyItemsPanelViewPort(DailyItemsPanelViewPort.EVENT_VIEW));
         eventsToolBar.setFloatable(false);
 
         newEventB.setIcon(

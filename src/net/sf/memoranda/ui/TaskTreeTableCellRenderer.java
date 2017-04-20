@@ -4,8 +4,12 @@ package net.sf.memoranda.ui;
 import net.sf.memoranda.Project;
 import net.sf.memoranda.Task;
 import net.sf.memoranda.date.CurrentDate;
+import net.sf.memoranda.ui.develop.LoadAssets;
+import net.sf.memoranda.ui.develop.Styling;
+
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -17,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTree;
+import javax.swing.border.BevelBorder;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
@@ -76,7 +81,8 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
             return empty_panel;
         if (!(value instanceof Task))
             return empty_panel;
-        Task t = (Task) value; 
+        Task t = (Task) value;
+        setForeground(Color.white);
         setText(t.getText());
         setToolTipText(t.getDescription());
         setIcon(getStatusIcon(t));
@@ -97,12 +103,22 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
         }
         // default values
         // label.setOpaque(true);
-        label.setForeground(Color.BLACK);
+        //label.setForeground(Color.BLACK);
         label.setIcon(null);
        // label.setToolTipText(t.getDescription()); //XXX Disabled because of bug 1596966
         applyFont(t, label);
         applySelectionStyle(selected, label);
         applyFocus(hasFocus, label);
+        
+        label.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED,Color.gray, Color.WHITE));
+        label.setFont(Styling.TASK_PANEL_FONT);
+        label.setForeground(Color.WHITE);
+        Dimension size = new Dimension(label.getWidth()+100,label.getHeight()+10);
+        label.setPreferredSize(size);
+        label.setMaximumSize(size);
+        label.setMinimumSize(size);
+        
+        //label.setIcon(LoadAssets.TERMINAL_IMAGE);
         if (value == null) {
             label.setText("");
             return label;
@@ -141,6 +157,7 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
         //tree_label.setToolTipText(t.getDescription());
         tree_label.setIcon(getStatusIcon(t));
         applyFont(t, tree_label);
+        tree_label.setBorder(BorderFactory.createLineBorder(Color.red));
         return tree_label;        
     }
 
@@ -151,6 +168,7 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
         progressLabel.setTask(t);
         progressLabel.setColumn(column);
         applyFocus(hasFocus, progressLabel);
+        progressLabel.setBackground(Color.black);
         return progressLabel;
     }
 
@@ -181,11 +199,7 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
     }
 
     private void applyFont(Task t, JComponent c) {
-        if ((t.getStatus(CurrentDate.get()) == Task.ACTIVE)
-                || (t.getStatus(CurrentDate.get()) == Task.DEADLINE))
-            c.setFont(c.getFont().deriveFont(Font.BOLD));
-        else
-            c.setFont(c.getFont().deriveFont(Font.PLAIN));
+        c.setFont(c.getFont().deriveFont(Font.BOLD));
     }
 
     /**

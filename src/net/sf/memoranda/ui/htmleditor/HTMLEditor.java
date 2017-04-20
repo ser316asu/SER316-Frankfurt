@@ -56,6 +56,7 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 
+import net.sf.memoranda.ui.develop.DailyItemsPanelViewPort;
 import net.sf.memoranda.ui.htmleditor.util.Local;
 
 /**
@@ -542,7 +543,7 @@ public class HTMLEditor extends JPanel {
 	}
 
 	void jbInit() throws Exception {
-
+		jScrollPane1.setViewport(new DailyItemsPanelViewPort(DailyItemsPanelViewPort.NOTES_VIEW));
 		cutAction.putValue(
 			Action.SMALL_ICON,
 			new ImageIcon(cl.getResource("resources/icons/cut.png")));
@@ -641,7 +642,6 @@ public class HTMLEditor extends JPanel {
 
 		editor.setEditorKit(editorKit);
 		editorKit.setDefaultCursor(new Cursor(Cursor.TEXT_CURSOR));
-
 		editor.setDocument(document);
 		document.addUndoableEditListener(undoHandler);
 

@@ -27,6 +27,8 @@
 package net.sf.memoranda.ui;
 
 import net.sf.memoranda.Task;
+import net.sf.memoranda.ui.develop.Styling;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import javax.swing.JLabel;
@@ -58,6 +60,7 @@ class TaskProgressLabel extends JLabel{
         int height = table.getRowHeight();
         int p = width * val / 100;
         
+        g.setFont(Styling.TASK_PANEL_FONT);
         g.setColor(Color.WHITE);
         g.fillRect(0,0,width, height);
 
@@ -66,9 +69,10 @@ class TaskProgressLabel extends JLabel{
         g.setColor(Color.LIGHT_GRAY);
         g.drawRect(1, 1, width, height - 2);
         
+        
         setText(val + "%");
         setBounds(0, 0, width, height);
-        
+        this.setFont(Styling.TASK_PANEL_FONT);
         super.paintComponent(g);
     }
 }

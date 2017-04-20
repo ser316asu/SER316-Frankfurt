@@ -39,6 +39,7 @@ import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.date.DateListener;
+import net.sf.memoranda.ui.develop.DailyItemsPanelViewPort;
 import net.sf.memoranda.util.Context;
 import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
@@ -100,7 +101,10 @@ public class TaskPanel extends JPanel implements Observer {
             ex.printStackTrace();
         }
     }
-    static void jbInit() throws Exception {
+
+    void jbInit() throws Exception {
+    	this.scrollPane.setViewport(new DailyItemsPanelViewPort(DailyItemsPanelViewPort.TASK_VIEW));
+
         tasksToolBar.setFloatable(false);
 
         newTaskB.setIcon(
