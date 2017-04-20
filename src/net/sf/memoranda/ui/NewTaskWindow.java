@@ -19,6 +19,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -40,7 +41,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	
 	private int WIDTH;
 	private int HEIGHT;
-	
+	private final String DATE_FORMAT = "MM/dd/yyyy";
 	private Container mainPane;
 	
 	private static final long serialVersionUID = 1L;
@@ -93,11 +94,11 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		//this.setVisible(true);
 	}
 	
-	public static void main(String[] args)
+	/*public static void main(String[] args)
 	{
 		NewTaskWindow ntw = new NewTaskWindow(new JFrame(), "Testing");
 		ntw.setVisible(true);
-	}
+	}*/
 	
 	public NewTaskWindow(JFrame parentFrame, String title, Task task){
 		super(parentFrame,title, true);
@@ -120,29 +121,64 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		
 		// formatting dates from Day/Month/Year to Month/Day/Year
 		String startDateString = task.getStartDate().toString();
+		System.out.println("\n\nINITIAL BEFORE CONVERSION:" + startDateString);
         String[] startDateArray = startDateString.split("/");
         startDateString = String.join("/", startDateArray[1], startDateArray[0], startDateArray[2]);
+        System.out.println("\n\n" + startDateString );
         
         String endDateString = task.getEndDate().toString();
         String[] endDateArray = endDateString.split("/");
         endDateString = String.join("/", endDateArray[1], endDateArray[0], endDateArray[2]);
 		
+        System.out.println("\n\n" + endDateString + "\n");
+        
+        
 		this.locAct.setText(task.getActualLOC() + "");
+		this.locAct.setValue(task.getActLOC());
+		
 		this.locEst.setText(task.getEstLOC() + "");
+		this.locEst.setValue(task.getEstLOC());
+		
 		this.estNumFiles.setText(task.getEstNumOfFiles() + "");
+		this.estNumFiles.setValue(task.getEstNumOfFiles());
+		
 		this.actNumFiles.setText(task.getActNumOfFiles() + "");
+		this.actNumFiles.setValue(task.getActNumOfFiles());
+		
 		this.hoursAct.setText(task.getHoursAct() + "");
+		this.hoursAct.setValue(task.getHoursAct());
+		
 		this.hoursEst.setText(task.getHoursEst() + "");
-		this.endDate.setText(endDateString);
+		this.hoursEst.setValue(task.getHoursEst());
+		
+		this.endDate.setText(endDateString); // value unnecessary I think...?
+		try {
+			this.endDate.setValue(new SimpleDateFormat(DATE_FORMAT).parse(endDateString));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		this.startDate.setText(startDateString);
+		try {
+			this.startDate.setValue(new SimpleDateFormat(DATE_FORMAT).parse(startDateString));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println("HERE");
+		System.out.println(startDate.getValue());
+		System.out.println(endDate.getValue());
+		
 		this.progress.setValue(task.getProgress());
-		this.jTextFieldName.setText(task.getText());
+		this.jTextFieldName.setText(task.getText()); // May need to set Value. 
 		this.priorityCB.setSelectedItem(priority[task.getPriority()]);
 		this.taskDesc.setText(task.getDescription());
 	}
 
 	private void createComponents() {
-		DateFormat newDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		DateFormat newDateFormat = new SimpleDateFormat(DATE_FORMAT);
 		NumberFormat integerFieldFormatter = NumberFormat.getIntegerInstance(); // Factory?
 
 		topCenterPane = new JPanel(new BorderLayout());
@@ -174,7 +210,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		actNumFilesLabel = new JLabel("Actual # of Files");
 		
 		jTextFieldName = new JTextField("Name of Task",28);
-		taskDesc = new JTextArea("Enter Task Description here...", 10, 120);
+		taskDesc = new JTextArea("Enter Task Description here...", 6, 120);
 		
 		finishButton = new JButton("Save Task");
 		notifB = new JButton("Add Notifcation");
@@ -208,30 +244,30 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		endDate.setColumns(28);
 		endDate.setText("MM/DD/YYYY");
 
-		locEst.setColumns(14);
-		locEst.setText("0");
+		locEst.setColumns(28);
+		locEst.setText("Estimated LOC");
 		
-		locAct.setColumns(14);
-		locAct.setText("Actual LOC");
+		locAct.setColumns(28);
+		locAct.setText("0");
 
-		hoursEst.setColumns(14);
+		hoursEst.setColumns(28);
 		hoursEst.setText("Hours Estimate");
 		
-		hoursAct.setColumns(14);
-		hoursAct.setText("Hours Actual");
+		hoursAct.setColumns(28);
+		hoursAct.setText("0");
 		
-		estNumFiles.setColumns(14);
+		estNumFiles.setColumns(28);
 		estNumFiles.setText("Estimated # Files");
 		
-		actNumFiles.setColumns(14);
-		actNumFiles.setText("Actual # Files");
+		actNumFiles.setColumns(28);
+		actNumFiles.setText("0");
 		
 		taskDesc.setBorder(blackBorder);
 		
 		notifB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	System.out.println("Before new event action");
-            	setNotifB_actionPerformed(e);
+            	//setNotifB_actionPerformed(e);
             	System.out.println("After new event action");
             }
         });
@@ -282,7 +318,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	}
 	
 	private void addComponents(){
-		Dimension centerPanelSize = new Dimension(335, 200);
+		Dimension centerPanelSize = new Dimension(335, 270);
 		
 		// Change these to regular boxes so color can be applied. These for filler spaces. Currently unused
 		//Filler boxLeft = new Box.Filler(minSize, prefSize, maxSize);
@@ -305,23 +341,23 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		topLeftPane.add(jLabelProgress);
 		topLeftPane.add(jPanelProgress);
 		topLeftPane.add(this.notifB);
+		topLeftPane.add(new JLabel("Priority:"));
+		topLeftPane.add(priorityCB);
+		topLeftPane.add(locEstLabel);
+		topLeftPane.add(locEst);
 		topLeftPane.setPreferredSize(centerPanelSize);
-	
 		// Top-Right-Center Pane
-		topRightPane.add(locEstLabel);
-		topRightPane.add(locEst);
-		topRightPane.add(locActLabel);
-		topRightPane.add(locAct);
 		topRightPane.add(hoursEstLabel);
 		topRightPane.add(hoursEst);
-		topRightPane.add(hoursActLabel);
-		topRightPane.add(hoursAct);
 		topRightPane.add(estNumFilesLabel);
 		topRightPane.add(estNumFiles);
+		topRightPane.add(locActLabel);
+		topRightPane.add(locAct);
+		topRightPane.add(hoursActLabel);
+		topRightPane.add(hoursAct);
 		topRightPane.add(actNumFilesLabel);
 		topRightPane.add(actNumFiles);
-		topRightPane.add(new JLabel("Priority:"));
-		topRightPane.add(priorityCB);
+
 		topRightPane.setPreferredSize(centerPanelSize);
 		
 		topCenterPane.add(topLeftPane, BorderLayout.WEST);
@@ -332,8 +368,8 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		statusLabel.setHorizontalAlignment(JLabel.CENTER);
 		statusLabel.setBackground(Color.lightGray);
 		statusLabel.setOpaque(true);
-		bottomCenterPane.add(finishButton, BorderLayout.SOUTH);
 		
+		bottomCenterPane.add(finishButton, BorderLayout.SOUTH);
 		centerPane.add(topCenterPane,BorderLayout.NORTH);
 		centerPane.add(bottomCenterPane, BorderLayout.CENTER);
 	}
@@ -345,7 +381,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		/* instantiate new TaskCard from this and pass it into a collection
 		*/
 		// CHECK IF INPUT IS VALID
-		if(/**validateInput() ||**/ true){ 
+		if(validateInput()){ 
 			
 			finishButton.setVisible(false);
 			// TODO - Create new taskcard here
@@ -371,10 +407,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	}
 	
 	public boolean validateInput(){
-		
-		boolean isValid = true; // If checks below pass, isValid remains true. 
-		Date startDateObj = (Date) startDate.getValue(); // Casting as Date instead of SimpleDateFormat for conditional.
-		Date endDateObj = (Date) endDate.getValue();
+		boolean isValid = true; // If checks below pass, isValid remains true.
 
 		//TODO: Check if Duplicate task exists
 		// CHECK TASK NAME
@@ -405,24 +438,27 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		}
 		// CHECK END DATE
 		// CHECK TO MAKE SURE END-DATE >= START-DATE. Use compareTo()
-		if(endDate.getValue() == null){
+		if(endDate.getText() == null || !(isValidDateFormat(endDate.getText()))){ //((endDate.getText() != null && endDate.getValue() == null))
 			System.out.println("endDate is invalid");
+			System.out.println(endDate.getText() == null);
+			System.out.println(endDate.getValue() == null);
 			endDate.setText("RE-ENTER! (mm/dd/yyyy)");
 			statusLabel.setText("Invalid Entry: Please fix marked fields");
 			endDate.setBackground(Color.red);
 			isValid = false;
 		}
-		else if(!endDateObj.after(startDateObj) && !endDateObj.equals(startDateObj)){ // Is endDate before startDate? Ensure HR/MIN/SEC/MS are set to 0. 
+
+		/*else if(!endDateObj.after(startDateObj) && !endDateObj.equals(startDateObj)){ // Is endDate before startDate? Ensure HR/MIN/SEC/MS are set to 0. 
 			endDate.setText("RE-ENTER! (dd/mm/yyyy)");
 			endDate.setBackground(Color.red);
 			isValid = false;
 		}
 		else if(endDate.getValue() != null){
 			endDate.setBackground(Color.WHITE);
-		}		
+		}*/
 		
 		// CHECK LOC ESTIMATE
-		if(locEst.getValue() == null){
+		if(locEst.getValue() == null || locEst.getText() == null){
 			System.out.println("LOC EST is invalid");
 			locEst.setText("Re-Enter Lines of Code Estimate!");
 			statusLabel.setText("Invalid Entry: Please fix marked fields");
@@ -433,8 +469,20 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 			locEst.setBackground(Color.WHITE);
 		}	
 		
+		if(locAct.getValue() == null || locAct.getText() == null){
+			System.out.println("LOC Act is invalid");
+			locAct.setText("Re-enter Lines of Code Estimate!");
+			statusLabel.setText("Invalid Entry: Please fix marked fields");
+			locAct.setBackground(Color.red);
+			isValid = false;
+		}
+		else if(locAct.getValue() != null){
+			locAct.setBackground(Color.WHITE);
+		}
+		
+		
 		// CHECK HOURS ESTIMATE
-		if(hoursEst.getValue() == null){
+		if(hoursEst.getValue() == null || hoursEst.getText() == null){
 			System.out.println("Hours EST is invalid");
 			hoursEst.setText("Re-Enter Lines of Code Estimate!");
 			statusLabel.setText("Invalid Entry: Please fix marked fields");
@@ -443,11 +491,22 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		}
 		else if(hoursEst.getValue() != null){
 			hoursEst.setBackground(Color.WHITE);
-		}	
+		}
+		
+		if(hoursAct.getValue() == null || hoursAct.getText() == null){
+			System.out.println("Hours Act is invalid");
+			hoursAct.setText("Re-Enter Actual Hours!");
+			statusLabel.setText("Invalid Entry: Please fix marked fields");
+			hoursAct.setBackground(Color.red);
+			isValid = false;
+		}
+		else if(hoursAct.getValue() != null){
+			hoursAct.setBackground(Color.WHITE);
+		}
 		
 		//TODO
 		// CHECK NUMFILES ESTIMATE
-		if(estNumFiles.getValue() == null){
+		if(estNumFiles.getValue() == null || estNumFiles.getText() == null){
 			System.out.println("# of Files is invalid");
 			estNumFiles.setText("Re-Enter Estimated # of Files");
 			statusLabel.setText("Invalid Entry: Please fix marked fields");
@@ -457,7 +516,18 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		else if(estNumFiles.getValue() != null){
 			estNumFiles.setBackground(Color.WHITE);
 		}
-	
+		
+		if(actNumFiles.getValue() == null || actNumFiles.getText() == null){
+			System.out.println("Act Num Files is invalid");
+			actNumFiles.setText("Re-Enter Actual # Files!");
+			statusLabel.setText("Invalid Entry: Please fix marked fields");
+			actNumFiles.setBackground(Color.red);
+			isValid = false;
+		}
+		else if(actNumFiles.getValue() != null){
+			actNumFiles.setBackground(Color.WHITE);
+		}
+		
 		// CHECK TASK DESCRIPTION
 		if(taskDesc.getText() == null || taskDesc.getText().equals("") || taskDesc.getText().equals("Enter Task Description here...") || taskDesc.getText().equals("Task Description is invalid")){
 			System.out.println("Task Description is Invalid");
@@ -495,6 +565,24 @@ public class NewTaskWindow extends JDialog implements ActionListener {
     	System.out.println("sdate " + startDate + "  eDate " + endDate);
     	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 
 			this.getTaskDesc().getText(), startDate,endDate);
+    }
+    
+    public boolean isValidDateFormat(String date){
+    	
+    	boolean isValid = true;
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+
+    	try {
+			if(sdf.parse(date) != null){
+				isValid = true;
+			}
+
+		} catch (ParseException e) {
+			return false;
+			//e.printStackTrace();
+		}
+    	return isValid;
+    	
     }
 	
 	/* GETTERS, THEN SETTERS */

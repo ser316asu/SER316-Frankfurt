@@ -65,7 +65,7 @@ public class DailyItemsPanel extends JPanel {
     public EditorPanel editorPanel = new EditorPanel(this);
     JLabel currentPageLabel = new JLabel();
     BorderLayout borderLayout4 = new BorderLayout();
-    TaskPanel tasksPanel = new TaskPanel(this);
+    TaskPanel tasksPanel = TaskPanel.getInstance(this);
     EventsPanel eventsPanel = new EventsPanel(this);
     AgendaPanel agendaPanel = new AgendaPanel(this);
     //CalendarPanel calendarPanel = new CalendarPanel(this);
