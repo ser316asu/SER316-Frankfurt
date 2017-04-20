@@ -25,7 +25,7 @@ public class IdleTimer implements Runnable{
 	private final Timer iTimer= new Timer();
 	
 	/** The idle wait. */
-	private final int IDLE_WAIT = 60;
+	private final int IDLE_WAIT = 600000000;
 	
 	/** The wait to close. */
 	private final int WAIT_TO_CLOSE = 10;

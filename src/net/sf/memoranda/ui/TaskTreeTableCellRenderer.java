@@ -3,6 +3,7 @@ package net.sf.memoranda.ui;
 
 import net.sf.memoranda.Project;
 import net.sf.memoranda.Task;
+import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 import java.awt.Color;
 import java.awt.Component;
@@ -118,7 +119,12 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
         // if( column_name.equals(Local.getString("Start date")) ||
         // column_name.equals(Local.getString("End date")) ){
         if ((column == 2) || (column == 3)) {
-            label.setText(dateFormat.format((Date) value));
+        	CalendarDate cd = (CalendarDate) value;
+        	System.out.println("cd day: " + cd.getDay());
+        	System.out.println("cd month: " + cd.getMonth());
+        	System.out.println("cd year: " + cd.getYear());
+        	CalendarDate switchDayAndMonth = new CalendarDate(cd.getMonth()-1,cd.getDay(),cd.getYear());
+            label.setText(switchDayAndMonth.getShortDateString());
             return label;
         }
         // if( column_name.equals( Local.getString("Status") ) ){

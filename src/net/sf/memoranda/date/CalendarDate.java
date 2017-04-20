@@ -27,11 +27,11 @@ public class CalendarDate {
 
     public static Calendar dateToCalendar(Date date) {
         Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
+        //cal.setTime(date);
         return cal;
     }
-
-    public CalendarDate() {
+   
+	public CalendarDate() {
         this(Calendar.getInstance());
     }
 
@@ -47,6 +47,10 @@ public class CalendarDate {
         else
           _day = dmax;
 
+    }
+    
+    public CalendarDate(Object obj) {
+    	this((Date) obj);
     }
 
     public CalendarDate(Calendar cal) {

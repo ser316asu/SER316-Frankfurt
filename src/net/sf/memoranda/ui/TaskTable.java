@@ -105,7 +105,7 @@ public class TaskTable extends JTable {
 
         CurrentDate.addDateListener(new DateListener() {
             public void dateChange(CalendarDate d) {
-                //updateUI();
+                updateUI();
                 tableChanged();
             }
         });
@@ -148,7 +148,7 @@ public class TaskTable extends JTable {
 		setDefaultRenderer(Integer.class, renderer);
 		setDefaultRenderer(TaskTable.class, renderer);
 		setDefaultRenderer(String.class, renderer);
-		setDefaultRenderer(java.util.Date.class, renderer);
+		setDefaultRenderer(CalendarDate.class, renderer);
 
 		setDefaultEditor(TreeTableModel.class, new TreeTableCellEditor());
 		
