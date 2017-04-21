@@ -41,9 +41,11 @@ public class IdleTimer implements Runnable{
 	@Override
 	public synchronized void run() {
 		this.startTimer(iTimer);
+		iTimer.setState(Timer.PAUSE);
 		while(!this.stop){
+			
+			Timer tmpTimer = new Timer(WAIT_TO_CLOSE);
 			if(iTimer.time > IDLE_WAIT){
-				Timer tmpTimer = new Timer(WAIT_TO_CLOSE);
 				this.startTimer(tmpTimer);
 				int result = JOptionPane.showConfirmDialog(App.getFrame(),
 						"You Have been Idle for " + IDLE_WAIT + 
@@ -63,14 +65,20 @@ public class IdleTimer implements Runnable{
 				tmpTimer.setState(Timer.STOP);
 			}
 			if(App.getFrame().getFocusOwner() == null){
-				if(!(iTimer.getState() == Timer.PLAY)){
+				
+				if((iTimer.getState() != Timer.PLAY)){
+					System.out.println("not in focus");
 					iTimer.setState(Timer.PLAY);
 				}
 				
 			}else{
-				iTimer.setState(Timer.PAUSE);
-				if(!(iTimer.getState() == Timer.PAUSE) || !(iTimer.getState() == Timer.STOP))
-				resetTimer();
+				
+				if((iTimer.getState() != Timer.PAUSE) && (iTimer.getState() != Timer.STOP)){
+					System.out.println("in focus reset timer");
+					resetTimer();
+					iTimer.setState(Timer.PAUSE);
+				}
+				
 			}
 			try {
 				this.wait(1000);
@@ -152,6 +160,8 @@ public class IdleTimer implements Runnable{
 		/** The state. */
 		private int state = PLAY;
 		
+		private int doSome = 0;
+		
 		/**
 		 * Instantiates a new timer.
 		 */
@@ -192,7 +202,7 @@ public class IdleTimer implements Runnable{
 		 * @see java.lang.Runnable#run()
 		 */
 		@Override
-		public void run() {
+		public synchronized void run() {
 			this.startTime = System.currentTimeMillis();
 			while(this.state == Timer.PLAY || this.state == Timer.PAUSE){
 				time = (System.currentTimeMillis() - startTime)/1000;
@@ -202,9 +212,26 @@ public class IdleTimer implements Runnable{
 				}
 				if(this.state == Timer.PAUSE){
 					while(this.state == Timer.PAUSE){
-						getState();
+						try {
+							wait(30);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
+				try {
+					wait(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+
+		private void doSomthing(int i) {
+			for(int wait = i; i < 300; i++){
+				int state = getState();
 			}
 		}
 	}
