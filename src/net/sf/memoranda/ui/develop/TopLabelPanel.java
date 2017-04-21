@@ -12,6 +12,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
+import java.text.DecimalFormat;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -24,6 +25,8 @@ import net.sf.memoranda.Task;
  * The Class TopLabelPanel.
  */
 public class TopLabelPanel extends JLabel implements Styling, Observer{
+	
+	DecimalFormat df = new DecimalFormat("#.00"); 
 	
 	/** The task. */
 	private Task task;
@@ -162,12 +165,12 @@ public class TopLabelPanel extends JLabel implements Styling, Observer{
             labels[1].setText(task.getText()+ "");// = new JLabel(task.getTaskName()+ "");
             labels[3].setText(task.getEstLOC()+ "");
             labels[5].setText(task.getActualLOC()+ "");
-            labels[7].setText(task.getHoursEst()+ "");
+            labels[7].setText(String.format("%.2f",task.getHoursEst()));
             labels[9].setText(task.getActualTime()+ "");
         }else if(location == TopHomePanel.RIGHT_LABEL_PANEL){
             labels[1].setText(task.getPriorityString()+"");
-            labels[3].setText(task.getActualLOC()/task.getActualTime() + "");
-            labels[5].setText(task.getEstLOC()/task.getHoursEst()+ "");
+            labels[3].setText(String.format("%.2f",(task.getActualLOC()/task.getActualTime()*1.0)));
+            labels[5].setText(String.format("%.2f", (task.getEstLOC()/task.getHoursEst()*1.0)));
             labels[7].setText(task.getStartDate().getShortDateString());
             labels[9].setText(task.getEndDate().getShortDateString());
         }
