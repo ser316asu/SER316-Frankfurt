@@ -30,7 +30,10 @@ public class CalendarDate {
         cal.setTime(date);
         return cal;
     }
-
+    public static Calendar dateToCalendar(String date) {
+        Calendar cal = Calendar.getInstance();
+        return cal;
+    }
     public CalendarDate() {
         this(Calendar.getInstance());
     }
@@ -60,11 +63,18 @@ public class CalendarDate {
     }
 
     public CalendarDate(String date) {
-        int[] d = Util.parseDateStamp(date);
-        _day = d[0];
-        _month = d[1];
-        _year = d[2];
-
+        String [] d = date.split("/");
+       	if(d[1].charAt(0) == '0'){
+       		d[1] = d[1].replaceFirst("0", "");
+       	}
+       	if(d[0].charAt(0) == '0'){
+       		d[0] = d[0].replaceFirst("0", "");
+       	}
+       	Util.debug("day: " + d[1] + " month: " + d[0]);
+        _day = Integer.parseInt(d[1]);
+        _month = Integer.parseInt(d[0]);
+        _year = Integer.parseInt(d[2]);
+        Util.debug("day: " + _day + " month: " + _month);
     }
 
     public static CalendarDate today() {
@@ -153,10 +163,6 @@ public class CalendarDate {
 
     public boolean inPeriod(CalendarDate startDate, CalendarDate endDate) {
         return (after(startDate) && before(endDate)) || equals(startDate) || equals(endDate);
-    }
-
-    public String toString() {
-        return Util.getDateStamp(this);
     }  
     
     public String getFullDateString() {
@@ -172,8 +178,11 @@ public class CalendarDate {
     }
     
     public String getShortDateString() {
-        return Local.getDateString(this, DateFormat.SHORT);
+        return this._month + "/" + this._day + "/" + this._year;
     }
-    
+    @Override
+    public String toString() {
+        return this._month + "/" + this._day + "/" + this._year;
+    }
 
 }

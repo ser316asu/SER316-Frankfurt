@@ -90,8 +90,6 @@ public interface Task{
     
     int getTaskTotalTime();
     
-    int getDaysLeft();
-    
     /*Collection getDependsFrom();
     
     void addDependsFrom(Task task);

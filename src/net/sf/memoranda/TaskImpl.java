@@ -9,7 +9,6 @@
 package net.sf.memoranda;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.Observable;
 import java.util.Vector;
 import java.util.Calendar;
@@ -51,13 +50,17 @@ public class TaskImpl  extends Observable implements Task, Comparable {
     }
 
     public void setStartDate(CalendarDate date) {
-           setAttr("startDate", date.toString());
+           setAttr("startDate", date.getShortDateString());
     }
 
     public CalendarDate getEndDate() {
 		String ed = _element.getAttribute("endDate").getValue();
-		if (ed != "")
+		if (ed != ""){
+			Util.debug("\t\t\tBefore: " + ed);
+			CalendarDate date = new CalendarDate(_element.getAttribute("endDate").getValue());
+			Util.debug("\t\t\tAfter: " + date.getShortDateString());
 			return new CalendarDate(_element.getAttribute("endDate").getValue());
+		}
 		Task parent = this.getParentTask();
 		if (parent != null)
 			return parent.getEndDate();
@@ -475,12 +478,6 @@ public class TaskImpl  extends Observable implements Task, Comparable {
 	@Override
 	public int getTaskTotalTime() {
 		long timeDif = this.getStartDate().getDate().getTime() - this.getEndDate().getDate().getTime();
-		return (int) timeDif;
-	}
-
-	@Override
-	public int getDaysLeft() {
-		long timeDif = this.getEndDate().getDate().getTime() - (new Date().getTime());
 		return (int) timeDif;
 	}
 
