@@ -7,6 +7,7 @@
  * Copyright (c) 2003 Memoranda Team. http://memoranda.sf.net
  */
 package net.sf.memoranda.ui;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -19,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.Event;
@@ -146,6 +148,34 @@ public class JNCalendarCellRenderer extends javax.swing.table.DefaultTableCellRe
 	    	
 	    	}
 	     }
+		
+		
+		
+		TaskWindow taskWindow;
+		
+		for(Object task : CurrentProject.getTaskList().getTopLevelTasks())
+	    {
+	    	Task tsk = (Task)task;
+	    	
+	    	if (isSelected){
+	    		
+	    		if (date.equals(tsk.getStartDate())){
+	    			
+	    			taskWindow = TaskWindow.get();
+	    			
+	    			JLabel taskDescription = new JLabel(tsk.getText(), SwingConstants.CENTER);
+	    			taskDescription.setFont (taskDescription.getFont ().deriveFont (30.0f));
+	    			taskWindow.add(taskDescription);
+	    			taskWindow.getContentPane().setBackground(Color.CYAN);
+	    			
+	    		}
+	    		
+	    		setEnabled(true);
+	    		
+	    	}
+           
+	     }
+			
 		// General Layout Alignment of labels inside cell
 		label.setHorizontalAlignment(CENTER);
 		label.setEnabled(true);
