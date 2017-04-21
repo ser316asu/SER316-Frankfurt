@@ -3,6 +3,7 @@ package net.sf.memoranda.ui;
 
 import net.sf.memoranda.Project;
 import net.sf.memoranda.Task;
+import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.ui.develop.LoadAssets;
 import net.sf.memoranda.ui.develop.Styling;
@@ -113,11 +114,11 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
         label.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED,Color.gray, Color.WHITE));
         label.setFont(Styling.TASK_PANEL_FONT);
         label.setForeground(Color.WHITE);
-        Dimension size = new Dimension(label.getWidth()+100,label.getHeight()+10);
+        Dimension size = new Dimension(label.getWidth()+100,label.getHeight()+20);
         label.setPreferredSize(size);
         label.setMaximumSize(size);
         label.setMinimumSize(size);
-        
+
         //label.setIcon(LoadAssets.TERMINAL_IMAGE);
         if (value == null) {
             label.setText("");
@@ -134,7 +135,11 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
         // if( column_name.equals(Local.getString("Start date")) ||
         // column_name.equals(Local.getString("End date")) ){
         if ((column == 2) || (column == 3)) {
-            label.setText(dateFormat.format((Date) value));
+        	CalendarDate d = ((CalendarDate)value);
+            label.setText(d.getShortDateString());
+            label.setFont(Styling.TASK_PANEL_FONT);
+            label.setForeground(Color.WHITE);
+            
             return label;
         }
         // if( column_name.equals( Local.getString("Status") ) ){
@@ -143,6 +148,7 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
             label.setForeground(getColorForTaskStatus(t, false));
             return label;
         }
+        System.out.println("column: " + column);
         label.setText(value.toString());
         return label;
     }

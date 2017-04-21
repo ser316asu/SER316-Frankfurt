@@ -64,12 +64,12 @@ public class CalendarDate {
 
     public CalendarDate(String date) {
         String [] d = date.split("/");
-       	if(d[1].charAt(0) == '0'){
+       	/*if(d[1].charAt(0) == '0'){
        		d[1] = d[1].replaceFirst("0", "");
        	}
        	if(d[0].charAt(0) == '0'){
        		d[0] = d[0].replaceFirst("0", "");
-       	}
+       	}*/
         _day = Integer.parseInt(d[1]);
         _month = Integer.parseInt(d[0]);
         _year = Integer.parseInt(d[2]);

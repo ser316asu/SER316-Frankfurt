@@ -22,7 +22,6 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 
@@ -120,17 +119,6 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 	private void addTaskElements(Task task) {
 		
 		// formatting dates from Day/Month/Year to Month/Day/Year
-		String startDateString = task.getStartDate().toString();
-		System.out.println("\n\nINITIAL BEFORE CONVERSION:" + startDateString);
-        String[] startDateArray = startDateString.split("/");
-        startDateString = String.join("/", startDateArray[1], startDateArray[0], startDateArray[2]);
-        System.out.println("\n\n" + startDateString );
-        
-        String endDateString = task.getEndDate().toString();
-        String[] endDateArray = endDateString.split("/");
-        endDateString = String.join("/", endDateArray[1], endDateArray[0], endDateArray[2]);
-		
-        System.out.println("\n\n" + endDateString + "\n");
         
         
 		this.locAct.setText(task.getActualLOC() + "");
@@ -151,25 +139,11 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		this.hoursEst.setText(task.getHoursEst() + "");
 		this.hoursEst.setValue(task.getHoursEst());
 		
-		this.endDate.setText(endDateString); // value unnecessary I think...?
-		try {
-			this.endDate.setValue(new SimpleDateFormat(DATE_FORMAT).parse(endDateString));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.endDate.setText(task.getEndDate().getShortDateString()); // value unnecessary I think...?
+		//this.endDate.setValue(task.getEndDate().getShortDateString());
 		
-		this.startDate.setText(startDateString);
-		try {
-			this.startDate.setValue(new SimpleDateFormat(DATE_FORMAT).parse(startDateString));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		System.out.println("HERE");
-		System.out.println(startDate.getValue());
-		System.out.println(endDate.getValue());
+		this.startDate.setText(task.getStartDate().getShortDateString());
+		//this.startDate.setValue(task.getStartDate().getShortDateString());
 		
 		this.progress.setValue(task.getProgress());
 		this.jTextFieldName.setText(task.getText()); // May need to set Value. 
@@ -551,7 +525,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
     	int day = Integer.parseInt(time[1]);
     	int year = Integer.parseInt(time[2]);
     	
-    	Date startDate = new Date(year,month,day);
+    	CalendarDate startDate = new CalendarDate(day,month,year);
     	
     	Date = this.startDate.getText();
     	time = Date.split("/");
@@ -560,11 +534,11 @@ public class NewTaskWindow extends JDialog implements ActionListener {
     	day = Integer.parseInt(time[1]);
     	year = Integer.parseInt(time[2]);
     	
-    	Date endDate = new Date(year,month,day);
+    	CalendarDate endDate = new CalendarDate(day,month,year);
     	
     	System.out.println("sdate " + startDate + "  eDate " + endDate);
     	((AppFrame)App.getFrame()).workPanel.dailyItemsPanel.eventsPanel.newEventB_actionPerformed(e, 
-			this.getTaskDesc().getText(), startDate,endDate);
+			this.getTaskDesc().getText(), startDate.getDate(),endDate.getDate());
     }
     
     public boolean isValidDateFormat(String date){

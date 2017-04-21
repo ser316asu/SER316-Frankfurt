@@ -459,6 +459,9 @@ public class TaskPanel extends JPanel implements Observer {
         if (numberOfEditTaskPopUps % 2 == 0) {
         	ntw = new NewTaskWindow(App.getFrame(), "Edit Task", t);
         }
+        if(ntw == null){
+        	ntw = new NewTaskWindow(App.getFrame(), "Edit Task", t);
+        }
 
        /* TaskDialog dlg = new TaskDialog(App.getFrame(), Local.getString("Edit task"));
         Dimension frmSize = App.getFrame().getSize();
