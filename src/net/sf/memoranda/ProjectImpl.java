@@ -49,7 +49,7 @@ public class ProjectImpl implements Project {
      */
     public void setStartDate(CalendarDate date) {
         if (date != null)
-            setAttr("startDate", date.toString());
+            setAttr("startDate", date.getShortDateString());
     }
 
     /**
@@ -66,7 +66,7 @@ public class ProjectImpl implements Project {
      */
     public void setEndDate(CalendarDate date) {
         if (date != null)
-            setAttr("endDate", date.toString());
+            setAttr("endDate", date.getShortDateString());
         else if (_root.getAttribute("endDate") != null)
             setAttr("endDate", null);
     }

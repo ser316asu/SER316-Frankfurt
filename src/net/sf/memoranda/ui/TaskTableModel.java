@@ -186,7 +186,7 @@ public class TaskTableModel extends AbstractTreeTableModel implements TreeTableM
                 return Class.forName("java.lang.String");
             case 2:
             case 3:
-                return Class.forName("java.util.Date");
+                return Class.forName("net.sf.memoranda.date.CalendarDate");
             case 6:
                 return Class.forName("java.lang.Integer");
             }

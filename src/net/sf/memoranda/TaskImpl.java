@@ -9,7 +9,6 @@
 package net.sf.memoranda;
 
 import java.util.Collection;
-import java.util.Date;
 import java.util.Observable;
 import java.util.Vector;
 import java.util.Calendar;
@@ -18,6 +17,7 @@ import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.ui.develop.StatusBarPanel;
 import net.sf.memoranda.ui.develop.TopLabelPanel;
+import net.sf.memoranda.util.Util;
 import nu.xom.Attribute;
 import nu.xom.Element;
 import nu.xom.Elements;
@@ -50,13 +50,14 @@ public class TaskImpl  extends Observable implements Task, Comparable {
     }
 
     public void setStartDate(CalendarDate date) {
-           setAttr("startDate", date.toString());
+           setAttr("startDate", date.getShortDateString());
     }
 
     public CalendarDate getEndDate() {
 		String ed = _element.getAttribute("endDate").getValue();
-		if (ed != "")
+		if (ed != ""){
 			return new CalendarDate(_element.getAttribute("endDate").getValue());
+		}
 		Task parent = this.getParentTask();
 		if (parent != null)
 			return parent.getEndDate();
@@ -279,10 +280,11 @@ public class TaskImpl  extends Observable implements Task, Comparable {
      * @see net.sf.memoranda.Task#getPriority()
      */
     public int getPriority() {
-        Attribute pa = _element.getAttribute("priority");
-        if (pa == null)
-            return Task.PRIORITY_NORMAL;
-        return new Integer(pa.getValue()).intValue();
+//        Attribute pa = _element.getAttribute("priority");
+//        if (pa == null)
+//            return Task.PRIORITY_NORMAL;
+       // return new Integer(pa.getValue()).intValue();
+    	return new Integer(this._element.getAttribute("priority").getValue());
     }
     /**
      * @see net.sf.memoranda.Task#setPriority(int)
@@ -439,35 +441,23 @@ public class TaskImpl  extends Observable implements Task, Comparable {
 	}
 
 	@Override
-	public int getActualTime() {
-		return (new Double(this._element.getAttribute("actualTime").getValue())).intValue();
-	}
-
-	@Override
-	public void setActualTime(double time) {
-		this.setAttr("actualTime", time +"");
-		
-	}
-
-	@Override
-	public int getHoursEst() {
-		return (new Integer(this._element.getAttribute("estimatedLOCPH").getValue())).intValue();
-	}
+    public int getActualTime() {
+        String str = this._element.getAttribute("actualTime").getValue().replaceAll(",", "");
+        int daValue =  (new Double(str)).intValue();
+        return daValue;
+    }    @Override
+    public void setActualTime(double time) {
+        this.setAttr("actualTime", time +"");
+        
+    }    @Override
+    public double getHoursEst() {
+        String str = this._element.getAttribute("estimatedTime").getValue().replaceAll(",", "");
+        return (new Double(str));
+    }
 
 	@Override
 	public void setHoursEst(double hrs) {
-		this.setAttr("estimatedLOCPH", hrs +"");
-		
-	}
-
-	@Override
-	public int getNumOfFiles() {
-		return (new Integer(this._element.getAttribute("numberOfFiles").getValue())).intValue();
-	}
-
-	@Override
-	public void setNumOfFiles(int files) {
-		this.setAttr("numberOfFiles", files +"");
+		this.setAttr("estimatedTime", hrs +"");
 		
 	}
 
@@ -489,9 +479,72 @@ public class TaskImpl  extends Observable implements Task, Comparable {
 	}
 
 	@Override
-	public int getDaysLeft() {
-		long timeDif = this.getEndDate().getDate().getTime() - (new Date().getTime());
-		return (int) timeDif;
+	public double getHoursAct() {
+		return new Double(this._element.getAttribute("actualTime").getValue());
+	}
+
+	@Override
+	public void setHoursAct(double hrs) {
+		this.setAttr("actualTime", hrs + "");
+		
+	}
+
+	@Override
+	public int getEstNumOfFiles() {
+		return new Integer(this._element.getAttribute("estNumberOfFiles").getValue());
+	}
+
+	@Override
+	public void setEstNumOfFiles(int files) {
+		this.setAttr("estNumberOfFiles", files + "");
+		
+	}
+
+	@Override
+	public int getActNumOfFiles() {
+		return new Integer(this._element.getAttribute("actNumberOfFiles").getValue());
+	}
+
+	@Override
+	public void setActNumOfFiles(int files) {
+		this.setAttr("actNumberOfFiles", files + "");
+	}
+
+	@Override
+	public int getActLOC() {
+		return new Integer(this._element.getAttribute("actualLOC").getValue());
+	}
+
+	@Override
+	public void setActLOC(int loc) {
+		this.setAttr("actualLOC", loc + "");
+	}
+
+	@Override
+	public String getPriorityString() {
+		String str = "Normal";
+		Util.debug("Priority: " + this.getPriority());
+		switch(this.getPriority()){
+			case 0:
+				str = "Lowest";
+				break;
+			case 1:
+				str = "Low";
+				break;
+			case 2:
+				str = "Normal";
+				break;
+			case 3:
+				str = "High";
+				break;
+			case 4:
+				str = "Highest";
+				break;
+			default:
+				str = "Unknown";
+				break;
+		}
+		return str;
 	}
 	
 }

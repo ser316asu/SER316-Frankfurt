@@ -1,9 +1,14 @@
 package net.sf.memoranda.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
+import net.sf.memoranda.ui.develop.DailyItemsPanelViewPort;
+import net.sf.memoranda.ui.develop.Styling;
 
 /*$Id: NotesListPanel.java,v 1.5 2005/01/29 13:55:26 rawsushi Exp $*/
 public class NotesListPanel extends JPanel {
@@ -20,8 +25,14 @@ public class NotesListPanel extends JPanel {
     }
   }
   void jbInit() throws Exception {
-    this.setLayout(borderLayout1);
-    this.add(scrollPane, BorderLayout.CENTER);
-    scrollPane.getViewport().add(notesList, null);
+	  scrollPane.setViewport(new DailyItemsPanelViewPort(DailyItemsPanelViewPort.NOTES_VIEW));
+	  this.setBackground(Color.black);
+	  this.setForeground(Color.WHITE);
+	  this.setFont(Styling.TASK_PANEL_FONT);
+	  this.getFont().deriveFont(Font.BOLD);
+	  this.setLayout(borderLayout1);
+	  this.add(scrollPane, BorderLayout.CENTER);
+	
+	  scrollPane.getViewport().add(notesList, null);
   }
 }

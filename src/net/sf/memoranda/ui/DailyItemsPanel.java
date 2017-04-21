@@ -40,7 +40,9 @@ import net.sf.memoranda.TaskList;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.date.DateListener;
+import net.sf.memoranda.ui.develop.DailyItemsPanelViewPort;
 import net.sf.memoranda.ui.develop.HomePanel;
+import net.sf.memoranda.ui.develop.Styling;
 import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
 import net.sf.memoranda.util.Util;
@@ -63,7 +65,7 @@ public class DailyItemsPanel extends JPanel {
     public EditorPanel editorPanel = new EditorPanel(this);
     JLabel currentPageLabel = new JLabel();
     BorderLayout borderLayout4 = new BorderLayout();
-    TaskPanel tasksPanel = new TaskPanel(this);
+    TaskPanel tasksPanel = TaskPanel.getInstance(this);
     EventsPanel eventsPanel = new EventsPanel(this);
     AgendaPanel agendaPanel = new AgendaPanel(this);
     //CalendarPanel calendarPanel = new CalendarPanel(this);
@@ -122,12 +124,14 @@ public class DailyItemsPanel extends JPanel {
         }
 	}
 	void jbInit() throws Exception {
+		
         border1 = BorderFactory.createEtchedBorder(Color.white, Color.gray);
         border2 = BorderFactory.createEtchedBorder(Color.white, new Color(161, 161, 161));
         this.setLayout(borderLayout1);
         splitPane.setOrientation(JSplitPane.HORIZONTAL_SPLIT);
         splitPane.setBorder(null);
         splitPane.setDividerSize(2);
+        
         controlPanel.setLayout(borderLayout2);
         //calendar.setMinimumSize(new Dimension(200, 170));
         mainPanel.setLayout(borderLayout3);
@@ -211,6 +215,12 @@ public class DailyItemsPanel extends JPanel {
         statusPanel.add(indicatorsPanel, BorderLayout.EAST);
 
         mainPanel.add(editorsPanel, BorderLayout.CENTER);
+        
+        //Styling by Joshua Becker Added
+        styleComponents();
+        //end styling
+        
+        
         
         editorsPanel.add(agendaPanel, "AGENDA");
         editorsPanel.add(eventsPanel, "EVENTS");
@@ -319,7 +329,16 @@ public class DailyItemsPanel extends JPanel {
 
    
 
-    void currentDateChanged(CalendarDate newdate) {
+    private void styleComponents() {
+        tasksPanel.taskTable.renderer.setOpaque(true);
+		//renderer.setBackground(new Color(0, 0, 0, 255));
+		//renderer.table.setBorder(BorderFactory.createLineBorder(Color.cyan));
+        tasksPanel.taskTable.renderer.table.setGridColor(Color.BLACK);
+        tasksPanel.taskTable.renderer.progressLabel.setFont(Styling.TASK_PANEL_FONT);
+		
+        tasksPanel.taskTable.renderer.table.setBackground(Color.black);
+	}
+	void currentDateChanged(CalendarDate newdate) {
         Cursor cur = App.getFrame().getCursor();
         App.getFrame().setCursor(waitCursor);
         if (!changedByHistory) {

@@ -12,9 +12,12 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Observer;
 import java.util.Vector;
 
 import javax.swing.AbstractAction;
@@ -67,9 +70,10 @@ import nu.xom.Elements;
 
 /*$Id: AppFrame.java,v 1.33 2005/07/05 08:17:24 alexeya Exp $*/
 
-public class AppFrame extends JFrame 
+public class AppFrame extends JFrame
 {
-    JPanel contentPane;
+	
+	JPanel contentPane;
     JMenuBar menuBar = new JMenuBar();
     JMenu jMenuFile = new JMenu();
     JMenuItem jMenuFileExit = new JMenuItem();
@@ -102,16 +106,26 @@ public class AppFrame extends JFrame
             Point loc = App.getFrame().getLocation();
             ntw.setLocation((frmSize.width / 4), (frmSize.height / 4));
             ntw.setVisible(true);
-            
+            if (ntw.CANCELLED) {
+                return;
+            }
+
             long effort = Util.getMillisFromHours(ntw.progress.getValue().toString());
     		//XXX Task newTask = CurrentProject.getTaskList().createTask(sd, ed, ntw.todoField.getText(), ntw.priorityCB.getSelectedIndex(),effort, ntw.descriptionField.getText(),parentTaskId);
     		Task newTask = CurrentProject.getTaskList().createTask(ntw.getStartDate().getText(),
-    				ntw.getEndDate().getText(), ntw.getjTextFieldName().getText() + "", 
+    				ntw.getEndDate().getText(),
+    				ntw.getjTextFieldName().getText(), 
     				ntw.priorityCB.getSelectedIndex(),effort, ntw.getTaskDesc().getText(),null, ntw.getHoursEst().getText(),
-    				ntw.getLocEst().getText(), ntw.getNumFiles().getText());
+    				ntw.getLocEst().getText(), 
+    				ntw.getNumFiles().getText(), 
+    				ntw.getLocAct().getText(), 
+    				ntw.getHoursAct().getText(), 
+    				ntw.getActualNumFiles().getText());
 //    		CurrentProject.getTaskList().adjustParentTasks(newTask);
     		newTask.setProgress(((Integer)ntw.progress.getValue()).intValue());
             CurrentStorage.get().storeTaskList(CurrentProject.getTaskList(), CurrentProject.get());
+            TaskPanel taskPanel = TaskPanel.getInstance(null);
+            taskPanel.update(null,null);
         }
     };
 
