@@ -266,7 +266,7 @@ public class FileStorage implements Storage {
 
         if (documentExists(fn)) {
             /*DEBUG*/
-            System.out.println(
+            Util.debug(
                 "[DEBUG] Open task list: "
                     + JN_DOCPATH
                     + prj.getID()

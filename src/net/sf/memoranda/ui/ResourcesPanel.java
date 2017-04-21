@@ -26,6 +26,7 @@ import javax.swing.event.ListSelectionListener;
 import net.sf.memoranda.CurrentProject;
 import net.sf.memoranda.Resource;
 import net.sf.memoranda.date.CurrentDate;
+import net.sf.memoranda.ui.develop.DailyItemsPanelViewPort;
 import net.sf.memoranda.util.AppList;
 import net.sf.memoranda.util.CurrentStorage;
 import net.sf.memoranda.util.Local;
@@ -62,6 +63,7 @@ public class ResourcesPanel extends JPanel {
         }
     }
     void jbInit() throws Exception {
+    	this.scrollPane.setViewport(new DailyItemsPanelViewPort(DailyItemsPanelViewPort.RESOURCE_VIEW));
     	
         toolBar.setFloatable(false);
         this.setLayout(borderLayout1);

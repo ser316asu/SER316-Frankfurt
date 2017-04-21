@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
 /**
  * The Class LoadAssets.
  */
-class LoadAssets {
+public class LoadAssets {
     
     /** The task panel image. */
     public static ImageIcon TASK_PANEL_IMAGE = loadImage("Assets/ui/frameNotSelected.png",
@@ -43,7 +43,7 @@ class LoadAssets {
     		Styling.SCREEN_WIDTH,Styling.SCREEN_HEIGHT);
     
     /** The terminal image. */
-    public static Icon TERMINAL_IMAGE = loadImage("Assets/ui/terminalBackground.png",
+    public static ImageIcon TERMINAL_IMAGE = loadImage("Assets/ui/terminalBackground.png",
     		Styling.SCREEN_WIDTH, Styling.SCREEN_HEIGHT);
     
     /** The toolbar calendar button image. */

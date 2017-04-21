@@ -36,6 +36,7 @@ import java.util.Iterator;
 import java.util.Hashtable;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -45,6 +46,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.LookAndFeel;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
+import javax.swing.border.BevelBorder;
 import javax.swing.event.*;
 import javax.swing.table.*;
 import javax.swing.tree.*;
@@ -53,6 +55,7 @@ import net.sf.memoranda.*;
 import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.date.CurrentDate;
 import net.sf.memoranda.date.DateListener;
+import net.sf.memoranda.ui.develop.Styling;
 import net.sf.memoranda.ui.treetable.*;
 
 /**
@@ -141,6 +144,15 @@ public class TaskTable extends JTable {
 			
 		// Install the tree editor renderer and editor.
 		renderer = new TaskTreeTableCellRenderer(this);
+		renderer.setOpaque(true);
+		//renderer.setBackground(new Color(0, 0, 0, 255));
+		//renderer.table.setBorder(BorderFactory.createLineBorder(Color.cyan));
+		renderer.table.setGridColor(Color.BLACK);
+		renderer.progressLabel.setFont(Styling.TASK_PANEL_FONT);
+		
+		renderer.table.setBackground(Color.black);
+		//renderer.table.setOpaque(true);
+		//renderer.table.setBackground(Color.gray);
 		
 		
 		tree.setCellRenderer(renderer);
@@ -148,7 +160,7 @@ public class TaskTable extends JTable {
 		setDefaultRenderer(Integer.class, renderer);
 		setDefaultRenderer(TaskTable.class, renderer);
 		setDefaultRenderer(String.class, renderer);
-		setDefaultRenderer(java.util.Date.class, renderer);
+		setDefaultRenderer(CalendarDate.class, renderer);
 
 		setDefaultEditor(TreeTableModel.class, new TreeTableCellEditor());
 		
@@ -167,9 +179,10 @@ public class TaskTable extends JTable {
 		// And update the height of the trees row to match that of
 		// the table.
 		//if (tree.getRowHeight() < 1) {
-			setRowHeight(18);
+			setRowHeight(25);
 		//}
 		initColumnWidths();
+		tree.setFont(Styling.TASK_PANEL_FONT);
 		
 		// do not allow moving columns
 		getTableHeader().setReorderingAllowed(false);
@@ -185,16 +198,16 @@ public class TaskTable extends JTable {
                 column.setPreferredWidth(32767);
             }
 	    else if( i == 6 ){
-		    column.setPreferredWidth(100);
-		    column.setMinWidth(100);
+		    column.setPreferredWidth(Styling.SCREEN_WIDTH/6);
+		    column.setMinWidth(200);
 	    }
             else {
-                column.setMinWidth(67); // 65);
-                column.setPreferredWidth(67); //65);
+            	column.setPreferredWidth(Styling.SCREEN_WIDTH/6+30); //65);
+                column.setMinWidth(200); // 65);
+                
             }
         }
     }
-    
     public void tableChanged() {
 		model.fireUpdateCache();
 		model.fireTreeStructureChanged();

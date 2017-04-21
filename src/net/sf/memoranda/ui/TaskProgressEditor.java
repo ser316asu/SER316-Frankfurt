@@ -1,6 +1,7 @@
 package net.sf.memoranda.ui;
 
 import net.sf.memoranda.*;
+import net.sf.memoranda.ui.develop.Styling;
 import net.sf.memoranda.util.*;
 
 import javax.swing.*;
@@ -45,7 +46,7 @@ public class TaskProgressEditor extends JPanel implements TableCellEditor{
 			}
 		});
 		setLayout(new java.awt.BorderLayout());
-		label.setOpaque(false);
+		//label.setOpaque(false);
 	}
 	
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int r, int c) { 
@@ -63,7 +64,7 @@ public class TaskProgressEditor extends JPanel implements TableCellEditor{
 	public void paintComponent(Graphics g){
 		TableCellRenderer cr = table.getCellRenderer(row, column);
 		((TaskProgressLabel)cr.getTableCellRendererComponent(table, current, isSelected, true, row, column)).paintComponent(g);
-		
+		label.setFont(Styling.TASK_PANEL_FONT);
 		label.setSize( this.getSize() );
 		
 		label.setText("-");

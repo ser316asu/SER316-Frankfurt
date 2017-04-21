@@ -6,6 +6,8 @@ import java.awt.RenderingHints;
 
 import javax.swing.JEditorPane;
 
+import net.sf.memoranda.ui.develop.LoadAssets;
+
 public class HTMLEditorPane extends JEditorPane {
 
 	boolean antiAlias = true;
@@ -23,6 +25,7 @@ public class HTMLEditorPane extends JEditorPane {
 	}
 
 	public void paint(Graphics g) {
+		g.drawImage(LoadAssets.TERMINAL_IMAGE.getImage(), 0, 0, null);
 		if (antiAlias) {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_RENDERING,
@@ -37,5 +40,6 @@ public class HTMLEditorPane extends JEditorPane {
 		} else {
 			super.paint(g);
 		}
+		
 	}
 }

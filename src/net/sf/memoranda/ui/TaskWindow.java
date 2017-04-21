@@ -8,8 +8,9 @@ import javax.swing.JFrame;
 public class TaskWindow extends JFrame{
 	
 	private static TaskWindow taskWindow;
+	
+	public static TaskWindow get() {
 
-    public static TaskWindow get() {
         if (taskWindow == null)
         	taskWindow = new TaskWindow();
 

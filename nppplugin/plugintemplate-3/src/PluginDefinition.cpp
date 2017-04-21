@@ -15,8 +15,6 @@
 //along with this program; if not, write to the Free Software
 //Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-
-
 #include "PluginDefinition.h"
 #include <Shobjidl.h>
 #include "menuCmdID.h"
@@ -29,12 +27,13 @@
 #include <fstream>
 #include <string>
 #include <tchar.h>
+#include <exception>
 
 OPENFILENAMEA ofn;
-std::string filename;
+std::string filename(128, ' '); // Set max file-path
 LPSTR cString = strdup(filename.c_str());
 bool autorun = true;
-
+ 
 //char filename[MAX_PATH];
 //
 // The plugin data that Notepad++ needs
@@ -54,7 +53,6 @@ void pluginInit(HANDLE /*hModule*/)
 
 	// Where the application checks to see if a filepath.txt exists and has content.
 	// If it does, it reads it. Otherwise it creates a blank one. 
-	
 	std::ifstream inFile;
 	std::ofstream outFile;
 	std::string line;
@@ -65,41 +63,47 @@ void pluginInit(HANDLE /*hModule*/)
 
 	// If filepath exists exist - above statement returns false
 
+	/*####### USEFUL MESSAGE BOX COMMANDS ######### */
+	//::MessageBox(NULL, TEXT("No filepath set for Memoranda"), TEXT("Filepath is blank or no longer valid."), MB_OK);	
 	//::MessageBoxA(NULL, filename.c_str(), "Selected Filepath", 0);
+	
+	try {
+		if (inFile.is_open()) {
+			getline(inFile, line);
+			filename = line.c_str();
 
-	if (inFile.is_open()) {
-		getline(inFile, line);
-		//::MessageBoxA(NULL, line.c_str(), "Selected Filepath", 0);
-		filename = line.c_str();
+			getline(inFile, autoStartNum);
 
-		getline(inFile, autoStartNum);
-		if(!autoStartNum.empty()){
-			if (autoStartNum == "0") {
-				autorun = false;
+			if (!autoStartNum.empty()) {
+				if (autoStartNum == "0") {
+					autorun = false;
+				}
+				else if (autoStartNum == "1") {
+					autorun = true;
+				}
+				else {
+					::MessageBox(NULL, TEXT("Invalid Auto-run value"), TEXT("Error reading auto-run value"), MB_OK);
+				}
 			}
-			else if (autoStartNum == "1") {
-				autorun = true;
+
+			if (autorun == true) {
+				openMemoranda();
 			}
-			else {
-				::MessageBox(NULL, TEXT("Invalid Auto-run value"), TEXT("Error reading auto-run value"), MB_OK);
-			}
+			inFile.close();
+		}
+		// Path does not exist 
+		else {
+
+			outFile.open("C:\\Program Files (x86)\\notepad++\\filepath.txt");  // This path ABSOLUTE to /Notepad++ main directory. WINDOWS OS ONLY.
+			outFile.close();
+			inFile.close(); // If this conditional passes, then inFile is never closed properly.
 		}
 
-		if (autorun == true) {
-			openMemoranda();
-		}
-		inFile.close();
 	}
-	// Path does not exist 
-	else {
-
-		outFile.open("C:\\Program Files (x86)\\notepad++\\filepath.txt");  // This path ~~relative~~ ABSOLUTE to /Notepad++ main directory
-		outFile.close();
-		//::MessageBox(NULL, TEXT("No filepath set for Memoranda"), TEXT("Filepath is blank or no longer valid."), MB_OK);		
-		//setFilepath();
-	}
-	//outFile.open("filepath.txt"); // This path relative to /Notepad++ main directory
-	//outFile << "This is a test";
+	catch (const std::exception& e) {
+		::MessageBox(NULL, TEXT("File IO Exception"), TEXT("ERROR!"), MB_OK);
+		::MessageBoxA(NULL, e.what(), "Selected Filepath", 0);
+	} 
 
 }
 
@@ -108,50 +112,19 @@ void pluginInit(HANDLE /*hModule*/)
 //
 void pluginCleanUp()
 {
-	/*Here I remove the original filepath.txt file 
+	/*Here dependent on the filepath's origin, I remove the original filepath.txt file 
 	and make a new filepath.txt in the root directory of npp++.
 	This done mainly to ensure no read/write errors with lingering empty spaces and terminators, etc.
 	*/
 
-	std::ifstream inFile;
-	std::ofstream outFile;
-	std::string line;
-
 	// Save whatever file-path was made to memoranda. 
-	if (!(cString == NULL) && !(cString[0] == 0)) {
-		remove("C:\\Program Files (x86)\\notepad++\\filepath.txt");
-		outFile.open("C:\\Program Files (x86)\\notepad++\\filepath.txt");
-		//::MessageBoxA(NULL, cString, "Selected Filepath", 0);
+	if (!(cString == NULL) && !(cString[0] == ' ')) {
 		filename = cString;
-		outFile.write(filename.c_str(), strlen(filename.c_str()));
-		outFile.write("\n", sizeof(char));
-		if (autorun == true) {
-			outFile.write("1", sizeof(char));
-		}
-		else {
-			outFile.write("0", sizeof(char));
-		}
-		outFile << std::endl;
-		outFile.close();
-	}
+		writeToFile();
 
-	// This in the instance that the filepath was not chosen THIS instance. Have to use a different fileWrite. This can be trimmed majorly and combined with code above.
-	else {
-		remove("C:\\Program Files (x86)\\notepad++\\filepath.txt");
-		outFile.open("C:\\Program Files (x86)\\notepad++\\filepath.txt");
-		//::MessageBoxA(NULL, filename.c_str(), "CLOSING", 0);
-		outFile.write(filename.c_str(), strlen(filename.c_str()));
-		outFile.write("\n", sizeof(char));
-		if (autorun == true) {
-			outFile.write("1", sizeof(char));
-		}
-		else {
-			outFile.write("0", sizeof(char));
-		}
-		outFile << std::endl;
-		outFile.close();
+	} else {
+		writeToFile();
 	}
-
 }
 
 //
@@ -220,14 +193,11 @@ void setFilepath()
 	ofn.lpstrTitle = "Choose Memoranda executable/jar file";
 	ofn.Flags = OFN_DONTADDTORECENT | OFN_FILEMUSTEXIST;
 
-	filename = cString;
+	//filename = cString;
 
 	if (GetOpenFileNameA(&ofn))
 	{
-
-		//std::cout << "You chose the file \"" << filename << "\"\n";
 		::MessageBoxA(NULL, cString, "Selected Filepath", 0);
-		//int fileLength = strlen(filename);
 	}
 	else
 	{
@@ -262,14 +232,11 @@ void openMemoranda()
 	//::MessageBoxA(NULL, filename.c_str() , "filename VALUE", 0);
 	//::MessageBoxA(NULL, cString, "cSTRING VALUE", 0);
 
-	if (!filename.empty()) { //&& pathIsValid
-		ShellExecuteA(NULL, "open", filename.c_str(), NULL, NULL, SW_SHOWDEFAULT); // This needs <windows.h>
-		//::MessageBoxA(NULL, filename.c_str(), "INSIDE IF FOR filename", 0);
-
+	if (!filename.empty()) { 
+		ShellExecuteA(NULL, "open", filename.c_str(), NULL, NULL, SW_SHOWNOACTIVATE); // This needs <windows.h>
 	}
 	else if (!(cString == NULL) && !(cString[0] == 0)) {
-		ShellExecuteA(NULL, "open", cString, NULL, NULL, SW_SHOWDEFAULT); // This needs <windows.h>
-		//::MessageBoxA(NULL, cString, "INSIDE IF FOR cString", 0);
+		ShellExecuteA(NULL, "open", cString, NULL, NULL, SW_SHOWNOACTIVATE); // This needs <windows.h> in order to run
 	}
 	else {
 		::MessageBox(NULL, TEXT("Invalid Filepath"), TEXT("Filepath is blank or no longer valid."), MB_OK);
@@ -280,9 +247,43 @@ void flipAutoRun() {
 
 	autorun = !autorun;
 
-	::MessageBoxA(NULL, BoolToString(autorun), "Auto-run set to:", 0);
+	::MessageBoxA(NULL, BoolToString(autorun), "Auto-run set to:", 0); // Display return value from char function. Can only place one String in MessageBoxA. Thus have to make it dynamic.  
+}
+
+bool writeToFile() {
+
+	std::ofstream outFile;
+	std::string line;
+	bool writeSuccess = true;
+
+	try {
+
+		remove("C:\\Program Files (x86)\\notepad++\\filepath.txt");
+		outFile.open("C:\\Program Files (x86)\\notepad++\\filepath.txt");
+		outFile.write(filename.c_str(), strlen(filename.c_str()));
+		outFile.write("\n", sizeof(char));
+
+		if (autorun == true) {
+			outFile.write("1", sizeof(char));
+		}
+		else {
+			outFile.write("0", sizeof(char));
+		}
+
+		outFile << std::endl;
+		outFile.close();
+
+	}
+	catch (const std::exception& e ) {
+		::MessageBox(NULL, TEXT("File IO Exception"), TEXT("ERROR!"), MB_OK);
+		::MessageBoxA(NULL, e.what(), "Selected Filepath", 0);
+		writeSuccess = false;
+	}
+
+	return writeSuccess;
 }
 
 inline const char * const BoolToString(bool b){
-	return b ? "Autorun: True" : "Autorun: false";
+	return b ? "Autorun ON" : "Autorun OFF";
 }
+

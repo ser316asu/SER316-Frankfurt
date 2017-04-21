@@ -20,7 +20,6 @@ package net.sf.memoranda.ui.table;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Date;
 import java.util.Vector;
 import java.util.Hashtable;
 
@@ -29,6 +28,8 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
+
+import net.sf.memoranda.date.CalendarDate;
 import net.sf.memoranda.util.Local;
 
 /*$Id: TableSorter.java,v 1.7 2004/10/07 08:52:32 ivanrise Exp $*/
@@ -107,11 +108,11 @@ public class TableSorter extends TableMap {
             } else {
                 return 0;
             }
-        } else if (type == java.util.Date.class) {
-            Date d1 = (Date)data.getValueAt(row1, column);
-            long n1 = d1.getTime();
-            Date d2 = (Date)data.getValueAt(row2, column);
-            long n2 = d2.getTime();
+        } else if (type == CalendarDate.class) {
+        	CalendarDate d1 = (CalendarDate)data.getValueAt(row1, column);
+            long n1 = d1.getDate().getTime();
+            CalendarDate d2 = (CalendarDate)data.getValueAt(row2, column);
+            long n2 = d2.getDate().getTime();
 
             if (n1 < n2) {
                 return -1;

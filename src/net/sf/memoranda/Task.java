@@ -70,18 +70,25 @@ public interface Task{
     int getActualTime();
     void setActualTime(double time);
     
-    int getHoursEst();
+    double getHoursEst();
     void setHoursEst(double hrs);
     
-    int getNumOfFiles();
-    void setNumOfFiles(int files);
+    double getHoursAct();
+    void setHoursAct(double hrs);
+    
+    int getEstNumOfFiles();
+    void setEstNumOfFiles(int files);
+    
+    int getActNumOfFiles();
+    void setActNumOfFiles(int files);
     
     int getEstLOC();
     void setEstLOC(int loc);
     
-    int getTaskTotalTime();
+    int getActLOC();
+    void setActLOC(int loc);
     
-    int getDaysLeft();
+    int getTaskTotalTime();
     
     /*Collection getDependsFrom();
     
@@ -113,5 +120,6 @@ public interface Task{
 	void setValue(Task task);
 	
     nu.xom.Element getContent();
+	String getPriorityString();
 
 }
