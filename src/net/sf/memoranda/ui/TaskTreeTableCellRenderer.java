@@ -135,7 +135,7 @@ public class TaskTreeTableCellRenderer extends DefaultTreeCellRenderer implement
         // if( column_name.equals(Local.getString("Start date")) ||
         // column_name.equals(Local.getString("End date")) ){
         if ((column == 2) || (column == 3)) {
-        	CalendarDate d = ((CalendarDate)value);
+        	CalendarDate d = (new CalendarDate((Date)value));
             label.setText(d.getShortDateString());
             label.setFont(Styling.TASK_PANEL_FONT);
             label.setForeground(Color.WHITE);
