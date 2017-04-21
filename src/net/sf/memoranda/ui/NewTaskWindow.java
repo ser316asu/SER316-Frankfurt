@@ -245,6 +245,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
             	System.out.println("After new event action");
             }
         });
+		
 
 		//###################
 		/* WINDOW SETUP */ 
@@ -386,7 +387,7 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		//TODO: Check if Duplicate task exists
 		// CHECK TASK NAME
 		if(jTextFieldName.getText() == null || jTextFieldName.getText().equals("Name of Task") 
-				|| jTextFieldName.getText().equals("startDate is invalid") || jTextFieldName.getText().equals("")){
+				|| jTextFieldName.getText().equals("Task Name is invalid") || jTextFieldName.getText().equals("")){
 			System.out.println("Task Name is invalid");
 			jTextFieldName.setText("Task Name is invalid");
 			statusLabel.setText("Invalid Entry: Please fix marked fields");
@@ -413,9 +414,6 @@ public class NewTaskWindow extends JDialog implements ActionListener {
 		// CHECK END DATE
 		// CHECK TO MAKE SURE END-DATE >= START-DATE. Use compareTo()
 		if(endDate.getText() == null || !(isValidDateFormat(endDate.getText()))){ //((endDate.getText() != null && endDate.getValue() == null))
-			System.out.println("endDate is invalid");
-			System.out.println(endDate.getText() == null);
-			System.out.println(endDate.getValue() == null);
 			endDate.setText("RE-ENTER! (mm/dd/yyyy)");
 			statusLabel.setText("Invalid Entry: Please fix marked fields");
 			endDate.setBackground(Color.red);
