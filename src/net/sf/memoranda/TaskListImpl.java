@@ -70,7 +70,6 @@ public class TaskListImpl implements TaskList{
 		for (int i = 0; i < els.size(); i++) {
 			Element el = els.get(i);
 			elements.put(el.getAttribute("id").getValue(), el);
-			Util.debug("att build: sd " + el.getAttribute("startDate").getValue());
 			buildElements(el);
 		}
 	}
@@ -111,7 +110,6 @@ public class TaskListImpl implements TaskList{
     public Task createTask(String startDate, String endDate, String text, int priority,
     		long effort, String description, String parentTaskId,String estimatedTime, String estimatedLOCPH,
     		String estNumFiles, String actualLOC, String actualTime, String actNumFiles) {
-    	Util.debug("\t\t\tsd: " + startDate + "\n\t\t\ted: " + endDate);
         Element el = new Element("task");
         el.addAttribute(new Attribute("startDate", startDate));
         el.addAttribute(new Attribute("endDate", endDate != null? endDate:""));
@@ -357,7 +355,6 @@ public class TaskListImpl implements TaskList{
 
         for (int i = 0; i < tasks.size(); i++) {
             Task t = new TaskImpl(tasks.get(i), this);
-            Util.debug("\t\t\tget sd: " + t.getStartDate().getShortDateString() + "\n\t\t\tget ed: " + t.getEndDate().getShortDateString());
             v.add(t);
         }
         return v;

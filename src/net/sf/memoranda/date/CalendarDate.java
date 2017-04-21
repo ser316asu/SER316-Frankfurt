@@ -70,11 +70,9 @@ public class CalendarDate {
        	if(d[0].charAt(0) == '0'){
        		d[0] = d[0].replaceFirst("0", "");
        	}
-       	Util.debug("day: " + d[1] + " month: " + d[0]);
         _day = Integer.parseInt(d[1]);
         _month = Integer.parseInt(d[0]);
         _year = Integer.parseInt(d[2]);
-        Util.debug("day: " + _day + " month: " + _month);
     }
 
     public static CalendarDate today() {

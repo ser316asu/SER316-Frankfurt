@@ -56,9 +56,6 @@ public class TaskImpl  extends Observable implements Task, Comparable {
     public CalendarDate getEndDate() {
 		String ed = _element.getAttribute("endDate").getValue();
 		if (ed != ""){
-			Util.debug("\t\t\tBefore: " + ed);
-			CalendarDate date = new CalendarDate(_element.getAttribute("endDate").getValue());
-			Util.debug("\t\t\tAfter: " + date.getShortDateString());
 			return new CalendarDate(_element.getAttribute("endDate").getValue());
 		}
 		Task parent = this.getParentTask();
